@@ -153,7 +153,152 @@
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 11)&amp;#39;&lt;/span&gt; | findstr &lt;span style=&#34;color:#ae81ff&#34;&gt;10672&lt;/span&gt; | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4]&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段&lt;/p&gt;
 &lt;h1 id=&#34;流量分析&#34;&gt;流量分析
-&lt;/h1&gt;</description>
+&lt;/h1&gt;&lt;h2 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
+&lt;/h2&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
+&lt;h3 id=&#34;开关级参数&#34;&gt;开关级参数
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;参数&lt;/th&gt;
+          &lt;th&gt;口语化说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-D&lt;/td&gt;
+          &lt;td&gt;显示所有可用的网络接口&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-i&lt;/td&gt;
+          &lt;td&gt;指定要抓包的网络接口，例如 &lt;code&gt;-i eth0&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-n&lt;/td&gt;
+          &lt;td&gt;不把 IP 地址或端口号转换成名字，直接显示数字&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-e&lt;/td&gt;
+          &lt;td&gt;抓包时连以太网头也抓上&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-X&lt;/td&gt;
+          &lt;td&gt;以十六进制和 ASCII 显示数据包内容&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-XX&lt;/td&gt;
+          &lt;td&gt;跟 -X 一样，但同时显示以太网头&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-v / -vv / -vvv&lt;/td&gt;
+          &lt;td&gt;增加输出的详细程度，越多 v 信息越详细&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-c&lt;/td&gt;
+          &lt;td&gt;抓指定数量的数据包后退出，例如 &lt;code&gt;-c 10&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-s&lt;/td&gt;
+          &lt;td&gt;设置每个数据包抓多少字节，&lt;code&gt;-s 0&lt;/code&gt; 表示抓完整包&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-S&lt;/td&gt;
+          &lt;td&gt;显示绝对序列号，而不是相对序列号&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-q&lt;/td&gt;
+          &lt;td&gt;输出更简略的协议信息&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-r 文件.pcap&lt;/td&gt;
+          &lt;td&gt;从指定文件读取抓包数据，例如 &lt;code&gt;-r /tmp/capture.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
+          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-A&lt;/td&gt;
+          &lt;td&gt;仅显示数据包行后的 ASCII 文本&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
+          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-l&lt;/td&gt;
+          &lt;td&gt;快速检查捕获，可以利用管道符号配合，例如 `sudo tcpdump -Ar http.cap -l&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;过滤器&#34;&gt;过滤器
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;过滤器&lt;/th&gt;
+          &lt;th&gt;说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;host x.x.x.x&lt;/td&gt;
+          &lt;td&gt;仅捕获与特定主机相关的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;捕获进出特定网络的流量（斜杠表示法指定掩码）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;src net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;仅捕获来自指定网络的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;dst net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;仅捕获发往目标网络的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;port #&lt;/td&gt;
+          &lt;td&gt;只捕获指定端口的流量，其余端口过滤掉&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;not&lt;/td&gt;
+          &lt;td&gt;捕获除指定条件之外的所有流量，例如 &lt;code&gt;not port 80&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;and&lt;/td&gt;
+          &lt;td&gt;连接多个过滤条件，例如 &lt;code&gt;host 192.168.1.1 and port 80&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;portrange x-x&lt;/td&gt;
+          &lt;td&gt;捕获指定端口范围内的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;ip / ether / tcp&lt;/td&gt;
+          &lt;td&gt;只抓指定协议的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;broadcast&lt;/td&gt;
+          &lt;td&gt;捕获广播流量（一对所有）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;multicast&lt;/td&gt;
+          &lt;td&gt;捕获多播流量（一对多）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;unicast&lt;/td&gt;
+          &lt;td&gt;捕获单播流量（一对一）&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;列出可用接口&#34;&gt;列出可用接口
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然也可以配合-l进行查找效果&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap -l | grep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag*&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
         </item>
         <item>
         <title>渊蜂之书</title>

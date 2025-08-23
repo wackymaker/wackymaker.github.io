@@ -214,6 +214,18 @@
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#tcpdump使用">tcpdump使用</a>
+      <ul>
+        <li><a href="#开关级参数">开关级参数</a></li>
+        <li><a href="#过滤器">过滤器</a></li>
+        <li><a href="#列出可用接口">列出可用接口</a></li>
+        <li><a href="#大参数抓取流量包命令示例">大参数抓取流量包命令示例</a></li>
+        <li><a href="#快速读取数据包中的人类可读信息">快速读取数据包中的人类可读信息</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
         </div>
     </section>
@@ -277,7 +289,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -433,7 +445,152 @@
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cat .<span style="color:#ae81ff">\2</span>0240408132435_EvtxECmd_Output.json | jq -c <span style="color:#e6db74">&#39;select(.EventId == 11)&#39;</span> | findstr <span style="color:#ae81ff">10672</span> | jq -s <span style="color:#e6db74">&#39;.[] | [.TimeCreated, .PayloadData4]&#39;</span>
 </span></span></code></pre></div><p>这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段</p>
 <h1 id="流量分析">流量分析
-</h1>
+</h1><h2 id="tcpdump使用">tcpdump使用
+</h2><p>需要root权限，并且如果需要生成数据包，请在tmp目录生成</p>
+<h3 id="开关级参数">开关级参数
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>口语化说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>-D</td>
+          <td>显示所有可用的网络接口</td>
+      </tr>
+      <tr>
+          <td>-i</td>
+          <td>指定要抓包的网络接口，例如 <code>-i eth0</code></td>
+      </tr>
+      <tr>
+          <td>-n</td>
+          <td>不把 IP 地址或端口号转换成名字，直接显示数字</td>
+      </tr>
+      <tr>
+          <td>-e</td>
+          <td>抓包时连以太网头也抓上</td>
+      </tr>
+      <tr>
+          <td>-X</td>
+          <td>以十六进制和 ASCII 显示数据包内容</td>
+      </tr>
+      <tr>
+          <td>-XX</td>
+          <td>跟 -X 一样，但同时显示以太网头</td>
+      </tr>
+      <tr>
+          <td>-v / -vv / -vvv</td>
+          <td>增加输出的详细程度，越多 v 信息越详细</td>
+      </tr>
+      <tr>
+          <td>-c</td>
+          <td>抓指定数量的数据包后退出，例如 <code>-c 10</code></td>
+      </tr>
+      <tr>
+          <td>-s</td>
+          <td>设置每个数据包抓多少字节，<code>-s 0</code> 表示抓完整包</td>
+      </tr>
+      <tr>
+          <td>-S</td>
+          <td>显示绝对序列号，而不是相对序列号</td>
+      </tr>
+      <tr>
+          <td>-q</td>
+          <td>输出更简略的协议信息</td>
+      </tr>
+      <tr>
+          <td>-r 文件.pcap</td>
+          <td>从指定文件读取抓包数据，例如 <code>-r /tmp/capture.pcap</code></td>
+      </tr>
+      <tr>
+          <td>-w 文件.pcap</td>
+          <td>把抓到的数据写入指定文件，例如 <code>-w out.pcap</code></td>
+      </tr>
+      <tr>
+          <td>-A</td>
+          <td>仅显示数据包行后的 ASCII 文本</td>
+      </tr>
+      <tr>
+          <td>-w 文件.pcap</td>
+          <td>把抓到的数据写入指定文件，例如 <code>-w out.pcap</code></td>
+      </tr>
+      <tr>
+          <td>-l</td>
+          <td>快速检查捕获，可以利用管道符号配合，例如 `sudo tcpdump -Ar http.cap -l</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="过滤器">过滤器
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>过滤器</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>host x.x.x.x</td>
+          <td>仅捕获与特定主机相关的流量</td>
+      </tr>
+      <tr>
+          <td>net x.x.x.x/24</td>
+          <td>捕获进出特定网络的流量（斜杠表示法指定掩码）</td>
+      </tr>
+      <tr>
+          <td>src net x.x.x.x/24</td>
+          <td>仅捕获来自指定网络的流量</td>
+      </tr>
+      <tr>
+          <td>dst net x.x.x.x/24</td>
+          <td>仅捕获发往目标网络的流量</td>
+      </tr>
+      <tr>
+          <td>port #</td>
+          <td>只捕获指定端口的流量，其余端口过滤掉</td>
+      </tr>
+      <tr>
+          <td>not</td>
+          <td>捕获除指定条件之外的所有流量，例如 <code>not port 80</code></td>
+      </tr>
+      <tr>
+          <td>and</td>
+          <td>连接多个过滤条件，例如 <code>host 192.168.1.1 and port 80</code></td>
+      </tr>
+      <tr>
+          <td>portrange x-x</td>
+          <td>捕获指定端口范围内的流量</td>
+      </tr>
+      <tr>
+          <td>ip / ether / tcp</td>
+          <td>只抓指定协议的流量</td>
+      </tr>
+      <tr>
+          <td>broadcast</td>
+          <td>捕获广播流量（一对所有）</td>
+      </tr>
+      <tr>
+          <td>multicast</td>
+          <td>捕获多播流量（一对多）</td>
+      </tr>
+      <tr>
+          <td>unicast</td>
+          <td>捕获单播流量（一对一）</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="列出可用接口">列出可用接口
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -D
+</span></span></code></pre></div><h3 id="大参数抓取流量包命令示例">大参数抓取流量包命令示例
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -i eth0 -nnvXX -c <span style="color:#ae81ff">100</span> -w /tmp/output.pcap
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件</span>
+</span></span></code></pre></div><h3 id="快速读取数据包中的人类可读信息">快速读取数据包中的人类可读信息
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -Ar telnet.pcap
+</span></span></code></pre></div><p>当然也可以配合-l进行查找效果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -Ar telnet.pcap -l | grep <span style="color:#e6db74">&#39;flag*&#39;</span>
+</span></span></code></pre></div>
 </section>
 
 
