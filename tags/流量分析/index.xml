@@ -8,22 +8,22 @@
         <language>en-us</language>
         <lastBuildDate>Sun, 24 Aug 2025 18:11:16 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>htb-Origins Wp</title>
-        <link>https://wackymaker.github.io/post/origins/</link>
+        <link>https://wackymaker.github.io/post/origins-htb/</link>
         <pubDate>Sun, 24 Aug 2025 18:11:16 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/origins/</guid>
+        <guid>https://wackymaker.github.io/post/origins-htb/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。&lt;/p&gt;
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-2.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-2.png&#34;
 	width=&#34;1090&#34;
 	height=&#34;458&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-2_hu_178f8ffa4d998b02.png 480w, https://wackymaker.github.io/post/origins/image-2_hu_e2dc0c30576e3dde.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-2_hu_178f8ffa4d998b02.png 480w, https://wackymaker.github.io/post/origins-htb/image-2_hu_e2dc0c30576e3dde.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 1&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -37,13 +37,13 @@
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-3.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-3.png&#34;
 	width=&#34;1753&#34;
 	height=&#34;324&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-3_hu_406d4e71e00abcec.png 480w, https://wackymaker.github.io/post/origins/image-3_hu_71d07741803302c7.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-3_hu_406d4e71e00abcec.png 480w, https://wackymaker.github.io/post/origins-htb/image-3_hu_71d07741803302c7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 2&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -53,13 +53,13 @@
 &gt;
 答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-4.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-4.png&#34;
 	width=&#34;1230&#34;
 	height=&#34;322&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-4_hu_ed4358f97c467854.png 480w, https://wackymaker.github.io/post/origins/image-4_hu_dcc0e13c3dfc678a.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-4_hu_ed4358f97c467854.png 480w, https://wackymaker.github.io/post/origins-htb/image-4_hu_dcc0e13c3dfc678a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 3&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -71,13 +71,13 @@
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
 &lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-5.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-5.png&#34;
 	width=&#34;1114&#34;
 	height=&#34;454&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-5_hu_1eb15ba4af093d63.png 480w, https://wackymaker.github.io/post/origins/image-5_hu_a0654380e7ff235e.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-5_hu_1eb15ba4af093d63.png 480w, https://wackymaker.github.io/post/origins-htb/image-5_hu_a0654380e7ff235e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 4&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -88,13 +88,13 @@
 答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 &lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-6.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-6.png&#34;
 	width=&#34;1362&#34;
 	height=&#34;371&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-6_hu_c68ebc4ce9894ed0.png 480w, https://wackymaker.github.io/post/origins/image-6_hu_92ccee519e3bb94f.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-6_hu_c68ebc4ce9894ed0.png 480w, https://wackymaker.github.io/post/origins-htb/image-6_hu_92ccee519e3bb94f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 5&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -103,13 +103,13 @@
 	
 &gt;
 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-7.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-7.png&#34;
 	width=&#34;360&#34;
 	height=&#34;70&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-7_hu_d03e3771a02fb41e.png 480w, https://wackymaker.github.io/post/origins/image-7_hu_be83b4e3e9edfd76.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-7_hu_d03e3771a02fb41e.png 480w, https://wackymaker.github.io/post/origins-htb/image-7_hu_be83b4e3e9edfd76.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 6&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -120,13 +120,13 @@
 答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 &lt;/h2&gt;&lt;p&gt;继续查看ftp命令
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-9.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-9.png&#34;
 	width=&#34;1205&#34;
 	height=&#34;463&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-9_hu_67f1705ac9a8a8fa.png 480w, https://wackymaker.github.io/post/origins/image-9_hu_7c42e2d934922f9e.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-9_hu_67f1705ac9a8a8fa.png 480w, https://wackymaker.github.io/post/origins-htb/image-9_hu_7c42e2d934922f9e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 7&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -135,13 +135,13 @@
 	
 &gt;
 可以看到攻击者对这个文件进行了操作，进行流追踪
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-10.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-10.png&#34;
 	width=&#34;854&#34;
 	height=&#34;145&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-10_hu_bae7d12242ba83db.png 480w, https://wackymaker.github.io/post/origins/image-10_hu_b6ae76bf10e6e410.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-10_hu_bae7d12242ba83db.png 480w, https://wackymaker.github.io/post/origins-htb/image-10_hu_b6ae76bf10e6e410.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 8&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -154,13 +154,13 @@
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
 &lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-11.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-11.png&#34;
 	width=&#34;645&#34;
 	height=&#34;212&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-11_hu_1eda15ea78fe4964.png 480w, https://wackymaker.github.io/post/origins/image-11_hu_4672c5fea2c0b57.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-11_hu_1eda15ea78fe4964.png 480w, https://wackymaker.github.io/post/origins-htb/image-11_hu_4672c5fea2c0b57.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 9&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -169,13 +169,13 @@
 	
 &gt;
 选择全部保存，pdf中保存了目标ssh密码
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-12.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-12.png&#34;
 	width=&#34;1013&#34;
 	height=&#34;733&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-12_hu_f7fcf4d5de2234ba.png 480w, https://wackymaker.github.io/post/origins/image-12_hu_219a6d96595b194c.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-12_hu_f7fcf4d5de2234ba.png 480w, https://wackymaker.github.io/post/origins-htb/image-12_hu_219a6d96595b194c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 10&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -186,13 +186,13 @@
 答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
 &lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt
-&lt;img src=&#34;https://wackymaker.github.io/post/origins/image-13.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/post/origins-htb/image-13.png&#34;
 	width=&#34;797&#34;
 	height=&#34;268&#34;
-	srcset=&#34;https://wackymaker.github.io/post/origins/image-13_hu_55947368264ae5a0.png 480w, https://wackymaker.github.io/post/origins/image-13_hu_24c20d770f5930af.png 1024w&#34;
+	srcset=&#34;https://wackymaker.github.io/post/origins-htb/image-13_hu_55947368264ae5a0.png 480w, https://wackymaker.github.io/post/origins-htb/image-13_hu_24c20d770f5930af.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;alt text&#34;
+		alt=&#34;Image 11&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
