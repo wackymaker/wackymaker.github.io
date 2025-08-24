@@ -17,13 +17,11 @@
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;https://wackymaker.github.io/image-2.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/origins/image-2.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
-	
-		alt=&#34;alt text&#34;
 	
 	
 &gt;
