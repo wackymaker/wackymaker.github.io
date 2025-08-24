@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？\r继续查看ftp命令 可以看到攻击者对这个文件进行了操作，进行流追踪 可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功\n答案：RETR\n攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？\r我们通过ftp-data将流经数据文件保存下来\nfile&gt;Export Objects&gt;FTP-data 选择全部保存，pdf中保存了目标ssh密码 答案:**B@ckup2024!**\n2023 年数据存档的 s3 存储桶 URL 是什么？\r同上方式搞到的s3_buckets.txt 答案:https://2023-coldstorage.s3.amazonaws.com\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n">
 <title>htb-Origins Wp</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/origins/origins-wp/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/origins/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="htb-Origins Wp">
-<meta property='og:description' content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？\r继续查看ftp命令 可以看到攻击者对这个文件进行了操作，进行流追踪 可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功\n答案：RETR\n攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？\r我们通过ftp-data将流经数据文件保存下来\nfile&gt;Export Objects&gt;FTP-data 选择全部保存，pdf中保存了目标ssh密码 答案:**B@ckup2024!**\n2023 年数据存档的 s3 存储桶 URL 是什么？\r同上方式搞到的s3_buckets.txt 答案:https://2023-coldstorage.s3.amazonaws.com\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/origins/origins-wp/'>
+<meta property='og:description' content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/origins/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='流量分析' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-24T18:11:16&#43;08:00'/><meta property='article:modified_time' content='2025-08-24T18:11:16&#43;08:00'/>
 <meta name="twitter:title" content="htb-Origins Wp">
-<meta name="twitter:description" content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？\r继续查看ftp命令 可以看到攻击者对这个文件进行了操作，进行流追踪 可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功\n答案：RETR\n攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？\r我们通过ftp-data将流经数据文件保存下来\nfile&gt;Export Objects&gt;FTP-data 选择全部保存，pdf中保存了目标ssh密码 答案:**B@ckup2024!**\n2023 年数据存档的 s3 存储桶 URL 是什么？\r同上方式搞到的s3_buckets.txt 答案:https://2023-coldstorage.s3.amazonaws.com\n">
+<meta name="twitter:description" content="题目简介\r最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。\n攻击者ip地址\r解压提供给我们的zip获取ftp.pcap流量包\nwireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令 可以看到请求方都是15.206.185.207\n答案:15.206.185.207\n获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？\r将得到的ip去ip38查询\nhttps://www.ip38.com/ 得到结果是印度的孟买 答案:Mumbai\n备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）\r重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号\n答案:vsFTPd 3.0.5\n攻击者已对服务器发起暴力攻击。此攻击何时开始？\r在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC 答案:2024-05-03 04:12:54\n授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）\r我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点 答案:fore-ftp/ftprocks69$\n">
     </head>
     <body class="
     article-page
@@ -244,7 +244,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/post/origins/origins-wp/">htb-Origins Wp</a>
+            <a href="/post/origins/">htb-Origins Wp</a>
         </h2>
     
         
@@ -301,14 +301,18 @@
 <h2 id="攻击者ip地址">攻击者ip地址
 </h2><p>解压提供给我们的zip获取ftp.pcap流量包</p>
 <p>wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-<img src="/image-2.png"
-	
-	
-	
+<img src="/post/origins/image-2.png"
+	width="1090"
+	height="458"
+	srcset="/post/origins/image-2_hu_178f8ffa4d998b02.png 480w, /post/origins/image-2_hu_e2dc0c30576e3dde.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="237"
+		data-flex-basis="571px"
 	
 >
 可以看到请求方都是15.206.185.207</p>
@@ -317,88 +321,116 @@
 </h2><p>将得到的ip去ip38查询</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://www.ip38.com/
 </span></span></code></pre></div><p>得到结果是印度的孟买
-<img src="/image-3.png"
-	
-	
-	
+<img src="/post/origins/image-3.png"
+	width="1753"
+	height="324"
+	srcset="/post/origins/image-3_hu_406d4e71e00abcec.png 480w, /post/origins/image-3_hu_71d07741803302c7.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="541"
+		data-flex-basis="1298px"
 	
 >
 答案:Mumbai</p>
 <h2 id="备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本">备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-</h2><p><img src="/image-4.png"
-	
-	
-	
+</h2><p><img src="/post/origins/image-4.png"
+	width="1230"
+	height="322"
+	srcset="/post/origins/image-4_hu_ed4358f97c467854.png 480w, /post/origins/image-4_hu_dcc0e13c3dfc678a.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="381"
+		data-flex-basis="916px"
 	
 >
 重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号</p>
 <p>答案:vsFTPd 3.0.5</p>
 <h2 id="攻击者已对服务器发起暴力攻击此攻击何时开始">攻击者已对服务器发起暴力攻击。此攻击何时开始？
 </h2><p>在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC
-<img src="/image-5.png"
-	
-	
-	
+<img src="/post/origins/image-5.png"
+	width="1114"
+	height="454"
+	srcset="/post/origins/image-5_hu_1eb15ba4af093d63.png 480w, /post/origins/image-5_hu_a0654380e7ff235e.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="245"
+		data-flex-basis="588px"
 	
 >
 答案:2024-05-03 04:12:54</p>
 <h2 id="授予攻击者访问权限的正确凭据是什么格式用户名密码">授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 </h2><p>我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息
-<img src="/image-6.png"
-	
-	
-	
+<img src="/post/origins/image-6.png"
+	width="1362"
+	height="371"
+	srcset="/post/origins/image-6_hu_c68ebc4ce9894ed0.png 480w, /post/origins/image-6_hu_92ccee519e3bb94f.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="367"
+		data-flex-basis="881px"
 	
 >
 我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点
-<img src="/image-7.png"
-	
-	
-	
+<img src="/post/origins/image-7.png"
+	width="360"
+	height="70"
+	srcset="/post/origins/image-7_hu_d03e3771a02fb41e.png 480w, /post/origins/image-7_hu_be83b4e3e9edfd76.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="514"
+		data-flex-basis="1234px"
 	
 >
 答案:fore-ftp/ftprocks69$</p>
 <h2 id="攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么">攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 </h2><p>继续查看ftp命令
-<img src="/image-9.png"
-	
-	
-	
+<img src="/post/origins/image-9.png"
+	width="1205"
+	height="463"
+	srcset="/post/origins/image-9_hu_67f1705ac9a8a8fa.png 480w, /post/origins/image-9_hu_7c42e2d934922f9e.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="260"
+		data-flex-basis="624px"
 	
 >
 可以看到攻击者对这个文件进行了操作，进行流追踪
-<img src="/image-10.png"
-	
-	
-	
+<img src="/post/origins/image-10.png"
+	width="854"
+	height="145"
+	srcset="/post/origins/image-10_hu_bae7d12242ba83db.png 480w, /post/origins/image-10_hu_b6ae76bf10e6e410.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="588"
+		data-flex-basis="1413px"
 	
 >
 可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功</p>
@@ -406,38 +438,50 @@
 <h2 id="攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么">攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 </h2><p>我们通过ftp-data将流经数据文件保存下来</p>
 <p>file&gt;Export Objects&gt;FTP-data
-<img src="/image-11.png"
-	
-	
-	
+<img src="/post/origins/image-11.png"
+	width="645"
+	height="212"
+	srcset="/post/origins/image-11_hu_1eda15ea78fe4964.png 480w, /post/origins/image-11_hu_4672c5fea2c0b57.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="304"
+		data-flex-basis="730px"
 	
 >
 选择全部保存，pdf中保存了目标ssh密码
-<img src="/image-12.png"
-	
-	
-	
+<img src="/post/origins/image-12.png"
+	width="1013"
+	height="733"
+	srcset="/post/origins/image-12_hu_f7fcf4d5de2234ba.png 480w, /post/origins/image-12_hu_219a6d96595b194c.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
 	
 >
 答案:**B@ckup2024!**</p>
 <h2 id="2023-年数据存档的-s3-存储桶-url-是什么">2023 年数据存档的 s3 存储桶 URL 是什么？
 </h2><p>同上方式搞到的s3_buckets.txt
-<img src="/image-13.png"
-	
-	
-	
+<img src="/post/origins/image-13.png"
+	width="797"
+	height="268"
+	srcset="/post/origins/image-13_hu_55947368264ae5a0.png 480w, /post/origins/image-13_hu_24c20d770f5930af.png 1024w"
 	loading="lazy"
 	
 		alt="alt text"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="297"
+		data-flex-basis="713px"
 	
 >
 答案:https://2023-coldstorage.s3.amazonaws.com</p>
