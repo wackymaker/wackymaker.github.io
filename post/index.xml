@@ -30,16 +30,16 @@
 &lt;h2 id=&#34;获取有关攻击者的更多知识至关重要即使保真度很低使用攻击者使用的-ip-地址的地理位置数据他们属于哪个城市&#34;&gt;获取有关攻击者的更多知识至关重要，即使保真度很低。使用攻击者使用的 IP 地址的地理位置数据，他们属于哪个城市？
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-答案:Mumbai&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
 &lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-4.png&#34;
 	
@@ -48,93 +48,93 @@
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;重新过滤ftp流量可以看到服务端回复数据包有带自己的版本号&lt;/p&gt;
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
-&lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
+&lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-答案:2024-05-03 04:12:54&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
-&lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
+&lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
+&gt;&lt;/p&gt;
+&lt;p&gt;我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-答案:fore-ftp/ftprocks69$&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
-&lt;/h2&gt;&lt;p&gt;继续查看ftp命令
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
+&lt;/h2&gt;&lt;p&gt;继续查看ftp命令&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-可以看到攻击者对这个文件进行了操作，进行流追踪
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到攻击者对这个文件进行了操作，进行流追踪&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到攻击者执行RETR Maintenance-Notice.pdf提示出现了传输成功&lt;/p&gt;
 &lt;p&gt;答案：RETR&lt;/p&gt;
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
-&lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
+&lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-选择全部保存，pdf中保存了目标ssh密码
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
+&gt;&lt;/p&gt;
+&lt;p&gt;选择全部保存，pdf中保存了目标ssh密码&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-答案:**B@ckup2024!**&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
-&lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
+&lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
 	
-&gt;
-答案:https://2023-coldstorage.s3.amazonaws.com&lt;/p&gt;
+&gt;&lt;/p&gt;
+&lt;p&gt;答案:https://2023-coldstorage.s3.amazonaws.com&lt;/p&gt;
 &lt;h2 id=&#34;该事件的范围很大因为-forela-的-s3-存储桶也遭到破坏数-gb-的数据被盗和泄露还发现攻击者使用社会工程来获取敏感数据的访问权限并勒索它攻击者在网络钓鱼电子邮件中使用什么内部电子邮件地址来访问存储在-s3-存储桶上的敏感数据&#34;&gt;该事件的范围很大，因为 Forela 的 s3 存储桶也遭到破坏，数 GB 的数据被盗和泄露。还发现攻击者使用社会工程来获取敏感数据的访问权限并勒索它。攻击者在网络钓鱼电子邮件中使用什么内部电子邮件地址来访问存储在 s3 存储桶上的敏感数据？
 &lt;/h2&gt;&lt;p&gt;同上文件&lt;/p&gt;
 &lt;p&gt;答案:archivebackups@forela.co.uk&lt;/p&gt;
