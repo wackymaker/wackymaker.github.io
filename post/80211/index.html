@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="802.11帧简介\r有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程\n802.11 mac帧介绍\r这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思\n所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成\nFrame Control（帧控制） Duration / ID（持续时间/ID） Address 1（接收地址/RA） Address 2（发送地址/TA） Address 3（BSSID 或目标地址） Sequence Control（序列控制） Address 4（仅在 WDS 桥接等场景中使用） Frame Body（数据/管理信息） FCS（Frame Check Sequence，CRC） IEEE 802.11帧类型\rieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种\nManagement(00) ：用于管理和控制，并允许介入点和客户端控制活动链接 Control(01) ：控制帧用来管理员wifi网络内数据帧的传输和接受 Data(10) ：数据帧用于传输数据 管理帧子类型\r对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接\n如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示\nBeacon Frames 信标框架（1000）\r信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息\nProbe Requests and Responses 探测请求与响应（0100与0101）\r探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。\nAuthentication Request and Response 身份验证请求和响应（1011）\r在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。\n">
+<title>802.11帧介绍</title>
+
+<link rel='canonical' href='https://wackymaker.github.io/post/80211/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="802.11帧介绍">
+<meta property='og:description' content="802.11帧简介\r有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程\n802.11 mac帧介绍\r这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思\n所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成\nFrame Control（帧控制） Duration / ID（持续时间/ID） Address 1（接收地址/RA） Address 2（发送地址/TA） Address 3（BSSID 或目标地址） Sequence Control（序列控制） Address 4（仅在 WDS 桥接等场景中使用） Frame Body（数据/管理信息） FCS（Frame Check Sequence，CRC） IEEE 802.11帧类型\rieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种\nManagement(00) ：用于管理和控制，并允许介入点和客户端控制活动链接 Control(01) ：控制帧用来管理员wifi网络内数据帧的传输和接受 Data(10) ：数据帧用于传输数据 管理帧子类型\r对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接\n如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示\nBeacon Frames 信标框架（1000）\r信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息\nProbe Requests and Responses 探测请求与响应（0100与0101）\r探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。\nAuthentication Request and Response 身份验证请求和响应（1011）\r在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/80211/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='无线安全' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-27T20:57:07&#43;08:00'/><meta property='article:modified_time' content='2025-08-27T20:57:07&#43;08:00'/>
+<meta name="twitter:title" content="802.11帧介绍">
+<meta name="twitter:description" content="802.11帧简介\r有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程\n802.11 mac帧介绍\r这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思\n所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成\nFrame Control（帧控制） Duration / ID（持续时间/ID） Address 1（接收地址/RA） Address 2（发送地址/TA） Address 3（BSSID 或目标地址） Sequence Control（序列控制） Address 4（仅在 WDS 桥接等场景中使用） Frame Body（数据/管理信息） FCS（Frame Check Sequence，CRC） IEEE 802.11帧类型\rieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种\nManagement(00) ：用于管理和控制，并允许介入点和客户端控制活动链接 Control(01) ：控制帧用来管理员wifi网络内数据帧的传输和接受 Data(10) ：数据帧用于传输数据 管理帧子类型\r对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接\n如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示\nBeacon Frames 信标框架（1000）\r信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息\nProbe Requests and Responses 探测请求与响应（0100与0101）\r探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。\nAuthentication Request and Response 身份验证请求和响应（1011）\r在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#80211帧简介">802.11帧简介</a></li>
+    <li><a href="#80211-mac帧介绍">802.11 mac帧介绍</a></li>
+    <li><a href="#ieee-80211帧类型">IEEE 802.11帧类型</a>
+      <ul>
+        <li><a href="#管理帧子类型">管理帧子类型</a></li>
+        <li><a href="#连接周期">连接周期</a></li>
+      </ul>
+    </li>
+    <li><a href="#抓包实操">抓包实操</a>
+      <ul>
+        <li><a href="#linux连接wifi">linux连接wifi</a></li>
+        <li><a href="#wireshark包分析">wireshark包分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+                学习笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/80211/">802.11帧介绍</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 27, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="80211帧简介">802.11帧简介
+</h2><p>有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程</p>
+<h2 id="80211-mac帧介绍">802.11 mac帧介绍
+</h2><p>这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思</p>
+<p>所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Frame Control（帧控制）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Duration / ID（持续时间/ID）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Address 1（接收地址/RA）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Address 2（发送地址/TA）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Address 3（BSSID 或目标地址）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sequence Control（序列控制）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Address 4（仅在 WDS 桥接等场景中使用）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Frame Body（数据/管理信息）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FCS（Frame Check Sequence，CRC）
+</span></span></code></pre></div><h2 id="ieee-80211帧类型">IEEE 802.11帧类型
+</h2><p>ieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种</p>
+<ol>
+<li>Management(00) ：用于管理和控制，并允许介入点和客户端控制活动链接</li>
+<li>Control(01)
+：控制帧用来管理员wifi网络内数据帧的传输和接受</li>
+<li>Data(10)
+：数据帧用于传输数据</li>
+</ol>
+<h3 id="管理帧子类型">管理帧子类型
+</h3><p>对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接</p>
+<p>如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示</p>
+<h4 id="beacon-frames-信标框架1000">Beacon Frames 信标框架（1000）
+</h4><p>信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息</p>
+<h4 id="probe-requests-and-responses-探测请求与响应0100与0101">Probe Requests and Responses 探测请求与响应（0100与0101）
+</h4><p>探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。</p>
+<h4 id="authentication-request-and-response-身份验证请求和响应1011">Authentication Request and Response 身份验证请求和响应（1011）
+</h4><p>在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。</p>
+<h4 id="disassociationdeauthentication-frames取消关联取消身份验证帧10101100">Disassociation/Deauthentication Frames（取消关联/取消身份验证帧）（1010，1100）
+</h4><p>关联和认证帧，它们的作用是用来中断接入点（AP）和客户端之间的连接。这类帧里还带有一个叫做“原因码（reason code）”的东西，用来说明为什么客户端会被断开。在 Wi-Fi 渗透测试中，我们经常会伪造这类帧，用来抓取握手包，或者发起拒绝服务攻击（DoS）。</p>
+<h3 id="连接周期">连接周期
+</h3><p>当我们理解前面管理帧子帧的时候，我们就可以对其排序来对应wifi连接过程中的典型连接过程（这里介绍的是wpa2身份验证，尽管此过程wifi不同的标准并不会完全一致，但是一般的连接周期遵循这个顺序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Beacon Frames
+</span></span><span style="display:flex;"><span>Probe Request and Response
+</span></span><span style="display:flex;"><span>Authentication Request and Response
+</span></span><span style="display:flex;"><span>Association Request and Response
+</span></span><span style="display:flex;"><span>Some form of handshake or other security mechanism
+</span></span><span style="display:flex;"><span>Disassociation/Deauthentication
+</span></span></code></pre></div><p>接下来我们利用实体wifi环境进行抓包测试</p>
+<h2 id="抓包实操">抓包实操
+</h2><h3 id="linux连接wifi">linux连接wifi
+</h3><p>接下来的操作我想通过kali操作，所以还需要介绍一下linux中通过命令行进行wifi连接的过程，（需要搞定一张无线网卡，最好具有监听功能，后续学习会运用到</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# iwconfig
+</span></span><span style="display:flex;"><span>lo        no wireless extensions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>eth0      no wireless extensions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>wlan0     IEEE 802.11  ESSID:off/any  
+</span></span><span style="display:flex;"><span>          Mode:Managed  Access Point: Not-Associated   Tx-Power<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> dBm   
+</span></span><span style="display:flex;"><span>          Retry short limit:7   RTS thr:off   Fragment thr:off
+</span></span><span style="display:flex;"><span>          Encryption key:off
+</span></span><span style="display:flex;"><span>          Power Management:on
+</span></span><span style="display:flex;"><span>          
+</span></span></code></pre></div><p>当我们利用iwconfig列出无线网卡的时候，有网卡回显则是网卡连接成功</p>
+<p>接下来我们需要利用nmxli来进行wifi连接的操作，它是linux下网络管理的命令行工具，几乎所有主流发行版都自带，作用主要是用于管理网络接口，wifi连接vpn等</p>
+<p>使用方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli <span style="color:#f92672">[</span>OPTIONS<span style="color:#f92672">]</span> OBJECT <span style="color:#f92672">{</span> COMMAND | help <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>常用对象（OBJECT）：
+</span></span><span style="display:flex;"><span>dev → 设备（device）
+</span></span><span style="display:flex;"><span>con → 连接配置（connection）
+</span></span><span style="display:flex;"><span>wifi → Wi-Fi 网络相关
+</span></span></code></pre></div><p>比如我们可以在网卡正常使用的时候利用如下命令查看附近ap接入点</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi list
+</span></span></code></pre></div><p>当列出wifi的ssid后我们就可以进行连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi connect <span style="color:#e6db74">&#34;SSID&#34;</span> password <span style="color:#e6db74">&#34;PASSWORD&#34;</span> ifname wlan0
+</span></span></code></pre></div><p>查看当前连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli con show --active
+</span></span></code></pre></div><p>断开连接并删除记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli con down id <span style="color:#e6db74">&#34;SSID&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nmcli con delete id <span style="color:#e6db74">&#34;SSID&#34;</span>
+</span></span></code></pre></div><p>注意，如果我们不删除记录，可能在再次连接wifi的时候出现无法找到加密报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Error: 802-11-wireless-security.key-mgmt: property is missing.
+</span></span></code></pre></div><p>出现这种报错直接删除此wifi记录，或者手动指定加密方式(我给出的示例是wpa2)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi connect <span style="color:#e6db74">&#34;SSID&#34;</span> password <span style="color:#e6db74">&#34;PASSWORD&#34;</span> ifname wlan0 wifi-sec.key-mgmt wpa-psk
+</span></span></code></pre></div><h3 id="wireshark包分析">wireshark包分析
+</h3><p>我们如果自身连接的话，是不允许抓取管理帧内容的，所以我们需要将网卡调整至监听模式，相关命令如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ip link set wlan0 down <span style="color:#75715e">#关闭网卡</span>
+</span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type monitor <span style="color:#75715e">#将网卡设置为监听模式</span>
+</span></span><span style="display:flex;"><span>or
+</span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type managed <span style="color:#75715e">#将网卡设置为普通模式</span>
+</span></span><span style="display:flex;"><span>sudo ip link set wlan0 up <span style="color:#75715e">#启动网卡</span>
+</span></span><span style="display:flex;"><span>iwconfig wlan0 <span style="color:#75715e">#查看当前网卡模式</span>
+</span></span></code></pre></div><p>当我们将网卡切换监听模式后，wireshark会抓到大量数据包</p>
+<p><img src="/80211/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>我们可以通过wireshark中的语法以及以上我们学习的帧类型进行查找</p>
+<p>查找来自ap的接入帧：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 8)</p>
+<p><img src="/80211/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>查找来自ap的探测请求帧：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 4)</p>
+<p><img src="/80211/image-2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>查找来自ap的探测响应帧：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 5)</p>
+<p>这里我抓包的时候并未请求响应所以显示的包为，所以找了htb文章的图片</p>
+<p><img src="/80211/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>可以用以下过滤器查找客户端和接入点之间的身份验证过程：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 11)</p>
+<p><img src="/80211/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>请求结束后，可以抓取到关联请求：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 0)</p>
+<p><img src="/80211/image-6.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>查看关联响应：(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 1)</p>
+<p><img src="/80211/image-7.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>如果网络使用wpa2，可以使用EAPOL查看握手帧</p>
+<p><img src="/80211/image-8.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>连接完成后，可以通过如下过滤器查看取消关联帧或者身份验证帧:(wlan.fc.type == 0) &amp;&amp; (wlan.fc.type_subtype == 12) or (wlan.fc.type_subtype == 10)</p>
+<p><img src="/80211/image-9.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/">无线安全</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E7%A4%BE%E4%B9%8B%E9%AD%94%E6%B3%95/">社之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/optinseltrace4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OpTinselTrace4-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">渊蜂之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/origins-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Origins-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

