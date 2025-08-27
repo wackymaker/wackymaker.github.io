@@ -6,7 +6,160 @@
         <description>Recent content in 流量分析 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 23 Aug 2025 18:11:16 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 27 Aug 2025 14:56:36 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>OpTinselTrace4-wp</title>
+        <link>https://wackymaker.github.io/post/optinseltrace4/</link>
+        <pubDate>Wed, 27 Aug 2025 14:56:36 +0800</pubDate>
+        
+        <guid>https://wackymaker.github.io/post/optinseltrace4/</guid>
+        <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
+&lt;/h2&gt;&lt;p&gt;打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！&lt;/p&gt;
+&lt;p&gt;附件信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/sherlock/OpTinselTrace-4&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;networktraffic.pcapng  networktraffic.zip  optinseltrace4.zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有一个流量包&lt;/p&gt;
+&lt;h2 id=&#34;攻击ip地址为&#34;&gt;攻击ip地址为？
+&lt;/h2&gt;&lt;p&gt;题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）&lt;/p&gt;
+&lt;p&gt;打开文件包，一共3800多个包&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案：172.17.79.133&lt;/p&gt;
+&lt;h2 id=&#34;最终攻击端口&#34;&gt;最终攻击端口
+&lt;/h2&gt;&lt;p&gt;题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）&lt;/p&gt;
+&lt;p&gt;过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案；9100&lt;/p&gt;
+&lt;h2 id=&#34;服务器上运行的打印机的全名是什么&#34;&gt;服务器上运行的打印机的全名是什么？
+&lt;/h2&gt;&lt;p&gt;随便找几个9100的包追踪tcp，我们能找到如下文本&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案： Northpole HP LaserJet 4200n&lt;/p&gt;
+&lt;h2 id=&#34;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单好名单上的第二个孩子叫什么名字&#34;&gt;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？
+&lt;/h2&gt;&lt;p&gt;并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;@PJL FSUPLOAD FORMAT:BINARY NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0:/christmas/2023/Nice-kids/list1.txt&amp;#34;&lt;/span&gt; OFFSET&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; SIZE&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Jennifer Sanchez
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Douglas Price
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Joshua Ross
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Catherine Bailey
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Martha Clark
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Ruby Kelly
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Edward Parker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Tammy James
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Lori Robinson
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Wayne Gonzales
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;@PJL ECHO DELIMITER56482
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;答案：Douglas Price&lt;/p&gt;
+&lt;h2 id=&#34;查看圣诞老人解雇elfin的理由&#34;&gt;查看圣诞老人解雇elfin的理由
+&lt;/h2&gt;&lt;p&gt;题目原文（格林奇获得了一份打印作业指令文件，该文件用于一位名叫埃尔芬的员工使用的打印机。看来圣诞老人和北极管理团队已经做出了解雇 Elfin 的决定。您能否提供终止 Elfin 雇佣关系的决定背后的逐字理由？）&lt;/p&gt;
+&lt;p&gt;我们过滤data字段，查找和这个id有关的包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Elfin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-5.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;只有415这个包出现了ascii码的Elfin，那就无需追踪流了&lt;/p&gt;
+&lt;p&gt;简单看了一下答案是因为这人是个二五仔&lt;/p&gt;
+&lt;p&gt;答案：The addressed employee is confirmed to be working with grinch and team. According to Clause 69 , This calls for an immediate expulsion.&lt;/p&gt;
+&lt;h2 id=&#34;计划打印作业的名称是什么&#34;&gt;计划打印作业的名称是什么？
+&lt;/h2&gt;&lt;p&gt;过滤Job,我们能找到大约几十个流量包&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-6.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;随便点一个追踪流，可惜都是打印机的打印任务，找不到有用的，但是我意识到计划任务应该会有start关键词&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Start&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有一个数据包，但是当中存在我们需要的内容&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-7.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案：MerryChristmas+BonusAnnouncment&lt;/p&gt;
+&lt;h2 id=&#34;ssh利用方式&#34;&gt;ssh利用方式？
+&lt;/h2&gt;&lt;p&gt;题目（在我们对当前数据包捕获的持续分析中，情况已经惊人地升级。我们的安全系统在一台高度关键的服务器上检测到了漏洞利用后活动的迹象，该服务器本应通过仅使用 SSH 密钥进行安全访问。这一事态发展引起了安全团队的严重担忧。在 Bytesparkle 调查此次违规行为时，他推测此次安全事件可能与早期的打印机问题有关。您能否确定并提供打印机服务器上使格林奇能够横向移动到此关键服务器的文件的完整路径？）&lt;/p&gt;
+&lt;p&gt;看来关键在于ssh&lt;/p&gt;
+&lt;p&gt;过滤后发现与上一题tcp流一致，都在46流&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-8.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;明显的ssh私钥&lt;/p&gt;
+&lt;p&gt;答案：/Administration/securitykeys/ssh_systems/id_rsa&lt;/p&gt;
+&lt;h2 id=&#34;私钥字节大小&#34;&gt;私钥字节大小
+&lt;/h2&gt;&lt;p&gt;在上图私钥信息中就出现了&lt;/p&gt;
+&lt;p&gt;答案：1914&lt;/p&gt;
+&lt;h2 id=&#34;泄露的另一台主机&#34;&gt;泄露的另一台主机
+&lt;/h2&gt;&lt;p&gt;与上题一致的泄露区域，有一则注释&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#This is a backup key for christmas.gifts server. Bytesparkle recommended me this since in christmas days everything gets mixed up in all the chaos and we can lose our access keys to the server just like we did back in 2022 christmas.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;答案：christmas.gifts&lt;/p&gt;
+&lt;h2 id=&#34;格林奇什么时候试图从打印机中删除文件utc&#34;&gt;格林奇什么时候试图从打印机中删除文件？（UTC）
+&lt;/h2&gt;&lt;p&gt;这道题我找了很久，并不在28或者46流，当过来吧DELETE后我们找到了结果&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-9.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;数据包3676存在delete关键字&lt;/p&gt;
+&lt;p&gt;答案：2023-12-08 12:18:14&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Origins-wp</title>
         <link>https://wackymaker.github.io/post/origins-htb/</link>
         <pubDate>Sat, 23 Aug 2025 18:11:16 +0800</pubDate>
