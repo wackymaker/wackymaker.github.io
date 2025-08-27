@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="802.11帧简介\r有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程\n802.11 mac帧介绍\r这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思\n所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成\nFrame Control（帧控制） Duration / ID（持续时间/ID） Address 1（接收地址/RA） Address 2（发送地址/TA） Address 3（BSSID 或目标地址） Sequence Control（序列控制） Address 4（仅在 WDS 桥接等场景中使用） Frame Body（数据/管理信息） FCS（Frame Check Sequence，CRC） IEEE 802.11帧类型\rieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种\nManagement(00) ：用于管理和控制，并允许介入点和客户端控制活动链接 Control(01) ：控制帧用来管理员wifi网络内数据帧的传输和接受 Data(10) ：数据帧用于传输数据 管理帧子类型\r对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接\n如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示\nBeacon Frames 信标框架（1000）\r信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息\nProbe Requests and Responses 探测请求与响应（0100与0101）\r探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。\nAuthentication Request and Response 身份验证请求和响应（1011）\r在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。\n">
 <title>802.11帧介绍</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/80211/'>
+<link rel='canonical' href='http://localhost:1313/post/80211/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="802.11帧介绍">
 <meta property='og:description' content="802.11帧简介\r有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程\n802.11 mac帧介绍\r这里需要注意mac帧的意思是 **MAC（Media Access Control）**帧翻译过来是介质访问控制，是专用于在介质（网线，光纤，无线电波）中用于控制访问的一种机制，并不是mac地址或者是mac电脑的意思\n所有的802.11帧都使用mac帧，此框架适用于客户端和接入点甚至自组织网络中执行工作的通信基础，mac数据帧由9个字段组成\nFrame Control（帧控制） Duration / ID（持续时间/ID） Address 1（接收地址/RA） Address 2（发送地址/TA） Address 3（BSSID 或目标地址） Sequence Control（序列控制） Address 4（仅在 WDS 桥接等场景中使用） Frame Body（数据/管理信息） FCS（Frame Check Sequence，CRC） IEEE 802.11帧类型\rieee框架可根据题目的作用和参与的工作分为不同的类别，一般来说会由有以下几种\nManagement(00) ：用于管理和控制，并允许介入点和客户端控制活动链接 Control(01) ：控制帧用来管理员wifi网络内数据帧的传输和接受 Data(10) ：数据帧用于传输数据 管理帧子类型\r对于wifi渗透测试，我们专注于管理管理框架。比较这些帧用于控制连接\n如果在wireshark中过滤他们，我们应该指定类型00（指定管理帧）和子类型，如下所示\nBeacon Frames 信标框架（1000）\r信标帧主要用于接入点用于将其存在传输工作站用的帧，其中包括支持的密码，身份验证类型，ssid以及支持的数据速率等信息\nProbe Requests and Responses 探测请求与响应（0100与0101）\r探测请求与响应过程的存在是为了允许客户端发现附近的接入点。简单来说，不管一个网络是隐藏的还是不隐藏的，客户端都会发一个“探测请求”，里面写着它要找的 Wi-Fi 名字（SSID）。接入点收到之后，就会回一个“探测响应”，告诉客户端关于自己的信息。\nAuthentication Request and Response 身份验证请求和响应（1011）\r在客户端发出认证请求并完成认证流程之后，它会再给接入点（AP）发一个“关联请求”。AP收到后会回一个“关联响应”，告诉客户端它能不能正式连上自己。\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/80211/'>
+<meta property='og:url' content='http://localhost:1313/post/80211/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='无线安全' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-27T20:57:07&#43;08:00'/><meta property='article:modified_time' content='2025-08-27T20:57:07&#43;08:00'/>
 <meta name="twitter:title" content="802.11帧介绍">
@@ -682,7 +682,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

