@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>学习笔记 on wackymaker</title>
-        <link>https://wackymaker.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <description>Recent content in 学习笔记 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 27 Aug 2025 20:57:07 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 27 Aug 2025 20:57:07 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>802.11帧介绍</title>
-        <link>https://wackymaker.github.io/post/80211/</link>
+        <link>http://localhost:1313/post/80211/</link>
         <pubDate>Wed, 27 Aug 2025 20:57:07 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/80211/</guid>
+        <guid>http://localhost:1313/post/80211/</guid>
         <description>&lt;h2 id=&#34;80211帧简介&#34;&gt;802.11帧简介
 &lt;/h2&gt;&lt;p&gt;有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程&lt;/p&gt;
 &lt;h2 id=&#34;80211-mac帧介绍&#34;&gt;802.11 mac帧介绍
@@ -111,7 +111,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up &lt;span style=&#34;color:#75715e&#34;&gt;#启动网卡&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig wlan0 &lt;span style=&#34;color:#75715e&#34;&gt;#查看当前网卡模式&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们将网卡切换监听模式后，wireshark会抓到大量数据包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image.png&#34;
 	
 	
 	
@@ -121,7 +121,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过wireshark中的语法以及以上我们学习的帧类型进行查找&lt;/p&gt;
 &lt;p&gt;查找来自ap的接入帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 8)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-1.png&#34;
 	
 	
 	
@@ -130,7 +130,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测请求帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 4)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-2.png&#34;
 	
 	
 	
@@ -140,7 +140,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测响应帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 5)&lt;/p&gt;
 &lt;p&gt;这里我抓包的时候并未请求响应所以显示的包为，所以找了htb文章的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-3.png&#34;
 	
 	
 	
@@ -149,7 +149,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以用以下过滤器查找客户端和接入点之间的身份验证过程：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 11)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-4.png&#34;
 	
 	
 	
@@ -158,7 +158,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;请求结束后，可以抓取到关联请求：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 0)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-6.png&#34;
 	
 	
 	
@@ -167,7 +167,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查看关联响应：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 1)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-7.png&#34;
 	
 	
 	
@@ -176,7 +176,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;如果网络使用wpa2，可以使用EAPOL查看握手帧&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-8.png&#34;
 	
 	
 	
@@ -185,7 +185,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;连接完成后，可以通过如下过滤器查看取消关联帧或者身份验证帧:(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 12) or (wlan.fc.type_subtype == 10)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-9.png&#34;
 	
 	
 	
