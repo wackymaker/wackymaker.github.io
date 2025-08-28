@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="题目简介与题目附件\rTalion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。\n附件提供如下\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck 的目录 2025/08/28 15:11 &lt;DIR&gt; . 2025/08/28 15:11 &lt;DIR&gt; .. 2025/04/09 17:24 1,118,208 Microsoft-Windows-Powershell.evtx 2025/04/09 17:24 15,798,272 Windows-Powershell-Operational.evtx Task1\r攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？\nwmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell\n这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &#34;Wmi&#34; -J -o &#34;Wmi.json&#34; ┏┓ ┏┳━━━┳┓ ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓ ┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃ ┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃ ┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃ ┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃ ┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛ by Yamato Security Getting 80% of the work done in 20% of the time~ Searching... Start time: 2025/08/28 15:26 Total event log files: 1 Total file size: 15.1 MiB Currently searching. Please wait. [00:00:00] 1 / 1 [========================================] 100% Scanning finished. Total findings: 6 Saved results: Wmi.json (5.2 KiB) Elapsed time: 00:00:00.044 初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&#39;s mind. 得到的结果不多，就直接看即可\n">
+<title>Phantom-check-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/phantom-check/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="Phantom-check-wp">
+<meta property='og:description' content="题目简介与题目附件\rTalion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。\n附件提供如下\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck 的目录 2025/08/28 15:11 &lt;DIR&gt; . 2025/08/28 15:11 &lt;DIR&gt; .. 2025/04/09 17:24 1,118,208 Microsoft-Windows-Powershell.evtx 2025/04/09 17:24 15,798,272 Windows-Powershell-Operational.evtx Task1\r攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？\nwmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell\n这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &#34;Wmi&#34; -J -o &#34;Wmi.json&#34; ┏┓ ┏┳━━━┳┓ ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓ ┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃ ┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃ ┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃ ┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃ ┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛ by Yamato Security Getting 80% of the work done in 20% of the time~ Searching... Start time: 2025/08/28 15:26 Total event log files: 1 Total file size: 15.1 MiB Currently searching. Please wait. [00:00:00] 1 / 1 [========================================] 100% Scanning finished. Total findings: 6 Saved results: Wmi.json (5.2 KiB) Elapsed time: 00:00:00.044 初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&#39;s mind. 得到的结果不多，就直接看即可\n">
+<meta property='og:url' content='http://localhost:1313/post/phantom-check/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='事件分析' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-28T16:05:44&#43;08:00'/><meta property='article:modified_time' content='2025-08-28T16:05:44&#43;08:00'/>
+<meta name="twitter:title" content="Phantom-check-wp">
+<meta name="twitter:description" content="题目简介与题目附件\rTalion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。\n附件提供如下\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck 的目录 2025/08/28 15:11 &lt;DIR&gt; . 2025/08/28 15:11 &lt;DIR&gt; .. 2025/04/09 17:24 1,118,208 Microsoft-Windows-Powershell.evtx 2025/04/09 17:24 15,798,272 Windows-Powershell-Operational.evtx Task1\r攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？\nwmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell\n这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &#34;Wmi&#34; -J -o &#34;Wmi.json&#34; ┏┓ ┏┳━━━┳┓ ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓ ┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃ ┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃ ┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃ ┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃ ┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛ by Yamato Security Getting 80% of the work done in 20% of the time~ Searching... Start time: 2025/08/28 15:26 Total event log files: 1 Total file size: 15.1 MiB Currently searching. Please wait. [00:00:00] 1 / 1 [========================================] 100% Scanning finished. Total findings: 6 Saved results: Wmi.json (5.2 KiB) Elapsed time: 00:00:00.044 初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&#39;s mind. 得到的结果不多，就直接看即可\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目简介与题目附件">题目简介与题目附件</a></li>
+    <li><a href="#task1">Task1</a></li>
+    <li><a href="#task2">Task2</a></li>
+    <li><a href="#task3">Task3</a></li>
+    <li><a href="#task4">Task4</a></li>
+    <li><a href="#task5">Task5</a></li>
+    <li><a href="#task6">Task6</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/phantom-check/">Phantom-check-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 28, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="题目简介与题目附件">题目简介与题目附件
+</h2><p>Talion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。</p>
+<p>附件提供如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span> C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\w</span>acky<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\s</span>herlock<span style="color:#ae81ff">\P</span>hantomCheck 的目录
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2025/08/28  15:11    &lt;DIR&gt;          .
+</span></span><span style="display:flex;"><span>2025/08/28  15:11    &lt;DIR&gt;          ..
+</span></span><span style="display:flex;"><span>2025/04/09  17:24         1,118,208 Microsoft-Windows-Powershell.evtx
+</span></span><span style="display:flex;"><span>2025/04/09  17:24        15,798,272 Windows-Powershell-Operational.evtx
+</span></span></code></pre></div><h2 id="task1">Task1
+</h2><p>攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？</p>
+<p>wmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell</p>
+<p>这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\w</span>acky<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\s</span>herlock<span style="color:#ae81ff">\P</span>hantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k <span style="color:#e6db74">&#34;Wmi&#34;</span> -J -o <span style="color:#e6db74">&#34;Wmi.json&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┏┓ ┏┳━━━┳┓  ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓
+</span></span><span style="display:flex;"><span>┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃
+</span></span><span style="display:flex;"><span>┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃
+</span></span><span style="display:flex;"><span>┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃
+</span></span><span style="display:flex;"><span>┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃
+</span></span><span style="display:flex;"><span>┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛
+</span></span><span style="display:flex;"><span>   by Yamato Security
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Getting 80% of the work <span style="color:#66d9ef">done</span> in 20% of the time~
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Searching...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Start time: 2025/08/28 15:26
+</span></span><span style="display:flex;"><span>Total event log files: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Total file size: 15.1 MiB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Currently searching. Please wait.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:00:00<span style="color:#f92672">]</span> <span style="color:#ae81ff">1</span> / <span style="color:#ae81ff">1</span>   <span style="color:#f92672">[========================================]</span> 100%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Scanning finished.
+</span></span><span style="display:flex;"><span>                                                                                                                        Total findings: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>Saved results: Wmi.json <span style="color:#f92672">(</span>5.2 KiB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Elapsed time: 00:00:00.044
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner<span style="color:#960050;background-color:#1e0010">&#39;</span>s mind.
+</span></span></code></pre></div><p>得到的结果不多，就直接看即可</p>
+<p><img src="/Phantom/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>可以看到调用了Win32_ComputerSystem</p>
+<p>答案：Win32_ComputerSystem</p>
+<h2 id="task2">Task2
+</h2><p>攻击者是用哪条 WMI 命令查当前机器温度的？</p>
+<p>比较典型的绕沙箱策略，检测实体机的硬件温度进行判断</p>
+<p>在刚才调用wmi的查询当中，我们能检索Temperature找到目标</p>
+<p><img src="/Phantom/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>答案：SELECT * FROM MSAcpi_ThermalZoneTemperature</p>
+<h2 id="task3">Task3
+</h2><p>攻击者加载了powershell脚本来检测虚拟化，脚本函数是什么？</p>
+<p>我本来是想过滤Import-Module用来查找加载模块的行为，但是并没有好效果，所以我打算将powershell事件日志转换为时间线输出</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\w</span>acky<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\s</span>herlock<span style="color:#ae81ff">\P</span>hantomCheck&gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┏┓ ┏┳━━━┳┓  ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓
+</span></span><span style="display:flex;"><span>┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃
+</span></span><span style="display:flex;"><span>┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃
+</span></span><span style="display:flex;"><span>┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃
+</span></span><span style="display:flex;"><span>┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃
+</span></span><span style="display:flex;"><span>┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛
+</span></span><span style="display:flex;"><span>   by Yamato Security
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Taking threat detection to the next level~
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Start time: 2025/08/28 15:36
+</span></span><span style="display:flex;"><span>Total event log files: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Total file size: 15.1 MiB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Scan wizard:
+</span></span><span style="display:flex;"><span>✔ Which set of detection rules would you like to load? · 5. All event and alert rules <span style="color:#f92672">(</span>4,701 rules<span style="color:#f92672">)</span> <span style="color:#f92672">(</span> status: * | level: informational+ <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>✔ Include deprecated rules? <span style="color:#f92672">(</span><span style="color:#ae81ff">219</span> rules<span style="color:#f92672">)</span> · yes
+</span></span><span style="display:flex;"><span>✔ Include unsupported rules? <span style="color:#f92672">(</span><span style="color:#ae81ff">42</span> rules<span style="color:#f92672">)</span> · yes
+</span></span><span style="display:flex;"><span>✔ Include noisy rules? <span style="color:#f92672">(</span><span style="color:#ae81ff">12</span> rules<span style="color:#f92672">)</span> · yes
+</span></span><span style="display:flex;"><span>✔ Include sysmon rules? <span style="color:#f92672">(</span>2,305 rules<span style="color:#f92672">)</span> · yes
+</span></span></code></pre></div><p>在生成所有规则过滤后，我们筛选出function</p>
+<p><img src="/Phantom/image-2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>多找一找就找到了</p>
+<p>答案：Check-VM</p>
+<h2 id="task4">Task4
+</h2><p>述脚本查询了哪个注册表项来检索服务详细信息以进行虚拟化检测？</p>
+<p>查询注册表的话，我们先直接从原时间过滤出注册表相关信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hayabusa search -f Windows-Powershell-Operational.evtx -k <span style="color:#e6db74">&#34;HKLM&#34;</span> -J -o <span style="color:#e6db74">&#34;HKLM.json&#34;</span>
+</span></span></code></pre></div><p>筛选后获得</p>
+<p><img src="/Phantom/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>答案：HKLM:\SYSTEM\ControlSet001\Services</p>
+<h2 id="task5">Task5
+</h2><p>检测脚本也可以识别 VirtualBox。它比较哪些进程以确定系统是否正在运行 VirtualBox？</p>
+<p>还是在task3筛选出来的事件中能看到日志</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ScriptBlock: <span style="color:#66d9ef">function</span> Check-VM <span style="color:#f92672">{</span> &lt;<span style="color:#75715e"># .SYNOPSIS Nishang script which detects whether it is in a known virtual machine. .DESCRIPTION This script uses known parameters or &#39;fingerprints&#39; of Hyper-V, VMWare, Virtual PC, Virtual Box, Xen and QEMU for detecting the environment. .EXAMPLE PS &gt; Check-VM .LINK http://www.labofapenetrationtester.com/2013/01/quick-post-check-if-your-payload-is.html https://github.com/samratashok/nishang .NOTES The script draws heavily from checkvm.rb post module from msf. https://github.com/rapid7/metasploit-framework/blob/master/modules/post/windows/gather/checkvm.rb #&gt; [CmdletBinding()] Param() $ErrorActionPreference = &#34;SilentlyContinue&#34; #Hyper-V $hyperv = Get-ChildItem HKLM:\SOFTWARE\Microsoft if (($hyperv -match &#34;Hyper-V&#34;) -or ($hyperv -match &#34;VirtualMachine&#34;)) { $hypervm = $true } if (!$hypervm) { $hyperv = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System -Name SystemBiosVersion if ($hyperv -match &#34;vrtual&#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($hyperv -match &#34;vrtual&#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($hyperv -match &#34;vrtual&#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($hyperv -match &#34;vmicheartbeat&#34;) -or ($hyperv -match &#34;vmicvss&#34;) -or ($hyperv -match &#34;vmicshutdown&#34;) -or ($hyperv -match &#34;vmiexchange&#34;)) { $hypervm = $true } } if ($hypervm) { &#34;This is a Hyper-V machine.&#34; } #VMWARE $vmware = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vmware -match &#34;vmdebug&#34;) -or ($vmware -match &#34;vmmouse&#34;) -or ($vmware -match &#34;VMTools&#34;) -or ($vmware -match &#34;VMMEMCTL&#34;)) { $vmwarevm = $true } if (!$vmwarevm) { $vmware = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System\BIOS -Name SystemManufacturer if ($vmware -match &#34;vmware&#34;) { $vmwarevm = $true } } if (!$vmwarevm) { $vmware = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($vmware -match &#34;vmware&#34;) { $vmwarevm = $true } } if (!$vmwarevm) { $vmware = Get-Process if (($vmware -eq &#34;vmwareuser.exe&#34;) -or ($vmware -match &#34;vmwaretray.exe&#34;)) { $vmwarevm = $true } } if ($vmwarevm) { &#34;This is a VMWare machine.&#34; } #Virtual PC $vpc = Get-Process if (($vpc -eq &#34;vmusrvc.exe&#34;) -or ($vpc -match &#34;vmsrvc.exe&#34;)) { $vpcvm = $true } if (!$vpcvm) { $vpc = Get-Process if (($vpc -eq &#34;vmwareuser.exe&#34;) -or ($vpc -match &#34;vmwaretray.exe&#34;)) { $vpcvm = $true } } if (!$vpcvm) { $vpc = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vpc -match &#34;vpc-s3&#34;) -or ($vpc -match &#34;vpcuhub&#34;) -or ($vpc -match &#34;msvmmouf&#34;)) { $vpcvm = $true } } if ($vpcvm) { &#34;This is a Virtual PC.&#34; } #Virtual Box $vb = Get-Process if (($vb -eq &#34;vboxservice.exe&#34;) -or ($vb -match &#34;vboxtray.exe&#34;)) { $vbvm = $true } if (!$vbvm) { $vb = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($vb -match &#34;vbox_&#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($vb -match &#34;vbox_&#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($vb -match &#34;vbox&#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System -Name SystemBiosVersion if ($vb -match &#34;vbox&#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vb -match &#34;VBoxMouse&#34;) -or ($vb -match &#34;VBoxGuest&#34;) -or ($vb -match &#34;VBoxService&#34;) -or ($vb -match &#34;VBoxSF&#34;)) { $vbvm = $true } } if ($vbvm) { &#34;This is a Virtual Box.&#34; } #Xen $xen = Get-Process if ($xen -eq &#34;xenservice.exe&#34;) { $xenvm = $true } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($xen -match &#34;xen&#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\DSDT if ($xen -match &#34;xen&#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($xen -match &#34;xen&#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($xen -match &#34;xenevtchn&#34;) -or ($xen -match &#34;xennet&#34;) -or ($xen -match &#34;xennet6&#34;) -or ($xen -match &#34;xensvc&#34;) -or ($xen -match &#34;xenvdb&#34;)) { $xenvm = $true } } if ($xenvm) { &#34;This is a Xen Machine.&#34; } #QEMU $qemu = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($qemu -match &#34;qemu&#34;) { $qemuvm = $true } if (!$qemuvm) { $qemu = Get-ItemProperty hklm:HARDWARE\DESCRIPTION\System\CentralProcessor\0 -Name ProcessorNameString if ($qemu -match &#34;qemu&#34;) { $qemuvm = $true } } if ($qemuvm) { &#34;This is a Qemu machine.&#34; } }</span>
+</span></span></code></pre></div><p>注释指明了检测逻辑</p>
+<p>答案：vboxservice.exe, vboxtray.exe</p>
+<h2 id="task6">Task6
+</h2><p>VM 检测脚本打印前缀为“This is a”的任何检测。脚本检测到哪两个虚拟化平台？</p>
+<p>一样的过滤关键词</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hayabusa search -f Windows-Powershell-Operational.evtx -k <span style="color:#e6db74">&#34;This is a&#34;</span> -J -o <span style="color:#e6db74">&#34;this.json&#34;</span>
+</span></span></code></pre></div><p><img src="/Phantom/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>答案：Hyper-V, Vmware</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%88%86%E6%9E%90/">事件分析</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%AE%A1%E4%B9%8B%E9%AD%94%E6%B3%95/">审之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/optinseltrace4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OpTinselTrace4-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/origins-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Origins-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/80211/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">802.11帧介绍</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">剥茧之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

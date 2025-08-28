@@ -6,7 +6,150 @@
         <description>Recent content in Posts on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 28 Aug 2025 13:43:59 +0800</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 28 Aug 2025 16:05:44 +0800</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Phantom-check-wp</title>
+        <link>http://localhost:1313/post/phantom-check/</link>
+        <pubDate>Thu, 28 Aug 2025 16:05:44 +0800</pubDate>
+        
+        <guid>http://localhost:1313/post/phantom-check/</guid>
+        <description>&lt;h2 id=&#34;题目简介与题目附件&#34;&gt;题目简介与题目附件
+&lt;/h2&gt;&lt;p&gt;Talion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。&lt;/p&gt;
+&lt;p&gt;附件提供如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;acky&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;herlock&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;hantomCheck 的目录
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2025/08/28  15:11    &amp;lt;DIR&amp;gt;          .
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2025/08/28  15:11    &amp;lt;DIR&amp;gt;          ..
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2025/04/09  17:24         1,118,208 Microsoft-Windows-Powershell.evtx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2025/04/09  17:24        15,798,272 Windows-Powershell-Operational.evtx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;task1&#34;&gt;Task1
+&lt;/h2&gt;&lt;p&gt;攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？&lt;/p&gt;
+&lt;p&gt;wmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell&lt;/p&gt;
+&lt;p&gt;这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;acky&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;herlock&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;hantomCheck&amp;gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Wmi&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Wmi.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┏┓ ┏┳━━━┳┓  ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   by Yamato Security
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Getting 80% of the work &lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt; in 20% of the time~
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Searching...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Start time: 2025/08/28 15:26
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total event log files: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total file size: 15.1 MiB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Currently searching. Please wait.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;00:00:00&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; / &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;[========================================]&lt;/span&gt; 100%
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Scanning finished.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                                        Total findings: &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Saved results: Wmi.json &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;5.2 KiB&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Elapsed time: 00:00:00.044
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;s mind.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的结果不多，就直接看即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到调用了Win32_ComputerSystem&lt;/p&gt;
+&lt;p&gt;答案：Win32_ComputerSystem&lt;/p&gt;
+&lt;h2 id=&#34;task2&#34;&gt;Task2
+&lt;/h2&gt;&lt;p&gt;攻击者是用哪条 WMI 命令查当前机器温度的？&lt;/p&gt;
+&lt;p&gt;比较典型的绕沙箱策略，检测实体机的硬件温度进行判断&lt;/p&gt;
+&lt;p&gt;在刚才调用wmi的查询当中，我们能检索Temperature找到目标&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案：SELECT * FROM MSAcpi_ThermalZoneTemperature&lt;/p&gt;
+&lt;h2 id=&#34;task3&#34;&gt;Task3
+&lt;/h2&gt;&lt;p&gt;攻击者加载了powershell脚本来检测虚拟化，脚本函数是什么？&lt;/p&gt;
+&lt;p&gt;我本来是想过滤Import-Module用来查找加载模块的行为，但是并没有好效果，所以我打算将powershell事件日志转换为时间线输出&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;acky&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;herlock&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;hantomCheck&amp;gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┏┓ ┏┳━━━┳┓  ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   by Yamato Security
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Taking threat detection to the next level~
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Start time: 2025/08/28 15:36
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total event log files: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total file size: 15.1 MiB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Scan wizard:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Which set of detection rules would you like to load? · 5. All event and alert rules &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;4,701 rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; status: * | level: informational+ &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include deprecated rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;219&lt;/span&gt; rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include unsupported rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;42&lt;/span&gt; rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include noisy rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include sysmon rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2,305 rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在生成所有规则过滤后，我们筛选出function&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;多找一找就找到了&lt;/p&gt;
+&lt;p&gt;答案：Check-VM&lt;/p&gt;
+&lt;h2 id=&#34;task4&#34;&gt;Task4
+&lt;/h2&gt;&lt;p&gt;述脚本查询了哪个注册表项来检索服务详细信息以进行虚拟化检测？&lt;/p&gt;
+&lt;p&gt;查询注册表的话，我们先直接从原时间过滤出注册表相关信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;筛选后获得&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案：HKLM:\SYSTEM\ControlSet001\Services&lt;/p&gt;
+&lt;h2 id=&#34;task5&#34;&gt;Task5
+&lt;/h2&gt;&lt;p&gt;检测脚本也可以识别 VirtualBox。它比较哪些进程以确定系统是否正在运行 VirtualBox？&lt;/p&gt;
+&lt;p&gt;还是在task3筛选出来的事件中能看到日志&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ScriptBlock: &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; Check-VM &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; &amp;lt;&lt;span style=&#34;color:#75715e&#34;&gt;# .SYNOPSIS Nishang script which detects whether it is in a known virtual machine. .DESCRIPTION This script uses known parameters or &amp;#39;fingerprints&amp;#39; of Hyper-V, VMWare, Virtual PC, Virtual Box, Xen and QEMU for detecting the environment. .EXAMPLE PS &amp;gt; Check-VM .LINK http://www.labofapenetrationtester.com/2013/01/quick-post-check-if-your-payload-is.html https://github.com/samratashok/nishang .NOTES The script draws heavily from checkvm.rb post module from msf. https://github.com/rapid7/metasploit-framework/blob/master/modules/post/windows/gather/checkvm.rb #&amp;gt; [CmdletBinding()] Param() $ErrorActionPreference = &amp;#34;SilentlyContinue&amp;#34; #Hyper-V $hyperv = Get-ChildItem HKLM:\SOFTWARE\Microsoft if (($hyperv -match &amp;#34;Hyper-V&amp;#34;) -or ($hyperv -match &amp;#34;VirtualMachine&amp;#34;)) { $hypervm = $true } if (!$hypervm) { $hyperv = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System -Name SystemBiosVersion if ($hyperv -match &amp;#34;vrtual&amp;#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($hyperv -match &amp;#34;vrtual&amp;#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($hyperv -match &amp;#34;vrtual&amp;#34;) { $hypervm = $true } } if (!$hypervm) { $hyperv = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($hyperv -match &amp;#34;vmicheartbeat&amp;#34;) -or ($hyperv -match &amp;#34;vmicvss&amp;#34;) -or ($hyperv -match &amp;#34;vmicshutdown&amp;#34;) -or ($hyperv -match &amp;#34;vmiexchange&amp;#34;)) { $hypervm = $true } } if ($hypervm) { &amp;#34;This is a Hyper-V machine.&amp;#34; } #VMWARE $vmware = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vmware -match &amp;#34;vmdebug&amp;#34;) -or ($vmware -match &amp;#34;vmmouse&amp;#34;) -or ($vmware -match &amp;#34;VMTools&amp;#34;) -or ($vmware -match &amp;#34;VMMEMCTL&amp;#34;)) { $vmwarevm = $true } if (!$vmwarevm) { $vmware = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System\BIOS -Name SystemManufacturer if ($vmware -match &amp;#34;vmware&amp;#34;) { $vmwarevm = $true } } if (!$vmwarevm) { $vmware = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($vmware -match &amp;#34;vmware&amp;#34;) { $vmwarevm = $true } } if (!$vmwarevm) { $vmware = Get-Process if (($vmware -eq &amp;#34;vmwareuser.exe&amp;#34;) -or ($vmware -match &amp;#34;vmwaretray.exe&amp;#34;)) { $vmwarevm = $true } } if ($vmwarevm) { &amp;#34;This is a VMWare machine.&amp;#34; } #Virtual PC $vpc = Get-Process if (($vpc -eq &amp;#34;vmusrvc.exe&amp;#34;) -or ($vpc -match &amp;#34;vmsrvc.exe&amp;#34;)) { $vpcvm = $true } if (!$vpcvm) { $vpc = Get-Process if (($vpc -eq &amp;#34;vmwareuser.exe&amp;#34;) -or ($vpc -match &amp;#34;vmwaretray.exe&amp;#34;)) { $vpcvm = $true } } if (!$vpcvm) { $vpc = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vpc -match &amp;#34;vpc-s3&amp;#34;) -or ($vpc -match &amp;#34;vpcuhub&amp;#34;) -or ($vpc -match &amp;#34;msvmmouf&amp;#34;)) { $vpcvm = $true } } if ($vpcvm) { &amp;#34;This is a Virtual PC.&amp;#34; } #Virtual Box $vb = Get-Process if (($vb -eq &amp;#34;vboxservice.exe&amp;#34;) -or ($vb -match &amp;#34;vboxtray.exe&amp;#34;)) { $vbvm = $true } if (!$vbvm) { $vb = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($vb -match &amp;#34;vbox_&amp;#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($vb -match &amp;#34;vbox_&amp;#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($vb -match &amp;#34;vbox&amp;#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ItemProperty hklm:\HARDWARE\DESCRIPTION\System -Name SystemBiosVersion if ($vb -match &amp;#34;vbox&amp;#34;) { $vbvm = $true } } if (!$vbvm) { $vb = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($vb -match &amp;#34;VBoxMouse&amp;#34;) -or ($vb -match &amp;#34;VBoxGuest&amp;#34;) -or ($vb -match &amp;#34;VBoxService&amp;#34;) -or ($vb -match &amp;#34;VBoxSF&amp;#34;)) { $vbvm = $true } } if ($vbvm) { &amp;#34;This is a Virtual Box.&amp;#34; } #Xen $xen = Get-Process if ($xen -eq &amp;#34;xenservice.exe&amp;#34;) { $xenvm = $true } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\FADT if ($xen -match &amp;#34;xen&amp;#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\DSDT if ($xen -match &amp;#34;xen&amp;#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\HARDWARE\ACPI\RSDT if ($xen -match &amp;#34;xen&amp;#34;) { $xenvm = $true } } if (!$xenvm) { $xen = Get-ChildItem HKLM:\SYSTEM\ControlSet001\Services if (($xen -match &amp;#34;xenevtchn&amp;#34;) -or ($xen -match &amp;#34;xennet&amp;#34;) -or ($xen -match &amp;#34;xennet6&amp;#34;) -or ($xen -match &amp;#34;xensvc&amp;#34;) -or ($xen -match &amp;#34;xenvdb&amp;#34;)) { $xenvm = $true } } if ($xenvm) { &amp;#34;This is a Xen Machine.&amp;#34; } #QEMU $qemu = Get-Childitem hklm:\hardware\devicemap\scsi -recurse | gp -Name identifier if ($qemu -match &amp;#34;qemu&amp;#34;) { $qemuvm = $true } if (!$qemuvm) { $qemu = Get-ItemProperty hklm:HARDWARE\DESCRIPTION\System\CentralProcessor\0 -Name ProcessorNameString if ($qemu -match &amp;#34;qemu&amp;#34;) { $qemuvm = $true } } if ($qemuvm) { &amp;#34;This is a Qemu machine.&amp;#34; } }&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注释指明了检测逻辑&lt;/p&gt;
+&lt;p&gt;答案：vboxservice.exe, vboxtray.exe&lt;/p&gt;
+&lt;h2 id=&#34;task6&#34;&gt;Task6
+&lt;/h2&gt;&lt;p&gt;VM 检测脚本打印前缀为“This is a”的任何检测。脚本检测到哪两个虚拟化平台？&lt;/p&gt;
+&lt;p&gt;一样的过滤关键词&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;This is a&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;this.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;答案：Hyper-V, Vmware&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>不可转发情况下的约束委派攻击</title>
         <link>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
         <pubDate>Thu, 28 Aug 2025 13:43:59 +0800</pubDate>
@@ -1521,8 +1664,7 @@
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
         <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;h1 id=&#34;日志分析&#34;&gt;日志分析
-&lt;/h1&gt;&lt;h2 id=&#34;sysmon日志&#34;&gt;Sysmon日志
+        <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events
@@ -1661,11 +1803,16 @@
 &lt;h4 id=&#34;常用分析命令&#34;&gt;常用分析命令
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 11)&amp;#39;&lt;/span&gt; | findstr &lt;span style=&#34;color:#ae81ff&#34;&gt;10672&lt;/span&gt; | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4]&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段&lt;/p&gt;
-&lt;h1 id=&#34;流量分析&#34;&gt;流量分析
-&lt;/h1&gt;&lt;h2 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
-&lt;/h2&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
-&lt;h3 id=&#34;开关级参数&#34;&gt;开关级参数
-&lt;/h3&gt;&lt;table&gt;
+&lt;h3 id=&#34;隼鸟快速使用&#34;&gt;隼鸟快速使用
+&lt;/h3&gt;&lt;p&gt;筛选出存在关键词的事件输出为json&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;keyword“ -J -o &amp;#34;&lt;/span&gt;this.json&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以时间线输出csv,可以手动选择匹配模式，一般选最大&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;流量分析&#34;&gt;流量分析
+&lt;/h2&gt;&lt;h3 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
+&lt;/h3&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
+&lt;h4 id=&#34;开关级参数&#34;&gt;开关级参数
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;参数&lt;/th&gt;
@@ -1739,8 +1886,8 @@
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;过滤器&#34;&gt;过滤器
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;过滤器&#34;&gt;过滤器
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;过滤器&lt;/th&gt;
@@ -1798,13 +1945,13 @@
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;列出可用接口&#34;&gt;列出可用接口
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
+&lt;h4 id=&#34;列出可用接口&#34;&gt;列出可用接口
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然也可以配合-l进行查找效果&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap -l | grep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag*&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>

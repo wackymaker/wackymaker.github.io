@@ -12,8 +12,7 @@
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
         <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;h1 id=&#34;日志分析&#34;&gt;日志分析
-&lt;/h1&gt;&lt;h2 id=&#34;sysmon日志&#34;&gt;Sysmon日志
+        <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events
@@ -152,11 +151,16 @@
 &lt;h4 id=&#34;常用分析命令&#34;&gt;常用分析命令
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 11)&amp;#39;&lt;/span&gt; | findstr &lt;span style=&#34;color:#ae81ff&#34;&gt;10672&lt;/span&gt; | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4]&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段&lt;/p&gt;
-&lt;h1 id=&#34;流量分析&#34;&gt;流量分析
-&lt;/h1&gt;&lt;h2 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
-&lt;/h2&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
-&lt;h3 id=&#34;开关级参数&#34;&gt;开关级参数
-&lt;/h3&gt;&lt;table&gt;
+&lt;h3 id=&#34;隼鸟快速使用&#34;&gt;隼鸟快速使用
+&lt;/h3&gt;&lt;p&gt;筛选出存在关键词的事件输出为json&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;keyword“ -J -o &amp;#34;&lt;/span&gt;this.json&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以时间线输出csv,可以手动选择匹配模式，一般选最大&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;流量分析&#34;&gt;流量分析
+&lt;/h2&gt;&lt;h3 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
+&lt;/h3&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
+&lt;h4 id=&#34;开关级参数&#34;&gt;开关级参数
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;参数&lt;/th&gt;
@@ -230,8 +234,8 @@
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;过滤器&#34;&gt;过滤器
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;过滤器&#34;&gt;过滤器
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;过滤器&lt;/th&gt;
@@ -289,13 +293,13 @@
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;列出可用接口&#34;&gt;列出可用接口
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
+&lt;h4 id=&#34;列出可用接口&#34;&gt;列出可用接口
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然也可以配合-l进行查找效果&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap -l | grep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag*&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
