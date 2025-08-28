@@ -240,7 +240,7 @@
       <ul>
         <li><a href="#linux连接wifi相关">linux连接wifi相关</a></li>
         <li><a href="#wireshark分析管理帧">wireshark分析管理帧</a></li>
-        <li><a href="#切换网卡监听模式并恢复">切换网卡监听模式并恢复</a></li>
+        <li><a href="#网卡模式切换以及选定">网卡模式切换以及选定</a></li>
       </ul>
     </li>
   </ul>
@@ -477,6 +477,8 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iwconfig
 </span></span></code></pre></div><p>查看wifi列表</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi list
+</span></span><span style="display:flex;"><span>or
+</span></span><span style="display:flex;"><span>iwlist wlan0 scan |  grep <span style="color:#e6db74">&#39;Cell\|Quality\|ESSID\|IEEE&#39;</span>
 </span></span></code></pre></div><p>连接wifi</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmcli dev wifi connect <span style="color:#e6db74">&#34;SSID&#34;</span> password <span style="color:#e6db74">&#34;PASSWORD&#34;</span> ifname wlan0
 </span></span></code></pre></div><p>查看当前连接</p>
@@ -506,8 +508,42 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>eapol
 </span></span></code></pre></div><p>查看取消关联帧或者身份验证帧</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">(</span>wlan.fc.type <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 12<span style="color:#f92672">)</span> or <span style="color:#f92672">(</span>wlan.fc.type_subtype <span style="color:#f92672">==</span> 10<span style="color:#f92672">)</span>
-</span></span></code></pre></div><h3 id="切换网卡监听模式并恢复">切换网卡监听模式并恢复
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ip link set wlan0 down <span style="color:#75715e">#关闭网卡</span>
+</span></span></code></pre></div><h3 id="网卡模式切换以及选定">网卡模式切换以及选定
+</h3><h4 id="托管模式managed">托管模式(Managed)
+</h4><p>最常见的形态，允许我们连接ap点进行无线连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 mode managed
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><h4 id="临时模式ad-hoc">临时模式（Ad-hoc）
+</h4><p>一般用于去中心化的连接，也就是点对点的连接，用于住宅内部自设系统</p>
+<p>大部分情况下这是两个桥接在一起的接口，所以需要指定桥接对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 mode ad-hoc
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 essid wackymaker
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><h4 id="中心模式master">中心模式（master）
+</h4><p>这种模式，我们会成为一个ap点，所以不能简单的利用iwconfig进行设置，需要配置所谓的管理守护模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wackymaker@kali<span style="color:#f92672">[</span>/kali<span style="color:#f92672">]</span>$ nano open.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>interface<span style="color:#f92672">=</span>wlan0
+</span></span><span style="display:flex;"><span>driver<span style="color:#f92672">=</span>nl80211
+</span></span><span style="display:flex;"><span>ssid<span style="color:#f92672">=</span>Hello-World
+</span></span><span style="display:flex;"><span>channel<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>hw_mode<span style="color:#f92672">=</span>g
+</span></span></code></pre></div><p>这段配置的意思是用 wlan0 网卡，通过 nl80211 驱动，在 2.4GHz 第 2 信道 上，开一个名为 Hello-World 的 Wi-Fi AP，工作模式是 802.11g（即 2.4G，速率可达 54Mbps）。</p>
+<p>可以利用如下命令启动</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo hostapd open.conf
+</span></span></code></pre></div><h4 id="节点模式mesh">节点模式（mesh）
+</h4><p>节点模式是个有意思的模式，类似于临时模式是一种点对点的模式，但是不一样的是，当一个节点连入另一个节点后会自动的连接此节点连接的其他节点，如果节点 A 和节点 C 之间距离太远，但 A 和 B、B 和 C 能连上，那么数据就会 A → B → C 自动转发。这样 Mesh 网络可以覆盖非常大的区域。</p>
+<p>设置节点模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo iw dev wlan0 set type mesh
+</span></span></code></pre></div><h4 id="监听模式monitor">监听模式（Monitor）
+</h4><p>我们wifi渗透测试最常用的节点，用于监听整个无线环境的连接，也能用来抓取连接包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iw wlan0 set monitor control
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><p>或者</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ip link set wlan0 down <span style="color:#75715e">#关闭网卡</span>
 </span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type monitor <span style="color:#75715e">#将网卡设置为监听模式</span>
 </span></span><span style="display:flex;"><span>or
 </span></span><span style="display:flex;"><span>sudo iw dev wlan0 set type managed <span style="color:#75715e">#将网卡设置为普通模式</span>

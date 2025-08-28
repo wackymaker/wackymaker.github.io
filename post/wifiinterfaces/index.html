@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="wifi接口\r无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口\n可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义\n┌──(root㉿kali)-[~] └─# iw list Wiphy phy1 wiphy index: 1 max # scan SSIDs: 4 max scan IEs length: 482 bytes max # sched scan SSIDs: 10 max # match sets: 16 Retry short limit: 7 Retry long limit: 4 Coverage class: 0 (up to 0m) Device supports AP-side u-APSD. Device supports T-DLS. Supported Ciphers: * WEP40 (00-0f-ac:1) * WEP104 (00-0f-ac:5) * TKIP (00-0f-ac:2) * CCMP-128 (00-0f-ac:4) * CCMP-256 (00-0f-ac:10) * GCMP-128 (00-0f-ac:8) * GCMP-256 (00-0f-ac:9) * CMAC (00-0f-ac:6) * CMAC-256 (00-0f-ac:13) * GMAC-128 (00-0f-ac:11) * GMAC-256 (00-0f-ac:12) Available Antennas: TX 0x3 RX 0x3 Configured Antennas: TX 0x3 RX 0x3 Supported interface modes: * managed * AP * AP/VLAN * monitor * P2P-client * P2P-GO Band 1: Capabilities: 0x9ff RX LDPC HT20/HT40 SM Power Save disabled RX Greenfield RX HT20 SGI RX HT40 SGI TX STBC RX STBC 1-stream Max AMSDU length: 7935 bytes No DSSS/CCK HT40 我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等\n">
+<title>wifi网卡简记</title>
+
+<link rel='canonical' href='http://localhost:1313/post/wifiinterfaces/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="wifi网卡简记">
+<meta property='og:description' content="wifi接口\r无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口\n可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义\n┌──(root㉿kali)-[~] └─# iw list Wiphy phy1 wiphy index: 1 max # scan SSIDs: 4 max scan IEs length: 482 bytes max # sched scan SSIDs: 10 max # match sets: 16 Retry short limit: 7 Retry long limit: 4 Coverage class: 0 (up to 0m) Device supports AP-side u-APSD. Device supports T-DLS. Supported Ciphers: * WEP40 (00-0f-ac:1) * WEP104 (00-0f-ac:5) * TKIP (00-0f-ac:2) * CCMP-128 (00-0f-ac:4) * CCMP-256 (00-0f-ac:10) * GCMP-128 (00-0f-ac:8) * GCMP-256 (00-0f-ac:9) * CMAC (00-0f-ac:6) * CMAC-256 (00-0f-ac:13) * GMAC-128 (00-0f-ac:11) * GMAC-256 (00-0f-ac:12) Available Antennas: TX 0x3 RX 0x3 Configured Antennas: TX 0x3 RX 0x3 Supported interface modes: * managed * AP * AP/VLAN * monitor * P2P-client * P2P-GO Band 1: Capabilities: 0x9ff RX LDPC HT20/HT40 SM Power Save disabled RX Greenfield RX HT20 SGI RX HT40 SGI TX STBC RX STBC 1-stream Max AMSDU length: 7935 bytes No DSSS/CCK HT40 我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等\n">
+<meta property='og:url' content='http://localhost:1313/post/wifiinterfaces/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='无线安全' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-28T22:51:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-28T22:51:00&#43;08:00'/>
+<meta name="twitter:title" content="wifi网卡简记">
+<meta name="twitter:description" content="wifi接口\r无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口\n可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义\n┌──(root㉿kali)-[~] └─# iw list Wiphy phy1 wiphy index: 1 max # scan SSIDs: 4 max scan IEs length: 482 bytes max # sched scan SSIDs: 10 max # match sets: 16 Retry short limit: 7 Retry long limit: 4 Coverage class: 0 (up to 0m) Device supports AP-side u-APSD. Device supports T-DLS. Supported Ciphers: * WEP40 (00-0f-ac:1) * WEP104 (00-0f-ac:5) * TKIP (00-0f-ac:2) * CCMP-128 (00-0f-ac:4) * CCMP-256 (00-0f-ac:10) * GCMP-128 (00-0f-ac:8) * GCMP-256 (00-0f-ac:9) * CMAC (00-0f-ac:6) * CMAC-256 (00-0f-ac:13) * GMAC-128 (00-0f-ac:11) * GMAC-256 (00-0f-ac:12) Available Antennas: TX 0x3 RX 0x3 Configured Antennas: TX 0x3 RX 0x3 Supported interface modes: * managed * AP * AP/VLAN * monitor * P2P-client * P2P-GO Band 1: Capabilities: 0x9ff RX LDPC HT20/HT40 SM Power Save disabled RX Greenfield RX HT20 SGI RX HT40 SGI TX STBC RX STBC 1-stream Max AMSDU length: 7935 bytes No DSSS/CCK HT40 我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#wifi接口">wifi接口</a></li>
+    <li><a href="#接口强度">接口强度</a></li>
+    <li><a href="#改变接口的频道和频率">改变接口的频道和频率</a></li>
+    <li><a href="#接口模式">接口模式</a>
+      <ul>
+        <li><a href="#托管模式managed">托管模式(Managed)</a></li>
+        <li><a href="#临时模式ad-hoc">临时模式（Ad-hoc）</a></li>
+        <li><a href="#中心模式master">中心模式（master）</a></li>
+        <li><a href="#节点模式mesh">节点模式（mesh）</a></li>
+        <li><a href="#监听模式monitor">监听模式（Monitor）</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+                学习笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/wifiinterfaces/">wifi网卡简记</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 28, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="wifi接口">wifi接口
+</h2><p>无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口</p>
+<p><img src="/wifiInterfaces/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# iw list   
+</span></span><span style="display:flex;"><span>Wiphy phy1
+</span></span><span style="display:flex;"><span>        wiphy index: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        max <span style="color:#75715e"># scan SSIDs: 4</span>
+</span></span><span style="display:flex;"><span>        max scan IEs length: <span style="color:#ae81ff">482</span> bytes
+</span></span><span style="display:flex;"><span>        max <span style="color:#75715e"># sched scan SSIDs: 10</span>
+</span></span><span style="display:flex;"><span>        max <span style="color:#75715e"># match sets: 16</span>
+</span></span><span style="display:flex;"><span>        Retry short limit: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>        Retry long limit: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>        Coverage class: <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>up to 0m<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        Device supports AP-side u-APSD.
+</span></span><span style="display:flex;"><span>        Device supports T-DLS.
+</span></span><span style="display:flex;"><span>        Supported Ciphers:
+</span></span><span style="display:flex;"><span>                * WEP40 <span style="color:#f92672">(</span>00-0f-ac:1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * WEP104 <span style="color:#f92672">(</span>00-0f-ac:5<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * TKIP <span style="color:#f92672">(</span>00-0f-ac:2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * CCMP-128 <span style="color:#f92672">(</span>00-0f-ac:4<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * CCMP-256 <span style="color:#f92672">(</span>00-0f-ac:10<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * GCMP-128 <span style="color:#f92672">(</span>00-0f-ac:8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * GCMP-256 <span style="color:#f92672">(</span>00-0f-ac:9<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * CMAC <span style="color:#f92672">(</span>00-0f-ac:6<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * CMAC-256 <span style="color:#f92672">(</span>00-0f-ac:13<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * GMAC-128 <span style="color:#f92672">(</span>00-0f-ac:11<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                * GMAC-256 <span style="color:#f92672">(</span>00-0f-ac:12<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        Available Antennas: TX 0x3 RX 0x3
+</span></span><span style="display:flex;"><span>        Configured Antennas: TX 0x3 RX 0x3
+</span></span><span style="display:flex;"><span>        Supported interface modes:
+</span></span><span style="display:flex;"><span>                 * managed
+</span></span><span style="display:flex;"><span>                 * AP
+</span></span><span style="display:flex;"><span>                 * AP/VLAN
+</span></span><span style="display:flex;"><span>                 * monitor
+</span></span><span style="display:flex;"><span>                 * P2P-client
+</span></span><span style="display:flex;"><span>                 * P2P-GO
+</span></span><span style="display:flex;"><span>        Band 1:
+</span></span><span style="display:flex;"><span>                Capabilities: 0x9ff
+</span></span><span style="display:flex;"><span>                        RX LDPC
+</span></span><span style="display:flex;"><span>                        HT20/HT40
+</span></span><span style="display:flex;"><span>                        SM Power Save disabled
+</span></span><span style="display:flex;"><span>                        RX Greenfield
+</span></span><span style="display:flex;"><span>                        RX HT20 SGI
+</span></span><span style="display:flex;"><span>                        RX HT40 SGI
+</span></span><span style="display:flex;"><span>                        TX STBC
+</span></span><span style="display:flex;"><span>                        RX STBC 1-stream
+</span></span><span style="display:flex;"><span>                        Max AMSDU length: <span style="color:#ae81ff">7935</span> bytes
+</span></span><span style="display:flex;"><span>                        No DSSS/CCK HT40
+</span></span></code></pre></div><p>我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等</p>
+<h2 id="接口强度">接口强度
+</h2><p>大部分的wifi渗透都属于近源渗透，所以如果一张卡的输出太低就会导致我们的攻击范围缩小，所以一张卡的强度决定了我们可以再更远更大的范围运行</p>
+<p>可以利用iwconfig直接查看我们网卡的信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>                                                                                                         
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# iwconfig
+</span></span><span style="display:flex;"><span>lo        no wireless extensions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>eth0      no wireless extensions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>wlan0     IEEE 802.11  ESSID:off/any  
+</span></span><span style="display:flex;"><span>          Mode:Managed  Access Point: Not-Associated   Tx-Power<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> dBm   
+</span></span><span style="display:flex;"><span>          Retry short limit:7   RTS thr:off   Fragment thr:off
+</span></span><span style="display:flex;"><span>          Encryption key:off
+</span></span><span style="display:flex;"><span>          Power Management:on
+</span></span></code></pre></div><p>可以看到我这张卡的输出是3dBm，这是一个非常小的数字，如果一般家用网卡像是“手电筒”，可以照亮一个房间或整栋楼，我这个 3 dBm 的网卡就像一支“蜡烛”，只能照亮你脚下的几米范围。只够自己测试使用</p>
+<p>当然，如果你的卡超过20dbm但是还是只显示20dbm的话，就是因为地区锁频率了,修改一下即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 txpower <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><h2 id="改变接口的频道和频率">改变接口的频道和频率
+</h2><p>我们可以利用以下命令查看当前可达通道</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# iwlist wlan0 channel
+</span></span><span style="display:flex;"><span>wlan0     <span style="color:#ae81ff">32</span> channels in total; available frequencies :
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">01</span> : 2.412 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">02</span> : 2.417 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">03</span> : 2.422 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">04</span> : 2.427 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">05</span> : 2.432 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">06</span> : 2.437 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">07</span> : 2.442 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">08</span> : 2.447 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">09</span> : 2.452 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">10</span> : 2.457 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">11</span> : 2.462 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">12</span> : 2.467 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">13</span> : 2.472 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">14</span> : 2.484 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">36</span> : 5.18 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">40</span> : 5.2 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">44</span> : 5.22 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">48</span> : 5.24 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">52</span> : 5.26 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">56</span> : 5.28 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">60</span> : 5.3 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">64</span> : 5.32 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">100</span> : 5.5 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">104</span> : 5.52 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">108</span> : 5.54 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">112</span> : 5.56 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">116</span> : 5.58 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">120</span> : 5.6 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">124</span> : 5.62 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">128</span> : 5.64 GHz
+</span></span><span style="display:flex;"><span>          Channel <span style="color:#ae81ff">132</span> : 5.66 GHz
+</span></span></code></pre></div><p>可以看到我的卡虽然强度不高，但是频段支持的比较多，频道（Channel）和频率（Frequency）在 Wi-Fi 中是紧密相关的</p>
+<p>频率是无线电波的物理属性，表示wifi信号在某个频率振荡，而信道是wifi协定中的逻辑编号，用来管理频率，其实也没必要区分，它们俩就是绑定的关系</p>
+<p>人们更喜欢记编号而不是小数点的赫兹</p>
+<p>我们可以通过以下命令调整wifi应用的信道或者频率，这样能使我们的目标缩减大部分</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 channel <span style="color:#ae81ff">64</span> <span style="color:#75715e">#调整信道到64</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#或者在这一步调整频率，效果都是一样的</span>
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 freq <span style="color:#e6db74">&#34;5.52G&#34;</span> <span style="color:#75715e">#调整频率为5.52G</span>
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><p>当调整完毕后，我们用如下命令查看</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# sudo ifconfig wlan0 down 
+</span></span><span style="display:flex;"><span>                                                                                                         
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# sudo iwconfig wlan0 channel <span style="color:#ae81ff">64</span>  
+</span></span><span style="display:flex;"><span>                                                                                                         
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# sudo ifconfig wlan0 up         
+</span></span><span style="display:flex;"><span>                                                                                                         
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# iwlist wlan0 frequency | grep Current       
+</span></span><span style="display:flex;"><span>          Current Frequency:5.32 GHz <span style="color:#f92672">(</span>Channel 64<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                                                                                                         
+</span></span></code></pre></div><p>想要取消锁定只需要调会自动即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo iwconfig wlan0 channel auto
+</span></span></code></pre></div><h2 id="接口模式">接口模式
+</h2><p>网卡接口允许不同的模式，以便进行不同的工作方式</p>
+<h3 id="托管模式managed">托管模式(Managed)
+</h3><p>最常见的形态，允许我们连接ap点进行无线连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 mode managed
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><h3 id="临时模式ad-hoc">临时模式（Ad-hoc）
+</h3><p>一般用于去中心化的连接，也就是点对点的连接，用于住宅内部自设系统</p>
+<p>大部分情况下这是两个桥接在一起的接口，所以需要指定桥接对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo iwconfig wlan0 mode ad-hoc
+</span></span><span style="display:flex;"><span>sudo iwconfig wlan0 essid wackymaker
+</span></span></code></pre></div><h3 id="中心模式master">中心模式（master）
+</h3><p>这种模式，我们会成为一个ap点，所以不能简单的利用iwconfig进行设置，需要配置所谓的管理守护模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wackymaker@kali<span style="color:#f92672">[</span>/kali<span style="color:#f92672">]</span>$ nano open.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>interface<span style="color:#f92672">=</span>wlan0
+</span></span><span style="display:flex;"><span>driver<span style="color:#f92672">=</span>nl80211
+</span></span><span style="display:flex;"><span>ssid<span style="color:#f92672">=</span>Hello-World
+</span></span><span style="display:flex;"><span>channel<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>hw_mode<span style="color:#f92672">=</span>g
+</span></span></code></pre></div><p>这段配置的意思是用 wlan0 网卡，通过 nl80211 驱动，在 2.4GHz 第 2 信道 上，开一个名为 Hello-World 的 Wi-Fi AP，工作模式是 802.11g（即 2.4G，速率可达 54Mbps）。</p>
+<p>可以利用如下命令启动</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo hostapd open.conf
+</span></span></code></pre></div><h3 id="节点模式mesh">节点模式（mesh）
+</h3><p>节点模式是个有意思的模式，类似于临时模式是一种点对点的模式，但是不一样的是，当一个节点连入另一个节点后会自动的连接此节点连接的其他节点，如果节点 A 和节点 C 之间距离太远，但 A 和 B、B 和 C 能连上，那么数据就会 A → B → C 自动转发。这样 Mesh 网络可以覆盖非常大的区域。</p>
+<p>设置节点模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo iw dev wlan0 set type mesh
+</span></span></code></pre></div><h3 id="监听模式monitor">监听模式（Monitor）
+</h3><p>我们wifi渗透测试最常用的节点，用于监听整个无线环境的连接，也能用来抓取连接包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ifconfig wlan0 down
+</span></span><span style="display:flex;"><span>sudo iw wlan0 set monitor control
+</span></span><span style="display:flex;"><span>sudo ifconfig wlan0 up
+</span></span></code></pre></div><p>今天就学到这里</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/">无线安全</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E7%A4%BE%E4%B9%8B%E9%AD%94%E6%B3%95/">社之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/80211/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">802.11帧介绍</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/phantom-check/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Phantom-check-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/optinseltrace4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OpTinselTrace4-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">渊蜂之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

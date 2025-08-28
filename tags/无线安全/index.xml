@@ -6,7 +6,188 @@
         <description>Recent content in 无线安全 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 27 Aug 2025 20:57:07 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 28 Aug 2025 22:51:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>wifi网卡简记</title>
+        <link>http://localhost:1313/post/wifiinterfaces/</link>
+        <pubDate>Thu, 28 Aug 2025 22:51:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/post/wifiinterfaces/</guid>
+        <description>&lt;h2 id=&#34;wifi接口&#34;&gt;wifi接口
+&lt;/h2&gt;&lt;p&gt;无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/wifiInterfaces/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# iw list   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Wiphy phy1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        wiphy index: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        max &lt;span style=&#34;color:#75715e&#34;&gt;# scan SSIDs: 4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        max scan IEs length: &lt;span style=&#34;color:#ae81ff&#34;&gt;482&lt;/span&gt; bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        max &lt;span style=&#34;color:#75715e&#34;&gt;# sched scan SSIDs: 10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        max &lt;span style=&#34;color:#75715e&#34;&gt;# match sets: 16&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Retry short limit: &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Retry long limit: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Coverage class: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;up to 0m&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Device supports AP-side u-APSD.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Device supports T-DLS.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Supported Ciphers:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * WEP40 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * WEP104 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:5&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * TKIP &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:2&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * CCMP-128 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:4&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * CCMP-256 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * GCMP-128 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * GCMP-256 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:9&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * CMAC &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:6&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * CMAC-256 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:13&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * GMAC-128 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:11&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                * GMAC-256 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;00-0f-ac:12&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Available Antennas: TX 0x3 RX 0x3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Configured Antennas: TX 0x3 RX 0x3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Supported interface modes:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * managed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * AP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * AP/VLAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * monitor
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * P2P-client
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 * P2P-GO
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Band 1:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                Capabilities: 0x9ff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        RX LDPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        HT20/HT40
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        SM Power Save disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        RX Greenfield
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        RX HT20 SGI
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        RX HT40 SGI
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        TX STBC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        RX STBC 1-stream
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        Max AMSDU length: &lt;span style=&#34;color:#ae81ff&#34;&gt;7935&lt;/span&gt; bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        No DSSS/CCK HT40
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等&lt;/p&gt;
+&lt;h2 id=&#34;接口强度&#34;&gt;接口强度
+&lt;/h2&gt;&lt;p&gt;大部分的wifi渗透都属于近源渗透，所以如果一张卡的输出太低就会导致我们的攻击范围缩小，所以一张卡的强度决定了我们可以再更远更大的范围运行&lt;/p&gt;
+&lt;p&gt;可以利用iwconfig直接查看我们网卡的信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# iwconfig
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lo        no wireless extensions.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;eth0      no wireless extensions.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wlan0     IEEE 802.11  ESSID:off/any  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Mode:Managed  Access Point: Not-Associated   Tx-Power&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; dBm   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Retry short limit:7   RTS thr:off   Fragment thr:off
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Encryption key:off
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Power Management:on
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到我这张卡的输出是3dBm，这是一个非常小的数字，如果一般家用网卡像是“手电筒”，可以照亮一个房间或整栋楼，我这个 3 dBm 的网卡就像一支“蜡烛”，只能照亮你脚下的几米范围。只够自己测试使用&lt;/p&gt;
+&lt;p&gt;当然，如果你的卡超过20dbm但是还是只显示20dbm的话，就是因为地区锁频率了,修改一下即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 down
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 txpower &lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;改变接口的频道和频率&#34;&gt;改变接口的频道和频率
+&lt;/h2&gt;&lt;p&gt;我们可以利用以下命令查看当前可达通道&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# iwlist wlan0 channel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wlan0     &lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt; channels in total; available frequencies :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;01&lt;/span&gt; : 2.412 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;02&lt;/span&gt; : 2.417 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;03&lt;/span&gt; : 2.422 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;04&lt;/span&gt; : 2.427 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;05&lt;/span&gt; : 2.432 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;06&lt;/span&gt; : 2.437 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;07&lt;/span&gt; : 2.442 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;08&lt;/span&gt; : 2.447 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;09&lt;/span&gt; : 2.452 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; : 2.457 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; : 2.462 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; : 2.467 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; : 2.472 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt; : 2.484 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;36&lt;/span&gt; : 5.18 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;40&lt;/span&gt; : 5.2 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;44&lt;/span&gt; : 5.22 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;48&lt;/span&gt; : 5.24 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;52&lt;/span&gt; : 5.26 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;56&lt;/span&gt; : 5.28 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt; : 5.3 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt; : 5.32 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; : 5.5 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;104&lt;/span&gt; : 5.52 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;108&lt;/span&gt; : 5.54 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;112&lt;/span&gt; : 5.56 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;116&lt;/span&gt; : 5.58 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;120&lt;/span&gt; : 5.6 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;124&lt;/span&gt; : 5.62 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;128&lt;/span&gt; : 5.64 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;132&lt;/span&gt; : 5.66 GHz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到我的卡虽然强度不高，但是频段支持的比较多，频道（Channel）和频率（Frequency）在 Wi-Fi 中是紧密相关的&lt;/p&gt;
+&lt;p&gt;频率是无线电波的物理属性，表示wifi信号在某个频率振荡，而信道是wifi协定中的逻辑编号，用来管理频率，其实也没必要区分，它们俩就是绑定的关系&lt;/p&gt;
+&lt;p&gt;人们更喜欢记编号而不是小数点的赫兹&lt;/p&gt;
+&lt;p&gt;我们可以通过以下命令调整wifi应用的信道或者频率，这样能使我们的目标缩减大部分&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 down
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 channel &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#调整信道到64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#或者在这一步调整频率，效果都是一样的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 freq &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;5.52G&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#调整频率为5.52G&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当调整完毕后，我们用如下命令查看&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# sudo ifconfig wlan0 down 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# sudo iwconfig wlan0 channel &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# sudo ifconfig wlan0 up         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# iwlist wlan0 frequency | grep Current       
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Current Frequency:5.32 GHz &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Channel 64&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                         
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;想要取消锁定只需要调会自动即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 channel auto
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;接口模式&#34;&gt;接口模式
+&lt;/h2&gt;&lt;p&gt;网卡接口允许不同的模式，以便进行不同的工作方式&lt;/p&gt;
+&lt;h3 id=&#34;托管模式managed&#34;&gt;托管模式(Managed)
+&lt;/h3&gt;&lt;p&gt;最常见的形态，允许我们连接ap点进行无线连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 down
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 mode managed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;临时模式ad-hoc&#34;&gt;临时模式（Ad-hoc）
+&lt;/h3&gt;&lt;p&gt;一般用于去中心化的连接，也就是点对点的连接，用于住宅内部自设系统&lt;/p&gt;
+&lt;p&gt;大部分情况下这是两个桥接在一起的接口，所以需要指定桥接对象&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 mode ad-hoc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iwconfig wlan0 essid wackymaker
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;中心模式master&#34;&gt;中心模式（master）
+&lt;/h3&gt;&lt;p&gt;这种模式，我们会成为一个ap点，所以不能简单的利用iwconfig进行设置，需要配置所谓的管理守护模式&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wackymaker@kali&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/kali&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;$ nano open.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;interface&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wlan0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;driver&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;nl80211
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Hello-World
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;channel&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hw_mode&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;g
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段配置的意思是用 wlan0 网卡，通过 nl80211 驱动，在 2.4GHz 第 2 信道 上，开一个名为 Hello-World 的 Wi-Fi AP，工作模式是 802.11g（即 2.4G，速率可达 54Mbps）。&lt;/p&gt;
+&lt;p&gt;可以利用如下命令启动&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo hostapd open.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;节点模式mesh&#34;&gt;节点模式（mesh）
+&lt;/h3&gt;&lt;p&gt;节点模式是个有意思的模式，类似于临时模式是一种点对点的模式，但是不一样的是，当一个节点连入另一个节点后会自动的连接此节点连接的其他节点，如果节点 A 和节点 C 之间距离太远，但 A 和 B、B 和 C 能连上，那么数据就会 A → B → C 自动转发。这样 Mesh 网络可以覆盖非常大的区域。&lt;/p&gt;
+&lt;p&gt;设置节点模式&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iw dev wlan0 set type mesh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;监听模式monitor&#34;&gt;监听模式（Monitor）
+&lt;/h3&gt;&lt;p&gt;我们wifi渗透测试最常用的节点，用于监听整个无线环境的连接，也能用来抓取连接包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 down
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo iw wlan0 set monitor control
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ifconfig wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;今天就学到这里&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>802.11帧介绍</title>
         <link>http://localhost:1313/post/80211/</link>
         <pubDate>Wed, 27 Aug 2025 20:57:07 +0800</pubDate>
