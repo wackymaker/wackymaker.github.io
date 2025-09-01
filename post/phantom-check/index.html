@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="题目简介与题目附件\rTalion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。\n附件提供如下\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck 的目录 2025/08/28 15:11 &lt;DIR&gt; . 2025/08/28 15:11 &lt;DIR&gt; .. 2025/04/09 17:24 1,118,208 Microsoft-Windows-Powershell.evtx 2025/04/09 17:24 15,798,272 Windows-Powershell-Operational.evtx Task1\r攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？\nwmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell\n这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &#34;Wmi&#34; -J -o &#34;Wmi.json&#34; ┏┓ ┏┳━━━┳┓ ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓ ┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃ ┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃ ┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃ ┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃ ┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛ by Yamato Security Getting 80% of the work done in 20% of the time~ Searching... Start time: 2025/08/28 15:26 Total event log files: 1 Total file size: 15.1 MiB Currently searching. Please wait. [00:00:00] 1 / 1 [========================================] 100% Scanning finished. Total findings: 6 Saved results: Wmi.json (5.2 KiB) Elapsed time: 00:00:00.044 初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&#39;s mind. 得到的结果不多，就直接看即可\n">
 <title>Phantom-check-wp</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/phantom-check/'>
+<link rel='canonical' href='http://localhost:1313/post/phantom-check/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="Phantom-check-wp">
 <meta property='og:description' content="题目简介与题目附件\rTalion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。\n附件提供如下\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck 的目录 2025/08/28 15:11 &lt;DIR&gt; . 2025/08/28 15:11 &lt;DIR&gt; .. 2025/04/09 17:24 1,118,208 Microsoft-Windows-Powershell.evtx 2025/04/09 17:24 15,798,272 Windows-Powershell-Operational.evtx Task1\r攻击者使用哪个 WMI 类来检索模型和制造商信息以进行虚拟化检测？\nwmi类全称（Windows Management Instrumentation Class）是windows管理规范框架中的一种对象定义，它用来表述管理windows中的系统资源，而这种管理接口一般是通过powrshell调用的所以我们将目光转向powershell\n这里使用隼鸟过滤出powershell事件中所有关于Wmi的事件记录\nC:\\Users\\wacky\\Desktop\\sherlock\\PhantomCheck&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &#34;Wmi&#34; -J -o &#34;Wmi.json&#34; ┏┓ ┏┳━━━┳┓ ┏┳━━━┳━━┓┏┓ ┏┳━━━┳━━━┓ ┃┃ ┃┃┏━┓┃┗┓┏┛┃┏━┓┃┏┓┃┃┃ ┃┃┏━┓┃┏━┓┃ ┃┗━┛┃┃ ┃┣┓┗┛┏┫┃ ┃┃┗┛┗┫┃ ┃┃┗━━┫┃ ┃┃ ┃┏━┓┃┗━┛┃┗┓┏┛┃┗━┛┃┏━┓┃┃ ┃┣━━┓┃┗━┛┃ ┃┃ ┃┃┏━┓┃ ┃┃ ┃┏━┓┃┗━┛┃┗━┛┃┗━┛┃┏━┓┃ ┗┛ ┗┻┛ ┗┛ ┗┛ ┗┛ ┗┻━━━┻━━━┻━━━┻┛ ┗┛ by Yamato Security Getting 80% of the work done in 20% of the time~ Searching... Start time: 2025/08/28 15:26 Total event log files: 1 Total file size: 15.1 MiB Currently searching. Please wait. [00:00:00] 1 / 1 [========================================] 100% Scanning finished. Total findings: 6 Saved results: Wmi.json (5.2 KiB) Elapsed time: 00:00:00.044 初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&#39;s mind. 得到的结果不多，就直接看即可\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/phantom-check/'>
+<meta property='og:url' content='http://localhost:1313/post/phantom-check/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='事件分析' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-28T16:05:44&#43;08:00'/><meta property='article:modified_time' content='2025-08-28T16:05:44&#43;08:00'/>
 <meta name="twitter:title" content="Phantom-check-wp">
@@ -655,7 +655,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
