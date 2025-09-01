@@ -6,12 +6,20 @@
         <description>Recent content in Categories on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 01 Sep 2025 20:56:42 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Wp</title>
-        <link>http://localhost:1313/categories/wp/</link>
+        <lastBuildDate>Mon, 01 Sep 2025 21:20:58 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>创新技术或自研工具</title>
+        <link>http://localhost:1313/categories/%E5%88%9B%E6%96%B0%E6%8A%80%E6%9C%AF%E6%88%96%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/</link>
+        <pubDate>Mon, 01 Sep 2025 21:20:58 +0800</pubDate>
+        
+        <guid>http://localhost:1313/categories/%E5%88%9B%E6%96%B0%E6%8A%80%E6%9C%AF%E6%88%96%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>题目wp</title>
+        <link>http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/</link>
         <pubDate>Mon, 01 Sep 2025 20:56:42 +0800</pubDate>
         
-        <guid>http://localhost:1313/categories/wp/</guid>
+        <guid>http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/</guid>
         <description></description>
         </item>
         <item>
@@ -20,14 +28,6 @@
         <pubDate>Sat, 30 Aug 2025 23:19:01 +0800</pubDate>
         
         <guid>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>题目wp</title>
-        <link>http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/</link>
-        <pubDate>Sat, 30 Aug 2025 18:04:36 +0800</pubDate>
-        
-        <guid>http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/</guid>
         <description></description>
         </item>
         <item>

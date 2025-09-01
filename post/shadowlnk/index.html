@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="介绍\r当我在研究免杀操作的时候，我发现常规意义上的注册表，启动项还有计划任务这三种基于机器自动化的权限维持手段，在杀软中是被看的很死的，我在学习的过程中很是苦恼。就在这个时候我正好在学习红队的一些基础钓鱼手段，其中利用隐藏文件夹以及lnk伪造文件的形式让我有了灵感，既然机器层面的自启动不好实现，那么人类层面呢？\nlnk钓鱼详解\r我演示的这就是一个很典型的样本\n__MACOSX文件夹下方是\n目录外的快捷方式指向其中的bat脚本，其中bat脚本内容是如下：移动我们的载荷并且在启动载荷的同时启动文档。\n@echo off cd /d %~dp0 move /Y 1.exe &#34;C:\\Users\\Public\\Documents\\1.exe&#34; start &#34;&#34; &#34;C:\\Users\\Public\\Documents\\1.exe&#34; timeout /t 1 /nobreak &gt;nul start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 当我们将__MACOSX文件夹隐藏后就是一个正常的文件，普通人不会在意这个角标。\n但是这个样本还是有问题的，首先是其中的bat文件不免杀，移动文件和启动文件这两个操作单拿出来都不会被杀，但是组合在一起的bat很容易触发国内一些杀软的报警。其次则是在启动的时候还是会伴随短暂的黑框。\n我的解决办法是利用，快捷方式调用vbs，也就是所谓的js脚本，js脚本能以黑框启动bat脚本。\nSet WshShell = CreateObject(&#34;WScript.Shell&#34;) WshShell.Run &#34;.\\__MACOSX\\1.bat&#34;, 0, False 将bat脚本只用于启动载荷和伪装文档\n@echo off cd /d %~dp0 start &#34;&#34; &#34;1.exe&#34; start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 如此情况下，就做到了一个简单的钓鱼样本，受害者在点击样本时，先执行我们隐藏的载荷，之后打开文档。\n所以我在想，既然红队能通过如此手段诱导受害者点击文件，那么就也可以劫持机器上本身存在的lnk文件，通过劫持受害者常用的快捷方式做到每次开机，由人类来帮助我们上线。\n工具实现\r为了实现这种效果，我开发了一个小工具 shadowlnk\n它有两种主要的使用逻辑，首先是利用-i指定劫持目标，-w指定可写目录（我们需要这个目录来创建隐藏文件夹），-p指定我们的载荷位置。\n当成功劫持之后，图标看上去没有变化，连闪烁都不存在，但是它的指向已经被替换为了我们指定的恶意脚本。\n执行后也是无感上线\n（载荷需要自己做免杀，这个工具本质上是权限维持使用的，为了辅助载荷免杀，此工具也有参数启动选项），可以看到我环境当中还存在360，也是并没有触发警告。\n所以这一套操作的流程是如何实现的呢？\n首先当接受到图标目标后，shadowslnk会利用解析这个lnk的原指向。这一点是必须的，因为我们不仅需要载荷正常执行，更重要的一点是需要图标维持原样，而原lnk图标并没有内置ico的文件，只是调用了它原指向的目标的图标，这里我利用了go两个第三方库。\n&#34;github.com/Kodeworks/golang-image-ico&#34; &#34;github.com/fcjr/geticon&#34; 他们能从pe文件上剥离ico图标，并用于我们的伪造。\n之后shaodwlnk会在我们指定的可写文件夹下创建与指向pe文件名相同的文件夹，并且添加系统属性和隐藏属性，这会使这个文件夹达成与attrib +s +h 一样的效果。\n">
+<title>基于lnk劫持的权限维持工具-shadowlnk</title>
+
+<link rel='canonical' href='http://localhost:1313/post/shadowlnk/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="基于lnk劫持的权限维持工具-shadowlnk">
+<meta property='og:description' content="介绍\r当我在研究免杀操作的时候，我发现常规意义上的注册表，启动项还有计划任务这三种基于机器自动化的权限维持手段，在杀软中是被看的很死的，我在学习的过程中很是苦恼。就在这个时候我正好在学习红队的一些基础钓鱼手段，其中利用隐藏文件夹以及lnk伪造文件的形式让我有了灵感，既然机器层面的自启动不好实现，那么人类层面呢？\nlnk钓鱼详解\r我演示的这就是一个很典型的样本\n__MACOSX文件夹下方是\n目录外的快捷方式指向其中的bat脚本，其中bat脚本内容是如下：移动我们的载荷并且在启动载荷的同时启动文档。\n@echo off cd /d %~dp0 move /Y 1.exe &#34;C:\\Users\\Public\\Documents\\1.exe&#34; start &#34;&#34; &#34;C:\\Users\\Public\\Documents\\1.exe&#34; timeout /t 1 /nobreak &gt;nul start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 当我们将__MACOSX文件夹隐藏后就是一个正常的文件，普通人不会在意这个角标。\n但是这个样本还是有问题的，首先是其中的bat文件不免杀，移动文件和启动文件这两个操作单拿出来都不会被杀，但是组合在一起的bat很容易触发国内一些杀软的报警。其次则是在启动的时候还是会伴随短暂的黑框。\n我的解决办法是利用，快捷方式调用vbs，也就是所谓的js脚本，js脚本能以黑框启动bat脚本。\nSet WshShell = CreateObject(&#34;WScript.Shell&#34;) WshShell.Run &#34;.\\__MACOSX\\1.bat&#34;, 0, False 将bat脚本只用于启动载荷和伪装文档\n@echo off cd /d %~dp0 start &#34;&#34; &#34;1.exe&#34; start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 如此情况下，就做到了一个简单的钓鱼样本，受害者在点击样本时，先执行我们隐藏的载荷，之后打开文档。\n所以我在想，既然红队能通过如此手段诱导受害者点击文件，那么就也可以劫持机器上本身存在的lnk文件，通过劫持受害者常用的快捷方式做到每次开机，由人类来帮助我们上线。\n工具实现\r为了实现这种效果，我开发了一个小工具 shadowlnk\n它有两种主要的使用逻辑，首先是利用-i指定劫持目标，-w指定可写目录（我们需要这个目录来创建隐藏文件夹），-p指定我们的载荷位置。\n当成功劫持之后，图标看上去没有变化，连闪烁都不存在，但是它的指向已经被替换为了我们指定的恶意脚本。\n执行后也是无感上线\n（载荷需要自己做免杀，这个工具本质上是权限维持使用的，为了辅助载荷免杀，此工具也有参数启动选项），可以看到我环境当中还存在360，也是并没有触发警告。\n所以这一套操作的流程是如何实现的呢？\n首先当接受到图标目标后，shadowslnk会利用解析这个lnk的原指向。这一点是必须的，因为我们不仅需要载荷正常执行，更重要的一点是需要图标维持原样，而原lnk图标并没有内置ico的文件，只是调用了它原指向的目标的图标，这里我利用了go两个第三方库。\n&#34;github.com/Kodeworks/golang-image-ico&#34; &#34;github.com/fcjr/geticon&#34; 他们能从pe文件上剥离ico图标，并用于我们的伪造。\n之后shaodwlnk会在我们指定的可写文件夹下创建与指向pe文件名相同的文件夹，并且添加系统属性和隐藏属性，这会使这个文件夹达成与attrib +s +h 一样的效果。\n">
+<meta property='og:url' content='http://localhost:1313/post/shadowlnk/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='自研工具' /><meta property='article:tag' content='社之魔法' /><meta property='article:tag' content='权限维持' /><meta property='article:published_time' content='2025-09-01T21:20:58&#43;08:00'/><meta property='article:modified_time' content='2025-09-01T21:20:58&#43;08:00'/>
+<meta name="twitter:title" content="基于lnk劫持的权限维持工具-shadowlnk">
+<meta name="twitter:description" content="介绍\r当我在研究免杀操作的时候，我发现常规意义上的注册表，启动项还有计划任务这三种基于机器自动化的权限维持手段，在杀软中是被看的很死的，我在学习的过程中很是苦恼。就在这个时候我正好在学习红队的一些基础钓鱼手段，其中利用隐藏文件夹以及lnk伪造文件的形式让我有了灵感，既然机器层面的自启动不好实现，那么人类层面呢？\nlnk钓鱼详解\r我演示的这就是一个很典型的样本\n__MACOSX文件夹下方是\n目录外的快捷方式指向其中的bat脚本，其中bat脚本内容是如下：移动我们的载荷并且在启动载荷的同时启动文档。\n@echo off cd /d %~dp0 move /Y 1.exe &#34;C:\\Users\\Public\\Documents\\1.exe&#34; start &#34;&#34; &#34;C:\\Users\\Public\\Documents\\1.exe&#34; timeout /t 1 /nobreak &gt;nul start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 当我们将__MACOSX文件夹隐藏后就是一个正常的文件，普通人不会在意这个角标。\n但是这个样本还是有问题的，首先是其中的bat文件不免杀，移动文件和启动文件这两个操作单拿出来都不会被杀，但是组合在一起的bat很容易触发国内一些杀软的报警。其次则是在启动的时候还是会伴随短暂的黑框。\n我的解决办法是利用，快捷方式调用vbs，也就是所谓的js脚本，js脚本能以黑框启动bat脚本。\nSet WshShell = CreateObject(&#34;WScript.Shell&#34;) WshShell.Run &#34;.\\__MACOSX\\1.bat&#34;, 0, False 将bat脚本只用于启动载荷和伪装文档\n@echo off cd /d %~dp0 start &#34;&#34; &#34;1.exe&#34; start &#34;&#34; &#34;1.docx&#34; taskkill /f /im cmd.exe 如此情况下，就做到了一个简单的钓鱼样本，受害者在点击样本时，先执行我们隐藏的载荷，之后打开文档。\n所以我在想，既然红队能通过如此手段诱导受害者点击文件，那么就也可以劫持机器上本身存在的lnk文件，通过劫持受害者常用的快捷方式做到每次开机，由人类来帮助我们上线。\n工具实现\r为了实现这种效果，我开发了一个小工具 shadowlnk\n它有两种主要的使用逻辑，首先是利用-i指定劫持目标，-w指定可写目录（我们需要这个目录来创建隐藏文件夹），-p指定我们的载荷位置。\n当成功劫持之后，图标看上去没有变化，连闪烁都不存在，但是它的指向已经被替换为了我们指定的恶意脚本。\n执行后也是无感上线\n（载荷需要自己做免杀，这个工具本质上是权限维持使用的，为了辅助载荷免杀，此工具也有参数启动选项），可以看到我环境当中还存在360，也是并没有触发警告。\n所以这一套操作的流程是如何实现的呢？\n首先当接受到图标目标后，shadowslnk会利用解析这个lnk的原指向。这一点是必须的，因为我们不仅需要载荷正常执行，更重要的一点是需要图标维持原样，而原lnk图标并没有内置ico的文件，只是调用了它原指向的目标的图标，这里我利用了go两个第三方库。\n&#34;github.com/Kodeworks/golang-image-ico&#34; &#34;github.com/fcjr/geticon&#34; 他们能从pe文件上剥离ico图标，并用于我们的伪造。\n之后shaodwlnk会在我们指定的可写文件夹下创建与指向pe文件名相同的文件夹，并且添加系统属性和隐藏属性，这会使这个文件夹达成与attrib +s +h 一样的效果。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#lnk钓鱼详解">lnk钓鱼详解</a></li>
+    <li><a href="#工具实现">工具实现</a></li>
+    <li><a href="#额外参数">额外参数</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%88%9B%E6%96%B0%E6%8A%80%E6%9C%AF%E6%88%96%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/" >
+                创新技术或自研工具
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/shadowlnk/">基于lnk劫持的权限维持工具-shadowlnk</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 01, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="介绍">介绍
+</h2><p>当我在研究免杀操作的时候，我发现常规意义上的注册表，启动项还有计划任务这三种基于机器自动化的权限维持手段，在杀软中是被看的很死的，我在学习的过程中很是苦恼。就在这个时候我正好在学习红队的一些基础钓鱼手段，其中利用隐藏文件夹以及lnk伪造文件的形式让我有了灵感，既然机器层面的自启动不好实现，那么人类层面呢？</p>
+<h2 id="lnk钓鱼详解">lnk钓鱼详解
+</h2><p>我演示的这就是一个很典型的样本</p>
+<p><img src="/shadowlnk/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>__MACOSX文件夹下方是</p>
+<p><img src="/shadowlnk/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>目录外的快捷方式指向其中的bat脚本，其中bat脚本内容是如下：移动我们的载荷并且在启动载荷的同时启动文档。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>@echo off
+</span></span><span style="display:flex;"><span>cd /d %~dp0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>move /Y 1.exe <span style="color:#e6db74">&#34;C:\Users\Public\Documents\1.exe&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">&#34;C:\Users\Public\Documents\1.exe&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>timeout /t <span style="color:#ae81ff">1</span> /nobreak &gt;nul
+</span></span><span style="display:flex;"><span>start <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">&#34;1.docx&#34;</span>
+</span></span><span style="display:flex;"><span>taskkill /f /im cmd.exe
+</span></span></code></pre></div><p>当我们将__MACOSX文件夹隐藏后就是一个正常的文件，普通人不会在意这个角标。</p>
+<p><img src="/shadowlnk/image-4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>但是这个样本还是有问题的，首先是其中的bat文件不免杀，移动文件和启动文件这两个操作单拿出来都不会被杀，但是组合在一起的bat很容易触发国内一些杀软的报警。其次则是在启动的时候还是会伴随短暂的黑框。</p>
+<p>我的解决办法是利用，快捷方式调用vbs，也就是所谓的js脚本，js脚本能以黑框启动bat脚本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Set WshShell <span style="color:#f92672">=</span> CreateObject<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WScript.Shell&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WshShell.Run <span style="color:#e6db74">&#34;.\__MACOSX\1.bat&#34;</span>, 0, False
+</span></span></code></pre></div><p>将bat脚本只用于启动载荷和伪装文档</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>@echo off
+</span></span><span style="display:flex;"><span>cd /d %~dp0
+</span></span><span style="display:flex;"><span>start <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">&#34;1.exe&#34;</span>
+</span></span><span style="display:flex;"><span>start <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">&#34;1.docx&#34;</span>
+</span></span><span style="display:flex;"><span>taskkill /f /im cmd.exe
+</span></span></code></pre></div><p>如此情况下，就做到了一个简单的钓鱼样本，受害者在点击样本时，先执行我们隐藏的载荷，之后打开文档。</p>
+<p><img src="/shadowlnk/image-3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>所以我在想，既然红队能通过如此手段诱导受害者点击文件，那么就也可以劫持机器上本身存在的lnk文件，通过劫持受害者常用的快捷方式做到每次开机，由人类来帮助我们上线。</p>
+<h2 id="工具实现">工具实现
+</h2><p>为了实现这种效果，我开发了一个小工具 <a class="link" href="https://github.com/wackymaker/shadowlnk"  target="_blank" rel="noopener"
+    >shadowlnk</a></p>
+<p>它有两种主要的使用逻辑，首先是利用-i指定劫持目标，-w指定可写目录（我们需要这个目录来创建隐藏文件夹），-p指定我们的载荷位置。</p>
+<p><img src="/shadowlnk/image-5.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>当成功劫持之后，图标看上去没有变化，连闪烁都不存在，但是它的指向已经被替换为了我们指定的恶意脚本。</p>
+<p><img src="/shadowlnk/image-6.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>执行后也是无感上线</p>
+<p><img src="/shadowlnk/image-7.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>（载荷需要自己做免杀，这个工具本质上是权限维持使用的，为了辅助载荷免杀，此工具也有参数启动选项），可以看到我环境当中还存在360，也是并没有触发警告。</p>
+<p>所以这一套操作的流程是如何实现的呢？</p>
+<p>首先当接受到图标目标后，shadowslnk会利用解析这个lnk的原指向。这一点是必须的，因为我们不仅需要载荷正常执行，更重要的一点是需要图标维持原样，而原lnk图标并没有内置ico的文件，只是调用了它原指向的目标的图标，这里我利用了go两个第三方库。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#e6db74">&#34;github.com/Kodeworks/golang-image-ico&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;github.com/fcjr/geticon&#34;</span>
+</span></span></code></pre></div><p>他们能从pe文件上剥离ico图标，并用于我们的伪造。</p>
+<p>之后shaodwlnk会在我们指定的可写文件夹下创建与指向pe文件名相同的文件夹，并且添加系统属性和隐藏属性，这会使这个文件夹达成与attrib +s +h 一样的效果。</p>
+<p>此后shaodwslnk会生成vbs，bat，ico三个文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span> C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\w</span>acky<span style="color:#ae81ff">\D</span>esktop<span style="color:#ae81ff">\s</span>hadowlnk-test<span style="color:#ae81ff">\m</span>gtv-1 的目录
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2025/08/10  23:48            15,601 icon.ico
+</span></span><span style="display:flex;"><span>2025/08/10  23:48               <span style="color:#ae81ff">130</span> mgtv-1.bat
+</span></span><span style="display:flex;"><span>2025/08/10  23:48               <span style="color:#ae81ff">162</span> mgtv-1.vbs
+</span></span><span style="display:flex;"><span>2025/08/10  23:48             2,259 芒果TV.lnk
+</span></span><span style="display:flex;"><span>               <span style="color:#ae81ff">4</span> 个文件         18,152 字节
+</span></span><span style="display:flex;"><span>               <span style="color:#ae81ff">0</span> 个目录 32,365,248,512 可用字节
+</span></span></code></pre></div><p>ico文件是shadowlnk从原程序上剥离的，与原lnk完全一致。vbs脚本用于执行bat脚本，而bat脚本用于执行载荷。</p>
+<p>最终，shadowslnk会利用ico生成一个伪造lnk，并与桌面上的同lnk进行调换，至此劫持工作就完成了。</p>
+<h2 id="额外参数">额外参数
+</h2><p>这个工具还有两个我额外添加的操作，就是-r参数和-power参数</p>
+<p>如果启用了-r参数，shadowlnk会自动的替换桌面上所有lnk文件，并且因为文件夹不重名的原因，兼容性还算不错，整个替换过程中桌面用户是无感的。</p>
+<p><img src="/shadowlnk/image-9.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>但是不建议实战中使用这种效果，因为360以及国内一些杀软会检查自身是否被替换快捷文件，所以一般情况下单个的劫持已经够用了，攻击者完全可以做到落地后检索当前环境，将常用软件lnk劫持替换进行权限维持。</p>
+<p>在此之上，如果启用了-power参数，其中的vbs脚本会被替换成如下</p>
+<p><img src="/shadowlnk/image-12.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>这时，当用户启动程序后会弹出uac认证，但vbs本身就是微软程序，所以弹出来的uac认证看上去并不危险，一些人或许会因此稀里糊涂的上钩，让我们进行了权限提升。</p>
+<p><img src="/shadowlnk/image-13.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>可以看到获得的是管理员shell。这一点也需要按需使用，如果一个用户发现自己的浏览器在启动的时候每次都询问管理员权限，也是不太合理不是吗？</p>
+<p><img src="/shadowlnk/image-8.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="总结">总结
+</h2><p>这个小东西只是一个我实验性的小玩意，所做的作用就是带给大家一些新的权限维持思路，经过我的测试，在样本免杀的前提下，劫持只要不劫持杀软本身，则在劫持过程中以及触发过程中均不会被杀软报毒，但是我并不希望此工具被恶意利用，本文仅做学习展示，这警醒了防御方在如今内存查杀以及敏感行为的防御检测严格情况下，人类的交互也许是攻击者下手的便捷之道。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/">自研工具</a>
+        
+            <a href="/tags/%E7%A4%BE%E4%B9%8B%E9%AD%94%E6%B3%95/">社之魔法</a>
+        
+            <a href="/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/">权限维持</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/aircrack/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">aircrack-ng套件</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/wifiinterfaces/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">wifi网卡简记</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/80211/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">802.11帧介绍</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">渊蜂之书</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
