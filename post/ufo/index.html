@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这两天写了两篇文章一篇adcs的恶意模板发布还有shadowslnk利用，但这两篇文章我需要去先知赚点稿费，所以先等他们过审了才能传到这边。今天做个情报分析就差不多了。\n题目简介\r在 ICS 行业，您的安全团队始终需要保持最新状态，并且应该了解针对您所在行业组织的威胁。您刚开始担任威胁情报实习生，具有一些 SOC 经验。您的经理给了您一项任务，以测试您的研究技能以及您如何利用 Mitre Att&amp;ck 来发挥自己的优势。对 Sandworm Team（也称为 BlackEnergy Group 和 APT44）进行研究。利用 Mitre ATT&amp;CK 了解如何以可作的形式映射对手的行为和战术。粉碎评估并给您的经理留下深刻印象，因为威胁情报是您的热情所在。\ntask1\r根据 Mitre 援引的消息来源，沙虫团队是哪一年开始行动的？\n打开矩阵，我们能搜索Sandworm Team，我们可以看到这是一个来自俄罗斯的军事组织，最早行动于2009年\n答案：2009\ntask2\rMitre 指出，在 2016 年针对乌克兰电网的一次运动中，BlackEnergy 集团使用了两种凭证访问技术来访问受感染网络中的多个主机。一种是 LSASS 内存访问 （T1003.001）。另一个的攻击 ID 是什么？\n转到此组织2016针对乌克兰电力系统的攻击，进入矩阵\n可以看到使用的是暴力破解，也就是T1110\n答案：T1110\ntask3\r在 2016 年的活动中，观察到对手在行动中使用了 VBS 脚本。VBS 文件的名称是什么？\n不用进入矩阵，直接在2016行动全局搜索vbs\n答案：ufn.vbs\ntask4\rAPT 在 2022 年开展了一场重大运动。服务器应用程序被滥用以保持持久性。该组使用持久性技术允许他们进行远程访问的 Mitre Att&amp;ck ID 是什么？\n转到2022的攻击记录，发现还是乌克兰的电力系统，这俄罗斯去乌克兰系统和回家没什么区别\n不用进入矩阵，可以直接看到是利用webshell进行权限维持的\n答案：T1505.003\ntask5\r问题 4 中使用的恶意软件/工具的名称是什么？\n">
 <title>UFO-1-wp</title>
 
-<link rel='canonical' href='http://localhost:1313/post/ufo/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/ufo/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="UFO-1-wp">
 <meta property='og:description' content="这两天写了两篇文章一篇adcs的恶意模板发布还有shadowslnk利用，但这两篇文章我需要去先知赚点稿费，所以先等他们过审了才能传到这边。今天做个情报分析就差不多了。\n题目简介\r在 ICS 行业，您的安全团队始终需要保持最新状态，并且应该了解针对您所在行业组织的威胁。您刚开始担任威胁情报实习生，具有一些 SOC 经验。您的经理给了您一项任务，以测试您的研究技能以及您如何利用 Mitre Att&amp;ck 来发挥自己的优势。对 Sandworm Team（也称为 BlackEnergy Group 和 APT44）进行研究。利用 Mitre ATT&amp;CK 了解如何以可作的形式映射对手的行为和战术。粉碎评估并给您的经理留下深刻印象，因为威胁情报是您的热情所在。\ntask1\r根据 Mitre 援引的消息来源，沙虫团队是哪一年开始行动的？\n打开矩阵，我们能搜索Sandworm Team，我们可以看到这是一个来自俄罗斯的军事组织，最早行动于2009年\n答案：2009\ntask2\rMitre 指出，在 2016 年针对乌克兰电网的一次运动中，BlackEnergy 集团使用了两种凭证访问技术来访问受感染网络中的多个主机。一种是 LSASS 内存访问 （T1003.001）。另一个的攻击 ID 是什么？\n转到此组织2016针对乌克兰电力系统的攻击，进入矩阵\n可以看到使用的是暴力破解，也就是T1110\n答案：T1110\ntask3\r在 2016 年的活动中，观察到对手在行动中使用了 VBS 脚本。VBS 文件的名称是什么？\n不用进入矩阵，直接在2016行动全局搜索vbs\n答案：ufn.vbs\ntask4\rAPT 在 2022 年开展了一场重大运动。服务器应用程序被滥用以保持持久性。该组使用持久性技术允许他们进行远程访问的 Mitre Att&amp;ck ID 是什么？\n转到2022的攻击记录，发现还是乌克兰的电力系统，这俄罗斯去乌克兰系统和回家没什么区别\n不用进入矩阵，可以直接看到是利用webshell进行权限维持的\n答案：T1505.003\ntask5\r问题 4 中使用的恶意软件/工具的名称是什么？\n">
-<meta property='og:url' content='http://localhost:1313/post/ufo/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/ufo/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='威胁情报' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-30T18:04:36&#43;08:00'/><meta property='article:modified_time' content='2025-08-30T18:04:36&#43;08:00'/>
 <meta name="twitter:title" content="UFO-1-wp">
@@ -695,7 +695,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
