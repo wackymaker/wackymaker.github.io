@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>流量分析 on wackymaker</title>
-        <link>https://wackymaker.github.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
+        <link>http://localhost:1313/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/</link>
         <description>Recent content in 流量分析 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 27 Aug 2025 14:56:36 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 27 Aug 2025 14:56:36 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>OpTinselTrace4-wp</title>
-        <link>https://wackymaker.github.io/post/optinseltrace4/</link>
+        <link>http://localhost:1313/post/optinseltrace4/</link>
         <pubDate>Wed, 27 Aug 2025 14:56:36 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/optinseltrace4/</guid>
+        <guid>http://localhost:1313/post/optinseltrace4/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！&lt;/p&gt;
 &lt;p&gt;附件信息&lt;/p&gt;
@@ -22,7 +22,7 @@
 &lt;h2 id=&#34;攻击ip地址为&#34;&gt;攻击ip地址为？
 &lt;/h2&gt;&lt;p&gt;题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）&lt;/p&gt;
 &lt;p&gt;打开文件包，一共3800多个包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image.png&#34;
 	
 	
 	
@@ -31,7 +31,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-1.png&#34;
 	
 	
 	
@@ -43,7 +43,7 @@
 &lt;h2 id=&#34;最终攻击端口&#34;&gt;最终攻击端口
 &lt;/h2&gt;&lt;p&gt;题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）&lt;/p&gt;
 &lt;p&gt;过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-2.png&#34;
 	
 	
 	
@@ -54,7 +54,7 @@
 &lt;p&gt;答案；9100&lt;/p&gt;
 &lt;h2 id=&#34;服务器上运行的打印机的全名是什么&#34;&gt;服务器上运行的打印机的全名是什么？
 &lt;/h2&gt;&lt;p&gt;随便找几个9100的包追踪tcp，我们能找到如下文本&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-3.png&#34;
 	
 	
 	
@@ -65,7 +65,7 @@
 &lt;p&gt;答案： Northpole HP LaserJet 4200n&lt;/p&gt;
 &lt;h2 id=&#34;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单好名单上的第二个孩子叫什么名字&#34;&gt;格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？
 &lt;/h2&gt;&lt;p&gt;并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-4.png&#34;
 	
 	
 	
@@ -91,7 +91,7 @@
 &lt;/h2&gt;&lt;p&gt;题目原文（格林奇获得了一份打印作业指令文件，该文件用于一位名叫埃尔芬的员工使用的打印机。看来圣诞老人和北极管理团队已经做出了解雇 Elfin 的决定。您能否提供终止 Elfin 雇佣关系的决定背后的逐字理由？）&lt;/p&gt;
 &lt;p&gt;我们过滤data字段，查找和这个id有关的包&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Elfin&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-5.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-5.png&#34;
 	
 	
 	
@@ -104,7 +104,7 @@
 &lt;p&gt;答案：The addressed employee is confirmed to be working with grinch and team. According to Clause 69 , This calls for an immediate expulsion.&lt;/p&gt;
 &lt;h2 id=&#34;计划打印作业的名称是什么&#34;&gt;计划打印作业的名称是什么？
 &lt;/h2&gt;&lt;p&gt;过滤Job,我们能找到大约几十个流量包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-6.png&#34;
 	
 	
 	
@@ -115,7 +115,7 @@
 &lt;p&gt;随便点一个追踪流，可惜都是打印机的打印任务，找不到有用的，但是我意识到计划任务应该会有start关键词&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data contains &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Start&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;只有一个数据包，但是当中存在我们需要的内容&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-7.png&#34;
 	
 	
 	
@@ -128,7 +128,7 @@
 &lt;/h2&gt;&lt;p&gt;题目（在我们对当前数据包捕获的持续分析中，情况已经惊人地升级。我们的安全系统在一台高度关键的服务器上检测到了漏洞利用后活动的迹象，该服务器本应通过仅使用 SSH 密钥进行安全访问。这一事态发展引起了安全团队的严重担忧。在 Bytesparkle 调查此次违规行为时，他推测此次安全事件可能与早期的打印机问题有关。您能否确定并提供打印机服务器上使格林奇能够横向移动到此关键服务器的文件的完整路径？）&lt;/p&gt;
 &lt;p&gt;看来关键在于ssh&lt;/p&gt;
 &lt;p&gt;过滤后发现与上一题tcp流一致，都在46流&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-8.png&#34;
 	
 	
 	
@@ -147,7 +147,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;答案：christmas.gifts&lt;/p&gt;
 &lt;h2 id=&#34;格林奇什么时候试图从打印机中删除文件utc&#34;&gt;格林奇什么时候试图从打印机中删除文件？（UTC）
 &lt;/h2&gt;&lt;p&gt;这道题我找了很久，并不在28或者46流，当过来吧DELETE后我们找到了结果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/OpTinselTrace4/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/OpTinselTrace4/image-9.png&#34;
 	
 	
 	
@@ -161,16 +161,16 @@
         </item>
         <item>
         <title>Origins-wp</title>
-        <link>https://wackymaker.github.io/post/origins-htb/</link>
+        <link>http://localhost:1313/post/origins-htb/</link>
         <pubDate>Sat, 23 Aug 2025 18:11:16 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/origins-htb/</guid>
+        <guid>http://localhost:1313/post/origins-htb/</guid>
         <description>&lt;h2 id=&#34;题目简介&#34;&gt;题目简介
 &lt;/h2&gt;&lt;p&gt;最近在福雷拉发生了一起重大事件。大约 20 GB 的数据从内部 s3 存储桶中被盗，攻击者现在正在勒索 Forela。在根本原因分析过程中，怀疑 FTP 服务器是攻击的来源。发现该服务器也遭到入侵，一些数据被盗，导致整个环境进一步受到损害。系统会向您提供最小的 PCAP 文件。您的目标是查找暴力破解和数据泄露的证据。&lt;/p&gt;
 &lt;h2 id=&#34;攻击者ip地址&#34;&gt;攻击者ip地址
 &lt;/h2&gt;&lt;p&gt;解压提供给我们的zip获取ftp.pcap流量包&lt;/p&gt;
 &lt;p&gt;wireshark打开后显示出了题目给的547个数据包，由于提示了ftp以及爆破，我们直接过滤ftp.request.command查看ftp流量中请求命令
-&lt;img src=&#34;https://wackymaker.github.io/origins/image-2.png&#34;
+&lt;img src=&#34;http://localhost:1313/origins/image-2.png&#34;
 	
 	
 	
@@ -184,7 +184,7 @@
 &lt;/h2&gt;&lt;p&gt;将得到的ip去ip38查询&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.ip38.com/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;得到结果是印度的孟买&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-3.png&#34;
 	
 	
 	
@@ -194,7 +194,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;答案:Mumbai&lt;/p&gt;
 &lt;h2 id=&#34;备份服务器使用了哪个-ftp-应用程序输入全名和版本格式名称版本&#34;&gt;备份服务器使用了哪个 FTP 应用程序？输入全名和版本。（格式：名称版本）
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-4.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-4.png&#34;
 	
 	
 	
@@ -206,7 +206,7 @@
 &lt;p&gt;答案:vsFTPd 3.0.5&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已对服务器发起暴力攻击此攻击何时开始&#34;&gt;攻击者已对服务器发起暴力攻击。此攻击何时开始？
 &lt;/h2&gt;&lt;p&gt;在第一题中，我们已经能从显示中看出目标的爆破过程，详细打开第一个包，我们能看到第一次攻击的UTC&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-5.png&#34;
 	
 	
 	
@@ -217,7 +217,7 @@
 &lt;p&gt;答案:2024-05-03 04:12:54&lt;/p&gt;
 &lt;h2 id=&#34;授予攻击者访问权限的正确凭据是什么格式用户名密码&#34;&gt;授予攻击者访问权限的正确凭据是什么？（格式用户名：密码）
 &lt;/h2&gt;&lt;p&gt;我们从ftp请求命令往下滑看到爆破者尝试的最后一个凭证信息&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-6.png&#34;
 	
 	
 	
@@ -226,7 +226,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;我十分确信凭证就是forela-ftp:ftprocks69$，在follow了这个包的tcp下面包的信息也佐证了这一点&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-7.png&#34;
 	
 	
 	
@@ -237,7 +237,7 @@
 &lt;p&gt;答案:fore-ftp/ftprocks69$&lt;/p&gt;
 &lt;h2 id=&#34;攻击者已从服务器中泄露文件用于下载远程文件的-ftp-命令是什么&#34;&gt;攻击者已从服务器中泄露文件。用于下载远程文件的 FTP 命令是什么？
 &lt;/h2&gt;&lt;p&gt;继续查看ftp命令&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-9.png&#34;
 	
 	
 	
@@ -246,7 +246,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以看到攻击者对这个文件进行了操作，进行流追踪&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-10.png&#34;
 	
 	
 	
@@ -259,7 +259,7 @@
 &lt;h2 id=&#34;攻击者能够破坏备份-ssh-服务器的凭据此-ssh-服务器的密码是什么&#34;&gt;攻击者能够破坏备份 SSH 服务器的凭据。此 SSH 服务器的密码是什么？
 &lt;/h2&gt;&lt;p&gt;我们通过ftp-data将流经数据文件保存下来&lt;/p&gt;
 &lt;p&gt;file&amp;gt;Export Objects&amp;gt;FTP-data&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-11.png&#34;
 	
 	
 	
@@ -268,7 +268,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;选择全部保存，pdf中保存了目标ssh密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-12.png&#34;
 	
 	
 	
@@ -279,7 +279,7 @@
 &lt;p&gt;答案:**B@ckup2024!**&lt;/p&gt;
 &lt;h2 id=&#34;2023-年数据存档的-s3-存储桶-url-是什么&#34;&gt;2023 年数据存档的 s3 存储桶 URL 是什么？
 &lt;/h2&gt;&lt;p&gt;同上方式搞到的s3_buckets.txt&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/origins/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/origins/image-13.png&#34;
 	
 	
 	
