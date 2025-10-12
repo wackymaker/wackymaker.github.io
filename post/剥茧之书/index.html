@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nEvent ID(事件id)\rhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：\n1：进程创建 2：文件创建时间修改 3：网络连接 5：进程终止 11：文件创建 12：注册表对象创建和删除 13：注册表值设置 22：DNS查询 23：文件删除（带归档） 26：文件删除（不带归档） 分析\r此日志一般后缀为.evtx,要进行分析需要转换为json\nhttps://github.com/EricZimmerman/evtx .\\EvtxECmd.exe -f $待转换日志.evtx --json $输出.json 在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下\nRecords included: 169 Errors: 0 Events dropped: 0 Metrics (including dropped events) Event ID Count 1 6 2 16 3 1 5 1 7 15 10 1 11 56 12 14 13 19 15 2 17 7 22 3 23 26 26 2 Processed 1 file in 0.9008 seconds 各事件次数\r第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令\n">
 <title>剥茧之书</title>
 
-<link rel='canonical' href='http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="剥茧之书">
 <meta property='og:description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nEvent ID(事件id)\rhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：\n1：进程创建 2：文件创建时间修改 3：网络连接 5：进程终止 11：文件创建 12：注册表对象创建和删除 13：注册表值设置 22：DNS查询 23：文件删除（带归档） 26：文件删除（不带归档） 分析\r此日志一般后缀为.evtx,要进行分析需要转换为json\nhttps://github.com/EricZimmerman/evtx .\\EvtxECmd.exe -f $待转换日志.evtx --json $输出.json 在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下\nRecords included: 169 Errors: 0 Events dropped: 0 Metrics (including dropped events) Event ID Count 1 6 2 16 3 1 5 1 7 15 10 1 11 56 12 14 13 19 15 2 17 7 22 3 23 26 26 2 Processed 1 file in 0.9008 seconds 各事件次数\r第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令\n">
-<meta property='og:url' content='http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-23T21:42:11&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T21:42:11&#43;08:00'/>
 <meta name="twitter:title" content="剥茧之书">
@@ -759,7 +759,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
