@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="notes\r本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加\n域控基础指令\r域用户创建\n$Password = &#34;$pass&#34; New-ADUser -Name &#34;$username&#34; ` -SamAccountName &#34;$username&#34; ` -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) ` -Enabled $true ` -Path &#34;CN=Users,DC=域名,DC=com&#34; ` -PasswordNeverExpires $false ` -ChangePasswordAtLogon $false # 让用户加入远程管理组 Add-ADGroupMember -Identity &#34;Remote Management Users&#34; -Members &#34;$username&#34; 创建域组并让域用户加入\n# 创建域组 New-ADGroup -Name &#34;$group_name&#34; -SamAccountName &#34;$group_name&#34; -GroupScope Global -GroupCategory Security -Path &#34;CN=Users,DC=$domain,DC=com&#34; # 添加域用户 Add-ADGroupMember -Identity &#34;$group_name&#34; -Members &#34;$username&#34; 密码复杂度调整\n# 获取当前域密码策略 Import-Module ActiveDirectory Get-ADDefaultDomainPasswordPolicy # 禁用复杂性要求 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -ComplexityEnabled $false # 可选：设置最小密码长度为0 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -MinPasswordLength 0 特殊配置\r配置无预认证,需先创建用户\n">
+<title>筑巢之书</title>
+
+<link rel='canonical' href='http://localhost:1313/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="筑巢之书">
+<meta property='og:description' content="notes\r本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加\n域控基础指令\r域用户创建\n$Password = &#34;$pass&#34; New-ADUser -Name &#34;$username&#34; ` -SamAccountName &#34;$username&#34; ` -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) ` -Enabled $true ` -Path &#34;CN=Users,DC=域名,DC=com&#34; ` -PasswordNeverExpires $false ` -ChangePasswordAtLogon $false # 让用户加入远程管理组 Add-ADGroupMember -Identity &#34;Remote Management Users&#34; -Members &#34;$username&#34; 创建域组并让域用户加入\n# 创建域组 New-ADGroup -Name &#34;$group_name&#34; -SamAccountName &#34;$group_name&#34; -GroupScope Global -GroupCategory Security -Path &#34;CN=Users,DC=$domain,DC=com&#34; # 添加域用户 Add-ADGroupMember -Identity &#34;$group_name&#34; -Members &#34;$username&#34; 密码复杂度调整\n# 获取当前域密码策略 Import-Module ActiveDirectory Get-ADDefaultDomainPasswordPolicy # 禁用复杂性要求 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -ComplexityEnabled $false # 可选：设置最小密码长度为0 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -MinPasswordLength 0 特殊配置\r配置无预认证,需先创建用户\n">
+<meta property='og:url' content='http://localhost:1313/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='筑之魔法' /><meta property='article:published_time' content='2025-10-26T22:39:21&#43;08:00'/><meta property='article:modified_time' content='2025-10-26T22:39:21&#43;08:00'/>
+<meta name="twitter:title" content="筑巢之书">
+<meta name="twitter:description" content="notes\r本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加\n域控基础指令\r域用户创建\n$Password = &#34;$pass&#34; New-ADUser -Name &#34;$username&#34; ` -SamAccountName &#34;$username&#34; ` -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) ` -Enabled $true ` -Path &#34;CN=Users,DC=域名,DC=com&#34; ` -PasswordNeverExpires $false ` -ChangePasswordAtLogon $false # 让用户加入远程管理组 Add-ADGroupMember -Identity &#34;Remote Management Users&#34; -Members &#34;$username&#34; 创建域组并让域用户加入\n# 创建域组 New-ADGroup -Name &#34;$group_name&#34; -SamAccountName &#34;$group_name&#34; -GroupScope Global -GroupCategory Security -Path &#34;CN=Users,DC=$domain,DC=com&#34; # 添加域用户 Add-ADGroupMember -Identity &#34;$group_name&#34; -Members &#34;$username&#34; 密码复杂度调整\n# 获取当前域密码策略 Import-Module ActiveDirectory Get-ADDefaultDomainPasswordPolicy # 禁用复杂性要求 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -ComplexityEnabled $false # 可选：设置最小密码长度为0 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -MinPasswordLength 0 特殊配置\r配置无预认证,需先创建用户\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#notes">notes</a></li>
+    <li><a href="#域控基础指令">域控基础指令</a></li>
+    <li><a href="#特殊配置">特殊配置</a></li>
+    <li><a href="#整体环境修改">整体环境修改</a>
+      <ul>
+        <li><a href="#启用匿名smb">启用匿名smb</a></li>
+        <li><a href="#彻底关闭defender">彻底关闭defender</a></li>
+        <li><a href="#防火墙相关">防火墙相关</a></li>
+        <li><a href="#开启嵌套虚拟机">开启嵌套虚拟机</a></li>
+        <li><a href="#创建自动重复执行任务">创建自动重复执行任务</a></li>
+        <li><a href="#windows服务强化相关windows-service-hardening">windows服务强化相关（Windows Service Hardening）</a></li>
+      </ul>
+    </li>
+    <li><a href="#adcs相关">adcs相关</a></li>
+    <li><a href="#esc14部署">esc14部署</a></li>
+    <li><a href="#mssql相关">mssql相关</a>
+      <ul>
+        <li><a href="#部署数据库">部署数据库</a></li>
+        <li><a href="#数据库权限分配需sa连接数据库">数据库权限分配(需sa连接数据库)</a></li>
+        <li><a href="#创建db_oner提权路径">创建db_oner提权路径</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/" >
+                魔法书
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/">筑巢之书</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 26, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="notes">notes
+</h2><p>本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加</p>
+<h2 id="域控基础指令">域控基础指令
+</h2><p>域用户创建</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>$Password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>New-ADUser -Name <span style="color:#e6db74">&#34;</span>$username<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -SamAccountName <span style="color:#e6db74">&#34;</span>$username<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -AccountPassword <span style="color:#f92672">(</span>ConvertTo-SecureString $Password -AsPlainText -Force<span style="color:#f92672">)</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -Enabled $true <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -Path <span style="color:#e6db74">&#34;CN=Users,DC=域名,DC=com&#34;</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -PasswordNeverExpires $false <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>           -ChangePasswordAtLogon $false
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 让用户加入远程管理组</span>
+</span></span><span style="display:flex;"><span>Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Remote Management Users&#34;</span> -Members <span style="color:#e6db74">&#34;</span>$username<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>创建域组并让域用户加入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 创建域组</span>
+</span></span><span style="display:flex;"><span>New-ADGroup -Name <span style="color:#e6db74">&#34;</span>$group_name<span style="color:#e6db74">&#34;</span> -SamAccountName <span style="color:#e6db74">&#34;</span>$group_name<span style="color:#e6db74">&#34;</span> -GroupScope Global -GroupCategory Security -Path <span style="color:#e6db74">&#34;CN=Users,DC=</span>$domain<span style="color:#e6db74">,DC=com&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 添加域用户</span>
+</span></span><span style="display:flex;"><span>Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;</span>$group_name<span style="color:#e6db74">&#34;</span> -Members <span style="color:#e6db74">&#34;</span>$username<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>密码复杂度调整</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 获取当前域密码策略</span>
+</span></span><span style="display:flex;"><span>Import-Module ActiveDirectory
+</span></span><span style="display:flex;"><span>Get-ADDefaultDomainPasswordPolicy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 禁用复杂性要求</span>
+</span></span><span style="display:flex;"><span>Set-ADDefaultDomainPasswordPolicy -Identity <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -ComplexityEnabled $false
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可选：设置最小密码长度为0</span>
+</span></span><span style="display:flex;"><span>Set-ADDefaultDomainPasswordPolicy -Identity <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -MinPasswordLength <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h2 id="特殊配置">特殊配置
+</h2><p>配置无预认证,需先创建用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 获取用户对象</span>
+</span></span><span style="display:flex;"><span>$user <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>ADSI<span style="color:#f92672">]</span><span style="color:#e6db74">&#34;LDAP://CN=</span>$username<span style="color:#e6db74">,CN=Users,DC=</span>$domain<span style="color:#e6db74">,DC=com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取当前 userAccountControl 数值</span>
+</span></span><span style="display:flex;"><span>$uac <span style="color:#f92672">=</span> $user.userAccountControl.Value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 添加免预认证标志（DONT_REQUIRE_PREAUTH = 4194304）</span>
+</span></span><span style="display:flex;"><span>$user.userAccountControl <span style="color:#f92672">=</span> $uac -bor <span style="color:#ae81ff">4194304</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 保存修改</span>
+</span></span><span style="display:flex;"><span>$user.SetInfo<span style="color:#f92672">()</span>
+</span></span></code></pre></div><h2 id="整体环境修改">整体环境修改
+</h2><h3 id="启用匿名smb">启用匿名smb
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>1.开始 → 运行 → gpedit.msc，打开组策略编辑器；
+</span></span><span style="display:flex;"><span>2.依次展开<span style="color:#e6db74">&#34;计算机配置&#34;</span> → <span style="color:#e6db74">&#34;windows设置&#34;</span> → <span style="color:#e6db74">&#34;安全设置&#34;</span> → <span style="color:#e6db74">&#34;本地策略&#34;</span> → <span style="color:#e6db74">&#34;安全选项&#34;</span>，将<span style="color:#e6db74">&#34;网络访问:本地帐户的共享和安全模式&#34;</span>修改为<span style="color:#e6db74">&#34;仅来宾-本地帐户以来宾身份验证&#34;</span>；
+</span></span><span style="display:flex;"><span>3.将<span style="color:#e6db74">&#34;帐户:来宾状态账户&#34;</span>设置为<span style="color:#e6db74">&#34;已启用&#34;</span>；
+</span></span><span style="display:flex;"><span>4.设置文件夹<span style="color:#e6db74">&#34;属性&#34;</span> → <span style="color:#e6db74">&#34;共享&#34;</span> → <span style="color:#e6db74">&#34;权限&#34;</span>中 添加<span style="color:#e6db74">&#34;Everyone&#34;</span>用户；
+</span></span><span style="display:flex;"><span>5.设置文件夹<span style="color:#e6db74">&#34;属性&#34;</span> → <span style="color:#e6db74">&#34;安全&#34;</span>中 添加<span style="color:#e6db74">&#34;Everyone&#34;</span>用户。
+</span></span></code></pre></div><h3 id="彻底关闭defender">彻底关闭defender
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>首先按下win+R组合键打开运行窗口, 输入gpedit.msc，然后点击“确定”即可打开组策略。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>打开本地组策略编辑器后如下图所示，依次展开并定位至“计算机配置”→“管理模板”→“Windows组件”→“Windows Defender”→“关闭Windows Defender”，双击打开；
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>打开设置页面，勾选“已启用”后，点击确定；
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>在相同路径下，双击“实时保护”；
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>我们点击选中“实时保护”，然后在窗口右侧找到“关闭实时保护”、“打开行为监视”、“扫描所有下载文件和附件”、“监视计算机上的文件和程序活动”，依次将它们双击打开，按以下进行设置：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>“关闭实时保护”设置为“已启用”，点击“确定”，
+</span></span><span style="display:flex;"><span>“打开行为监视”设置“已禁用”，点击“确定”，
+</span></span><span style="display:flex;"><span>“扫描所有下载文件和附件”设置为“已禁用”，点击“确定”，
+</span></span><span style="display:flex;"><span>“监视计算机上的文件和程序活动”设置为“已禁用”，点击“确定”，
+</span></span></code></pre></div><h3 id="防火墙相关">防火墙相关
+</h3><h4 id="防火墙放行">防火墙放行
+</h4><p>管理员powershell运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>New-NetFirewallRule -DisplayName <span style="color:#e6db74">&#34;1433&#34;</span> -Direction Inbound -LocalPort <span style="color:#ae81ff">1433</span> -Protocol TCP -Action Allow
+</span></span></code></pre></div><h4 id="关闭外部端口允许回环访问同时放行特殊端口">关闭外部端口（允许回环访问）同时放行特殊端口
+</h4><p>设防火墙默认行为为阻止</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Set-NetFirewallProfile -All -DefaultInboundAction Block
+</span></span></code></pre></div><p>设特殊端口允许放行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>New-NetFirewallRule -DisplayName <span style="color:#e6db74">&#34;Allow External TCP 445 for SMB&#34;</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -Direction Inbound <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -Protocol TCP <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -LocalPort <span style="color:#ae81ff">445</span> <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -Action Allow <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -Profile Any <span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>    -Enabled True -Force
+</span></span></code></pre></div><h4 id="列出所有防火墙放行规则">列出所有防火墙放行规则
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-NetFirewallRule -Direction Inbound -Enabled True | 
+</span></span><span style="display:flex;"><span>    Where-Object <span style="color:#f92672">{</span> $_.Action -eq <span style="color:#e6db74">&#34;Allow&#34;</span> -or $_.Action -eq <span style="color:#e6db74">&#34;Block&#34;</span> <span style="color:#f92672">}</span> | 
+</span></span><span style="display:flex;"><span>    Format-Table -Property Name, DisplayName, Action, Enabled, Profile, 
+</span></span><span style="display:flex;"><span>    @<span style="color:#f92672">{</span>Name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Protocol&#39;</span>;Expression<span style="color:#f92672">={(</span>$PSItem | Get-NetFirewallPortFilter<span style="color:#f92672">)</span>.Protocol<span style="color:#f92672">}}</span>, 
+</span></span><span style="display:flex;"><span>    @<span style="color:#f92672">{</span>Name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;LocalPort&#39;</span>;Expression<span style="color:#f92672">={(</span>$PSItem | Get-NetFirewallPortFilter<span style="color:#f92672">)</span>.LocalPort<span style="color:#f92672">}}</span>, 
+</span></span><span style="display:flex;"><span>    @<span style="color:#f92672">{</span>Name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RemoteAddress&#39;</span>;Expression<span style="color:#f92672">={(</span>$PSItem | Get-NetFirewallAddressFilter<span style="color:#f92672">)</span>.RemoteAddress<span style="color:#f92672">}}</span>
+</span></span></code></pre></div><p>删除所有规则</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 1. 筛选出所有启用的入站 ALLOW 规则</span>
+</span></span><span style="display:flex;"><span>Get-NetFirewallRule -Direction Inbound -Enabled True | Where-Object <span style="color:#f92672">{</span> $_.Action -eq <span style="color:#e6db74">&#34;Allow&#34;</span> <span style="color:#f92672">}</span> | 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. 将它们全部删除</span>
+</span></span><span style="display:flex;"><span>    Remove-NetFirewallRule -Confirm:$false
+</span></span></code></pre></div><h3 id="开启嵌套虚拟机">开启嵌套虚拟机
+</h3><p>1,vm中将需要的虚拟机cpu设置中勾选虚拟化嵌套
+2，禁用hyper-v,powershell管理员运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Hypervisor
+</span></span></code></pre></div><p>3.在blos中启用CPU的虚拟化技术
+4，关闭基于虚拟化的安全性，管理员cmd运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bcdedit /set hypervisorlaunchtype off
+</span></span></code></pre></div><p>重启你的电脑，win+r输入msinfo32.exe回车可以查看设置，之后vm就能正常使用嵌套虚拟化</p>
+<h3 id="创建自动重复执行任务">创建自动重复执行任务
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>schtasks /Create /TN <span style="color:#e6db74">&#34;Check3AutoRun&#34;</span> /TR <span style="color:#e6db74">&#34;C:\Users\Administrator\Desktop\check.exe&#34;</span> /SC MINUTE /MO <span style="color:#ae81ff">5</span> /RL HIGHEST /F /RU SYSTEM
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>schtasks /Query /TN <span style="color:#e6db74">&#34;Check3AutoRun&#34;</span> /V /FO LIST
+</span></span></code></pre></div><h3 id="windows服务强化相关windows-service-hardening">windows服务强化相关（Windows Service Hardening）
+</h3><h4 id="禁用某服务的模拟权限">禁用某服务的模拟权限
+</h4><p>先查找服务名称，这里拿sqlserver举例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-Service | Where-Object <span style="color:#f92672">{</span>$_.DisplayName -like <span style="color:#e6db74">&#39;*SQL*&#39;</span><span style="color:#f92672">}</span> | Select-Object Name, DisplayName
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name               DisplayName
+</span></span><span style="display:flex;"><span>----               -----------
+</span></span><span style="display:flex;"><span>MSSQL$MSSQL        SQL Server <span style="color:#f92672">(</span>MSSQL<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SQLAgent$MSSQL     SQL Server 代理 <span style="color:#f92672">(</span>MSSQL<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SQLBrowser         SQL Server Browser
+</span></span><span style="display:flex;"><span>SQLTELEMETRY$MSSQL SQL Server CEIP service <span style="color:#f92672">(</span>MSSQL<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SQLWriter          SQL Server VSS Writer
+</span></span></code></pre></div><p>没修改前权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>特权名                        描述                 状态                                   
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">====================</span> <span style="color:#f92672">======</span>                          
+</span></span><span style="display:flex;"><span>SeAssignPrimaryTokenPrivilege 替换一个进程级令牌   已禁用                                      
+</span></span><span style="display:flex;"><span>SeIncreaseQuotaPrivilege      为进程调整内存配额   已禁用                                     
+</span></span><span style="display:flex;"><span>SeMachineAccountPrivilege     将工作站添加到域     已禁用                                     
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       绕过遍历检查         已启用                                   
+</span></span><span style="display:flex;"><span>SeImpersonatePrivilege        身份验证后模拟客户端 已启用                                       
+</span></span><span style="display:flex;"><span>SeCreateGlobalPrivilege       创建全局对象         已启用                                   
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege 增加进程工作集       已禁用                                    
+</span></span></code></pre></div><p>给MSSQL$MSSQL划分最小权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sc privs MSSQL$MSSQL SeChangeNotifyPrivilege
+</span></span></code></pre></div><p>修改后权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>特权名                  描述         状态                                                 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=======================</span> <span style="color:#f92672">============</span> <span style="color:#f92672">======</span>                                        
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege 绕过遍历检查 已启用                                                 
+</span></span><span style="display:flex;"><span>NULL                                                                               
+</span></span><span style="display:flex;"><span>NULL                                  
+</span></span></code></pre></div><h2 id="adcs相关">adcs相关
+</h2><p>启用域控证书信任（配置证书服务后需要设置，证书服务才能正常工作）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>1,打开 MMC → 添加证书 snap-in → 本地计算机 → 个人 → 证书
+</span></span><span style="display:flex;"><span>MMC：Windows 的管理控制台（Microsoft Management Console），可以加载各种管理插件（snap-in）。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1在 MMC 窗口中，点击菜单栏的：文件<span style="color:#f92672">(</span>File<span style="color:#f92672">)</span> → 添加/删除管理单元<span style="color:#f92672">(</span>Add/Remove Snap-in<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>在左侧列表中找到并选中：Certificates（证书）
+</span></span><span style="display:flex;"><span>点击右侧的 “添加<span style="color:#f92672">(</span>Add<span style="color:#f92672">)</span>”
+</span></span><span style="display:flex;"><span>系统会弹出一个选择框：
+</span></span><span style="display:flex;"><span>- 我的用户账户 <span style="color:#f92672">(</span>My user account<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- 服务账户 <span style="color:#f92672">(</span>Service account<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- 计算机账户 <span style="color:#f92672">(</span>Computer account<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>下一步 → 选择 “本地计算机 <span style="color:#f92672">(</span>Local computer<span style="color:#f92672">)</span>” → 完成 <span style="color:#f92672">(</span>Finish<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>2,右键 个人 → 所有任务 → 请求新证书 <span style="color:#f92672">(</span>Enroll<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>请求新证书 <span style="color:#f92672">(</span>Enroll<span style="color:#f92672">)</span> 是客户端向 CA 提交证书申请的操作
+</span></span><span style="display:flex;"><span>当你选择“请求新证书”时，本机会生成一个证书请求（CSR，Certificate Signing Request）
+</span></span><span style="display:flex;"><span>CSR 会发送给企业 CA，请求 CA 给这个域控签发一张 Domain Controller 证书
+</span></span><span style="display:flex;"><span>简单理解：你在 MMC 上点这个按钮，就是告诉 CA “请给我签发一张域控证书，我要用在 LDAPS 上”
+</span></span></code></pre></div><h2 id="esc14部署">esc14部署
+</h2><p>首先证书创建部分</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>拓展：需要包含至少智能卡登陆及客户端验证
+</span></span><span style="display:flex;"><span>安全：允许请求组注册及读取
+</span></span><span style="display:flex;"><span>使用者名称：使用ad信息生成，将使用者名称格式改为公用名，勾选电子邮件名，不要勾选在使用者名称中包括电子邮件名以及用户主体名称
+</span></span></code></pre></div><p>为目标用户写入关于邮件的显示证书映射，邮件名称随便</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Set-ADUser -Identity <span style="color:#e6db74">&#34;test&#34;</span> -Add @<span style="color:#f92672">{</span>altSecurityIdentities<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X509:&lt;RFC822&gt;test@mssql.com&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>之后就是血缇之书中的利用了，任何允许请求这个证书的用户，都可以将自己的邮件写为test@mssql.com，之后请求完证书去以目标用户认证</p>
+<h2 id="mssql相关">mssql相关
+</h2><h3 id="部署数据库">部署数据库
+</h3><p>首先在微软下载数据库安装包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://info.microsoft.com/ww-landing-sql-server-2022.html?culture<span style="color:#f92672">=</span>en-us&amp;country<span style="color:#f92672">=</span>US
+</span></span></code></pre></div><p>当安装开始后按照下面的步骤部署</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Log into your server with an administrator account.
+</span></span><span style="display:flex;"><span>使用管理员帐户登录您的服务器。
+</span></span><span style="display:flex;"><span>Download the SQL <span style="color:#ae81ff">2022</span> Installation Media or insert a media disk.
+</span></span><span style="display:flex;"><span>下载 SQL <span style="color:#ae81ff">2022</span> 安装媒体或插入媒体磁盘。
+</span></span><span style="display:flex;"><span>Browse to the download location and double-click Setup.exe to begin the installation.
+</span></span><span style="display:flex;"><span>浏览到下载位置并双击 Setup.exe 开始安装。
+</span></span><span style="display:flex;"><span>Select Custom <span style="color:#66d9ef">for</span> Installation Type.
+</span></span><span style="display:flex;"><span>安装类型选择自定义 。
+</span></span><span style="display:flex;"><span>Choose a Media Location and click Install to begin downloading the installation files..
+</span></span><span style="display:flex;"><span>选择媒体位置并单击“安装”开始下载安装文件。
+</span></span><span style="display:flex;"><span>Click Installation located on the left side.
+</span></span><span style="display:flex;"><span>单击左侧的 “安装” 。
+</span></span><span style="display:flex;"><span>Click New SQL Server stand-alone installation or add features to an existing installation to open the SQL Server <span style="color:#ae81ff">2022</span> window.
+</span></span><span style="display:flex;"><span>单击“新的 SQL Server 独立安装”或“向现有安装添加功能”以打开 SQL Server <span style="color:#ae81ff">2022</span> 窗口。
+</span></span><span style="display:flex;"><span>Click Next <span style="color:#66d9ef">if</span> prompted to download Product Updates.
+</span></span><span style="display:flex;"><span>如果提示下载产品更新， 请单击 “下一步” 。
+</span></span><span style="display:flex;"><span>Enter a Product Key or <span style="color:#66d9ef">select</span> a free edition, <span style="color:#66d9ef">then</span> click Next.  
+</span></span><span style="display:flex;"><span>输入产品密钥或选择免费版本，然后单击 “下一步” 。
+</span></span><span style="display:flex;"><span>Click I accept the license terms, <span style="color:#66d9ef">then</span> Next.
+</span></span><span style="display:flex;"><span>单击 “我接受许可条款” ，然后单击“下一步” 。
+</span></span><span style="display:flex;"><span>Click Next on the Install Rules window.
+</span></span><span style="display:flex;"><span>在“安装规则”窗口中单击“下一步”。
+</span></span><span style="display:flex;"><span>Note: It<span style="color:#960050;background-color:#1e0010">&#39;</span>s normal to see a warning <span style="color:#66d9ef">for</span> Windows Firewall. Adding Firewall Exceptions is recommended after setting up SQL.
+</span></span><span style="display:flex;"><span>注意： Windows 防火墙出现警告是正常现象。建议在设置 SQL 后添加防火墙例外 。
+</span></span><span style="display:flex;"><span>If you purchased Azure Extension <span style="color:#66d9ef">for</span> SQL, enter your account details, otherwise uncheck the box and click Next.
+</span></span><span style="display:flex;"><span>如果您购买了 Azure Extension <span style="color:#66d9ef">for</span> SQL ，请输入您的帐户详细信息，否则取消选中该框并单击 “下一步” 。
+</span></span><span style="display:flex;"><span>Check the Database Engine Services box on the Feature Selection window, <span style="color:#66d9ef">then</span> click Next.
+</span></span><span style="display:flex;"><span>选中数据库引擎服务框   在功能选择窗口中，然后单击下一步 。
+</span></span><span style="display:flex;"><span>Juris only requires installing Database Engine Services. Client Connectivity is automatically installed on SQL 2022. 
+</span></span><span style="display:flex;"><span>Juris 仅需要安装数据库引擎服务 。 客户端连接已在 SQL <span style="color:#ae81ff">2022</span> 上自动安装。  
+</span></span><span style="display:flex;"><span>SQL Server Replication is not compatible with Juris. All other SQL features are optional based on firm needs.
+</span></span><span style="display:flex;"><span>SQL Server Replication 与 Juris 不兼容。所有其他 SQL 功能均可根据公司需求选择。
+</span></span><span style="display:flex;"><span>Specify Instance Root and Shared Feature directories, or accept the default locations.
+</span></span><span style="display:flex;"><span>指定实例根目录和共享功能目录，或接受默认位置。
+</span></span><span style="display:flex;"><span>Enter a desired name <span style="color:#f92672">(</span>such as Juris<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> the Named Instance and Instance ID <span style="color:#66d9ef">then</span> click Next to open Server Configuration.
+</span></span><span style="display:flex;"><span>为命名实例和实例 ID 输入所需的名称（例如 Juris），然后单击下一步打开服务器配置。
+</span></span><span style="display:flex;"><span>Ensure Startup Types <span style="color:#66d9ef">for</span> SQL Server Database Engine and SQL Server Browser are set to Automatic, <span style="color:#66d9ef">then</span> click Next to open Database Engine Configuration.
+</span></span><span style="display:flex;"><span>确保 SQL Server 数据库引擎和 SQL Server 浏览器的启动类型设置为自动，然后单击下一步打开数据库引擎配置 。
+</span></span><span style="display:flex;"><span>On the Server Configuration tab:
+</span></span><span style="display:flex;"><span>在服务器配置选项卡上：
+</span></span><span style="display:flex;"><span>Select Mixed Mode <span style="color:#f92672">(</span>SQL Server authentication and Windows Authentication<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> Authentication Type.
+</span></span><span style="display:flex;"><span>对于身份验证类型， 选择混合模式 （ SQL Server 身份验证和 Windows 身份验证） 。
+</span></span><span style="display:flex;"><span>Enter and confirm the desired password <span style="color:#66d9ef">for</span> the built-in <span style="color:#f92672">(</span>sa<span style="color:#f92672">)</span> administrator account.
+</span></span><span style="display:flex;"><span>输入并确认内置（sa）管理员帐户所需的密码。
+</span></span><span style="display:flex;"><span>Click Add Current User under Specify SQL Server Administrators. Click Add <span style="color:#66d9ef">if</span> you want to add additional users.
+</span></span><span style="display:flex;"><span>单击 “指定 SQL Server 管理员” 下的 “添加当前用户” 。如果要添加其他用户，请单击 “添加” 。
+</span></span><span style="display:flex;"><span>Click Next when you a finished making Database Engine Configuration choices.
+</span></span><span style="display:flex;"><span>完成数据库引擎配置选择后，单击 “下一步” 。
+</span></span><span style="display:flex;"><span>Click Next on the Ready to Install window.
+</span></span><span style="display:flex;"><span>在 “准备安装 ”窗口中单击 “下一步” 。
+</span></span><span style="display:flex;"><span>Click Close on the Complete window.
+</span></span><span style="display:flex;"><span>单击 “完成” 窗口中的 “关闭” 。
+</span></span></code></pre></div><p>部署完毕后放行1433端口</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>netsh advfirewall firewall add rule name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SQLServerTCP1433&#34;</span> dir<span style="color:#f92672">=</span>in action<span style="color:#f92672">=</span>allow protocol<span style="color:#f92672">=</span>TCP localport<span style="color:#f92672">=</span><span style="color:#ae81ff">1433</span>
+</span></span></code></pre></div><p>最后将mssql默认的动态端口修改为固定端口</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>打开 “SQL Server 配置管理器”
+</span></span><span style="display:flex;"><span>进入 SQL Server 网络配置 → 协议 <span style="color:#66d9ef">for</span> <span style="color:#f92672">[</span>实例名<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>选择tcp并双击进入设置
+</span></span><span style="display:flex;"><span>选择ip地址将需要的活动ip的活动都改为是，已启用改为是，tcp端口改为1433，tcp动态端口全部改为空，注意是空不是零，包括最下面的ipall
+</span></span><span style="display:flex;"><span>修改完毕后选择左侧的sql server服务并重启实例
+</span></span></code></pre></div><h3 id="数据库权限分配需sa连接数据库">数据库权限分配(需sa连接数据库)
+</h3><p>将某个域组或者域用户创建登陆权限，并分配连接权限以及查看数据库的权限（服务器级权限）,注意这里使用NetBIOS格式名称</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>IF NOT EXISTS <span style="color:#f92672">(</span>SELECT <span style="color:#ae81ff">1</span> FROM sys.server_principals WHERE name<span style="color:#f92672">=</span>N<span style="color:#e6db74">&#39;$domaim\$user_or_group&#39;</span><span style="color:#f92672">)</span> BEGIN CREATE LOGIN <span style="color:#f92672">[</span>$domain<span style="color:#ae81ff">\$</span>user_or_group<span style="color:#f92672">]</span> FROM WINDOWS; END; GRANT CONNECT SQL TO <span style="color:#f92672">[</span>$domain<span style="color:#ae81ff">\$</span>user_or_group<span style="color:#f92672">]</span>; GRANT VIEW ANY DATABASE TO <span style="color:#f92672">[</span>$domain<span style="color:#ae81ff">\$</span>user_or_group<span style="color:#f92672">]</span>;
+</span></span></code></pre></div><p>创建数据库并指定所有者为sa</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>CREATE DATABASE <span style="color:#f92672">[</span>$db_name<span style="color:#f92672">]</span>; ALTER AUTHORIZATION ON DATABASE::<span style="color:#f92672">[</span>test<span style="color:#f92672">]</span> TO sa;
+</span></span></code></pre></div><h3 id="创建db_oner提权路径">创建db_oner提权路径
+</h3><p>首先我们需要一个数据库，并且赋予一个普通用户此库的db_oner权限，注意使用NetBIOS格式名称</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use $db
+</span></span><span style="display:flex;"><span>EXEC sp_addrolemember N<span style="color:#e6db74">&#39;db_owner&#39;</span>, N<span style="color:#e6db74">&#39;$domain\$user_or_group&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## 之后确认数据库确实oner为sa</span>
+</span></span><span style="display:flex;"><span>ALTER AUTHORIZATION ON DATABASE::<span style="color:#f92672">[</span>$db<span style="color:#f92672">]</span> TO <span style="color:#f92672">[</span>$odmain<span style="color:#ae81ff">\A</span>dministrator<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## 开启这个数据库的TRUSTWORTHY on属性</span>
+</span></span><span style="display:flex;"><span>ALTER DATABASE <span style="color:#f92672">[</span>$db<span style="color:#f92672">]</span> SET TRUSTWORTHY ON;
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%AD%91%E4%B9%8B%E9%AD%94%E6%B3%95/">筑之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

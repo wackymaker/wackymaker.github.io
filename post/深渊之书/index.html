@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="notes\r本笔记记录二进制相关内容，不限于pwn与逆向，会随着我的学习逐渐添加内容\nlinxu相关\relf64_asm汇编\r生成逻辑与脚本\n┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ ./asmmake.sh helloword.s Hello word! ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat helloword.s global _start section .data message db &#34;Hello word&#34; length equ $-message section .text _start: mov rax, 1 mov rdi, 1 mov rsi, message mov rdx, length syscall mov rax, 60 mov rdi, 0 syscall ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat asmmake.sh #!/bin/bash fileName=&#34;${1%%.*}&#34; # remove .s extension nasm -f elf64 ${fileName}&#34;.s&#34; ld ${fileName}&#34;.o&#34; -o ${fileName} [ &#34;$2&#34; == &#34;-g&#34; ] &amp;&amp; gdb -q ${fileName} || ./${fileName} 查找64_linux_syscall\n">
+<title>深渊之书</title>
+
+<link rel='canonical' href='http://localhost:1313/post/%E6%B7%B1%E6%B8%8A%E4%B9%8B%E4%B9%A6/'>
+
+<link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="深渊之书">
+<meta property='og:description' content="notes\r本笔记记录二进制相关内容，不限于pwn与逆向，会随着我的学习逐渐添加内容\nlinxu相关\relf64_asm汇编\r生成逻辑与脚本\n┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ ./asmmake.sh helloword.s Hello word! ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat helloword.s global _start section .data message db &#34;Hello word&#34; length equ $-message section .text _start: mov rax, 1 mov rdi, 1 mov rsi, message mov rdx, length syscall mov rax, 60 mov rdi, 0 syscall ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat asmmake.sh #!/bin/bash fileName=&#34;${1%%.*}&#34; # remove .s extension nasm -f elf64 ${fileName}&#34;.s&#34; ld ${fileName}&#34;.o&#34; -o ${fileName} [ &#34;$2&#34; == &#34;-g&#34; ] &amp;&amp; gdb -q ${fileName} || ./${fileName} 查找64_linux_syscall\n">
+<meta property='og:url' content='http://localhost:1313/post/%E6%B7%B1%E6%B8%8A%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:site_name' content='wackymaker'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='0&amp;1之魔法' /><meta property='article:published_time' content='2025-10-26T22:39:28&#43;08:00'/><meta property='article:modified_time' content='2025-10-26T22:39:28&#43;08:00'/>
+<meta name="twitter:title" content="深渊之书">
+<meta name="twitter:description" content="notes\r本笔记记录二进制相关内容，不限于pwn与逆向，会随着我的学习逐渐添加内容\nlinxu相关\relf64_asm汇编\r生成逻辑与脚本\n┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ ./asmmake.sh helloword.s Hello word! ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat helloword.s global _start section .data message db &#34;Hello word&#34; length equ $-message section .text _start: mov rax, 1 mov rdi, 1 mov rsi, message mov rdx, length syscall mov rax, 60 mov rdi, 0 syscall ┌──(wackymaker㉿kali)-[~/tools/code/asm] └─$ cat asmmake.sh #!/bin/bash fileName=&#34;${1%%.*}&#34; # remove .s extension nasm -f elf64 ${fileName}&#34;.s&#34; ld ${fileName}&#34;.o&#34; -o ${fileName} [ &#34;$2&#34; == &#34;-g&#34; ] &amp;&amp; gdb -q ${fileName} || ./${fileName} 查找64_linux_syscall\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_6baab66dae07af16.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">wackymaker</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/wackymaker'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#notes">notes</a></li>
+    <li><a href="#linxu相关">linxu相关</a>
+      <ul>
+        <li><a href="#elf64_asm汇编">elf64_asm汇编</a></li>
+        <li><a href="#gdb使用">gdb使用</a></li>
+        <li><a href="#pwntools使用">pwntools使用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/" >
+                魔法书
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/%E6%B7%B1%E6%B8%8A%E4%B9%8B%E4%B9%A6/">深渊之书</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 26, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="notes">notes
+</h2><p>本笔记记录二进制相关内容，不限于pwn与逆向，会随着我的学习逐渐添加内容</p>
+<h2 id="linxu相关">linxu相关
+</h2><h3 id="elf64_asm汇编">elf64_asm汇编
+</h3><p>生成逻辑与脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/code/asm<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ ./asmmake.sh helloword.s
+</span></span><span style="display:flex;"><span>Hello word!
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/code/asm<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat helloword.s 
+</span></span><span style="display:flex;"><span>global _start
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>section .data
+</span></span><span style="display:flex;"><span>    message db <span style="color:#e6db74">&#34;Hello word&#34;</span>
+</span></span><span style="display:flex;"><span>    length equ $-message
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>section .text
+</span></span><span style="display:flex;"><span>_start:
+</span></span><span style="display:flex;"><span>    mov rax, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    mov rdi, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    mov rsi, message
+</span></span><span style="display:flex;"><span>    mov rdx, length
+</span></span><span style="display:flex;"><span>    syscall
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    mov rax, <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>    mov rdi, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    syscall
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>wackymaker㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~/tools/code/asm<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ cat asmmake.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fileName<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>1%%.*<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#75715e"># remove .s extension</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nasm -f elf64 <span style="color:#e6db74">${</span>fileName<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;.s&#34;</span>
+</span></span><span style="display:flex;"><span>ld <span style="color:#e6db74">${</span>fileName<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;.o&#34;</span> -o <span style="color:#e6db74">${</span>fileName<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$2<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-g&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> gdb -q <span style="color:#e6db74">${</span>fileName<span style="color:#e6db74">}</span> <span style="color:#f92672">||</span> ./<span style="color:#e6db74">${</span>fileName<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><p>查找64_linux_syscall</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wackymaker@htb<span style="color:#f92672">[</span>/htb<span style="color:#f92672">]</span>$ grep exit /usr/include/x86_64-linux-gnu/asm/unistd_64.h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define __NR_exit 60</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define __NR_exit_group 231</span>
+</span></span></code></pre></div><p>查找其使用参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wackymaker@htb<span style="color:#f92672">[</span>/htb<span style="color:#f92672">]</span>$ man -s <span style="color:#ae81ff">2</span> exit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...SNIP...
+</span></span><span style="display:flex;"><span>void _exit<span style="color:#f92672">(</span>int status<span style="color:#f92672">)</span>;
+</span></span></code></pre></div><h3 id="gdb使用">gdb使用
+</h3><p>安装gef插件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wget -O ~/.gdbinit-gef.py -q https://gef.blah.cat/py
+</span></span><span style="display:flex;"><span>echo source ~/.gdbinit-gef.py &gt;&gt; ~/.gdbinit
+</span></span></code></pre></div><p>开始反编译</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>gdb -q ./helloWorld
+</span></span></code></pre></div><h4 id="查找命令相关简要记录查找">查找命令相关简要记录(查找)
+</h4><p>运行前或运行中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>info functions <span style="color:#75715e">#查找所有函数函数</span>
+</span></span><span style="display:flex;"><span>info variables <span style="color:#75715e">#查找所有可用变量</span>
+</span></span><span style="display:flex;"><span>info breakpoints <span style="color:#75715e">#查找所有已经设置的断点</span>
+</span></span><span style="display:flex;"><span>x/s 0x402000 <span style="color:#75715e">#查找0x402000地址中的值并字符串输出</span>
+</span></span><span style="display:flex;"><span>x/wx 0x401000 <span style="color:#75715e">#查找0x401000地址中的值并十六进制输出</span>
+</span></span></code></pre></div><p>运行中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>registers <span style="color:#75715e">#查看所有寄存器</span>
+</span></span></code></pre></div><h4 id="disas命令相关简要记录查函数">disas命令相关简要记录(查函数)
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>disas $函数名 <span style="color:#75715e"># 查看函数具体汇编</span>
+</span></span></code></pre></div><h4 id="break命令相关记录下断点">break命令相关记录(下断点)
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>b <span style="color:#f92672">[</span>目标<span style="color:#f92672">]</span> <span style="color:#75715e">#在目标地址下断点 比如</span>
+</span></span><span style="display:flex;"><span>b _start <span style="color:#75715e">#在_start函数起始下断点</span>
+</span></span><span style="display:flex;"><span>b *_start+10 <span style="color:#75715e">#在_start+10的位置下断点</span>
+</span></span><span style="display:flex;"><span>b *0x401015 <span style="color:#75715e">#在0x401015处下断点</span>
+</span></span></code></pre></div><h4 id="启动与运行相关指令">启动与运行相关指令
+</h4><p>启动程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>run
+</span></span></code></pre></div><p>步进</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>si
+</span></span></code></pre></div><p>步过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>step
+</span></span></code></pre></div><p>持续运行至断点或结束</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>c
+</span></span></code></pre></div><h3 id="pwntools使用">pwntools使用
+</h3><p>安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo pip3 install pwntools
+</span></span></code></pre></div><p>详细使用文档</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://docs.pwntools.com/en/stable/asm.html
+</span></span></code></pre></div><h4 id="汇编与shellcode转换">汇编与shellcode转换
+</h4><p>汇编转shellcode</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pwn asm <span style="color:#e6db74">&#39;$指令&#39;</span>  -c <span style="color:#e6db74">&#39;$架构&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 例:pwn asm &#39;push rax&#39;  -c &#39;amd64&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  0:    50                       push   eax</span>
+</span></span></code></pre></div><p>shellcode转换汇编</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pwn disasm <span style="color:#e6db74">&#39;$shellcode&#39;</span> -c <span style="color:#e6db74">&#39;$架构&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 例:pwn disasm &#39;50&#39; -c &#39;amd64&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  0:    50                       push   eax</span>
+</span></span></code></pre></div><h4 id="应用程序转换shellcode">应用程序转换shellcode
+</h4><p>脚本如下，适应不同架构需要改动</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/python3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>import sys
+</span></span><span style="display:flex;"><span>from pwn import *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">(</span>os<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linux&#34;</span>, arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;amd64&#34;</span>, log_level<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;error&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file <span style="color:#f92672">=</span> ELF<span style="color:#f92672">(</span>sys.argv<span style="color:#f92672">[</span>1<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>shellcode <span style="color:#f92672">=</span> file.section<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;.text&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span>shellcode.hex<span style="color:#f92672">())</span>
+</span></span></code></pre></div><p>使用例如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 shellcoder.py helloworld
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>48be0020400000000000bf01000000ba12000000b8010000000f05b83c000000bf000000000f05
+</span></span></code></pre></div><h4 id="shellcode_loader">shellcode_loader
+</h4><p>脚本如下，适应不同架构需要改动</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/python3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>import sys
+</span></span><span style="display:flex;"><span>from pwn import *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">(</span>os<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linux&#34;</span>, arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;amd64&#34;</span>, log_level<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;error&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>run_shellcode<span style="color:#f92672">(</span>unhex<span style="color:#f92672">(</span>sys.argv<span style="color:#f92672">[</span>1<span style="color:#f92672">]))</span>.interactive<span style="color:#f92672">()</span>
+</span></span></code></pre></div><p>使用例如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 loader.py <span style="color:#e6db74">&#39;4831db66bb79215348bb422041636164656d5348bb48656c6c6f204854534889e64831c0b0014831ff40b7014831d2b2120f054831c0043c4030ff0f05&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hello word!
+</span></span></code></pre></div><h4 id="shellcraft库使用常用shell载荷">shellcraft库使用(常用shell载荷)
+</h4><p>查找某架构可用载荷</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pwn shellcraft -l <span style="color:#e6db74">&#39;$架构.$系统&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 采取通配使用，所以很好查找，比如查找amd64的linux的sh运行</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># pwn shellcraft -l &#39;amd64.linux.sh&#39;</span>
+</span></span></code></pre></div><p>当查找到后可以显示shellcode</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pwn shellcraft amd64.linux.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>6a6848b82f62696e2f2f2f.......34240101010131f6566a085e4801e6564889e631d26a3b580f05
+</span></span></code></pre></div><p>也可以直接-r运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pwn shellcraft amd64.linux.sh -r
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ whoami
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root
+</span></span></code></pre></div><p>也可以使用python3解释器完全解锁 shellcraft ，并使用带参数的高级系统调用</p>
+<p>可以使用dir(shellcraft)列出所有可用系统调用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; from pwn import *
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; context<span style="color:#f92672">(</span>os<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linux&#34;</span>, arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;amd64&#34;</span>, log_level<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;error&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; dir<span style="color:#f92672">(</span>shellcraft<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...SNIP... <span style="color:#e6db74">&#39;execve&#39;</span>, <span style="color:#e6db74">&#39;exit&#39;</span>, <span style="color:#e6db74">&#39;exit_group&#39;</span>, ... SNIP...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>使用系统调用（举例execve）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>&gt;&gt;&gt; syscall <span style="color:#f92672">=</span> shellcraft.execve<span style="color:#f92672">(</span>path<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/bin/sh&#39;</span>,argv<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;/bin/sh&#39;</span><span style="color:#f92672">])</span> <span style="color:#75715e"># syscall and args</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; asm<span style="color:#f92672">(</span>syscall<span style="color:#f92672">)</span>.hex<span style="color:#f92672">()</span> <span style="color:#75715e"># print shellcode</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;48b801010101010101015048b82e63686f2e726901483104244889e748b801010101010101015048b82e63686f2e7269014831042431f6566a085e4801e6564889e631d26a3b580f05&#39;</span>
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/01%E4%B9%8B%E9%AD%94%E6%B3%95/">0&amp;1之魔法</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 wackymaker
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

