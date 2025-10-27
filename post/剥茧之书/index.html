@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nEvent ID(事件id)\rhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：\n1：进程创建 2：文件创建时间修改 3：网络连接 5：进程终止 11：文件创建 12：注册表对象创建和删除 13：注册表值设置 22：DNS查询 23：文件删除（带归档） 26：文件删除（不带归档） 分析\r此日志一般后缀为.evtx,要进行分析需要转换为json\nhttps://github.com/EricZimmerman/evtx .\\EvtxECmd.exe -f $待转换日志.evtx --json $输出.json 在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下\nRecords included: 169 Errors: 0 Events dropped: 0 Metrics (including dropped events) Event ID Count 1 6 2 16 3 1 5 1 7 15 10 1 11 56 12 14 13 19 15 2 17 7 22 3 23 26 26 2 Processed 1 file in 0.9008 seconds 各事件次数\r第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nsysmon部署\r下载\nhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 激活\nsysmon.exe -i -accepteula -h md5,sha256,imphash -l -n 导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等\nhttps://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml 下载后将配置文件中需要检测的部分中的参数进行修改\n#include更改为exclude # 比如 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;include&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; #改为 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;exclude&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; 导入配置\n">
 <title>剥茧之书</title>
 
 <link rel='canonical' href='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="剥茧之书">
-<meta property='og:description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nEvent ID(事件id)\rhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：\n1：进程创建 2：文件创建时间修改 3：网络连接 5：进程终止 11：文件创建 12：注册表对象创建和删除 13：注册表值设置 22：DNS查询 23：文件删除（带归档） 26：文件删除（不带归档） 分析\r此日志一般后缀为.evtx,要进行分析需要转换为json\nhttps://github.com/EricZimmerman/evtx .\\EvtxECmd.exe -f $待转换日志.evtx --json $输出.json 在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下\nRecords included: 169 Errors: 0 Events dropped: 0 Metrics (including dropped events) Event ID Count 1 6 2 16 3 1 5 1 7 15 10 1 11 56 12 14 13 19 15 2 17 7 22 3 23 26 26 2 Processed 1 file in 0.9008 seconds 各事件次数\r第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令\n">
+<meta property='og:description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nsysmon部署\r下载\nhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 激活\nsysmon.exe -i -accepteula -h md5,sha256,imphash -l -n 导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等\nhttps://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml 下载后将配置文件中需要检测的部分中的参数进行修改\n#include更改为exclude # 比如 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;include&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; #改为 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;exclude&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; 导入配置\n">
 <meta property='og:url' content='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-23T21:42:11&#43;08:00'/><meta property='article:modified_time' content='2025-08-23T21:42:11&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-10-26T21:42:11&#43;08:00'/><meta property='article:modified_time' content='2025-10-26T21:42:11&#43;08:00'/>
 <meta name="twitter:title" content="剥茧之书">
-<meta name="twitter:description" content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nEvent ID(事件id)\rhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：\n1：进程创建 2：文件创建时间修改 3：网络连接 5：进程终止 11：文件创建 12：注册表对象创建和删除 13：注册表值设置 22：DNS查询 23：文件删除（带归档） 26：文件删除（不带归档） 分析\r此日志一般后缀为.evtx,要进行分析需要转换为json\nhttps://github.com/EricZimmerman/evtx .\\EvtxECmd.exe -f $待转换日志.evtx --json $输出.json 在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下\nRecords included: 169 Errors: 0 Events dropped: 0 Metrics (including dropped events) Event ID Count 1 6 2 16 3 1 5 1 7 15 10 1 11 56 12 14 13 19 15 2 17 7 22 3 23 26 26 2 Processed 1 file in 0.9008 seconds 各事件次数\r第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令\n">
+<meta name="twitter:description" content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nsysmon部署\r下载\nhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 激活\nsysmon.exe -i -accepteula -h md5,sha256,imphash -l -n 导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等\nhttps://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml 下载后将配置文件中需要检测的部分中的参数进行修改\n#include更改为exclude # 比如 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;include&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; #改为 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;exclude&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; 导入配置\n">
     </head>
     <body class="
     article-page
@@ -209,14 +209,24 @@
   <ul>
     <li><a href="#事件日志分析">事件日志分析</a>
       <ul>
+        <li><a href="#sysmon部署">sysmon部署</a></li>
         <li><a href="#event-id事件id">Event ID(事件id)</a></li>
         <li><a href="#分析">分析</a></li>
         <li><a href="#隼鸟快速使用">隼鸟快速使用</a></li>
+        <li><a href="#特殊安全事件速查">特殊安全事件速查</a></li>
       </ul>
     </li>
     <li><a href="#流量分析">流量分析</a>
       <ul>
         <li><a href="#tcpdump使用">tcpdump使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#恶意软件分析相关">恶意软件分析相关</a>
+      <ul>
+        <li><a href="#linux静态分析pe载荷">linux静态分析（pe载荷）</a></li>
+        <li><a href="#windows静态分析pe载荷">windows静态分析（pe载荷）</a></li>
+        <li><a href="#动态分析">动态分析</a></li>
+        <li><a href="#逆向工程及调试">逆向工程及调试</a></li>
       </ul>
     </li>
   </ul>
@@ -268,7 +278,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 23, 2025</time>
+                <time class="article-time--published">Oct 26, 2025</time>
             </div>
         
 
@@ -283,7 +293,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    6 minute read
                 </time>
             </div>
         
@@ -300,7 +310,34 @@
     
     <h2 id="事件日志分析">事件日志分析
 </h2><p>Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。</p>
-<h3 id="event-id事件id">Event ID(事件id)
+<h3 id="sysmon部署">sysmon部署
+</h3><p>下载</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+</span></span></code></pre></div><p>激活</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sysmon.exe -i -accepteula -h md5,sha256,imphash -l -n
+</span></span></code></pre></div><p>导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml
+</span></span></code></pre></div><p>下载后将配置文件中需要检测的部分中的参数进行修改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e">#include更改为exclude</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 比如</span>
+</span></span><span style="display:flex;"><span>	&lt;RuleGroup name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> groupRelation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;or&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>		&lt;FileCreateTime onmatch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;include&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>			&lt;Image name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;begin with&#34;</span>&gt;C:<span style="color:#ae81ff">\U</span>sers&lt;/Image&gt; &lt;!--Look <span style="color:#66d9ef">for</span> timestomping in user area, usually nothing should be doing that here--&gt;
+</span></span><span style="display:flex;"><span>			&lt;TargetFilename name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;end with&#34;</span>&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look <span style="color:#66d9ef">for</span> backdated executables anywhere--&gt;
+</span></span><span style="display:flex;"><span>			&lt;Image name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;begin with&#34;</span>&gt;<span style="color:#ae81ff">\D</span>evice<span style="color:#ae81ff">\H</span>arddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden <span style="color:#f92672">[</span> https://twitter.com/SBousseaden/status/1133030955407630336 <span style="color:#f92672">]</span> --&gt;
+</span></span><span style="display:flex;"><span>		&lt;/FileCreateTime&gt;
+</span></span><span style="display:flex;"><span>	&lt;/RuleGroup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#改为</span>
+</span></span><span style="display:flex;"><span>	&lt;RuleGroup name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> groupRelation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;or&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>		&lt;FileCreateTime onmatch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;exclude&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>			&lt;Image name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;begin with&#34;</span>&gt;C:<span style="color:#ae81ff">\U</span>sers&lt;/Image&gt; &lt;!--Look <span style="color:#66d9ef">for</span> timestomping in user area, usually nothing should be doing that here--&gt;
+</span></span><span style="display:flex;"><span>			&lt;TargetFilename name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;end with&#34;</span>&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look <span style="color:#66d9ef">for</span> backdated executables anywhere--&gt;
+</span></span><span style="display:flex;"><span>			&lt;Image name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;T1099&#34;</span> condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;begin with&#34;</span>&gt;<span style="color:#ae81ff">\D</span>evice<span style="color:#ae81ff">\H</span>arddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden <span style="color:#f92672">[</span> https://twitter.com/SBousseaden/status/1133030955407630336 <span style="color:#f92672">]</span> --&gt;
+</span></span><span style="display:flex;"><span>		&lt;/FileCreateTime&gt;
+</span></span><span style="display:flex;"><span>	&lt;/RuleGroup&gt;
+</span></span></code></pre></div><p>导入配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>C:<span style="color:#ae81ff">\T</span>ools<span style="color:#ae81ff">\S</span>ysmon&gt; sysmon.exe -c sysmonconfig-export.xml
+</span></span></code></pre></div><h3 id="event-id事件id">Event ID(事件id)
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events
 </span></span></code></pre></div><p>Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>    1：进程创建
@@ -442,6 +479,34 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hayabusa search -f Windows-Powershell-Operational.evtx -k <span style="color:#e6db74">&#34;keyword“ -J -o &#34;</span>this.json<span style="color:#e6db74">&#34;
 </span></span></span></code></pre></div><p>以时间线输出csv,可以手动选择匹配模式，一般选最大</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+</span></span></code></pre></div><h3 id="特殊安全事件速查">特殊安全事件速查
+</h3><p>痕迹清除痕迹</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">1102</span> <span style="color:#f92672">(</span>The audit log was cleared<span style="color:#f92672">)</span> ：清除审计日志通常是试图删除入侵或恶意活动证据的迹象。
+</span></span></code></pre></div><p>登陆相关(爆破)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4625</span> <span style="color:#f92672">(</span>Failed Logon<span style="color:#f92672">)</span> ：此事件记录登录失败的次数。多次登录失败可能意味着正在进行暴力攻击。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4624</span> <span style="color:#f92672">(</span>Successful Logon<span style="color:#f92672">)</span> ：此事件记录成功登录事件。此信息对于建立正常的用户行为至关重要。异常行为（例如在非正常时间或从不同地点尝试登录）可能预示着潜在的安全威胁。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4672</span> <span style="color:#f92672">(</span>Special Privileges Assigned to a New Logon<span style="color:#f92672">)</span> ：每当帐户以超级用户权限登录时，都会记录此事件。跟踪这些事件有助于确保超级用户权限不会被滥用或恶意使用
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4648</span> <span style="color:#f92672">(</span>A logon was attempted using explicit credentials<span style="color:#f92672">)</span> ：当用户使用显式凭据登录并运行程序时，会触发此事件。这些登录事件中的异常可能表明网络内存在横向移动，这是攻击者常用的技术。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4771</span> <span style="color:#f92672">(</span>Kerberos pre-authentication failed<span style="color:#f92672">)</span> ：此事件与 4625（登录失败）类似，但专用于 Kerberos 身份验证。此类日志数量异常可能表明攻击者正在尝试暴力破解您的 Kerberos 服务。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4776</span> <span style="color:#f92672">(</span>The domain controller attempted to validate the credentials <span style="color:#66d9ef">for</span> an account<span style="color:#f92672">)</span> ：此事件用于跟踪域控制器凭据验证的成功和失败尝试。多次失败可能表明存在暴力攻击。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">5140</span> <span style="color:#f92672">(</span>A network share object was accessed<span style="color:#f92672">)</span> ：每当访问网络共享时都会记录此事件。这对于识别未经授权的网络共享访问至关重要。
+</span></span></code></pre></div><p>defender检测相关</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">1116</span> <span style="color:#f92672">(</span>Antivirus malware detection<span style="color:#f92672">)</span> ：此事件尤为重要，因为它会在 Defender 检测到恶意软件时进行记录。此类事件的激增可能表明存在针对性攻击或大范围恶意软件感染。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">1118</span> <span style="color:#f92672">(</span>Antivirus remediation activity has started<span style="color:#f92672">)</span> ：此事件表示 Defender 已开始删除或隔离检测到的恶意软件。监控这些事件对于确保补救措施成功至关重要。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">1119</span> <span style="color:#f92672">(</span>Antivirus remediation activity has succeeded<span style="color:#f92672">)</span> ：此事件表示检测到的恶意软件的修复过程已成功。定期监控这些事件将有助于确保有效消除已识别的威胁。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">1120</span> <span style="color:#f92672">(</span>Antivirus remediation activity has failed<span style="color:#f92672">)</span> ：此事件与 <span style="color:#ae81ff">1119</span> 对应，表示补救过程失败。应密切监控并立即处理此类事件，以确保有效消除威胁。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">5001</span> <span style="color:#f92672">(</span>Antivirus real-time protection configuration has changed<span style="color:#f92672">)</span> ：此事件表示 Defender 的实时保护设置已被修改。未经授权的更改可能表示有人试图禁用或破坏 Defender 的功能。
+</span></span></code></pre></div><p>敏感行为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4656</span> <span style="color:#f92672">(</span>A handle to an object was requested<span style="color:#f92672">)</span> ：请求对象（例如文件、注册表项或进程）的句柄时会触发此事件。此事件对于检测访问敏感资源的尝试非常有用。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4698</span> <span style="color:#f92672">(</span>A scheduled task was created<span style="color:#f92672">)</span> ：创建计划任务时触发此事件。监控此事件有助于检测持久性机制，因为攻击者经常使用计划任务来维持访问权限并运行恶意代码。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4700</span> 和事件 ID <span style="color:#ae81ff">4701</span> <span style="color:#f92672">(</span>A scheduled task was enabled/disabled<span style="color:#f92672">)</span> ：记录计划任务的启用或禁用。计划任务经常被攻击者操纵，以实现持久化或运行恶意代码，因此这些日志可以为可疑活动提供有价值的洞察。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4702</span> <span style="color:#f92672">(</span>A scheduled task was updated<span style="color:#f92672">)</span> ：与 <span style="color:#ae81ff">4698</span> 类似，此事件在计划任务更新时触发。监控这些更新有助于检测可能存在恶意意图的更改。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4719</span> <span style="color:#f92672">(</span>System audit policy was changed<span style="color:#f92672">)</span> ：此事件记录了计算机上审核策略的更改。这可能表明有人试图通过关闭审核或更改要审核的事件来掩盖其踪迹。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">4738</span> <span style="color:#f92672">(</span>A user account was changed<span style="color:#f92672">)</span> ：此事件记录对用户帐户所做的任何更改，包括权限、组成员身份和帐户设置的更改。意外的帐户更改可能是帐户被接管或内部威胁的征兆。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">5142</span> <span style="color:#f92672">(</span>A network share object was added<span style="color:#f92672">)</span> ：此事件表示创建了新的网络共享。未经授权的网络共享可能被用于窃取数据或在网络中传播恶意软件。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">5145</span> <span style="color:#f92672">(</span>A network share object was checked to see whether client can be granted desired access<span style="color:#f92672">)</span> ：此事件表示有人尝试访问网络共享。频繁进行此类检查可能表明用户或恶意软件正在尝试映射网络共享，以备将来利用。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">5157</span> <span style="color:#f92672">(</span>The Windows Filtering Platform has blocked a connection<span style="color:#f92672">)</span> ：当 Windows 筛选平台阻止连接尝试时，会记录此事件。这有助于识别网络上的恶意流量。
+</span></span><span style="display:flex;"><span>事件 ID <span style="color:#ae81ff">7045</span> <span style="color:#f92672">(</span>A service was installed in the system<span style="color:#f92672">)</span> ：突然出现未知服务可能表明安装了恶意软件，因为许多类型的恶意软件都会将自身安装为服务。
 </span></span></code></pre></div><h2 id="流量分析">流量分析
 </h2><h3 id="tcpdump使用">tcpdump使用
 </h3><p>需要root权限，并且如果需要生成数据包，请在tmp目录生成</p>
@@ -588,7 +653,115 @@
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -Ar telnet.pcap
 </span></span></code></pre></div><p>当然也可以配合-l进行查找效果</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo tcpdump -Ar telnet.pcap -l | grep <span style="color:#e6db74">&#39;flag*&#39;</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><h2 id="恶意软件分析相关">恶意软件分析相关
+</h2><h3 id="linux静态分析pe载荷">linux静态分析（pe载荷）
+</h3><h4 id="类型相关">类型相关
+</h4><p>识别文件类型</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>file $file
+</span></span></code></pre></div><h4 id="基础hash相关">基础hash相关
+</h4><p>转md5指纹识别</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>md5sum $file
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#之后去沙箱查找https://www.virustotal.com/gui/home/search</span>
+</span></span></code></pre></div><p>导入hash生成脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pefile
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> peutils
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pe_file <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>pe <span style="color:#f92672">=</span> pefile<span style="color:#f92672">.</span>PE(pe_file)
+</span></span><span style="display:flex;"><span>imphash <span style="color:#f92672">=</span> pe<span style="color:#f92672">.</span>get_imphash()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(imphash)
+</span></span></code></pre></div><h4 id="模糊散列碰撞ssdeep">模糊散列碰撞（SSDEEP）
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 也称为上下文触发分段哈希 (CTPH)，是一种哈希技术，旨在计算指示两个文件之间内容相似度的哈希值。该技术将文件分解成较小的固定大小的块，并计算每个块的哈希值。然后将生成的哈希值合并，生成最终的模糊哈希值。</span>
+</span></span></code></pre></div><p>输出模糊散列</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ssdeep $file
+</span></span></code></pre></div><p>匹配同目录下是否有相似程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ssdeep -pb *
+</span></span></code></pre></div><h4 id="pe部分hash">pe部分hash
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># （对 PE 段进行哈希处理）是一种强大的技术，它允许分析人员识别可移植可执行 (PE) 文件中已被修改的段</span>
+</span></span></code></pre></div><p>脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pefile
+</span></span><span style="display:flex;"><span>pe_file <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>pe <span style="color:#f92672">=</span> pefile<span style="color:#f92672">.</span>PE(pe_file)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> section <span style="color:#f92672">in</span> pe<span style="color:#f92672">.</span>sections:
+</span></span><span style="display:flex;"><span>    print (section<span style="color:#f92672">.</span>Name, <span style="color:#e6db74">&#34;MD5 hash:&#34;</span>, section<span style="color:#f92672">.</span>get_hash_md5())
+</span></span><span style="display:flex;"><span>    print (section<span style="color:#f92672">.</span>Name, <span style="color:#e6db74">&#34;SHA256 hash:&#34;</span>, section<span style="color:#f92672">.</span>get_hash_sha256())
+</span></span></code></pre></div><h4 id="字符串分析">字符串分析
+</h4><p>strings</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>strings -n <span style="color:#ae81ff">15</span> $file
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -n 指定打印至少指定数字的序列 - 在我们的例子中为 15 。</span>
+</span></span></code></pre></div><p>floss</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># FLOSS 是“FireEye Labs 混淆字符串解析器”的缩写，是由 FireEye 的 FLARE 团队开发的一款工具，用于自动对恶意软件中 FLOSS 字符串进行反混淆处理</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>floss $file
+</span></span></code></pre></div><h4 id="脱壳">脱壳
+</h4><p>upx壳</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>upx -d -o $file $out_file
+</span></span></code></pre></div><h3 id="windows静态分析pe载荷">windows静态分析（pe载荷）
+</h3><h4 id="文件类型">文件类型
+</h4><p>这个可以使用die或者cff等pe查看器，不想贴图暂时不记录</p>
+<h4 id="基础hash相关-1">基础hash相关
+</h4><p>利用powershell生成载荷md5或者sha256hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-FileHash -Algorithm MD5 $file
+</span></span><span style="display:flex;"><span>Get-FileHash -Algorithm SHA256 $file
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#之后去沙箱查找https://www.virustotal.com/gui/home/search</span>
+</span></span></code></pre></div><p>导入hash脚本与linux一直，都用python</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pefile
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> peutils
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pe_file <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>pe <span style="color:#f92672">=</span> pefile<span style="color:#f92672">.</span>PE(pe_file)
+</span></span><span style="display:flex;"><span>imphash <span style="color:#f92672">=</span> pe<span style="color:#f92672">.</span>get_imphash()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(imphash)
+</span></span></code></pre></div><h4 id="模糊散列碰撞ssdeep-1">模糊散列碰撞（SSDEEP）
+</h4><p>windows上的操作与linux一致，不做复述</p>
+<h4 id="pe部分hash-1">pe部分hash
+</h4><p>脚本与linux一致</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>import sys
+</span></span><span style="display:flex;"><span>import pefile
+</span></span><span style="display:flex;"><span>pe_file <span style="color:#f92672">=</span> sys.argv<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>pe <span style="color:#f92672">=</span> pefile.PE<span style="color:#f92672">(</span>pe_file<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> section in pe.sections:
+</span></span><span style="display:flex;"><span>    print <span style="color:#f92672">(</span>section.Name, <span style="color:#e6db74">&#34;MD5 hash:&#34;</span>, section.get_hash_md5<span style="color:#f92672">())</span>
+</span></span><span style="display:flex;"><span>    print <span style="color:#f92672">(</span>section.Name, <span style="color:#e6db74">&#34;SHA256 hash:&#34;</span>, section.get_hash_sha256<span style="color:#f92672">())</span>
+</span></span></code></pre></div><p>也可以使用pe工具（pestudio）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>拖入载荷，在footprints中找到section&gt;.text&gt;md5
+</span></span></code></pre></div><h4 id="字符串分析-1">字符串分析
+</h4><p>strings和floss一样能用，不复述，在linux静态分析中</p>
+<h4 id="脱壳-1">脱壳
+</h4><p>upx操作与linux一致，不复述</p>
+<h3 id="动态分析">动态分析
+</h3><h4 id="noriben配合process-monitor">Noriben配合Process Monitor
+</h4><p>准备虚拟环境，同时部署Process Monitor以及Noriben脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Noriben会在启用后调用Process Monitor过滤无用信息，记录当前的异常访问或系统事件
+</span></span></code></pre></div><p>分析流程</p>
+<p>首先启动Noriben</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>PS C:<span style="color:#ae81ff">\T</span>ools<span style="color:#ae81ff">\N</span>oriben-master&gt; python .<span style="color:#ae81ff">\N</span>oriben.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--<span style="color:#f92672">===[</span> Noriben v1.8.8
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using filter file: ProcmonConfiguration.PMC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using procmon EXE: C:<span style="color:#ae81ff">\P</span>rogramData<span style="color:#ae81ff">\c</span>hocolatey<span style="color:#ae81ff">\b</span>in<span style="color:#ae81ff">\p</span>rocmon.exe
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Procmon session saved to: Noriben_27_Oct_25__03_28_473199.pml
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Launching Procmon ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Procmon is running. Run your executable now.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> When runtime is complete, press CTRL+C to stop logging.
+</span></span></code></pre></div><p>之后启动恶意载荷，运行一段时间，觉得差不多的时候终止Noriben分析</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>终止时首先需要使用任务管理器关闭 Procmon，再关闭 Noriben（Ctrl+C），要不然有几率报错
+</span></span></code></pre></div><p>之后会看到生成的txt报告，Noriben会输出载荷运行过程中的典型恶意行为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Procmon is running. Run your executable now.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> When runtime is complete, press CTRL+C to stop logging.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Termination of Procmon commencing... please wait
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Procmon terminated
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving report to: Noriben_27_Oct_25__03_28_473199.txt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saving timeline to: Noriben_27_Oct_25__03_28_473199_timeline.csv
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Exiting with error code: 0: Normal exit
+</span></span></code></pre></div><h3 id="逆向工程及调试">逆向工程及调试
+</h3><p>二进制内容已经转移，请移步至深渊之书</p>
+
 </section>
 
 
@@ -615,6 +788,45 @@
     <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/ufo/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">UFO-1-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/phantom-check/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Phantom-check-wp</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/optinseltrace4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OpTinselTrace4-wp</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">

@@ -6,7 +6,468 @@
         <description>Recent content in 魔法书 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 25 Oct 2025 22:39:28 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 26 Oct 2025 21:42:11 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/categories/%E9%AD%94%E6%B3%95%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>剥茧之书</title>
+        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
+        <pubDate>Sun, 26 Oct 2025 21:42:11 +0800</pubDate>
+        
+        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
+        <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
+&lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
+&lt;h3 id=&#34;sysmon部署&#34;&gt;sysmon部署
+&lt;/h3&gt;&lt;p&gt;下载&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;激活&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sysmon.exe -i -accepteula -h md5,sha256,imphash -l -n
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下载后将配置文件中需要检测的部分中的参数进行修改&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include更改为exclude&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 比如&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&amp;lt;RuleGroup name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; groupRelation&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;or&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&amp;lt;FileCreateTime onmatch&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;include&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;Image name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;begin with&amp;#34;&lt;/span&gt;&amp;gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&amp;lt;/Image&amp;gt; &amp;lt;!--Look &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; timestomping in user area, usually nothing should be doing that here--&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;TargetFilename name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;end with&amp;#34;&lt;/span&gt;&amp;gt;.exe&amp;lt;/TargetFilename&amp;gt; &amp;lt;!--Look &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; backdated executables anywhere--&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;Image name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;begin with&amp;#34;&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;evice&lt;span style=&#34;color:#ae81ff&#34;&gt;\H&lt;/span&gt;arddiskVolumeShadowCopy&amp;lt;/Image&amp;gt; &amp;lt;!--Nothing should be written here | Credit: @SBousseaden &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; https://twitter.com/SBousseaden/status/1133030955407630336 &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&amp;lt;/FileCreateTime&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&amp;lt;/RuleGroup&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#改为&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&amp;lt;RuleGroup name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; groupRelation&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;or&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&amp;lt;FileCreateTime onmatch&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;exclude&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;Image name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;begin with&amp;#34;&lt;/span&gt;&amp;gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&amp;lt;/Image&amp;gt; &amp;lt;!--Look &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; timestomping in user area, usually nothing should be doing that here--&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;TargetFilename name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;end with&amp;#34;&lt;/span&gt;&amp;gt;.exe&amp;lt;/TargetFilename&amp;gt; &amp;lt;!--Look &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; backdated executables anywhere--&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&amp;lt;Image name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;T1099&amp;#34;&lt;/span&gt; condition&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;begin with&amp;#34;&lt;/span&gt;&amp;gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;evice&lt;span style=&#34;color:#ae81ff&#34;&gt;\H&lt;/span&gt;arddiskVolumeShadowCopy&amp;lt;/Image&amp;gt; &amp;lt;!--Nothing should be written here | Credit: @SBousseaden &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; https://twitter.com/SBousseaden/status/1133030955407630336 &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&amp;lt;/FileCreateTime&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&amp;lt;/RuleGroup&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入配置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\T&lt;/span&gt;ools&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;ysmon&amp;gt; sysmon.exe -c sysmonconfig-export.xml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    1：进程创建
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    2：文件创建时间修改
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    3：网络连接
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    5：进程终止
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    11：文件创建
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    12：注册表对象创建和删除
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    13：注册表值设置
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    22：DNS查询
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    23：文件删除（带归档）
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    26：文件删除（不带归档）
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;分析&#34;&gt;分析
+&lt;/h3&gt;&lt;p&gt;此日志一般后缀为.evtx,要进行分析需要转换为json&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/EricZimmerman/evtx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.\EvtxECmd.exe &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; $待转换日志.evtx --json $输出.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Records included: &lt;span style=&#34;color:#ae81ff&#34;&gt;169&lt;/span&gt; Errors: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; Events dropped: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Metrics &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;including dropped events&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Event ID        Count
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;56&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;19&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;17&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Processed &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; file in 0.9008 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;各事件次数&#34;&gt;各事件次数
+&lt;/h4&gt;&lt;p&gt;第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .\Output.json | jq -sc &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;group_by(.EventId) | map({EventId: .[0].EventId, count: length}) | .[]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;jq会将输入的json当作一个json处理，并依据EventId进行分组并记录次数后输出，效果如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;acky&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&lt;span style=&#34;color:#ae81ff&#34;&gt;\c&lt;/span&gt;ode&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;ools&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;vtxECmd&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;vtxeCmd&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;ite42.json&amp;gt; cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0250818040123_EvtxECmd_Output.json| jq -sc &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;group_by(.EventId) | map({EventId: .[0].EventId, count: length}) | .[]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:1,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:6&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:2,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:16&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:3,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:5,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:7,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:15&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:10,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:11,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:56&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:12,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:14&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:13,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:19&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:15,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:17,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:7&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:22,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:3&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:23,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:26&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:26,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;单独事件分析举例分析事件1&#34;&gt;单独事件分析（举例分析事件1）
+&lt;/h4&gt;&lt;p&gt;利用jq以EventId为参数分离某类事件,这里分类的是1类事件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 1)&amp;#39;&lt;/span&gt; &amp;gt; eventid1.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后可以取出第一条事件，我们可以了解此json的字段&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;ventid1.json | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[0]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;事件1信息如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1️⃣ 基础事件信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包括 EventId、时间戳、EventRecordId、Channel、Provider、Level、SourceFile 等
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;描述了这条事件本身的元信息，即日志是谁生成的、什么时候生成、记录编号是多少。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2️⃣ 进程相关信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包括 PayloadData1~6、ExecutableInfo、ProcessId、ThreadId、UserName、Hashes 等
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;描述了事件关联的进程及其父进程的详细信息：路径、ID、GUID、命令行、父进程信息、哈希值、执行用户等。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对应输出类似如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 基础事件信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EventId	&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;	Sysmon 事件类型&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;：&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; 表示 进程创建
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EventRecordId	&lt;span style=&#34;color:#ae81ff&#34;&gt;118772&lt;/span&gt;	日志在 Sysmon 日志文件中的记录编号
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TimeCreated	&lt;span style=&#34;color:#ae81ff&#34;&gt;2024&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;02&lt;/span&gt;-14T03&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;41&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;45.3058822&lt;/span&gt;+&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;	事件发生的 UTC 时间
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Level	Info	日志级别
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Keywords	Classic	日志关键字类别
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Channel	Microsoft-Windows-Sysmon/Operational	Sysmon 日志通道
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Provider	Microsoft-Windows-Sysmon	生成事件的提供者
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SourceFile	&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;\Microsoft-Windows-Sysmon-Operational.evtx	原始 EVTX 文件路径
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;RecordNumber	&lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;	事件记录编号&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;局部顺序&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HiddenRecord	false	是否为隐藏记录&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;通常为 false&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 进程相关信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData1	ProcessID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5584&lt;/span&gt;, ProcessGUID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; 817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3679&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;2902&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	当前进程 ID 和 GUID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData4	ParentProcess&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; C:\Program Files\Mozilla Firefox\firefox.exe	父进程路径
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData5	ParentProcessID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4292&lt;/span&gt;, ParentProcessGUID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; 817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3514&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;0802&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	父进程 ID 和 GUID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData6	ParentCommandLine&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\firefox.exe&amp;#34;&lt;/span&gt;	父进程启动命令行
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ProcessId	&lt;span style=&#34;color:#ae81ff&#34;&gt;3028&lt;/span&gt;	当前事件的 Windows 进程 ID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;与 PayloadData1 中 &lt;span style=&#34;color:#ae81ff&#34;&gt;5584&lt;/span&gt; 对比&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;，&lt;/span&gt;可能是 EvtxECmd 内部映射&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ThreadId	&lt;span style=&#34;color:#ae81ff&#34;&gt;4412&lt;/span&gt;	触发事件的线程 ID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ExecutableInfo	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\pingsender.exe&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;	当前进程完整路径及命令行参数
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UserName	DESKTOP-887GK2L\CyberJunkie	执行进程的用户
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 文件/哈希信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData3	SHA1=&lt;span style=&#34;color:#ae81ff&#34;&gt;282F&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, MD5=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, SHA256=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, IMPHASH=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;	进程可执行文件的哈希值&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;，&lt;/span&gt;IMPHASH 用于检测恶意文件家族
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData2	RuleName&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; technique_id=T1027, technique_name=Obfuscated Files or Information	MITRE ATT&amp;amp;CK 对应技术&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;这里表示混淆文件或信息&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;4️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; Parent / 上级进程信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcess	C:\Program Files\Mozilla Firefox\firefox.exe	父进程路径
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcessID	&lt;span style=&#34;color:#ae81ff&#34;&gt;4292&lt;/span&gt;	父进程 ID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcessGUID	817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3514&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;0802&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	父进程 GUID
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentCommandLine	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\firefox.exe&amp;#34;&lt;/span&gt;	父进程启动命令行
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentUser	DESKTOP-887GK2L\CyberJunkie	父进程执行用户
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; Sysmon EventData 字段&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;Payload&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Payload 内部是 Sysmon 原始 XML EventData 转成 JSON
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包含详细字段如&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;：&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 进程路径
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CommandLine &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 启动参数
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Hashes &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 文件哈希
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;User &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 执行用户
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentImage / ParentCommandLine / ParentUser &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 父进程信息
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IntegrityLevel &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 进程权限级别&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;这里是 Medium&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接下来我们可以用下面的语法输出整个事件1当中我们感兴趣的所有字段&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;ventid1.json | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4, .ExecutableInfo, .PayloadData1, .PayloadData5]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就像这里我输出了.TimeCreated → 事件发生时间 .PayloadData4 → 父进程路径 .ExecutableInfo → 当前进程完整路径及命令行 .PayloadData1 → 当前进程 ID 和 GUID .PayloadData5 → 父进程 ID 和 GUID&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#示例输出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2024-02-14T03:41:56.5596188+00:00&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ParentProcess: C:\\Windows\\explorer.exe&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Users\\CyberJunkie\\Downloads\\Preventivo24.02.14.exe.exe\&amp;#34; &amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ProcessID: 10672, ProcessGUID: 817bddf3-3684-65cc-2d02-000000001900&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ParentProcessID: 1116, ParentProcessGUID: 817bddf3-311f-65cc-0a01-000000001900&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单的利用分析就是这样&lt;/p&gt;
+&lt;h4 id=&#34;常用分析命令&#34;&gt;常用分析命令
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 11)&amp;#39;&lt;/span&gt; | findstr &lt;span style=&#34;color:#ae81ff&#34;&gt;10672&lt;/span&gt; | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段&lt;/p&gt;
+&lt;h3 id=&#34;隼鸟快速使用&#34;&gt;隼鸟快速使用
+&lt;/h3&gt;&lt;p&gt;筛选出存在关键词的事件输出为json&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;keyword“ -J -o &amp;#34;&lt;/span&gt;this.json&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以时间线输出csv,可以手动选择匹配模式，一般选最大&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;特殊安全事件速查&#34;&gt;特殊安全事件速查
+&lt;/h3&gt;&lt;p&gt;痕迹清除痕迹&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1102&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;The audit log was cleared&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：清除审计日志通常是试图删除入侵或恶意活动证据的迹象。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;登陆相关(爆破)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4625&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Failed Logon&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件记录登录失败的次数。多次登录失败可能意味着正在进行暴力攻击。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4624&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Successful Logon&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件记录成功登录事件。此信息对于建立正常的用户行为至关重要。异常行为（例如在非正常时间或从不同地点尝试登录）可能预示着潜在的安全威胁。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4672&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Special Privileges Assigned to a New Logon&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：每当帐户以超级用户权限登录时，都会记录此事件。跟踪这些事件有助于确保超级用户权限不会被滥用或恶意使用
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4648&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A logon was attempted using explicit credentials&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：当用户使用显式凭据登录并运行程序时，会触发此事件。这些登录事件中的异常可能表明网络内存在横向移动，这是攻击者常用的技术。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4771&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Kerberos pre-authentication failed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件与 4625（登录失败）类似，但专用于 Kerberos 身份验证。此类日志数量异常可能表明攻击者正在尝试暴力破解您的 Kerberos 服务。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4776&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;The domain controller attempted to validate the credentials &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; an account&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件用于跟踪域控制器凭据验证的成功和失败尝试。多次失败可能表明存在暴力攻击。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;5140&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A network share object was accessed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：每当访问网络共享时都会记录此事件。这对于识别未经授权的网络共享访问至关重要。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;defender检测相关&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1116&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Antivirus malware detection&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件尤为重要，因为它会在 Defender 检测到恶意软件时进行记录。此类事件的激增可能表明存在针对性攻击或大范围恶意软件感染。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1118&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Antivirus remediation activity has started&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件表示 Defender 已开始删除或隔离检测到的恶意软件。监控这些事件对于确保补救措施成功至关重要。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1119&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Antivirus remediation activity has succeeded&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件表示检测到的恶意软件的修复过程已成功。定期监控这些事件将有助于确保有效消除已识别的威胁。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;1120&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Antivirus remediation activity has failed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件与 &lt;span style=&#34;color:#ae81ff&#34;&gt;1119&lt;/span&gt; 对应，表示补救过程失败。应密切监控并立即处理此类事件，以确保有效消除威胁。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;5001&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Antivirus real-time protection configuration has changed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件表示 Defender 的实时保护设置已被修改。未经授权的更改可能表示有人试图禁用或破坏 Defender 的功能。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;敏感行为&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4656&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A handle to an object was requested&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：请求对象（例如文件、注册表项或进程）的句柄时会触发此事件。此事件对于检测访问敏感资源的尝试非常有用。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4698&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A scheduled task was created&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：创建计划任务时触发此事件。监控此事件有助于检测持久性机制，因为攻击者经常使用计划任务来维持访问权限并运行恶意代码。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4700&lt;/span&gt; 和事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4701&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A scheduled task was enabled/disabled&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：记录计划任务的启用或禁用。计划任务经常被攻击者操纵，以实现持久化或运行恶意代码，因此这些日志可以为可疑活动提供有价值的洞察。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4702&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A scheduled task was updated&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：与 &lt;span style=&#34;color:#ae81ff&#34;&gt;4698&lt;/span&gt; 类似，此事件在计划任务更新时触发。监控这些更新有助于检测可能存在恶意意图的更改。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4719&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;System audit policy was changed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件记录了计算机上审核策略的更改。这可能表明有人试图通过关闭审核或更改要审核的事件来掩盖其踪迹。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;4738&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A user account was changed&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件记录对用户帐户所做的任何更改，包括权限、组成员身份和帐户设置的更改。意外的帐户更改可能是帐户被接管或内部威胁的征兆。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;5142&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A network share object was added&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件表示创建了新的网络共享。未经授权的网络共享可能被用于窃取数据或在网络中传播恶意软件。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;5145&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A network share object was checked to see whether client can be granted desired access&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：此事件表示有人尝试访问网络共享。频繁进行此类检查可能表明用户或恶意软件正在尝试映射网络共享，以备将来利用。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;5157&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;The Windows Filtering Platform has blocked a connection&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：当 Windows 筛选平台阻止连接尝试时，会记录此事件。这有助于识别网络上的恶意流量。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;事件 ID &lt;span style=&#34;color:#ae81ff&#34;&gt;7045&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;A service was installed in the system&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; ：突然出现未知服务可能表明安装了恶意软件，因为许多类型的恶意软件都会将自身安装为服务。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;流量分析&#34;&gt;流量分析
+&lt;/h2&gt;&lt;h3 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
+&lt;/h3&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
+&lt;h4 id=&#34;开关级参数&#34;&gt;开关级参数
+&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;参数&lt;/th&gt;
+          &lt;th&gt;口语化说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-D&lt;/td&gt;
+          &lt;td&gt;显示所有可用的网络接口&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-i&lt;/td&gt;
+          &lt;td&gt;指定要抓包的网络接口，例如 &lt;code&gt;-i eth0&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-n&lt;/td&gt;
+          &lt;td&gt;不把 IP 地址或端口号转换成名字，直接显示数字&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-e&lt;/td&gt;
+          &lt;td&gt;抓包时连以太网头也抓上&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-X&lt;/td&gt;
+          &lt;td&gt;以十六进制和 ASCII 显示数据包内容&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-XX&lt;/td&gt;
+          &lt;td&gt;跟 -X 一样，但同时显示以太网头&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-v / -vv / -vvv&lt;/td&gt;
+          &lt;td&gt;增加输出的详细程度，越多 v 信息越详细&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-c&lt;/td&gt;
+          &lt;td&gt;抓指定数量的数据包后退出，例如 &lt;code&gt;-c 10&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-s&lt;/td&gt;
+          &lt;td&gt;设置每个数据包抓多少字节，&lt;code&gt;-s 0&lt;/code&gt; 表示抓完整包&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-S&lt;/td&gt;
+          &lt;td&gt;显示绝对序列号，而不是相对序列号&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-q&lt;/td&gt;
+          &lt;td&gt;输出更简略的协议信息&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-r 文件.pcap&lt;/td&gt;
+          &lt;td&gt;从指定文件读取抓包数据，例如 &lt;code&gt;-r /tmp/capture.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
+          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-A&lt;/td&gt;
+          &lt;td&gt;仅显示数据包行后的 ASCII 文本&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
+          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;-l&lt;/td&gt;
+          &lt;td&gt;快速检查捕获，可以利用管道符号配合，例如 `sudo tcpdump -Ar http.cap -l&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;过滤器&#34;&gt;过滤器
+&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;过滤器&lt;/th&gt;
+          &lt;th&gt;说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;host x.x.x.x&lt;/td&gt;
+          &lt;td&gt;仅捕获与特定主机相关的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;捕获进出特定网络的流量（斜杠表示法指定掩码）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;src net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;仅捕获来自指定网络的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;dst net x.x.x.x/24&lt;/td&gt;
+          &lt;td&gt;仅捕获发往目标网络的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;port #&lt;/td&gt;
+          &lt;td&gt;只捕获指定端口的流量，其余端口过滤掉&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;not&lt;/td&gt;
+          &lt;td&gt;捕获除指定条件之外的所有流量，例如 &lt;code&gt;not port 80&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;and&lt;/td&gt;
+          &lt;td&gt;连接多个过滤条件，例如 &lt;code&gt;host 192.168.1.1 and port 80&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;portrange x-x&lt;/td&gt;
+          &lt;td&gt;捕获指定端口范围内的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;ip / ether / tcp&lt;/td&gt;
+          &lt;td&gt;只抓指定协议的流量&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;broadcast&lt;/td&gt;
+          &lt;td&gt;捕获广播流量（一对所有）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;multicast&lt;/td&gt;
+          &lt;td&gt;捕获多播流量（一对多）&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;unicast&lt;/td&gt;
+          &lt;td&gt;捕获单播流量（一对一）&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;列出可用接口&#34;&gt;列出可用接口
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然也可以配合-l进行查找效果&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap -l | grep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag*&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;恶意软件分析相关&#34;&gt;恶意软件分析相关
+&lt;/h2&gt;&lt;h3 id=&#34;linux静态分析pe载荷&#34;&gt;linux静态分析（pe载荷）
+&lt;/h3&gt;&lt;h4 id=&#34;类型相关&#34;&gt;类型相关
+&lt;/h4&gt;&lt;p&gt;识别文件类型&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;file $file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基础hash相关&#34;&gt;基础hash相关
+&lt;/h4&gt;&lt;p&gt;转md5指纹识别&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;md5sum $file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#之后去沙箱查找https://www.virustotal.com/gui/home/search&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入hash生成脚本&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pefile
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; peutils
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pefile&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PE(pe_file)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;imphash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_imphash()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(imphash)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;模糊散列碰撞ssdeep&#34;&gt;模糊散列碰撞（SSDEEP）
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 也称为上下文触发分段哈希 (CTPH)，是一种哈希技术，旨在计算指示两个文件之间内容相似度的哈希值。该技术将文件分解成较小的固定大小的块，并计算每个块的哈希值。然后将生成的哈希值合并，生成最终的模糊哈希值。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出模糊散列&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssdeep $file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;匹配同目录下是否有相似程序&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssdeep -pb *
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;pe部分hash&#34;&gt;pe部分hash
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# （对 PE 段进行哈希处理）是一种强大的技术，它允许分析人员识别可移植可执行 (PE) 文件中已被修改的段&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;脚本&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pefile
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pefile&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PE(pe_file)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; section &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; pe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sections:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print (section&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Name, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MD5 hash:&amp;#34;&lt;/span&gt;, section&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_hash_md5())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print (section&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Name, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SHA256 hash:&amp;#34;&lt;/span&gt;, section&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_hash_sha256())
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;字符串分析&#34;&gt;字符串分析
+&lt;/h4&gt;&lt;p&gt;strings&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;strings -n &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt; $file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# -n 指定打印至少指定数字的序列 - 在我们的例子中为 15 。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;floss&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# FLOSS 是“FireEye Labs 混淆字符串解析器”的缩写，是由 FireEye 的 FLARE 团队开发的一款工具，用于自动对恶意软件中 FLOSS 字符串进行反混淆处理&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;floss $file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;脱壳&#34;&gt;脱壳
+&lt;/h4&gt;&lt;p&gt;upx壳&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upx -d -o $file $out_file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;windows静态分析pe载荷&#34;&gt;windows静态分析（pe载荷）
+&lt;/h3&gt;&lt;h4 id=&#34;文件类型&#34;&gt;文件类型
+&lt;/h4&gt;&lt;p&gt;这个可以使用die或者cff等pe查看器，不想贴图暂时不记录&lt;/p&gt;
+&lt;h4 id=&#34;基础hash相关-1&#34;&gt;基础hash相关
+&lt;/h4&gt;&lt;p&gt;利用powershell生成载荷md5或者sha256hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-FileHash -Algorithm MD5 $file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-FileHash -Algorithm SHA256 $file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#之后去沙箱查找https://www.virustotal.com/gui/home/search&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;导入hash脚本与linux一直，都用python&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pefile
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; peutils
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argv[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pefile&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PE(pe_file)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;imphash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_imphash()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(imphash)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;模糊散列碰撞ssdeep-1&#34;&gt;模糊散列碰撞（SSDEEP）
+&lt;/h4&gt;&lt;p&gt;windows上的操作与linux一致，不做复述&lt;/p&gt;
+&lt;h4 id=&#34;pe部分hash-1&#34;&gt;pe部分hash
+&lt;/h4&gt;&lt;p&gt;脚本与linux一致&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import pefile
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sys.argv&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pefile.PE&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;pe_file&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; section in pe.sections:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;section.Name, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MD5 hash:&amp;#34;&lt;/span&gt;, section.get_hash_md5&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;section.Name, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SHA256 hash:&amp;#34;&lt;/span&gt;, section.get_hash_sha256&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以使用pe工具（pestudio）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;拖入载荷，在footprints中找到section&amp;gt;.text&amp;gt;md5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;字符串分析-1&#34;&gt;字符串分析
+&lt;/h4&gt;&lt;p&gt;strings和floss一样能用，不复述，在linux静态分析中&lt;/p&gt;
+&lt;h4 id=&#34;脱壳-1&#34;&gt;脱壳
+&lt;/h4&gt;&lt;p&gt;upx操作与linux一致，不复述&lt;/p&gt;
+&lt;h3 id=&#34;动态分析&#34;&gt;动态分析
+&lt;/h3&gt;&lt;h4 id=&#34;noriben配合process-monitor&#34;&gt;Noriben配合Process Monitor
+&lt;/h4&gt;&lt;p&gt;准备虚拟环境，同时部署Process Monitor以及Noriben脚本&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Noriben会在启用后调用Process Monitor过滤无用信息，记录当前的异常访问或系统事件
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;分析流程&lt;/p&gt;
+&lt;p&gt;首先启动Noriben&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\T&lt;/span&gt;ools&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;oriben-master&amp;gt; python .&lt;span style=&#34;color:#ae81ff&#34;&gt;\N&lt;/span&gt;oriben.py
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--&lt;span style=&#34;color:#f92672&#34;&gt;===[&lt;/span&gt; Noriben v1.8.8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using filter file: ProcmonConfiguration.PMC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Using procmon EXE: C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;rogramData&lt;span style=&#34;color:#ae81ff&#34;&gt;\c&lt;/span&gt;hocolatey&lt;span style=&#34;color:#ae81ff&#34;&gt;\b&lt;/span&gt;in&lt;span style=&#34;color:#ae81ff&#34;&gt;\p&lt;/span&gt;rocmon.exe
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Procmon session saved to: Noriben_27_Oct_25__03_28_473199.pml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Launching Procmon ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Procmon is running. Run your executable now.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; When runtime is complete, press CTRL+C to stop logging.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后启动恶意载荷，运行一段时间，觉得差不多的时候终止Noriben分析&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;终止时首先需要使用任务管理器关闭 Procmon，再关闭 Noriben（Ctrl+C），要不然有几率报错
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后会看到生成的txt报告，Noriben会输出载荷运行过程中的典型恶意行为&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Procmon is running. Run your executable now.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; When runtime is complete, press CTRL+C to stop logging.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Termination of Procmon commencing... please wait
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Procmon terminated
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving report to: Noriben_27_Oct_25__03_28_473199.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Saving timeline to: Noriben_27_Oct_25__03_28_473199_timeline.csv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Exiting with error code: 0: Normal exit
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;逆向工程及调试&#34;&gt;逆向工程及调试
+&lt;/h3&gt;&lt;p&gt;二进制内容已经转移，请移步至深渊之书&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>深渊之书</title>
         <link>https://wackymaker.github.io/post/%E6%B7%B1%E6%B8%8A%E4%B9%8B%E4%B9%A6/</link>
         <pubDate>Sat, 25 Oct 2025 22:39:28 +0800</pubDate>
@@ -3797,304 +4258,6 @@ linux换行&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xzvf file.tar.gz
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;解文件元数据&#34;&gt;解文件元数据
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exiftool filename
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-        </item>
-        <item>
-        <title>剥茧之书</title>
-        <link>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</link>
-        <pubDate>Sat, 23 Aug 2025 21:42:11 +0800</pubDate>
-        
-        <guid>https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;h2 id=&#34;事件日志分析&#34;&gt;事件日志分析
-&lt;/h2&gt;&lt;p&gt;Sysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。&lt;/p&gt;
-&lt;h3 id=&#34;event-id事件id&#34;&gt;Event ID(事件id)
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Sysmon日志中所使用的全部Event ID都已经在微软的Sysmon页面上进行了介绍，其中包括：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    1：进程创建
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    2：文件创建时间修改
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    3：网络连接
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    5：进程终止
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    11：文件创建
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    12：注册表对象创建和删除
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    13：注册表值设置
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    22：DNS查询
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    23：文件删除（带归档）
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    26：文件删除（不带归档）
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;分析&#34;&gt;分析
-&lt;/h3&gt;&lt;p&gt;此日志一般后缀为.evtx,要进行分析需要转换为json&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/EricZimmerman/evtx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.\EvtxECmd.exe &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; $待转换日志.evtx --json $输出.json
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在转换过程中，我们会看到此日志事件记录条数以及各事件的出现次数类似如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Records included: &lt;span style=&#34;color:#ae81ff&#34;&gt;169&lt;/span&gt; Errors: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; Events dropped: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Metrics &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;including dropped events&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Event ID        Count
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;56&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;19&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;17&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;22&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;              &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Processed &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; file in 0.9008 seconds
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;各事件次数&#34;&gt;各事件次数
-&lt;/h4&gt;&lt;p&gt;第一种方式就是利用EvtxECmd.exe转换json的时候会简单看到，第二种是利用jq查询此json的时候使用如下命令&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .\Output.json | jq -sc &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;group_by(.EventId) | map({EventId: .[0].EventId, count: length}) | .[]&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;jq会将输入的json当作一个json处理，并依据EventId进行分组并记录次数后输出，效果如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PS C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\w&lt;/span&gt;acky&lt;span style=&#34;color:#ae81ff&#34;&gt;\D&lt;/span&gt;esktop&lt;span style=&#34;color:#ae81ff&#34;&gt;\c&lt;/span&gt;ode&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;ools&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;vtxECmd&lt;span style=&#34;color:#ae81ff&#34;&gt;\E&lt;/span&gt;vtxeCmd&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;ite42.json&amp;gt; cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0250818040123_EvtxECmd_Output.json| jq -sc &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;group_by(.EventId) | map({EventId: .[0].EventId, count: length}) | .[]&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:1,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:6&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:2,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:16&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:3,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:5,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:7,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:15&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:10,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:11,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:56&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:12,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:14&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:13,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:19&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:15,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:17,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:7&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:22,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:3&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:23,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:26&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EventId&amp;#34;&lt;/span&gt;:26,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;count&amp;#34;&lt;/span&gt;:2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;单独事件分析举例分析事件1&#34;&gt;单独事件分析（举例分析事件1）
-&lt;/h4&gt;&lt;p&gt;利用jq以EventId为参数分离某类事件,这里分类的是1类事件&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 1)&amp;#39;&lt;/span&gt; &amp;gt; eventid1.json
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后可以取出第一条事件，我们可以了解此json的字段&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;ventid1.json | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[0]&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;事件1信息如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1️⃣ 基础事件信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包括 EventId、时间戳、EventRecordId、Channel、Provider、Level、SourceFile 等
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;描述了这条事件本身的元信息，即日志是谁生成的、什么时候生成、记录编号是多少。
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2️⃣ 进程相关信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包括 PayloadData1~6、ExecutableInfo、ProcessId、ThreadId、UserName、Hashes 等
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;描述了事件关联的进程及其父进程的详细信息：路径、ID、GUID、命令行、父进程信息、哈希值、执行用户等。
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对应输出类似如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 基础事件信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EventId	&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;	Sysmon 事件类型&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;：&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; 表示 进程创建
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EventRecordId	&lt;span style=&#34;color:#ae81ff&#34;&gt;118772&lt;/span&gt;	日志在 Sysmon 日志文件中的记录编号
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TimeCreated	&lt;span style=&#34;color:#ae81ff&#34;&gt;2024&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;02&lt;/span&gt;-14T03&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;41&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;45.3058822&lt;/span&gt;+&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;00&lt;/span&gt;	事件发生的 UTC 时间
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Level	Info	日志级别
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Keywords	Classic	日志关键字类别
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Channel	Microsoft-Windows-Sysmon/Operational	Sysmon 日志通道
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Provider	Microsoft-Windows-Sysmon	生成事件的提供者
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SourceFile	&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;\Microsoft-Windows-Sysmon-Operational.evtx	原始 EVTX 文件路径
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;RecordNumber	&lt;span style=&#34;color:#ae81ff&#34;&gt;26&lt;/span&gt;	事件记录编号&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;局部顺序&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HiddenRecord	false	是否为隐藏记录&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;通常为 false&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 进程相关信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData1	ProcessID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5584&lt;/span&gt;, ProcessGUID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; 817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3679&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;2902&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	当前进程 ID 和 GUID
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData4	ParentProcess&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; C:\Program Files\Mozilla Firefox\firefox.exe	父进程路径
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData5	ParentProcessID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4292&lt;/span&gt;, ParentProcessGUID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; 817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3514&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;0802&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	父进程 ID 和 GUID
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData6	ParentCommandLine&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\firefox.exe&amp;#34;&lt;/span&gt;	父进程启动命令行
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ProcessId	&lt;span style=&#34;color:#ae81ff&#34;&gt;3028&lt;/span&gt;	当前事件的 Windows 进程 ID&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;与 PayloadData1 中 &lt;span style=&#34;color:#ae81ff&#34;&gt;5584&lt;/span&gt; 对比&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;，&lt;/span&gt;可能是 EvtxECmd 内部映射&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ThreadId	&lt;span style=&#34;color:#ae81ff&#34;&gt;4412&lt;/span&gt;	触发事件的线程 ID
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ExecutableInfo	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\pingsender.exe&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;	当前进程完整路径及命令行参数
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UserName	DESKTOP-887GK2L\CyberJunkie	执行进程的用户
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; 文件/哈希信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData3	SHA1=&lt;span style=&#34;color:#ae81ff&#34;&gt;282F&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, MD5=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, SHA256=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;, IMPHASH=&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;	进程可执行文件的哈希值&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;，&lt;/span&gt;IMPHASH 用于检测恶意文件家族
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PayloadData2	RuleName&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt; technique_id=T1027, technique_name=Obfuscated Files or Information	MITRE ATT&amp;amp;CK 对应技术&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;这里表示混淆文件或信息&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;4️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; Parent / 上级进程信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;字段	示例	说明
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcess	C:\Program Files\Mozilla Firefox\firefox.exe	父进程路径
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcessID	&lt;span style=&#34;color:#ae81ff&#34;&gt;4292&lt;/span&gt;	父进程 ID
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentProcessGUID	817bddf3-&lt;span style=&#34;color:#ae81ff&#34;&gt;3514&lt;/span&gt;-65cc-&lt;span style=&#34;color:#ae81ff&#34;&gt;0802&lt;/span&gt;-&lt;span style=&#34;color:#ae81ff&#34;&gt;000000001900&lt;/span&gt;	父进程 GUID
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentCommandLine	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Program Files\Mozilla Firefox\firefox.exe&amp;#34;&lt;/span&gt;	父进程启动命令行
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentUser	DESKTOP-887GK2L\CyberJunkie	父进程执行用户
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5️&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;⃣&lt;/span&gt; Sysmon EventData 字段&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;Payload&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Payload 内部是 Sysmon 原始 XML EventData 转成 JSON
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;包含详细字段如&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;：&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 进程路径
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CommandLine &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 启动参数
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Hashes &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 文件哈希
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;User &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 执行用户
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ParentImage / ParentCommandLine / ParentUser &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 父进程信息
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IntegrityLevel &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;→&lt;/span&gt; 进程权限级别&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;（&lt;/span&gt;这里是 Medium&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接下来我们可以用下面的语法输出整个事件1当中我们感兴趣的所有字段&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\e&lt;/span&gt;ventid1.json | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4, .ExecutableInfo, .PayloadData1, .PayloadData5]&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就像这里我输出了.TimeCreated → 事件发生时间 .PayloadData4 → 父进程路径 .ExecutableInfo → 当前进程完整路径及命令行 .PayloadData1 → 当前进程 ID 和 GUID .PayloadData5 → 父进程 ID 和 GUID&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#示例输出&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2024-02-14T03:41:56.5596188+00:00&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ParentProcess: C:\\Windows\\explorer.exe&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Users\\CyberJunkie\\Downloads\\Preventivo24.02.14.exe.exe\&amp;#34; &amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ProcessID: 10672, ProcessGUID: 817bddf3-3684-65cc-2d02-000000001900&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ParentProcessID: 1116, ParentProcessGUID: 817bddf3-311f-65cc-0a01-000000001900&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单的利用分析就是这样&lt;/p&gt;
-&lt;h4 id=&#34;常用分析命令&#34;&gt;常用分析命令
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat .&lt;span style=&#34;color:#ae81ff&#34;&gt;\2&lt;/span&gt;0240408132435_EvtxECmd_Output.json | jq -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;select(.EventId == 11)&amp;#39;&lt;/span&gt; | findstr &lt;span style=&#34;color:#ae81ff&#34;&gt;10672&lt;/span&gt; | jq -s &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.[] | [.TimeCreated, .PayloadData4]&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这条命令效果是筛选事件id为11的事件，并进一步筛选出包含10672字段的事件 并输出其中的TimeCreated, PayloadData4字段&lt;/p&gt;
-&lt;h3 id=&#34;隼鸟快速使用&#34;&gt;隼鸟快速使用
-&lt;/h3&gt;&lt;p&gt;筛选出存在关键词的事件输出为json&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa search -f Windows-Powershell-Operational.evtx -k &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;keyword“ -J -o &amp;#34;&lt;/span&gt;this.json&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以时间线输出csv,可以手动选择匹配模式，一般选最大&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hayabusa csv-timeline -f Windows-Powershell-Operational.evtx -o time_powershell.csv
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;流量分析&#34;&gt;流量分析
-&lt;/h2&gt;&lt;h3 id=&#34;tcpdump使用&#34;&gt;tcpdump使用
-&lt;/h3&gt;&lt;p&gt;需要root权限，并且如果需要生成数据包，请在tmp目录生成&lt;/p&gt;
-&lt;h4 id=&#34;开关级参数&#34;&gt;开关级参数
-&lt;/h4&gt;&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;参数&lt;/th&gt;
-          &lt;th&gt;口语化说明&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-D&lt;/td&gt;
-          &lt;td&gt;显示所有可用的网络接口&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-i&lt;/td&gt;
-          &lt;td&gt;指定要抓包的网络接口，例如 &lt;code&gt;-i eth0&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-n&lt;/td&gt;
-          &lt;td&gt;不把 IP 地址或端口号转换成名字，直接显示数字&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-e&lt;/td&gt;
-          &lt;td&gt;抓包时连以太网头也抓上&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-X&lt;/td&gt;
-          &lt;td&gt;以十六进制和 ASCII 显示数据包内容&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-XX&lt;/td&gt;
-          &lt;td&gt;跟 -X 一样，但同时显示以太网头&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-v / -vv / -vvv&lt;/td&gt;
-          &lt;td&gt;增加输出的详细程度，越多 v 信息越详细&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-c&lt;/td&gt;
-          &lt;td&gt;抓指定数量的数据包后退出，例如 &lt;code&gt;-c 10&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-s&lt;/td&gt;
-          &lt;td&gt;设置每个数据包抓多少字节，&lt;code&gt;-s 0&lt;/code&gt; 表示抓完整包&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-S&lt;/td&gt;
-          &lt;td&gt;显示绝对序列号，而不是相对序列号&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-q&lt;/td&gt;
-          &lt;td&gt;输出更简略的协议信息&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-r 文件.pcap&lt;/td&gt;
-          &lt;td&gt;从指定文件读取抓包数据，例如 &lt;code&gt;-r /tmp/capture.pcap&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
-          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-A&lt;/td&gt;
-          &lt;td&gt;仅显示数据包行后的 ASCII 文本&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-w 文件.pcap&lt;/td&gt;
-          &lt;td&gt;把抓到的数据写入指定文件，例如 &lt;code&gt;-w out.pcap&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;-l&lt;/td&gt;
-          &lt;td&gt;快速检查捕获，可以利用管道符号配合，例如 `sudo tcpdump -Ar http.cap -l&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;过滤器&#34;&gt;过滤器
-&lt;/h4&gt;&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;过滤器&lt;/th&gt;
-          &lt;th&gt;说明&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;host x.x.x.x&lt;/td&gt;
-          &lt;td&gt;仅捕获与特定主机相关的流量&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;net x.x.x.x/24&lt;/td&gt;
-          &lt;td&gt;捕获进出特定网络的流量（斜杠表示法指定掩码）&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;src net x.x.x.x/24&lt;/td&gt;
-          &lt;td&gt;仅捕获来自指定网络的流量&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;dst net x.x.x.x/24&lt;/td&gt;
-          &lt;td&gt;仅捕获发往目标网络的流量&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;port #&lt;/td&gt;
-          &lt;td&gt;只捕获指定端口的流量，其余端口过滤掉&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;not&lt;/td&gt;
-          &lt;td&gt;捕获除指定条件之外的所有流量，例如 &lt;code&gt;not port 80&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;and&lt;/td&gt;
-          &lt;td&gt;连接多个过滤条件，例如 &lt;code&gt;host 192.168.1.1 and port 80&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;portrange x-x&lt;/td&gt;
-          &lt;td&gt;捕获指定端口范围内的流量&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;ip / ether / tcp&lt;/td&gt;
-          &lt;td&gt;只抓指定协议的流量&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;broadcast&lt;/td&gt;
-          &lt;td&gt;捕获广播流量（一对所有）&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;multicast&lt;/td&gt;
-          &lt;td&gt;捕获多播流量（一对多）&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;unicast&lt;/td&gt;
-          &lt;td&gt;捕获单播流量（一对一）&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;列出可用接口&#34;&gt;列出可用接口
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -D
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;大参数抓取流量包命令示例&#34;&gt;大参数抓取流量包命令示例
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -i eth0 -nnvXX -c &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; -w /tmp/output.pcap
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#禁用名称解析且启用ascii和十六进制的详细抓前100个完整数据包并输出到目标文件&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;快速读取数据包中的人类可读信息&#34;&gt;快速读取数据包中的人类可读信息
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然也可以配合-l进行查找效果&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tcpdump -Ar telnet.pcap -l | grep &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flag*&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
         </item>
         <item>
