@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>无线安全 on wackymaker</title>
-        <link>https://wackymaker.github.io/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/</link>
+        <link>http://localhost:1313/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/</link>
         <description>Recent content in 无线安全 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 30 Aug 2025 23:19:01 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 Aug 2025 23:19:01 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>aircrack-ng套件</title>
-        <link>https://wackymaker.github.io/post/aircrack/</link>
+        <link>http://localhost:1313/post/aircrack/</link>
         <pubDate>Sat, 30 Aug 2025 23:19:01 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/aircrack/</guid>
+        <guid>http://localhost:1313/post/aircrack/</guid>
         <description>&lt;h2 id=&#34;aircrack-ng套件介绍&#34;&gt;aircrack-ng套件介绍
 &lt;/h2&gt;&lt;p&gt;只要学习无线安全，Aircrack-ng套件就是需要接触的内容，其包含20多种专门用于审核wifi网络的攻击，并且都是命令行，我今天只会简要记录几个常用工具&lt;/p&gt;
 &lt;h3 id=&#34;airmon-ng快捷监控&#34;&gt;Airmon-ng(快捷监控)
@@ -200,7 +200,7 @@
 &lt;p&gt;生成客户端与ap关系图CAPR,生成的图片会可视化当前的ap和客户端连接情况&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airgraph-ng -i wacky-01.csv -g CAPR -o CAPR.png
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;类似如下效果&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image.png&#34;
 	
 	
 	
@@ -210,7 +210,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;还可以生成通用探针图CPG生成的图片会可视化当前ap和所有客户端的联系，包括并没有接入或者准备接入网络的客户端&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo airgraph-ng -i wacky-01.csv -g CPG -o CAPR.png
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-1.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-1.png&#34;
 	
 	
 	
@@ -236,7 +236,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-c 00：0F：B5：32：31：31 是要取消身份验证的客户端的 MAC 地址;如果省略，则连接的所有客户端都会被攻击
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;airdecap-ng解密无线流量&#34;&gt;Airdecap-ng（解密无线流量）
 &lt;/h3&gt;&lt;p&gt;当我们抓取wifi流量包后会发现抓取协议都是802.11&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-2.png&#34;
 	
 	
 	
@@ -285,7 +285,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number of bad TKIP &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;WPA&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; packets         &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number of bad CCMP &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;WPA&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; packets         &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解密后流量就是正常的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/air/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/air/image-3.png&#34;
 	
 	
 	
@@ -299,13 +299,13 @@
         </item>
         <item>
         <title>wifi网卡简记</title>
-        <link>https://wackymaker.github.io/post/wifiinterfaces/</link>
+        <link>http://localhost:1313/post/wifiinterfaces/</link>
         <pubDate>Thu, 28 Aug 2025 22:51:00 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/wifiinterfaces/</guid>
+        <guid>http://localhost:1313/post/wifiinterfaces/</guid>
         <description>&lt;h2 id=&#34;wifi接口&#34;&gt;wifi接口
 &lt;/h2&gt;&lt;p&gt;无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/wifiInterfaces/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/wifiInterfaces/image.png&#34;
 	
 	
 	
@@ -480,10 +480,10 @@
         </item>
         <item>
         <title>802.11帧介绍</title>
-        <link>https://wackymaker.github.io/post/80211/</link>
+        <link>http://localhost:1313/post/80211/</link>
         <pubDate>Wed, 27 Aug 2025 20:57:07 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/80211/</guid>
+        <guid>http://localhost:1313/post/80211/</guid>
         <description>&lt;h2 id=&#34;80211帧简介&#34;&gt;802.11帧简介
 &lt;/h2&gt;&lt;p&gt;有线网络传输以太网帧而wifi无线网传输802.11帧，802.11帧数是ieee（电气和电子工程协会）定义的wifi标准系列，当我们的设备通过无线接入点（AP）通信的时候，双方并不是直接发送流量包，而是先通过802.11MAC层帧在空中交换信息，这些帧包括控制，管理和数据，共同构成wifi的整个连接和通信过程&lt;/p&gt;
 &lt;h2 id=&#34;80211-mac帧介绍&#34;&gt;802.11 mac帧介绍
@@ -583,7 +583,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set wlan0 up &lt;span style=&#34;color:#75715e&#34;&gt;#启动网卡&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iwconfig wlan0 &lt;span style=&#34;color:#75715e&#34;&gt;#查看当前网卡模式&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们将网卡切换监听模式后，wireshark会抓到大量数据包&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image.png&#34;
 	
 	
 	
@@ -593,7 +593,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过wireshark中的语法以及以上我们学习的帧类型进行查找&lt;/p&gt;
 &lt;p&gt;查找来自ap的接入帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 8)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-1.png&#34;
 	
 	
 	
@@ -602,7 +602,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测请求帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 4)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-2.png&#34;
 	
 	
 	
@@ -612,7 +612,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;查找来自ap的探测响应帧：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 5)&lt;/p&gt;
 &lt;p&gt;这里我抓包的时候并未请求响应所以显示的包为，所以找了htb文章的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-3.png&#34;
 	
 	
 	
@@ -621,7 +621,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以用以下过滤器查找客户端和接入点之间的身份验证过程：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 11)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-4.png&#34;
 	
 	
 	
@@ -630,7 +630,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;请求结束后，可以抓取到关联请求：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 0)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-6.png&#34;
 	
 	
 	
@@ -639,7 +639,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;查看关联响应：(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 1)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-7.png&#34;
 	
 	
 	
@@ -648,7 +648,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;如果网络使用wpa2，可以使用EAPOL查看握手帧&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-8.png&#34;
 	
 	
 	
@@ -657,7 +657,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;连接完成后，可以通过如下过滤器查看取消关联帧或者身份验证帧:(wlan.fc.type == 0) &amp;amp;&amp;amp; (wlan.fc.type_subtype == 12) or (wlan.fc.type_subtype == 10)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/80211/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/80211/image-9.png&#34;
 	
 	
 	

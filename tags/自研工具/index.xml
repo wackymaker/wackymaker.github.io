@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>自研工具 on wackymaker</title>
-        <link>https://wackymaker.github.io/tags/%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/</link>
+        <link>http://localhost:1313/tags/%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/</link>
         <description>Recent content in 自研工具 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 01 Sep 2025 21:20:58 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 01 Sep 2025 21:20:58 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E8%87%AA%E7%A0%94%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>基于lnk劫持的权限维持工具-shadowlnk</title>
-        <link>https://wackymaker.github.io/post/shadowlnk/</link>
+        <link>http://localhost:1313/post/shadowlnk/</link>
         <pubDate>Mon, 01 Sep 2025 21:20:58 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/shadowlnk/</guid>
+        <guid>http://localhost:1313/post/shadowlnk/</guid>
         <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍
 &lt;/h2&gt;&lt;p&gt;当我在研究免杀操作的时候，我发现常规意义上的注册表，启动项还有计划任务这三种基于机器自动化的权限维持手段，在杀软中是被看的很死的，我在学习的过程中很是苦恼。就在这个时候我正好在学习红队的一些基础钓鱼手段，其中利用隐藏文件夹以及lnk伪造文件的形式让我有了灵感，既然机器层面的自启动不好实现，那么人类层面呢？&lt;/p&gt;
 &lt;h2 id=&#34;lnk钓鱼详解&#34;&gt;lnk钓鱼详解
 &lt;/h2&gt;&lt;p&gt;我演示的这就是一个很典型的样本&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image.png&#34;
 	
 	
 	
@@ -25,7 +25,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;__MACOSX文件夹下方是&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-1.png&#34;
 	
 	
 	
@@ -45,7 +45,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;start &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.docx&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;taskkill /f /im cmd.exe
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们将__MACOSX文件夹隐藏后就是一个正常的文件，普通人不会在意这个角标。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-4.png&#34;
 	
 	
 	
@@ -64,7 +64,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;start &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.docx&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;taskkill /f /im cmd.exe
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如此情况下，就做到了一个简单的钓鱼样本，受害者在点击样本时，先执行我们隐藏的载荷，之后打开文档。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-3.png&#34;
 	
 	
 	
@@ -77,7 +77,7 @@
 &lt;/h2&gt;&lt;p&gt;为了实现这种效果，我开发了一个小工具 &lt;a class=&#34;link&#34; href=&#34;https://github.com/wackymaker/shadowlnk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;shadowlnk&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;它有两种主要的使用逻辑，首先是利用-i指定劫持目标，-w指定可写目录（我们需要这个目录来创建隐藏文件夹），-p指定我们的载荷位置。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-5.png&#34;
 	
 	
 	
@@ -86,7 +86,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;当成功劫持之后，图标看上去没有变化，连闪烁都不存在，但是它的指向已经被替换为了我们指定的恶意脚本。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-6.png&#34;
 	
 	
 	
@@ -95,7 +95,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;执行后也是无感上线&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-7.png&#34;
 	
 	
 	
@@ -124,7 +124,7 @@
 &lt;h2 id=&#34;额外参数&#34;&gt;额外参数
 &lt;/h2&gt;&lt;p&gt;这个工具还有两个我额外添加的操作，就是-r参数和-power参数&lt;/p&gt;
 &lt;p&gt;如果启用了-r参数，shadowlnk会自动的替换桌面上所有lnk文件，并且因为文件夹不重名的原因，兼容性还算不错，整个替换过程中桌面用户是无感的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-9.png&#34;
 	
 	
 	
@@ -134,7 +134,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;但是不建议实战中使用这种效果，因为360以及国内一些杀软会检查自身是否被替换快捷文件，所以一般情况下单个的劫持已经够用了，攻击者完全可以做到落地后检索当前环境，将常用软件lnk劫持替换进行权限维持。&lt;/p&gt;
 &lt;p&gt;在此之上，如果启用了-power参数，其中的vbs脚本会被替换成如下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-12.png&#34;
 	
 	
 	
@@ -143,7 +143,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这时，当用户启动程序后会弹出uac认证，但vbs本身就是微软程序，所以弹出来的uac认证看上去并不危险，一些人或许会因此稀里糊涂的上钩，让我们进行了权限提升。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-13.png&#34;
 	
 	
 	
@@ -152,7 +152,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以看到获得的是管理员shell。这一点也需要按需使用，如果一个用户发现自己的浏览器在启动的时候每次都询问管理员权限，也是不太合理不是吗？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/shadowlnk/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/shadowlnk/image-8.png&#34;
 	
 	
 	

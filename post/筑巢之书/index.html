@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="notes\r本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加\n域控基础指令\r域用户创建\n$Password = &#34;$pass&#34; New-ADUser -Name &#34;$username&#34; ` -SamAccountName &#34;$username&#34; ` -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) ` -Enabled $true ` -Path &#34;CN=Users,DC=域名,DC=com&#34; ` -PasswordNeverExpires $false ` -ChangePasswordAtLogon $false # 让用户加入远程管理组 Add-ADGroupMember -Identity &#34;Remote Management Users&#34; -Members &#34;$username&#34; 创建域组并让域用户加入\n# 创建域组 New-ADGroup -Name &#34;$group_name&#34; -SamAccountName &#34;$group_name&#34; -GroupScope Global -GroupCategory Security -Path &#34;CN=Users,DC=$domain,DC=com&#34; # 添加域用户 Add-ADGroupMember -Identity &#34;$group_name&#34; -Members &#34;$username&#34; 密码复杂度调整\n# 获取当前域密码策略 Import-Module ActiveDirectory Get-ADDefaultDomainPasswordPolicy # 禁用复杂性要求 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -ComplexityEnabled $false # 可选：设置最小密码长度为0 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -MinPasswordLength 0 特殊配置\r配置无预认证,需先创建用户\n">
 <title>筑巢之书</title>
 
-<link rel='canonical' href='https://wackymaker.github.io/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='http://localhost:1313/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="筑巢之书">
 <meta property='og:description' content="notes\r本笔记记录windows（ad）相关靶机构筑与安全防护部署等内容，会随我学习逐渐添加\n域控基础指令\r域用户创建\n$Password = &#34;$pass&#34; New-ADUser -Name &#34;$username&#34; ` -SamAccountName &#34;$username&#34; ` -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) ` -Enabled $true ` -Path &#34;CN=Users,DC=域名,DC=com&#34; ` -PasswordNeverExpires $false ` -ChangePasswordAtLogon $false # 让用户加入远程管理组 Add-ADGroupMember -Identity &#34;Remote Management Users&#34; -Members &#34;$username&#34; 创建域组并让域用户加入\n# 创建域组 New-ADGroup -Name &#34;$group_name&#34; -SamAccountName &#34;$group_name&#34; -GroupScope Global -GroupCategory Security -Path &#34;CN=Users,DC=$domain,DC=com&#34; # 添加域用户 Add-ADGroupMember -Identity &#34;$group_name&#34; -Members &#34;$username&#34; 密码复杂度调整\n# 获取当前域密码策略 Import-Module ActiveDirectory Get-ADDefaultDomainPasswordPolicy # 禁用复杂性要求 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -ComplexityEnabled $false # 可选：设置最小密码长度为0 Set-ADDefaultDomainPasswordPolicy -Identity &#34;$domain&#34; -MinPasswordLength 0 特殊配置\r配置无预认证,需先创建用户\n">
-<meta property='og:url' content='https://wackymaker.github.io/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='http://localhost:1313/post/%E7%AD%91%E5%B7%A2%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='筑之魔法' /><meta property='article:published_time' content='2025-10-25T22:39:21&#43;08:00'/><meta property='article:modified_time' content='2025-10-25T22:39:21&#43;08:00'/>
 <meta name="twitter:title" content="筑巢之书">
@@ -695,7 +695,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
