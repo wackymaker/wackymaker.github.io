@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nsysmon部署\r下载\nhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 激活\nsysmon.exe -i -accepteula -h md5,sha256,imphash -l -n 导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等\nhttps://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml 下载后将配置文件中需要检测的部分中的参数进行修改\n#include更改为exclude # 比如 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;include&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; #改为 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;exclude&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; 导入配置\n">
 <title>剥茧之书</title>
 
-<link rel='canonical' href='http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="剥茧之书">
 <meta property='og:description' content="事件日志分析\rSysmon日志是由Microsoft系统监视器（Sysmon）生成的事件日志，它们提供有关Windows上的系统级操作的详细信息，并记录进程启动、网络连接、文件和注册表修改、驱动程序和服务活动以及WMI操作等活动，通过分析Sysmon日志，安全专家可以检测潜在风险、发现异常并响应安全事件，以增强整体系统监控和安全性。在不断变化的网络安全环境中，提前防范威胁非常重要。\nsysmon部署\r下载\nhttps://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 激活\nsysmon.exe -i -accepteula -h md5,sha256,imphash -l -n 导入sysmon配置，可以使用下面这个,能检测常见的dll注入lsass抓取等\nhttps://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml 下载后将配置文件中需要检测的部分中的参数进行修改\n#include更改为exclude # 比如 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;include&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; #改为 &lt;RuleGroup name=&#34;&#34; groupRelation=&#34;or&#34;&gt; &lt;FileCreateTime onmatch=&#34;exclude&#34;&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;C:\\Users&lt;/Image&gt; &lt;!--Look for timestomping in user area, usually nothing should be doing that here--&gt; &lt;TargetFilename name=&#34;T1099&#34; condition=&#34;end with&#34;&gt;.exe&lt;/TargetFilename&gt; &lt;!--Look for backdated executables anywhere--&gt; &lt;Image name=&#34;T1099&#34; condition=&#34;begin with&#34;&gt;\\Device\\HarddiskVolumeShadowCopy&lt;/Image&gt; &lt;!--Nothing should be written here | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] --&gt; &lt;/FileCreateTime&gt; &lt;/RuleGroup&gt; 导入配置\n">
-<meta property='og:url' content='http://localhost:1313/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/%E5%89%A5%E8%8C%A7%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-10-26T21:42:11&#43;08:00'/><meta property='article:modified_time' content='2025-10-26T21:42:11&#43;08:00'/>
 <meta name="twitter:title" content="剥茧之书">
@@ -877,7 +877,7 @@
     <section class="copyright">
         &copy; 
         
-        2025 wackymaker
+        2026 wackymaker
     </section>
     
     <section class="powerby">
@@ -971,7 +971,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

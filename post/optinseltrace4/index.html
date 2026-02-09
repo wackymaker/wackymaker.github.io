@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="题目简介\r打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！\n附件信息\n┌──(wackymaker㉿kali)-[~/tmp/sherlock/OpTinselTrace-4] └─$ dir networktraffic.pcapng networktraffic.zip optinseltrace4.zip 只有一个流量包\n攻击ip地址为？\r题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）\n打开文件包，一共3800多个包\n提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip\n答案：172.17.79.133\n最终攻击端口\r题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）\n过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问\n答案；9100\n服务器上运行的打印机的全名是什么？\r随便找几个9100的包追踪tcp，我们能找到如下文本\n答案： Northpole HP LaserJet 4200n\n格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？\r并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西\n@PJL FSUPLOAD FORMAT:BINARY NAME=&#34;0:/christmas/2023/Nice-kids/list1.txt&#34; OFFSET=0 SIZE=180 Jennifer Sanchez Douglas Price Joshua Ross Catherine Bailey Martha Clark Ruby Kelly Edward Parker Tammy James Lori Robinson Wayne Gonzales @PJL ECHO DELIMITER56482 答案：Douglas Price\n">
 <title>OpTinselTrace4-wp</title>
 
-<link rel='canonical' href='http://localhost:1313/post/optinseltrace4/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/optinseltrace4/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="OpTinselTrace4-wp">
 <meta property='og:description' content="题目简介\r打印机在圣诞老人的工作室中很重要，但我们还没有真正尝试确保它们的安全！格林奇和他的精英黑客团队可能会试图利用它来对付我们！请使用提供的数据包捕获进行调查！打印机服务器 IP 地址为 192.168.68.128 请注意 - 这些 Sherlocks 是按顺序完成的！\n附件信息\n┌──(wackymaker㉿kali)-[~/tmp/sherlock/OpTinselTrace-4] └─$ dir networktraffic.pcapng networktraffic.zip optinseltrace4.zip 只有一个流量包\n攻击ip地址为？\r题目原文（网络打印机服务器的性能变得缓慢，导致北极车间的工作流程中断。圣诞老人指示我们生成支持请求并检查网络数据以查明问题的根源。他怀疑格林奇和他的团队可能参与了这种情况。您能否验证是否有向打印机服务器发送过多流量的 IP 地址？）\n打开文件包，一共3800多个包\n提供给了我们打印机的ip地址，只需要过滤出打印机ip就能找到请求最多的ip\n答案：172.17.79.133\n最终攻击端口\r题目原文（Bytesparkle 作为技术负责人，发现了来自先前攻击中识别的同一 IP 的端口扫描痕迹。然后，哪个端口是打印机最初入侵的目标？）\n过滤攻击ip，并锁定初步攻击时的流量包，我们能找到攻击者对9100端口进行了大量访问\n答案；9100\n服务器上运行的打印机的全名是什么？\r随便找几个9100的包追踪tcp，我们能找到如下文本\n答案： Northpole HP LaserJet 4200n\n格林奇截获了一份圣诞老人制作的善良和顽皮孩子的名单。好名单上的第二个孩子叫什么名字？\r并不太理解打印机流量数据中的内容，于是我继续分析刚才追踪的tcp，找到了类似名单的东西\n@PJL FSUPLOAD FORMAT:BINARY NAME=&#34;0:/christmas/2023/Nice-kids/list1.txt&#34; OFFSET=0 SIZE=180 Jennifer Sanchez Douglas Price Joshua Ross Catherine Bailey Martha Clark Ruby Kelly Edward Parker Tammy James Lori Robinson Wayne Gonzales @PJL ECHO DELIMITER56482 答案：Douglas Price\n">
-<meta property='og:url' content='http://localhost:1313/post/optinseltrace4/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/optinseltrace4/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='流量分析' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='审之魔法' /><meta property='article:published_time' content='2025-08-27T14:56:36&#43;08:00'/><meta property='article:modified_time' content='2025-08-27T14:56:36&#43;08:00'/>
 <meta name="twitter:title" content="OpTinselTrace4-wp">
@@ -523,7 +523,7 @@
     <section class="copyright">
         &copy; 
         
-        2025 wackymaker
+        2026 wackymaker
     </section>
     
     <section class="powerby">
@@ -617,7 +617,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

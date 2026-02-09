@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="wifi接口\r无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口\n可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义\n┌──(root㉿kali)-[~] └─# iw list Wiphy phy1 wiphy index: 1 max # scan SSIDs: 4 max scan IEs length: 482 bytes max # sched scan SSIDs: 10 max # match sets: 16 Retry short limit: 7 Retry long limit: 4 Coverage class: 0 (up to 0m) Device supports AP-side u-APSD. Device supports T-DLS. Supported Ciphers: * WEP40 (00-0f-ac:1) * WEP104 (00-0f-ac:5) * TKIP (00-0f-ac:2) * CCMP-128 (00-0f-ac:4) * CCMP-256 (00-0f-ac:10) * GCMP-128 (00-0f-ac:8) * GCMP-256 (00-0f-ac:9) * CMAC (00-0f-ac:6) * CMAC-256 (00-0f-ac:13) * GMAC-128 (00-0f-ac:11) * GMAC-256 (00-0f-ac:12) Available Antennas: TX 0x3 RX 0x3 Configured Antennas: TX 0x3 RX 0x3 Supported interface modes: * managed * AP * AP/VLAN * monitor * P2P-client * P2P-GO Band 1: Capabilities: 0x9ff RX LDPC HT20/HT40 SM Power Save disabled RX Greenfield RX HT20 SGI RX HT40 SGI TX STBC RX STBC 1-stream Max AMSDU length: 7935 bytes No DSSS/CCK HT40 我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等\n">
 <title>wifi网卡简记</title>
 
-<link rel='canonical' href='http://localhost:1313/post/wifiinterfaces/'>
+<link rel='canonical' href='https://wackymaker.github.io/post/wifiinterfaces/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="wifi网卡简记">
 <meta property='og:description' content="wifi接口\r无线接口是进行 Wi-Fi 渗透测试的关键。毕竟我们的设备就是通过它们来发送和接收数据的。在选购合适的无线接口时，有很多方面需要考虑。如果选了性能太弱的接口，在渗透测试时可能抓不到任何数据。这一部分就是简单研究一下我买的这个小接口\n可以使用iw list查看网卡详细信息，如果我们的目标是wpa3但是网卡不支持就没有意义\n┌──(root㉿kali)-[~] └─# iw list Wiphy phy1 wiphy index: 1 max # scan SSIDs: 4 max scan IEs length: 482 bytes max # sched scan SSIDs: 10 max # match sets: 16 Retry short limit: 7 Retry long limit: 4 Coverage class: 0 (up to 0m) Device supports AP-side u-APSD. Device supports T-DLS. Supported Ciphers: * WEP40 (00-0f-ac:1) * WEP104 (00-0f-ac:5) * TKIP (00-0f-ac:2) * CCMP-128 (00-0f-ac:4) * CCMP-256 (00-0f-ac:10) * GCMP-128 (00-0f-ac:8) * GCMP-256 (00-0f-ac:9) * CMAC (00-0f-ac:6) * CMAC-256 (00-0f-ac:13) * GMAC-128 (00-0f-ac:11) * GMAC-256 (00-0f-ac:12) Available Antennas: TX 0x3 RX 0x3 Configured Antennas: TX 0x3 RX 0x3 Supported interface modes: * managed * AP * AP/VLAN * monitor * P2P-client * P2P-GO Band 1: Capabilities: 0x9ff RX LDPC HT20/HT40 SM Power Save disabled RX Greenfield RX HT20 SGI RX HT40 SGI TX STBC RX STBC 1-stream Max AMSDU length: 7935 bytes No DSSS/CCK HT40 我省略了一部分，但是上面的信息也差不多了，其支持wpa3协议以及监听模式等\n">
-<meta property='og:url' content='http://localhost:1313/post/wifiinterfaces/'>
+<meta property='og:url' content='https://wackymaker.github.io/post/wifiinterfaces/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='无线安全' /><meta property='article:tag' content='htb' /><meta property='article:tag' content='社之魔法' /><meta property='article:published_time' content='2025-08-28T22:51:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-28T22:51:00&#43;08:00'/>
 <meta name="twitter:title" content="wifi网卡简记">
@@ -604,7 +604,7 @@
     <section class="copyright">
         &copy; 
         
-        2025 wackymaker
+        2026 wackymaker
     </section>
     
     <section class="powerby">
@@ -698,7 +698,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.9feb0937132291db314540e31350de0da717928ca87e53cdebf73f0dfcdc569c.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
